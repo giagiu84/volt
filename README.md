@@ -10,11 +10,11 @@ Sul telefono non ci sono tasti a schermo: si gioca a gesti, con i due pollici.
 
 | | PC | Telefono |
 |---|---|---|
-| Muoversi | `A` `D` o frecce | pollice destro: appoggialo dove vuoi nella metà destra, nasce lì un joystick |
-| Saltare (doppio) | `SPAZIO` o `W` | spingi il pollice destro verso l'alto (una seconda spinta in aria = doppio salto) |
+| Muoversi | `A` `D` o frecce | trascina il pollice destro: il joystick nasce dove appoggi il dito |
+| Saltare (doppio) | `SPAZIO` o `W` | un tocco del pollice destro; due tocchi = doppio salto; tenendolo premuto il salto è più alto. Mentre corri puoi saltare appoggiando un secondo dito a destra |
 | Sparare | click sinistro o `J` | tieni premuto il pollice sinistro |
 | Mirare | mouse | trascina il pollice sinistro; se lo appoggi soltanto, mira da sola al mostro più vicino |
-| Scatto | `SHIFT` o `K` | doppio tocco rapido col pollice destro |
+| Scatto | `SHIFT` o `K` | scorrimento rapido in orizzontale col pollice destro |
 | Scendere da una piattaforma | `S` / giù | spingi il pollice destro in basso |
 | Pausa | `ESC` o `P` | tasto in alto a destra |
 

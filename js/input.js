@@ -1,13 +1,26 @@
 /* VOLT — input: tastiera, mouse e touch a gesti (nessun tasto a schermo).
-   Sul telefono: pollice destro = joystick che nasce dove appoggi il dito
-   (avanti/dietro, su = salta, giù = scendi, doppio tocco = scatto),
-   pollice sinistro = tieni premuto per sparare, trascina per mirare. */
+
+   Pollice DESTRO, un dito solo che fa tutto:
+     · trascini            → corri (joystick che nasce dove appoggi)
+     · tocco               → salto
+     · due tocchi          → doppio salto
+     · tocco tenuto        → salto più alto (slancio)
+     · scorrimento rapido  → scatto
+     · spinta in basso     → scendi dalla piattaforma
+   Un secondo dito appoggiato a destra mentre corri = salto, così non devi
+   staccare il pollice per saltare.
+
+   Pollice SINISTRO: tieni premuto per sparare, trascina per mirare. */
 'use strict';
 
-const STICK_R = 66;        /* raggio del joystick invisibile, in px schermo */
+const STICK_R = 66;          /* raggio del joystick invisibile, in px schermo */
 const DEAD = 0.18;
-const JUMP_ON = -0.55, JUMP_OFF = -0.28;
 const DROP_ON = 0.62;
+const TAP_MOVE = 15;         /* oltre questo spostamento non è più un tocco, è una corsa */
+const HOLD_MS = 70;          /* dito fermo per più di così: parte il salto e si tiene */
+/* scatto: serve un colpo secco vero (oltre 850 px/s), altrimenti il normale
+   trascinare il pollice per correre farebbe partire scatti a raffica */
+const FLICK_PX = 95, FLICK_MS = 110;
 
 const Input = {
   keys: Object.create(null),
@@ -19,10 +32,9 @@ const Input = {
   lastPointerT: 0, lastKeyT: 0,
   touchMode: false,
 
-  /* dita attive */
-  stick: null,         /* dito che comanda il movimento: {id, ox, oy, x, y, tDown, armed} */
-  shoot: null,         /* dito che spara e mira: {id, ox, oy, x, y, moved} */
-  lastStickUp: 0,
+  stick: null,        /* dito del movimento/salto */
+  shoot: null,        /* dito del fuoco */
+  extraJump: null,    /* secondo dito a destra: salto mentre si corre */
   hasAim: false, aimDX: 1, aimDY: 0,
 
   init(canvas) {
@@ -43,7 +55,7 @@ const Input = {
       this.keys = Object.create(null);
       this.fire = false;
       this.axisX = this.axisY = 0;
-      this.stick = null; this.shoot = null;
+      this.stick = null; this.shoot = null; this.extraJump = null;
       this.hasAim = false;
     };
     addEventListener('blur', releaseAll);
@@ -60,12 +72,10 @@ const Input = {
     canvas.addEventListener('mouseleave', () => { this.mouseIn = false; });
     canvas.addEventListener('mousedown', (e) => { if (e.button === 0) { trackMouse(e); this.fire = true; } });
     addEventListener('mouseup', (e) => { if (e.button === 0) this.fire = false; });
-    /* puntatore fuori dalla finestra: niente colpo bloccato e niente mira appesa in alto */
     document.addEventListener('mouseleave', () => { this.mouseIn = false; this.fire = false; });
     canvas.addEventListener('contextmenu', (e) => e.preventDefault());
 
-    /* --- touch: due zone, nessun bottone --- */
-    /* metà destra dello schermo = movimento, metà sinistra = fuoco */
+    /* --- touch --- */
     const zoneIsStick = (x) => x >= innerWidth * 0.5;
 
     /* se un dito sparisce senza touchend (succede) i riferimenti restano appesi
@@ -75,6 +85,7 @@ const Input = {
       for (const t of e.touches) live.add(t.identifier);
       if (this.stick && !live.has(this.stick.id)) { this.stick = null; this.axisX = 0; this.axisY = 0; }
       if (this.shoot && !live.has(this.shoot.id)) { this.shoot = null; this.fire = false; this.hasAim = false; }
+      if (this.extraJump !== null && !live.has(this.extraJump)) this.extraJump = null;
     };
 
     canvas.addEventListener('touchstart', (e) => {
@@ -83,11 +94,22 @@ const Input = {
       syncTouches(e);
       const now = performance.now();
       for (const t of e.changedTouches) {
+        /* un dito già in uso non deve essere riassegnato */
+        if ((this.stick && this.stick.id === t.identifier) ||
+            (this.shoot && this.shoot.id === t.identifier) ||
+            this.extraJump === t.identifier) continue;
         if (zoneIsStick(t.clientX)) {
-          if (this.stick) continue;
-          this.stick = { id: t.identifier, ox: t.clientX, oy: t.clientY, x: t.clientX, y: t.clientY, tDown: now, armed: true };
-          /* doppio tocco ravvicinato = scatto */
-          if (now - this.lastStickUp < 280) this.dashEdge = true;
+          if (!this.stick) {
+            this.stick = {
+              id: t.identifier, ox: t.clientX, oy: t.clientY, x: t.clientX, y: t.clientY,
+              tDown: now, moved: false, jumped: false,
+              fx: t.clientX, ft: now                    /* riferimento per lo scorrimento rapido */
+            };
+          } else if (this.extraJump === null) {
+            /* sto già correndo: questo secondo dito è un salto immediato */
+            this.extraJump = t.identifier;
+            this.jumpEdge = true;
+          }
         } else {
           if (this.shoot) continue;
           this.shoot = { id: t.identifier, ox: t.clientX, oy: t.clientY, x: t.clientX, y: t.clientY, moved: false };
@@ -99,9 +121,18 @@ const Input = {
     canvas.addEventListener('touchmove', (e) => {
       e.preventDefault();
       syncTouches(e);
+      const now = performance.now();
       for (const t of e.changedTouches) {
         if (this.stick && t.identifier === this.stick.id) {
-          this.stick.x = t.clientX; this.stick.y = t.clientY;
+          const S = this.stick;
+          S.x = t.clientX; S.y = t.clientY;
+          if (!S.moved && Math.hypot(S.x - S.ox, S.y - S.oy) > TAP_MOVE) S.moved = true;
+          /* scorrimento rapido in orizzontale = scatto */
+          if (now - S.ft > FLICK_MS) { S.fx = S.x; S.ft = now; }
+          else if (Math.abs(S.x - S.fx) > FLICK_PX) {
+            this.dashEdge = true;
+            S.fx = S.x; S.ft = now;
+          }
           this.updateStick();
         } else if (this.shoot && t.identifier === this.shoot.id) {
           this.shoot.x = t.clientX; this.shoot.y = t.clientY;
@@ -118,13 +149,15 @@ const Input = {
     const endTouch = (e) => {
       for (const t of e.changedTouches) {
         if (this.stick && t.identifier === this.stick.id) {
-          /* tocco breve e fermo: lo ricordo, un secondo tocco rapido è lo scatto */
-          const held = performance.now() - this.stick.tDown;
-          if (held < 220) this.lastStickUp = performance.now();
+          const S = this.stick;
+          /* tocco lampo staccato prima che scattasse il salto tenuto: salta comunque */
+          if (!S.moved && !S.jumped) this.jumpEdge = true;
           this.stick = null;
           this.axisX = 0; this.axisY = 0;
         } else if (this.shoot && t.identifier === this.shoot.id) {
           this.shoot = null; this.fire = false; this.hasAim = false;
+        } else if (this.extraJump === t.identifier) {
+          this.extraJump = null;
         }
       }
     };
@@ -132,28 +165,28 @@ const Input = {
     canvas.addEventListener('touchcancel', endTouch);
   },
 
+  /* il dito appoggiato e fermo fa partire il salto e lo tiene: più resta giù,
+     più il salto è alto. Chiamato una volta per frame dal gioco. */
+  poll() {
+    const S = this.stick;
+    if (!S || S.moved || S.jumped) return;
+    if (performance.now() - S.tDown >= HOLD_MS) { S.jumped = true; this.jumpEdge = true; }
+  },
+
   updateStick() {
-    const L = this.stick;
-    if (!L) { this.axisX = this.axisY = 0; return; }
-    let dx = L.x - L.ox, dy = L.y - L.oy;
+    const S = this.stick;
+    if (!S) { this.axisX = this.axisY = 0; return; }
+    let dx = S.x - S.ox, dy = S.y - S.oy;
     const d = Math.hypot(dx, dy) || 1;
     /* se il dito va oltre il raggio, l'origine lo insegue: niente joystick "perso" */
     if (d > STICK_R) {
-      L.ox += dx * (1 - STICK_R / d);
-      L.oy += dy * (1 - STICK_R / d);
-      dx = L.x - L.ox; dy = L.y - L.oy;
+      S.ox += dx * (1 - STICK_R / d);
+      S.oy += dy * (1 - STICK_R / d);
+      dx = S.x - S.ox; dy = S.y - S.oy;
     }
     const ax = dx / STICK_R, ay = dy / STICK_R;
     this.axisX = Math.abs(ax) < DEAD ? 0 : clamp(ax, -1, 1);
     this.axisY = Math.abs(ay) < DEAD ? 0 : clamp(ay, -1, 1);
-
-    /* spinta verso l'alto = salto (si ri-arma quando il pollice torna giù,
-       così una seconda spinta in aria fa il doppio salto) */
-    if (this.axisY < JUMP_ON) {
-      if (L.armed) { L.armed = false; this.jumpEdge = true; }
-    } else if (this.axisY > JUMP_OFF) {
-      L.armed = true;
-    }
   },
 
   enableTouch() {
@@ -189,12 +222,17 @@ const Input = {
     return y;
   },
   wantJump() {
+    this.poll();
     const e = this.jumpEdge || this.pressed[' '] || this.pressed['w'] || this.pressed['arrowup'];
     this.jumpEdge = false;
     return !!e;
   },
+  /* dito ancora appoggiato = slancio: il salto continua a salire */
   jumpHeld() {
-    if (this.stick && this.axisY < JUMP_OFF) return true;
+    if (this.extraJump !== null) return true;
+    /* una volta staccato da terra, finché il dito resta giù il salto sale:
+       vale anche se nel frattempo lo stai trascinando per correre */
+    if (this.stick && this.stick.jumped) return true;
     return !!this.keys[' '] || !!this.keys['w'] || !!this.keys['arrowup'];
   },
   wantDash() {

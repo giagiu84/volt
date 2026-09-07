@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=4">
+<link rel="stylesheet" href="css/style.css?v=5">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>%E2%9A%A1</text></svg>">
 </head>
 <body>
@@ -48,7 +48,7 @@
     <div class="th-half">
       <div class="th-icon">☝</div>
       <b>Pollice destro</b>
-      <span>muovi · spingi in alto per saltare · in basso per scendere · doppio tocco = scatto</span>
+      <span>trascina per correre · un tocco salta · due tocchi doppio salto · tienilo premuto per saltare più in alto</span>
     </div>
   </div>
 
@@ -67,7 +67,7 @@
           <div class="help-row"><span class="key">A D</span> muovi <span class="key">SPAZIO</span> salta (doppio) <span class="key">MOUSE</span> mira <span class="key">CLICK</span> spara <span class="key">SHIFT</span> scatto</div>
         </div>
         <div class="help-touch">
-          <div class="help-row"><b>Pollice destro</b> — muovi · spingi in alto per saltare (due volte = doppio salto) · in basso per scendere · doppio tocco = scatto</div>
+          <div class="help-row"><b>Pollice destro</b> — trascina per correre · un tocco = salto · due tocchi = doppio salto · tenuto premuto = salto più alto · scorrimento rapido = scatto · in basso = scendi</div>
           <div class="help-row"><b>Pollice sinistro</b> — tieni premuto per sparare · trascina per mirare</div>
         </div>
         <div class="help-row muted">Ogni 4.000 punti conquisti una vita. Il boss lascia un cuore che alza il massimo.</div>
@@ -105,7 +105,7 @@
 /* Se il telefono ha in cache una versione vecchia della pagina, se ne accorge
    da solo e si ricarica: senza questo si continuerebbero a vedere i comandi
    di ieri per una decina di minuti. */
-window.VOLT_VERSION = 4;
+window.VOLT_VERSION = 5;
 fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   .then(function (r) { return r.json(); })
   .then(function (d) {
@@ -119,12 +119,12 @@ fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   })
   .catch(function () { /* offline: pazienza, si gioca con quello che c'è */ });
 </script>
-<script src="js/util.js?v=4"></script>
-<script src="js/gfx.js?v=4"></script>
-<script src="js/audio.js?v=4"></script>
-<script src="js/input.js?v=4"></script>
-<script src="js/level.js?v=4"></script>
-<script src="js/entities.js?v=4"></script>
-<script src="js/game.js?v=4"></script>
+<script src="js/util.js?v=5"></script>
+<script src="js/gfx.js?v=5"></script>
+<script src="js/audio.js?v=5"></script>
+<script src="js/input.js?v=5"></script>
+<script src="js/level.js?v=5"></script>
+<script src="js/entities.js?v=5"></script>
+<script src="js/game.js?v=5"></script>
 </body>
 </html>
