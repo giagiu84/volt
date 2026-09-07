@@ -113,6 +113,11 @@ body.touch .weapon{bottom:auto;left:calc(12px + env(safe-area-inset-left));
 .help{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);
   font-size:12.5px;font-weight:700;line-height:2.1;color:var(--ink-soft)}
 .help-row.muted{opacity:.75;margin-top:6px;font-weight:700}
+.help b{color:var(--ink);font-weight:900}
+.help-touch{display:none}
+body.is-touch .help-pc{display:none}
+body.is-touch .help-touch{display:block}
+body.is-touch .help .help-row{margin-bottom:8px;line-height:1.65}
 .key{display:inline-block;padding:2px 8px;margin:0 2px;border-radius:7px;background:#fff;
   color:var(--ink);font-weight:900;font-size:11px;box-shadow:0 2px 0 rgba(36,26,77,.16),inset 0 0 0 1px var(--line)}
 

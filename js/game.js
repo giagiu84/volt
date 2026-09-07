@@ -20,6 +20,9 @@ const Game = {
 
   /* ---------------- avvio ---------------- */
   init() {
+    /* il menu deve mostrare i comandi giusti prima ancora di toccare lo schermo */
+    if (matchMedia('(pointer:coarse)').matches || 'ontouchstart' in window)
+      document.body.classList.add('is-touch');
     this.canvas = document.getElementById('game');
     this.ctx = this.canvas.getContext('2d', { alpha: false });
     Gfx.init();
@@ -352,8 +355,9 @@ const Game = {
     if (this.portalOn && !p.dead) {
       const px = lv.portalX + 16, py = lv.portalY + 24;
       if (Math.random() < 0.6) Particles.spawn(px + (Math.random() - .5) * 26, py + 24, 0, -90 - Math.random() * 90, 0.5, 4, '#4dffd5', -30, 0);
-      /* zona d'ingresso alta quanto il portale: camminandoci sotto si entra lo stesso */
-      if (Math.abs(p.cx - px) < 42 && p.cy > py - 70 && p.cy < py + 90) {
+      /* il portale chiude il settore: dalla sua soglia in poi non si scappa,
+         e la zona è alta quanto il varco, così ci si entra anche camminando */
+      if (p.cx > px - 46 && p.cy > py - 80 && p.cy < py + 96) {
         this.transition = 0.55;
         this.addScore(500 + this.level * 100);
         Floaters.add(p.cx, p.cy - 20, 'SETTORE PULITO +' + (500 + this.level * 100), '#4dffd5', 16);

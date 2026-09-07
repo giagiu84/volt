@@ -174,7 +174,7 @@ function generateLevel(n) {
     n, boss, theme, w, h, tiles, spawns, pickups, hills, clouds, motes,
     pxW: w * TILE, pxH: h * TILE,
     startX: 5 * TILE, startY: (groundY[5] - 2) * TILE,
-    portalX: (w - 6) * TILE, portalY: (groundY[w - 6] - 2) * TILE,
+    portalX: (w - 3) * TILE, portalY: (groundY[w - 3] - 2) * TILE,
     groundY,
     tileAt(tx, ty) {
       if (tx < 0 || tx >= this.w || ty < 0) return T_SOLID;

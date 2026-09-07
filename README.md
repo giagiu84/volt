@@ -42,6 +42,10 @@ js/util.js  gfx.js  audio.js  input.js  level.js  entities.js  game.js
 
 L'unica risorsa esterna sono i font Google (Fredoka e Nunito): se il sito deve funzionare offline o senza chiamate esterne, togli il `<link>` dei font in `index.html` — il gioco continua a funzionare con i font di sistema.
 
+### Quando modifichi il gioco
+
+Alza di uno il numero in `version.json` **e** il `?v=` nei tag di `index.html`: la pagina si accorge da sola di essere vecchia e si ricarica, altrimenti telefoni e browser continuano a servire i file di prima per una decina di minuti.
+
 ## Provarlo in locale
 
 Basta aprire `index.html` col browser. Se preferisci un server:
