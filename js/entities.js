@@ -126,7 +126,9 @@ const PICK_TYPES = [
   { k: 'spread', col: '#ffc247', label: 'TRIPLO', w: 4 },
   { k: 'rapid',  col: '#5ee08a', label: 'RAPIDO', w: 4 },
   { k: 'laser',  col: '#c98ff7', label: 'LASER',  w: 3 },
-  { k: 'coin',   col: '#ffd166', label: '+250',   w: 6 }
+  { k: 'coin',   col: '#ffd166', label: '+250',   w: 6 },
+  /* peso 0: non esce a caso, lo lascia solo il boss */
+  { k: 'maxheart', col: '#ff2f6e', label: 'CUORE IN PIÙ', w: 0 }
 ];
 
 class Pickup {
@@ -155,7 +157,19 @@ class Pickup {
   }
   drawIcon(ctx, k, col) {
     ctx.fillStyle = '#ffffff';
-    if (k === 'heart') {
+    if (k === 'maxheart') {
+      /* cuore con la corona: è il cuore che alza il massimo */
+      ctx.fillStyle = '#ffd166';
+      ctx.beginPath();
+      ctx.moveTo(-8, -6); ctx.lineTo(-5, -11); ctx.lineTo(0, -7);
+      ctx.lineTo(5, -11); ctx.lineTo(8, -6); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.moveTo(0, 8);
+      ctx.bezierCurveTo(-9, 0, -6, -6, 0, -1.5);
+      ctx.bezierCurveTo(6, -6, 9, 0, 0, 8);
+      ctx.fill();
+    } else if (k === 'heart') {
       ctx.beginPath();
       ctx.moveTo(0, 6);
       ctx.bezierCurveTo(-9, -1, -6, -8, 0, -3.5);
@@ -325,7 +339,9 @@ class Player {
         this.vx = approach(this.vx, 0, (this.onGround ? 3400 : 1500) * dt);
       }
       this.vy += GRAV * dt;
-      if (this.vy < 0 && !Input.jumpHeld()) this.vy += GRAV * 0.9 * dt;
+      /* salto a due altezze: tocco breve = saltino, tenuto = salto pieno.
+         Il taglio è morbido, così anche il tocco veloce stacca da terra sul serio. */
+      if (this.vy < 0 && !Input.jumpHeld()) this.vy += GRAV * 0.5 * dt;
     }
 
     if (Input.wantJump()) this.buffer = 0.13;
@@ -336,7 +352,7 @@ class Player {
     if (this.buffer > 0) {
       if (this.coyote > 0 || this.jumpsLeft > 0) {
         const doubleJump = !(this.coyote > 0);
-        this.vy = doubleJump ? -600 : -660;
+        this.vy = doubleJump ? -720 : -790;
         this.buffer = 0; this.coyote = 0;
         this.jumpsLeft = doubleJump ? 0 : 1;
         this.dashT = 0;
@@ -445,6 +461,13 @@ class Player {
 
   give(kind) {
     switch (kind) {
+      case 'maxheart':
+        this.maxHp = Math.min(6, this.maxHp + 1);
+        this.hp = this.maxHp;
+        Floaters.add(this.cx, this.y - 8, 'CUORE IN PIÙ!', '#ffd166', 18);
+        Game.banner('CUORE IN PIÙ');
+        Sfx.levelUp();
+        break;
       case 'heart':
         if (this.hp < this.maxHp) { this.hp++; Floaters.add(this.cx, this.y - 8, '+VITA', '#ff8fb4', 16); }
         else { Game.addScore(150); Floaters.add(this.cx, this.y - 8, '+150', '#ffd166', 16); }

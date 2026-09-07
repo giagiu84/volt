@@ -2,6 +2,7 @@
 'use strict';
 
 const MINW = 580, MINH = 400, MAXSCALE = 2.8;
+const LIFE_EVERY = 4000;      /* punti necessari per una vita in più */
 
 const Game = {
   canvas: null, ctx: null,
@@ -99,6 +100,7 @@ const Game = {
     Sfx.init(); Sfx.resume(); Sfx.startMusic();
     this.level = 1; this.score = 0; this.kills = 0;
     this.combo = 0; this.comboT = 0;
+    this.nextLifeAt = LIFE_EVERY;
     this.loadLevel(1, true);
     document.getElementById('menu').classList.add('hidden');
     document.getElementById('over').classList.add('hidden');
@@ -174,7 +176,23 @@ const Game = {
 
   addScore(v) {
     this.score += Math.round(v);
+    if (this.score >= this.nextLifeAt) { this.nextLifeAt += LIFE_EVERY; this.grantLife(); }
     if (this.score > this.best) { this.best = this.score; Store.set('volt_best', this.best); }
+  },
+
+  /* premio arcade: a punti si conquista una vita, e se sei già pieno
+     il cuore in più resta tuo per il resto della partita */
+  grantLife() {
+    const p = this.player;
+    if (!p || p.dead || this.state !== 'play') return;
+    if (p.hp < p.maxHp) p.hp++;
+    else if (p.maxHp < 6) { p.maxHp++; p.hp++; }
+    else { this.score += 1000; Floaters.add(p.cx, p.y - 14, '+1000', '#ffd166', 18); return; }
+    this.banner('VITA EXTRA!');
+    Floaters.add(p.cx, p.y - 14, '+1 VITA', '#ff8fb4', 18);
+    Particles.burst(p.cx, p.cy, 34, '#ff5d8f', 260, 5, -40);
+    Rings.add(p.cx, p.cy, '#ffd166', 110, 0.5, 6);
+    Sfx.levelUp();
   },
 
   spawnEnemy(type, x, y) {
@@ -193,11 +211,15 @@ const Game = {
     this.addScore(pts);
     Floaters.add(e.cx, e.cy - 10, '+' + pts, this.combo > 2 ? '#7dff8d' : '#ffe98a', this.combo > 4 ? 19 : 15);
 
-    const dropChance = e.type === 'boss' ? 1 : 0.17;
+    /* all'ultima vita il gioco allunga la mano: più oggetti, più cuori */
+    const lowHp = this.player && this.player.hp <= 1;
+    const dropChance = e.type === 'boss' ? 1 : (lowHp ? 0.30 : 0.17);
     if (Math.random() < dropChance) {
-      this.pickups.push(new Pickup(e.cx - 10, e.cy - 10, Pickup.randomKind()));
+      let kind = Pickup.randomKind();
+      if (lowHp && Math.random() < 0.5) kind = 'heart';
+      this.pickups.push(new Pickup(e.cx - 10, e.cy - 10, kind));
       if (e.type === 'boss') {
-        this.pickups.push(new Pickup(e.cx + 30, e.cy - 10, 'heart'));
+        this.pickups.push(new Pickup(e.cx + 30, e.cy - 10, 'maxheart'));
         this.pickups.push(new Pickup(e.cx - 50, e.cy - 10, 'shield'));
       }
     }
@@ -330,7 +352,8 @@ const Game = {
     if (this.portalOn && !p.dead) {
       const px = lv.portalX + 16, py = lv.portalY + 24;
       if (Math.random() < 0.6) Particles.spawn(px + (Math.random() - .5) * 26, py + 24, 0, -90 - Math.random() * 90, 0.5, 4, '#4dffd5', -30, 0);
-      if (dist2(p.cx, p.cy, px, py) < 34 * 34) {
+      /* zona d'ingresso alta quanto il portale: camminandoci sotto si entra lo stesso */
+      if (Math.abs(p.cx - px) < 42 && p.cy > py - 70 && p.cy < py + 90) {
         this.transition = 0.55;
         this.addScore(500 + this.level * 100);
         Floaters.add(p.cx, p.cy - 20, 'SETTORE PULITO +' + (500 + this.level * 100), '#4dffd5', 16);
@@ -747,7 +770,7 @@ const Game = {
     if (!Input.touchMode) return;
     const k = 1 / this.scale;
     ctx.save();
-    const L = Input.left;
+    const L = Input.stick;
     if (L) {
       const ox = L.ox * k, oy = L.oy * k;
       const dx = (L.x - L.ox) * k, dy = (L.y - L.oy) * k;
@@ -761,7 +784,7 @@ const Game = {
       ctx.globalAlpha = 0.42;
       ctx.beginPath(); ctx.arc(ox + nx, oy + ny, 26 * k, 0, TAU); ctx.fill();
     }
-    const R = Input.right;
+    const R = Input.shoot;
     if (R) {
       const x = R.x * k, y = R.y * k;
       ctx.globalAlpha = 0.35; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2.5 * k;

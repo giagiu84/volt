@@ -1,7 +1,7 @@
 /* VOLT — input: tastiera, mouse e touch a gesti (nessun tasto a schermo).
-   Sul telefono: pollice sinistro = joystick che nasce dove appoggi il dito
+   Sul telefono: pollice destro = joystick che nasce dove appoggi il dito
    (avanti/dietro, su = salta, giù = scendi, doppio tocco = scatto),
-   pollice destro = tieni premuto per sparare, trascina per mirare. */
+   pollice sinistro = tieni premuto per sparare, trascina per mirare. */
 'use strict';
 
 const STICK_R = 66;        /* raggio del joystick invisibile, in px schermo */
@@ -20,9 +20,9 @@ const Input = {
   touchMode: false,
 
   /* dita attive */
-  left: null,          /* {id, ox, oy, x, y, tDown, armed} */
-  right: null,         /* {id, ox, oy, x, y, moved} */
-  lastLeftUp: 0,
+  stick: null,         /* dito che comanda il movimento: {id, ox, oy, x, y, tDown, armed} */
+  shoot: null,         /* dito che spara e mira: {id, ox, oy, x, y, moved} */
+  lastStickUp: 0,
   hasAim: false, aimDX: 1, aimDY: 0,
 
   init(canvas) {
@@ -43,7 +43,7 @@ const Input = {
       this.keys = Object.create(null);
       this.fire = false;
       this.axisX = this.axisY = 0;
-      this.left = null; this.right = null;
+      this.stick = null; this.shoot = null;
       this.hasAim = false;
     };
     addEventListener('blur', releaseAll);
@@ -65,15 +65,16 @@ const Input = {
     canvas.addEventListener('contextmenu', (e) => e.preventDefault());
 
     /* --- touch: due zone, nessun bottone --- */
-    const zoneIsLeft = (x) => x < innerWidth * 0.5;
+    /* metà destra dello schermo = movimento, metà sinistra = fuoco */
+    const zoneIsStick = (x) => x >= innerWidth * 0.5;
 
     /* se un dito sparisce senza touchend (succede) i riferimenti restano appesi
        e i comandi si bloccano: a ogni evento ricontrollo chi è ancora sullo schermo */
     const syncTouches = (e) => {
       const live = new Set();
       for (const t of e.touches) live.add(t.identifier);
-      if (this.left && !live.has(this.left.id)) { this.left = null; this.axisX = 0; this.axisY = 0; }
-      if (this.right && !live.has(this.right.id)) { this.right = null; this.fire = false; this.hasAim = false; }
+      if (this.stick && !live.has(this.stick.id)) { this.stick = null; this.axisX = 0; this.axisY = 0; }
+      if (this.shoot && !live.has(this.shoot.id)) { this.shoot = null; this.fire = false; this.hasAim = false; }
     };
 
     canvas.addEventListener('touchstart', (e) => {
@@ -82,14 +83,14 @@ const Input = {
       syncTouches(e);
       const now = performance.now();
       for (const t of e.changedTouches) {
-        if (zoneIsLeft(t.clientX)) {
-          if (this.left) continue;
-          this.left = { id: t.identifier, ox: t.clientX, oy: t.clientY, x: t.clientX, y: t.clientY, tDown: now, armed: true };
+        if (zoneIsStick(t.clientX)) {
+          if (this.stick) continue;
+          this.stick = { id: t.identifier, ox: t.clientX, oy: t.clientY, x: t.clientX, y: t.clientY, tDown: now, armed: true };
           /* doppio tocco ravvicinato = scatto */
-          if (now - this.lastLeftUp < 280) this.dashEdge = true;
+          if (now - this.lastStickUp < 280) this.dashEdge = true;
         } else {
-          if (this.right) continue;
-          this.right = { id: t.identifier, ox: t.clientX, oy: t.clientY, x: t.clientX, y: t.clientY, moved: false };
+          if (this.shoot) continue;
+          this.shoot = { id: t.identifier, ox: t.clientX, oy: t.clientY, x: t.clientX, y: t.clientY, moved: false };
           this.fire = true;
         }
       }
@@ -99,14 +100,14 @@ const Input = {
       e.preventDefault();
       syncTouches(e);
       for (const t of e.changedTouches) {
-        if (this.left && t.identifier === this.left.id) {
-          this.left.x = t.clientX; this.left.y = t.clientY;
+        if (this.stick && t.identifier === this.stick.id) {
+          this.stick.x = t.clientX; this.stick.y = t.clientY;
           this.updateStick();
-        } else if (this.right && t.identifier === this.right.id) {
-          this.right.x = t.clientX; this.right.y = t.clientY;
-          const dx = t.clientX - this.right.ox, dy = t.clientY - this.right.oy;
+        } else if (this.shoot && t.identifier === this.shoot.id) {
+          this.shoot.x = t.clientX; this.shoot.y = t.clientY;
+          const dx = t.clientX - this.shoot.ox, dy = t.clientY - this.shoot.oy;
           if (Math.hypot(dx, dy) > 20) {
-            this.right.moved = true;
+            this.shoot.moved = true;
             const l = Math.hypot(dx, dy) || 1;
             this.aimDX = dx / l; this.aimDY = dy / l; this.hasAim = true;
           }
@@ -116,14 +117,14 @@ const Input = {
 
     const endTouch = (e) => {
       for (const t of e.changedTouches) {
-        if (this.left && t.identifier === this.left.id) {
+        if (this.stick && t.identifier === this.stick.id) {
           /* tocco breve e fermo: lo ricordo, un secondo tocco rapido è lo scatto */
-          const held = performance.now() - this.left.tDown;
-          if (held < 220) this.lastLeftUp = performance.now();
-          this.left = null;
+          const held = performance.now() - this.stick.tDown;
+          if (held < 220) this.lastStickUp = performance.now();
+          this.stick = null;
           this.axisX = 0; this.axisY = 0;
-        } else if (this.right && t.identifier === this.right.id) {
-          this.right = null; this.fire = false; this.hasAim = false;
+        } else if (this.shoot && t.identifier === this.shoot.id) {
+          this.shoot = null; this.fire = false; this.hasAim = false;
         }
       }
     };
@@ -132,7 +133,7 @@ const Input = {
   },
 
   updateStick() {
-    const L = this.left;
+    const L = this.stick;
     if (!L) { this.axisX = this.axisY = 0; return; }
     let dx = L.x - L.ox, dy = L.y - L.oy;
     const d = Math.hypot(dx, dy) || 1;
@@ -193,7 +194,7 @@ const Input = {
     return !!e;
   },
   jumpHeld() {
-    if (this.left && this.axisY < JUMP_OFF) return true;
+    if (this.stick && this.axisY < JUMP_OFF) return true;
     return !!this.keys[' '] || !!this.keys['w'] || !!this.keys['arrowup'];
   },
   wantDash() {

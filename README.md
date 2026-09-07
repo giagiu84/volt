@@ -10,15 +10,17 @@ Sul telefono non ci sono tasti a schermo: si gioca a gesti, con i due pollici.
 
 | | PC | Telefono |
 |---|---|---|
-| Muoversi | `A` `D` o frecce | pollice sinistro: appoggialo dove vuoi nella metà sinistra, nasce lì un joystick |
-| Saltare (doppio) | `SPAZIO` o `W` | spingi il pollice sinistro verso l'alto (una seconda spinta in aria = doppio salto) |
-| Sparare | click sinistro o `J` | tieni premuto il pollice destro |
-| Mirare | mouse | trascina il pollice destro; se lo appoggi soltanto, mira da sola al mostro più vicino |
-| Scatto | `SHIFT` o `K` | doppio tocco rapido col pollice sinistro |
-| Scendere da una piattaforma | `S` / giù | spingi il pollice sinistro in basso |
+| Muoversi | `A` `D` o frecce | pollice destro: appoggialo dove vuoi nella metà destra, nasce lì un joystick |
+| Saltare (doppio) | `SPAZIO` o `W` | spingi il pollice destro verso l'alto (una seconda spinta in aria = doppio salto) |
+| Sparare | click sinistro o `J` | tieni premuto il pollice sinistro |
+| Mirare | mouse | trascina il pollice sinistro; se lo appoggi soltanto, mira da sola al mostro più vicino |
+| Scatto | `SHIFT` o `K` | doppio tocco rapido col pollice destro |
+| Scendere da una piattaforma | `S` / giù | spingi il pollice destro in basso |
 | Pausa | `ESC` o `P` | tasto in alto a destra |
 
 Con la tastiera si spara dritto davanti a sé; con il mouse si mira dove punta il cursore. Il gioco capisce da solo quale dei due stai usando.
+
+**Vite.** Si parte con tre cuori. Ogni **4.000 punti** si conquista una vita; se sei già al massimo, il premio alza il massimo stesso (fino a sei cuori). Il boss lascia un cuore dorato che alza il massimo, e quando resti a una sola vita i mostri lasciano cadere più cuori.
 
 Regola del settore: **uccidi tutti i mostri**, il portale si apre, entraci per passare al successivo. Cadere nel vuoto costa una vita ma non la partita: si rientra sull'ultimo appoggio sicuro. Sparare scalda l'arma: se la barra arriva a fondo, il blaster si blocca per un secondo.
 
@@ -64,7 +66,8 @@ Un settore è determinato dal suo numero: il settore 7 è sempre lo stesso terre
 
 ### Numeri che vale la pena toccare
 
-- `js/entities.js` — `GRAV`, velocità di corsa (`MAXV`), forza del salto, cadenza di fuoco delle armi.
+- `js/entities.js` — `GRAV`, velocità di corsa (`MAXV`), forza del salto (`this.vy = doubleJump ? ... : ...`), cadenza di fuoco delle armi.
+- `js/game.js` — `LIFE_EVERY`: ogni quanti punti arriva una vita in più.
 - `js/level.js` — `count` (quanti mostri per settore), larghezza dei settori, probabilità di burroni e spine.
 - `js/game.js` — `MINW` / `MINH`: quanto mondo si vede a schermo (numeri più piccoli = più zoom).
 

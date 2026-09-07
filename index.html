@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=2">
+<link rel="stylesheet" href="css/style.css?v=3">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>%E2%9A%A1</text></svg>">
 </head>
 <body>
@@ -41,14 +41,14 @@
   <!-- Comandi a gesti: nessun tasto, solo un promemoria al primo avvio -->
   <div id="touchHint" class="touch-hint hidden">
     <div class="th-half">
-      <div class="th-icon">☝</div>
+      <div class="th-icon">🔥</div>
       <b>Pollice sinistro</b>
-      <span>muovi · spingi in alto per saltare · in basso per scendere · doppio tocco = scatto</span>
+      <span>tieni premuto per sparare · trascina per mirare</span>
     </div>
     <div class="th-half">
-      <div class="th-icon">🔥</div>
+      <div class="th-icon">☝</div>
       <b>Pollice destro</b>
-      <span>tieni premuto per sparare · trascina per mirare</span>
+      <span>muovi · spingi in alto per saltare · in basso per scendere · doppio tocco = scatto</span>
     </div>
   </div>
 
@@ -64,7 +64,8 @@
       <div class="best">Record <b id="bestScore">0</b></div>
       <div class="help">
         <div class="help-row"><span class="key">A D</span> muovi <span class="key">SPAZIO</span> salta (doppio) <span class="key">MOUSE</span> mira <span class="key">CLICK</span> spara <span class="key">SHIFT</span> scatto</div>
-        <div class="help-row muted">Su telefono nessun tasto: pollice sinistro per muoverti e saltare, pollice destro per sparare.</div>
+        <div class="help-row muted">Su telefono nessun tasto: pollice destro per muoverti e saltare, pollice sinistro per sparare.</div>
+        <div class="help-row muted">Ogni 4.000 punti guadagni una vita — e il boss lascia un cuore che alza il massimo.</div>
       </div>
       <button id="muteBtn" class="mini-btn">Audio: ON</button>
     </div>
@@ -95,12 +96,12 @@
   <div id="banner" class="banner hidden"><span id="bannerText"></span></div>
 </div>
 
-<script src="js/util.js?v=2"></script>
-<script src="js/gfx.js?v=2"></script>
-<script src="js/audio.js?v=2"></script>
-<script src="js/input.js?v=2"></script>
-<script src="js/level.js?v=2"></script>
-<script src="js/entities.js?v=2"></script>
-<script src="js/game.js?v=2"></script>
+<script src="js/util.js?v=3"></script>
+<script src="js/gfx.js?v=3"></script>
+<script src="js/audio.js?v=3"></script>
+<script src="js/input.js?v=3"></script>
+<script src="js/level.js?v=3"></script>
+<script src="js/entities.js?v=3"></script>
+<script src="js/game.js?v=3"></script>
 </body>
 </html>
