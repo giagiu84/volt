@@ -258,16 +258,10 @@ class Player {
 
   aim(lv, enemies, camX, camY) {
     if (Input.touchMode) {
-      const ax = Input.axisX, ay = Input.axisY;
-      if (Math.abs(ax) > 0.35 || Math.abs(ay) > 0.35) {
-        let dx = Math.abs(ax) > 0.35 ? sign(ax) : 0;
-        let dy = Math.abs(ay) > 0.45 ? sign(ay) : 0;
-        if (dx === 0 && dy === 0) dx = this.facing;
-        const l = Math.hypot(dx, dy) || 1;
-        this.aimX = dx / l; this.aimY = dy / l;
-        return;
-      }
-      let best = null, bd = 460 * 460;
+      /* trascinando il pollice destro si mira a mano */
+      if (Input.hasAim) { this.aimX = Input.aimDX; this.aimY = Input.aimDY; return; }
+      /* altrimenti punta da sola il mostro più vicino */
+      let best = null, bd = 520 * 520;
       for (const e of enemies) {
         if (e.dead) continue;
         const d = dist2(this.cx, this.cy, e.cx, e.cy);
@@ -276,18 +270,23 @@ class Player {
       if (best) {
         const dx = best.cx - this.cx, dy = best.cy - this.cy - 4, l = Math.hypot(dx, dy) || 1;
         this.aimX = dx / l; this.aimY = dy / l;
-      } else { this.aimX = this.facing; this.aimY = 0; }
+      } else {
+        const mx = Input.moveX();
+        this.aimX = mx !== 0 ? sign(mx) : this.facing;
+        this.aimY = 0;
+      }
       return;
     }
-    if (Input.usingMouse) {
+    if (Input.aimWithMouse()) {
       const wx = Input.mouseX / Game.scale + camX, wy = Input.mouseY / Game.scale + camY;
       const dx = wx - this.cx, dy = wy - this.cy, l = Math.hypot(dx, dy) || 1;
       this.aimX = dx / l; this.aimY = dy / l;
     } else {
-      let dx = Input.moveX(), dy = Input.moveY();
-      if (dx === 0 && dy === 0) { dx = this.facing; dy = 0; }
-      const l = Math.hypot(dx, dy) || 1;
-      this.aimX = dx / l; this.aimY = dy / l;
+      /* con la tastiera si spara dritto davanti a sé: il tasto di salto
+         non deve far puntare l'arma verso il cielo */
+      const mx = Input.moveX();
+      this.aimX = mx !== 0 ? sign(mx) : this.facing;
+      this.aimY = 0;
     }
   }
 

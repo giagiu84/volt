@@ -60,30 +60,19 @@ body.touch .weapon{bottom:auto;left:calc(12px + env(safe-area-inset-left));
   background:rgba(28,20,64,.5);backdrop-filter:blur(6px);border:0;color:#fff;cursor:pointer;
   box-shadow:0 3px 10px rgba(0,0,0,.25),inset 0 0 0 1.5px rgba(255,255,255,.22)}
 
-/* ---------- Comandi touch ---------- */
-#touch{position:absolute;inset:0;pointer-events:none}
-.stick{position:absolute;left:calc(20px + env(safe-area-inset-left));bottom:calc(22px + env(safe-area-inset-bottom));
-  width:136px;height:136px;border-radius:50%;pointer-events:auto;touch-action:none;
-  background:radial-gradient(circle at 50% 45%,rgba(255,255,255,.22),rgba(255,255,255,.08));
-  box-shadow:inset 0 0 0 2px rgba(255,255,255,.3),0 6px 18px rgba(0,0,0,.2)}
-.nub{position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;
-  background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(226,232,255,.72));
-  box-shadow:0 4px 12px rgba(0,0,0,.28),inset 0 -3px 0 rgba(0,0,0,.08)}
-.btns{position:absolute;right:calc(16px + env(safe-area-inset-right));bottom:calc(20px + env(safe-area-inset-bottom));
-  width:190px;height:176px;pointer-events:none}
-.tbtn{position:absolute;pointer-events:auto;touch-action:none;border:0;border-radius:50%;cursor:pointer;
-  font-family:'Fredoka',sans-serif;font-weight:600;font-size:13px;letter-spacing:.5px;color:#fff;
-  text-shadow:0 1px 2px rgba(0,0,0,.25)}
-.tbtn.fire{right:0;bottom:66px;width:100px;height:100px;font-size:15px;
-  background:linear-gradient(180deg,#ff7ba4,#ff3d78);box-shadow:0 6px 0 #c62b5c,0 10px 22px rgba(0,0,0,.28)}
-.tbtn.jump{right:100px;bottom:4px;width:80px;height:80px;
-  background:linear-gradient(180deg,#7ce0ff,#22b6f0);box-shadow:0 6px 0 #1088b9,0 10px 20px rgba(0,0,0,.26)}
-.tbtn.dash{right:4px;bottom:0;width:62px;height:62px;font-size:12px;
-  background:linear-gradient(180deg,#ffd979,#ffab2e);box-shadow:0 5px 0 #cf7f13,0 8px 18px rgba(0,0,0,.24)}
-.tbtn:active{transform:translateY(3px);filter:brightness(1.06)}
-.tbtn.fire:active{box-shadow:0 3px 0 #c62b5c,0 6px 14px rgba(0,0,0,.28)}
-.tbtn.jump:active{box-shadow:0 3px 0 #1088b9,0 6px 14px rgba(0,0,0,.26)}
-.tbtn.dash:active{box-shadow:0 2px 0 #cf7f13,0 5px 12px rgba(0,0,0,.24)}
+/* ---------- Comandi a gesti: promemoria iniziale ---------- */
+.touch-hint{position:absolute;inset:0;display:flex;pointer-events:none;z-index:3;
+  opacity:1;transition:opacity .9s ease}
+.touch-hint.fade{opacity:0}
+.th-half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  gap:5px;padding:0 14px calc(16vh + env(safe-area-inset-bottom));text-align:center;color:#fff}
+.th-half+.th-half{border-left:1px dashed rgba(255,255,255,.28)}
+.th-icon{font-size:30px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.4));animation:tap 1.4s ease-in-out infinite}
+.th-half:last-child .th-icon{animation-delay:.5s}
+@keyframes tap{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.th-half b{font-size:14px;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.th-half span{font-size:11px;line-height:1.5;font-weight:700;opacity:.85;max-width:230px;
+  text-shadow:0 2px 6px rgba(0,0,0,.5)}
 
 /* ---------- Schermate ---------- */
 .overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:18px;z-index:5;

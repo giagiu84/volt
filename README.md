@@ -1,20 +1,24 @@
 # VOLT — Run & Gun
 
-Gioco arcade a piattaforme per browser: corri, salti e spari attraverso **settori generati a caso, infiniti**, pieni di mostri. Ogni 5 settori c'è un boss. Gira su PC (tastiera + mouse) e su telefono (joystick + tasti a schermo, mira automatica).
+Gioco arcade a piattaforme per browser: corri, salti e spari attraverso **settori generati a caso, infiniti**, pieni di mostri. Ogni 5 settori c'è un boss. Gira su PC (tastiera + mouse) e su telefono, dove si comanda a gesti con i due pollici: nessun tasto a schermo.
 
 Niente librerie, niente build, niente server: sono file statici puri.
 
 ## Come si gioca
 
+Sul telefono non ci sono tasti a schermo: si gioca a gesti, con i due pollici.
+
 | | PC | Telefono |
 |---|---|---|
-| Muoversi | `A` `D` o frecce | joystick a sinistra |
-| Saltare (doppio) | `SPAZIO` o `W` | tasto SALTA |
-| Sparare | click sinistro o `J` | tasto SPARA |
-| Mirare | mouse | automatica (o spingi il joystick) |
-| Scatto | `SHIFT` o `K` | tasto DASH |
-| Scendere da una piattaforma | `S` / giù | joystick verso il basso |
+| Muoversi | `A` `D` o frecce | pollice sinistro: appoggialo dove vuoi nella metà sinistra, nasce lì un joystick |
+| Saltare (doppio) | `SPAZIO` o `W` | spingi il pollice sinistro verso l'alto (una seconda spinta in aria = doppio salto) |
+| Sparare | click sinistro o `J` | tieni premuto il pollice destro |
+| Mirare | mouse | trascina il pollice destro; se lo appoggi soltanto, mira da sola al mostro più vicino |
+| Scatto | `SHIFT` o `K` | doppio tocco rapido col pollice sinistro |
+| Scendere da una piattaforma | `S` / giù | spingi il pollice sinistro in basso |
 | Pausa | `ESC` o `P` | tasto in alto a destra |
+
+Con la tastiera si spara dritto davanti a sé; con il mouse si mira dove punta il cursore. Il gioco capisce da solo quale dei due stai usando.
 
 Regola del settore: **uccidi tutti i mostri**, il portale si apre, entraci per passare al successivo. Cadere nel vuoto costa una vita ma non la partita: si rientra sull'ultimo appoggio sicuro. Sparare scalda l'arma: se la barra arriva a fondo, il blaster si blocca per un secondo.
 

@@ -38,13 +38,17 @@
     </button>
   </div>
 
-  <!-- Comandi touch -->
-  <div id="touch" class="hidden">
-    <div id="stick" class="stick"><div id="stickNub" class="nub"></div></div>
-    <div class="btns">
-      <button id="btnFire" class="tbtn fire" aria-label="Spara">SPARA</button>
-      <button id="btnJump" class="tbtn jump" aria-label="Salta">SALTA</button>
-      <button id="btnDash" class="tbtn dash" aria-label="Scatto">DASH</button>
+  <!-- Comandi a gesti: nessun tasto, solo un promemoria al primo avvio -->
+  <div id="touchHint" class="touch-hint hidden">
+    <div class="th-half">
+      <div class="th-icon">☝</div>
+      <b>Pollice sinistro</b>
+      <span>muovi · spingi in alto per saltare · in basso per scendere · doppio tocco = scatto</span>
+    </div>
+    <div class="th-half">
+      <div class="th-icon">🔥</div>
+      <b>Pollice destro</b>
+      <span>tieni premuto per sparare · trascina per mirare</span>
     </div>
   </div>
 
@@ -60,7 +64,7 @@
       <div class="best">Record <b id="bestScore">0</b></div>
       <div class="help">
         <div class="help-row"><span class="key">A D</span> muovi <span class="key">SPAZIO</span> salta (doppio) <span class="key">MOUSE</span> mira <span class="key">CLICK</span> spara <span class="key">SHIFT</span> scatto</div>
-        <div class="help-row muted">Su telefono: joystick a sinistra, tasti a destra, mira automatica.</div>
+        <div class="help-row muted">Su telefono nessun tasto: pollice sinistro per muoverti e saltare, pollice destro per sparare.</div>
       </div>
       <button id="muteBtn" class="mini-btn">Audio: ON</button>
     </div>
