@@ -218,15 +218,8 @@ body.is-touch .help .help-row{margin-bottom:8px;line-height:1.65}
 .hero-btn small{font-size:10px;font-weight:800;color:var(--ink-soft);letter-spacing:.3px}
 .hero-btn.on{background:#fff;box-shadow:0 4px 0 rgba(36,26,77,.14),0 8px 18px rgba(10,6,36,.12),
   inset 0 0 0 2px var(--blue)}
-.hero-face{width:46px;height:46px;border-radius:14px;position:relative;display:block}
-.hero-face.volt{background:linear-gradient(180deg,#7ce0ff,#22c8f5)}
-.hero-face.lyra{background:linear-gradient(180deg,#ff9ec4,#ff5d8f)}
-.hero-face::after{content:"";position:absolute;left:9px;right:9px;top:17px;height:9px;
-  border-radius:5px;background:#1b2340}
-.hero-face.volt::before,.hero-face.lyra::before{content:"";position:absolute;width:30px;height:7px;
-  border-radius:6px;top:32px;left:8px}
-.hero-face.volt::before{background:#ff5d8f}
-.hero-face.lyra::before{background:#7a3fd6}
+.hero-canvas{width:110px;height:130px;display:block}
+.hero-btn{flex:0 1 150px}
 
 /* ---------- Campagna e vittoria ---------- */
 .big-btn small{display:block;font-size:11px;letter-spacing:2px;opacity:.75;margin-top:2px;font-weight:600}

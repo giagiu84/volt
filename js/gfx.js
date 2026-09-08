@@ -143,3 +143,53 @@ const Rings = {
   },
   clear() { this.list.length = 0; }
 };
+
+/* ---------- illustrazioni dei custodi ----------
+   Se in assets/heroes/ ci sono i disegni (aren_front.png, aren_side.png,
+   aren_back.png e gli stessi per lyra) la scelta li usa; altrimenti resta il
+   personaggio disegnato dal codice. Nessun errore se mancano: si prova e basta. */
+const HeroArt = {
+  imgs: {}, tried: false,
+  poses: ['front', 'side', 'back'],
+
+  load() {
+    if (this.tried) return;
+    this.tried = true;
+    for (const who of ['aren', 'lyra']) {
+      for (const pose of this.poses) {
+        const key = who + '_' + pose;
+        const im = new Image();
+        im.onerror = () => { im._failed = true; };
+        im.src = 'assets/heroes/' + key + '.png';
+        this.imgs[key] = im;
+      }
+    }
+  },
+
+  /* pronto solo se ci sono tutte e tre le viste: mezze illustrazioni
+     darebbero una rotazione che salta */
+  ready(who) {
+    for (const pose of this.poses) {
+      const im = this.imgs[who + '_' + pose];
+      if (!im || im._failed || !im.complete || !im.naturalWidth) return false;
+    }
+    return true;
+  },
+
+  /* disegna il custode all'angolo richiesto, alto `h` pixel e centrato sui piedi */
+  draw(ctx, who, ang, h) {
+    const sx = Math.sin(ang), front = Math.cos(ang) > 0;
+    const side = Math.abs(sx) > 0.45;
+    const key = who + '_' + (side ? 'side' : (front ? 'front' : 'back'));
+    const im = this.imgs[key];
+    if (!im || !im.naturalWidth) return false;
+    const w = h * (im.naturalWidth / im.naturalHeight);
+    ctx.save();
+    /* la compressione orizzontale è ciò che fa "girare" la figura */
+    const squeeze = side ? (Math.abs(sx) * 0.5 + 0.5) * Math.sign(sx) : (front ? 1 : -1);
+    ctx.scale(squeeze, 1);
+    ctx.drawImage(im, -w / 2, -h, w, h);
+    ctx.restore();
+    return true;
+  }
+};

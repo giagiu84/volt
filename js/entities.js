@@ -1423,3 +1423,107 @@ class Drone {
     ctx.restore();
   }
 }
+
+/* ---------- ritratto rotante per la scelta del personaggio ----------
+   Alla maniera dei vecchi arcade: il custode gira sul piedistallo e lo si
+   vede di fronte, di profilo e di schiena. */
+function drawHeroPose(ctx, H, ang, t, scale) {
+  const sx = Math.sin(ang);            /* quanto siamo di profilo: -1..1 */
+  const front = Math.cos(ang) > 0;     /* davanti o dietro */
+  const side = Math.abs(sx) > 0.45;
+  const bob = Math.sin(t * 2.2) * 2;
+
+  ctx.save();
+  ctx.scale(scale, scale);
+  ctx.translate(0, bob);
+  ctx.lineWidth = 3; ctx.strokeStyle = OUTLINE;
+  ctx.lineJoin = 'round';
+
+  /* sciarpa o coda, dietro al corpo */
+  const trailBack = side ? 1 : (front ? 0 : 1);
+  if (trailBack) {
+    ctx.save();
+    ctx.strokeStyle = H.trail; ctx.lineWidth = H.ponytail ? 8 : 7; ctx.lineCap = 'round';
+    ctx.beginPath();
+    const dir = side ? -Math.sign(sx) : 0;
+    ctx.moveTo(dir * 4, -14);
+    ctx.quadraticCurveTo(dir * 16 + Math.sin(t * 3) * 3, -6, dir * 20 + Math.sin(t * 4) * 4, 4);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  ctx.save();
+  ctx.scale(side ? Math.abs(sx) * 0.55 + 0.45 : 1, 1);
+
+  /* gambe */
+  Gfx.capsule(ctx, -9, 8, 8, 13, H.legs, OUTLINE, 3);
+  Gfx.capsule(ctx, 1, 8, 8, 13, H.legs, OUTLINE, 3);
+
+  /* corpo */
+  Gfx.capsule(ctx, -12, -14, 24, 26, H.body, OUTLINE, 3);
+  ctx.save();
+  roundRect(ctx, -12, -14, 24, 26, 10); ctx.clip();
+  ctx.fillStyle = H.trim;
+  roundRect(ctx, -12, -1, 24, 14, 6); ctx.fill();
+  ctx.restore();
+  Gfx.gloss(ctx, -8, -11, 10, 4, 0.7);
+
+  /* braccia */
+  if (!side) {
+    Gfx.capsule(ctx, -18, -9, 7, 16, H.body, OUTLINE, 2.5);
+    Gfx.capsule(ctx, 11, -9, 7, 16, H.body, OUTLINE, 2.5);
+  }
+
+  /* testa */
+  ctx.save();
+  ctx.translate(0, -18);
+  if (H.ponytail) {
+    ctx.fillStyle = H.trail;
+    ctx.beginPath(); ctx.arc(0, -2, 12, Math.PI, TAU); ctx.fill(); ctx.stroke();
+    if (front) {
+      ctx.fillStyle = H.hair2 || '#ffd166';
+      ctx.beginPath();
+      ctx.moveTo(-3, -11); ctx.quadraticCurveTo(-10, -6, -7, 0);
+      ctx.quadraticCurveTo(-5, -6, -1, -9); ctx.closePath(); ctx.fill();
+    }
+  }
+  Gfx.capsule(ctx, -11, -10, 22, 20, H.trim, OUTLINE, 3);
+  if (front) {
+    ctx.fillStyle = '#1b2340';
+    roundRect(ctx, -8, -5, 16, 9, 4.5); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,.8)';
+    roundRect(ctx, -5.5, -3.5, 5, 3, 1.5); ctx.fill();
+  } else if (side) {
+    ctx.fillStyle = '#1b2340';
+    roundRect(ctx, Math.sign(sx) >= 0 ? -1 : -7, -5, 8, 8, 4); ctx.fill();
+  } else {
+    /* di schiena: solo il casco, con la presa d'aria */
+    ctx.fillStyle = 'rgba(20,14,45,.25)';
+    roundRect(ctx, -6, -4, 12, 6, 3); ctx.fill();
+  }
+  ctx.restore();
+  ctx.restore();
+
+  /* arma: si vede solo se non è di schiena */
+  if (front || side) {
+    ctx.save();
+    const armX = side ? Math.sign(sx) * 14 : 15;
+    ctx.translate(armX, -2);
+    ctx.scale(side ? Math.sign(sx) : 1, 1);
+    if (H.glove) {
+      Gfx.capsule(ctx, -4, -6, 12, 13, H.trim, OUTLINE, 2.5);
+      ctx.globalAlpha = 0.6 + Math.sin(t * 7) * 0.25;
+      ctx.strokeStyle = '#ffd166'; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.arc(3, 0, 6, 0, TAU); ctx.stroke();
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = '#ffd166';
+      ctx.beginPath(); ctx.arc(3, 0, 2.6, 0, TAU); ctx.fill();
+    } else {
+      Gfx.capsule(ctx, -6, -6, 16, 12, '#ffc247', OUTLINE, 2.5);
+      ctx.fillStyle = '#ff8a3d';
+      roundRect(ctx, 6, -3.5, 8, 7, 3); ctx.fill();
+    }
+    ctx.restore();
+  }
+  ctx.restore();
+}

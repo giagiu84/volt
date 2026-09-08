@@ -89,6 +89,7 @@ const Game = {
     this.canvas = document.getElementById('game');
     this.ctx = this.canvas.getContext('2d', { alpha: false });
     Gfx.init();
+    HeroArt.load();
     Input.init(this.canvas);
     this.resize();
     addEventListener('resize', () => this.resize());
@@ -467,7 +468,7 @@ const Game = {
     dt = Math.min(dt, 0.05);          /* niente salti dopo un tab in background */
 
     if (this.state === 'play') this.update(dt);
-    else if (this.state === 'menu') this.updateMenu(dt);
+    else if (this.state === 'menu') { this.updateMenu(dt); this.drawHeroPicks(dt); }
     else { Particles.update(dt * 0.35); Rings.update(dt * 0.35); }
 
     Sfx.update(dt);
@@ -478,6 +479,47 @@ const Game = {
     if (this.bannerT > 0) {
       this.bannerT -= dt;
       if (this.bannerT <= 0) document.getElementById('banner').classList.add('hidden');
+    }
+  },
+
+  /* i custodi girano sul piedistallo finché sei nel menu */
+  drawHeroPicks(dt) {
+    this.heroSpin = (this.heroSpin || 0) + dt;
+    for (const id of ['aren', 'lyra']) {
+      const cv = document.getElementById(id === 'aren' ? 'canvAren' : 'canvLyra');
+      if (!cv) continue;
+      const g = cv.getContext('2d');
+      const W = cv.width, H = cv.height;
+      g.clearRect(0, 0, W, H);
+      const sel = this.hero === id;
+      const t = this.heroSpin;
+      /* quello scelto gira spedito, l'altro fa un giro lento */
+      const ang = t * (sel ? 1.9 : 0.7) + (id === 'lyra' ? 1.6 : 0);
+      const col = id === 'aren' ? '#22c8f5' : '#ff5d8f';
+
+      /* piedistallo */
+      g.save();
+      g.translate(W / 2, H * 0.78);
+      const grd = g.createRadialGradient(0, 0, 4, 0, 0, 74);
+      grd.addColorStop(0, Gfx.alpha(col, sel ? 0.5 : 0.2));
+      grd.addColorStop(1, Gfx.alpha(col, 0));
+      g.fillStyle = grd;
+      g.beginPath(); g.ellipse(0, 0, 74, 26, 0, 0, TAU); g.fill();
+      g.strokeStyle = Gfx.alpha(col, sel ? 0.9 : 0.35);
+      g.lineWidth = 3;
+      g.beginPath(); g.ellipse(0, 0, 46, 15, 0, 0, TAU); g.stroke();
+      g.restore();
+
+      /* il custode: illustrazione se disponibile, altrimenti disegnato dal codice */
+      g.save();
+      if (HeroArt.ready(id)) {
+        g.translate(W / 2, H * 0.80);
+        HeroArt.draw(g, id, ang, H * (sel ? 0.74 : 0.68));
+      } else {
+        g.translate(W / 2, H * 0.63);
+        drawHeroPose(g, HEROES[id], ang, t, sel ? 2.05 : 1.85);
+      }
+      g.restore();
     }
   },
 

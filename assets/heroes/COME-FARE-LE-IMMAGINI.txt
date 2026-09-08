@@ -1,0 +1,38 @@
+COSA SERVE PER LA GIOSTRA DEI CUSTODI
+=====================================
+
+Sei file PNG con SFONDO TRASPARENTE, da mettere in questa cartella:
+
+  aren_front.png    Aren visto di fronte
+  aren_side.png     Aren visto di profilo, rivolto a DESTRA
+  aren_back.png     Aren visto di schiena
+  lyra_front.png    Lyra vista di fronte
+  lyra_side.png     Lyra vista di profilo, rivolta a DESTRA
+  lyra_back.png     Lyra vista di schiena
+
+Il gioco le usa da solo appena ci sono. Se ne manca anche una sola per un
+personaggio, quel personaggio resta disegnato dal codice (nessun errore).
+
+REGOLE PERCHE' LA ROTAZIONE FUNZIONI
+- Stessa inquadratura in tutte e tre le viste: figura intera, in piedi,
+  braccia lungo i fianchi, stessa altezza e stesso centro.
+- Personaggio centrato in orizzontale, piedi appoggiati sul bordo basso.
+- Dimensione consigliata: 512 x 768 px, sfondo trasparente (non bianco).
+- Nessuna ombra a terra disegnata dentro il PNG: la mette il gioco.
+- Niente scritte, cornici o effetti attorno alla figura.
+
+COME CHIEDERLE AL GENERATORE
+Chiedi un "character turnaround sheet" in un'unica immagine, poi ritaglia le
+tre viste. E' l'unico modo per avere lo stesso personaggio in tutte e tre:
+generandole separatamente cambiano faccia e colori.
+
+  "character turnaround sheet, same character in three views: front view,
+   side view facing right, back view, full body, standing, arms relaxed,
+   consistent proportions, flat white background, [descrizione del
+   personaggio], colorful mobile game art style, clean vector shading"
+
+AREN: casco bianco e ciano con visiera scura, tuta bianca e blu notte,
+sciarpa fucsia, blaster giallo alla cintura, saette azzurre sul petto.
+
+LYRA: tuta rosa corallo e bianca, capelli viola corti con una ciocca gialla,
+guanto energetico con anello luminoso giallo sulla mano destra, dettagli ciano.
