@@ -41,6 +41,7 @@ const MISSIONS = {
   cores:   { name: 'SOVRACCARICO', hint: 'Raccogli i nuclei VOLT' },
   targets: { name: 'BERSAGLI',     hint: 'Distruggi i generatori' },
   assault: { name: 'ASSALTO',      hint: 'Respingi le ondate' },
+  escape:  { name: 'FUGA',         hint: 'Corri al portale, la tempesta avanza' },
   boss:    { name: 'BOSS',         hint: 'Abbatti il boss' }
 };
 
@@ -123,6 +124,7 @@ function generateLevel(n) {
   else if (n <= 2) mission = { type: 'hunt' };
   else {
     const pool = ['hunt', 'survive', 'cores', 'targets', 'assault'];
+    if (n >= 4) pool.push('escape');   /* la fuga arriva quando si sa gia' correre */
     /* la caccia resta la piu' frequente: e' l'identita' del gioco */
     const type = pick(rng, ['hunt'].concat(pool));
     mission = { type };
@@ -198,6 +200,7 @@ function generateLevel(n) {
     let count = Math.min(6 + Math.floor(n * 1.6), 26);
     if (mission.type === 'cores' || mission.type === 'targets') count = Math.round(count * 0.6);
     if (mission.type === 'survive' || mission.type === 'assault') count = Math.round(count * 0.45);
+    if (mission.type === 'escape') count = Math.round(count * 0.5);
     let attempts = 0;
     while (spawns.length < count && attempts < count * 30) {
       attempts++;

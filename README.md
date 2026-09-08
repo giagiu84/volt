@@ -15,14 +15,14 @@ Sul telefono: sfera al plasma in basso a sinistra (tieni il pollice premuto e sp
 | Sparare | click sinistro o `J` | pulsante SPARA |
 | Mirare | mouse | automatica, sul mostro più vicino |
 | Scatto | `SHIFT` o `K` | doppio tocco sulla sfera |
-| Scendere da una piattaforma | `S` / giù | spingi la sfera in basso |
+| Abbassarsi (schiva i colpi) / scendere da una piattaforma | `S` / giù | spingi la sfera in basso |
 | Pausa | `ESC` o `P` | tasto in alto a destra |
 
 Con la tastiera si spara dritto davanti a sé; con il mouse si mira dove punta il cursore. Il gioco capisce da solo quale dei due stai usando.
 
 **Vite.** Si parte con tre cuori. Ogni **8.000 punti** si conquista una vita; se sei già al massimo, il premio alza il massimo stesso (fino a sei cuori). Il boss lascia un cuore dorato che alza il massimo, e quando resti a una sola vita i mostri lasciano cadere più cuori.
 
-**Missioni.** Dal terzo settore ognuno pesca una missione diversa: caccia (elimina tutti), sopravvivenza (resisti mentre arrivano ondate), sovraccarico (raccogli tre nuclei), bersagli (distruggi i generatori), assalto (respingi tre ondate). Il portale si apre quando l'obiettivo è compiuto.
+**Missioni.** Dal terzo settore ognuno pesca una missione diversa: caccia (elimina tutti), sopravvivenza (resisti mentre arrivano ondate), sovraccarico (raccogli tre nuclei), bersagli (distruggi i generatori), assalto (respingi tre ondate), fuga (il portale e' gia' aperto ma un muro di tempesta avanza da sinistra e divora tutto). Il portale si apre quando l'obiettivo è compiuto.
 
 **VOLT Rush a comando.** La barra si carica combattendo; quando è piena il Rush non parte da solo: lo attivi tu con `E` (o col tasto VOLT che compare sul telefono), scegliendo il momento.
 

@@ -11,6 +11,7 @@ const Game = {
   lv: null, player: null,
   enemies: [], bullets: [], pickups: [], explosions: [], ships: [], cores: [], gens: [],
   mission: null, missionT: 0, wave: 0, waveCool: 0, spawnCool: 0, missionDone: false,
+  stormX: -9999,
   camX: 0, camY: 0, shakeAmt: 0, shakeT: 0,
   level: 1, score: 0, best: Store.get('volt_best', 0), kills: 0,
   combo: 0, comboT: 0, maxCombo: 0,
@@ -160,6 +161,7 @@ const Game = {
     this.missionDone = false;
     this.missionT = this.mission.time || 0;
     this.wave = 0; this.waveCool = 1.2; this.spawnCool = 3;
+    this.stormX = -9999;
     for (const q of (this.mission.spots || [])) {
       if (this.mission.type === 'cores') this.cores.push(new Core(q.x, q.y));
       else this.gens.push(new Generator(q.x, q.y - 20, n));
@@ -167,6 +169,12 @@ const Game = {
 
     this.enemiesLeft = this.enemies.length;
     this.portalOn = false; this.portalT = 0;
+    if (this.mission.type === 'escape') {
+      /* qui non si combatte: il portale è già aperto e si scappa */
+      this.portalOn = true;
+      this.missionDone = true;
+      this.stormX = lv.startX - 340;
+    }
     this.sectorTime = 0; this.sectorNoHit = true;
     this.transition = 0;
     this.camX = clamp(p.cx - this.viewW / 2, 0, Math.max(0, lv.pxW - this.viewW));
@@ -371,6 +379,28 @@ const Game = {
       if (this.rushT === 0) Floaters.add(p.cx, p.y - 10, 'RUSH TERMINATO', '#b9d9ff', 13);
     }
 
+    /* muro di tempesta: avanza sempre, non si combatte, si corre */
+    if (this.mission && this.mission.type === 'escape' && !p.dead) {
+      this.stormX += (112 + Math.min(90, this.level * 4)) * dt;
+      if (p.cx < this.stormX + 54 && p.hurt(1)) {
+        this.stormX = p.cx - 240;              /* respinta, per non restare dentro */
+        p.vx = Math.max(p.vx, 340);
+        Game.shake(14, 0.3);
+      }
+      /* i mostri inghiottiti spariscono: non si spara dentro la tempesta */
+      for (const e of this.enemies) {
+        if (!e.dead && e.cx < this.stormX - 10) {
+          Particles.burst(e.cx, e.cy, 14, '#d36bff', 220, 4, 120);
+          e.dead = true;
+        }
+      }
+      if (Math.random() < 0.6) {
+        const sy = this.camY + Math.random() * this.viewH;
+        Particles.spawn(this.stormX + Math.random() * 60, sy, 120 + Math.random() * 90,
+          (Math.random() - 0.5) * 60, 0.5, 5, '#e79bff', -30, 1);
+      }
+    }
+
     /* combo */
     if (this.comboT > 0) { this.comboT -= dt; if (this.comboT <= 0) this.combo = 0; }
 
@@ -397,7 +427,7 @@ const Game = {
       b.update(dt, lv);
       if (!b.dead) {
         if (b.foe) {
-          if (!p.dead && this.hitCircle(b, p)) {
+          if (!p.dead && this.hitPlayer(b, p)) {
             b.dead = true;
             if (b.bomb) b.explode();
             else { p.hurt(b.dmg); Particles.spark(b.x, b.y, -b.vx, -b.vy, b.col); }
@@ -607,6 +637,14 @@ const Game = {
   overlap(a, b) {
     return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
   },
+  /* colpo contro il giocatore: da accovacciato i proiettili alti devono passare
+     davvero sopra la testa, altrimenti abbassarsi non servirebbe a nulla */
+  hitPlayer(b, p) {
+    const top = p.crouch ? p.y + b.r * 1.4 : p.y - b.r;
+    return b.x > p.x - b.r && b.x < p.x + p.w + b.r &&
+           b.y > top && b.y < p.y + p.h + b.r;
+  },
+
   hitCircle(b, e) {
     return b.x > e.x - b.r && b.x < e.x + e.w + b.r && b.y > e.y - b.r && b.y < e.y + e.h + b.r;
   },
@@ -651,7 +689,8 @@ const Game = {
     if (this.portalOn) tg = '➜ PORTALE';
     else {
       const m = this.mission || { type: 'hunt' };
-      if (m.type === 'survive') tg = 'RESISTI ' + Math.ceil(this.missionT) + 's';
+      if (m.type === 'escape') tg = 'SCAPPA!';
+      else if (m.type === 'survive') tg = 'RESISTI ' + Math.ceil(this.missionT) + 's';
       else if (m.type === 'cores') tg = 'NUCLEI ' + (m.need - this.cores.length) + '/' + m.need;
       else if (m.type === 'targets') tg = 'GENERATORI ' + (m.need - this.gens.length) + '/' + m.need;
       else if (m.type === 'assault') tg = 'ONDATA ' + Math.max(1, this.wave) + '/' + (m.waves || 3);
@@ -695,6 +734,7 @@ const Game = {
     this.drawTiles(ctx, camX, camY, lv);
     if (this.state !== 'menu') {
       this.drawPortal(ctx, camX, camY, lv);
+      if (this.mission && this.mission.type === 'escape') this.drawStorm(ctx, camX);
       for (const g of this.gens) g.draw(ctx, camX, camY);
       for (const c of this.cores) c.draw(ctx, camX, camY);
       for (const sh of this.ships) sh.draw(ctx, camX, camY);
@@ -1110,6 +1150,38 @@ const Game = {
     ctx.beginPath();
     ctx.ellipse(cx - R * 0.34, cy - R * 0.44, R * 0.26, R * 0.13, -0.7, 0, TAU);
     ctx.fill();
+    ctx.restore();
+  },
+
+  /* il muro di tempesta che insegue: bordo elettrico e buio dietro */
+  drawStorm(ctx, camX) {
+    const x = this.stormX - camX;
+    if (x < -260 || x > this.viewW + 60) return;
+    const t = this.portalT;
+    ctx.save();
+    /* tutto ciò che sta dietro è perduto */
+    const back = ctx.createLinearGradient(x - 240, 0, x + 60, 0);
+    back.addColorStop(0, 'rgba(38,8,70,.95)');
+    back.addColorStop(0.7, 'rgba(120,30,160,.75)');
+    back.addColorStop(1, 'rgba(210,90,230,0)');
+    ctx.fillStyle = back;
+    ctx.fillRect(x - 260, 0, 320, this.viewH);
+
+    /* fronte elettrico */
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.strokeStyle = 'rgba(232,150,255,.85)';
+    ctx.lineWidth = 3;
+    for (let b = 0; b < 3; b++) {
+      ctx.beginPath();
+      for (let y = -10; y < this.viewH + 10; y += 26) {
+        const j = Math.sin(y * 0.05 + t * (7 + b * 3) + b) * (10 + b * 6);
+        if (y < 0) ctx.moveTo(x + j, y); else ctx.lineTo(x + j, y);
+      }
+      ctx.globalAlpha = 0.5 - b * 0.12;
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'source-over';
     ctx.restore();
   },
 

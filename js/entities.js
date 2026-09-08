@@ -240,6 +240,7 @@ class Player {
     this.safeX = x; this.safeY = y; this.safeT = 0;
     /* navicella */
     this.riding = false; this.shipHp = 0; this.shipT = 0; this.shipFlash = 0;
+    this.crouch = false;
   }
 
   get cx() { return this.x + this.w / 2; }
@@ -340,10 +341,14 @@ class Player {
 
     this.aim(lv, enemies, camX, camY);
 
+    /* abbassarsi: a terra, spingendo in basso. Il corpo si accorcia davvero,
+       così i colpi ad altezza del petto passano sopra la testa. */
+    this.setCrouch(this.onGround && this.dashT <= 0 && Input.moveY() > 0.55, lv);
+
     const mx = Input.moveX();
     const ACC = this.onGround ? 4200 : 2600;
     const rush = Game.rushT > 0;
-    const MAXV = (300 + (this.weapon === 'rapid' ? 24 : 0)) * (rush ? 1.2 : 1);
+    const MAXV = (300 + (this.weapon === 'rapid' ? 24 : 0)) * (rush ? 1.2 : 1) * (this.crouch ? 0.42 : 1);
 
     if (this.dashT > 0) {
       this.dashT -= dt;
@@ -370,6 +375,7 @@ class Player {
 
     if (this.buffer > 0) {
       if (this.coyote > 0 || this.jumpsLeft > 0) {
+        this.setCrouch(false, lv);          /* si salta sempre in piedi */
         const doubleJump = !(this.coyote > 0);
         this.vy = doubleJump ? -720 : -790;
         this.buffer = 0; this.coyote = 0;
@@ -492,8 +498,26 @@ class Player {
     if (this.heat >= 100) { this.heat = 100; this.overheat = 1.15; Floaters.add(this.cx, this.y - 8, 'SURRISCALDATO', '#ff9f68', 14); }
   }
 
+  /* accovacciato l'ingombro passa da 30 a 18 px: ci si rialza solo se c'è spazio */
+  setCrouch(on, lv) {
+    if (on === this.crouch || this.riding) return;
+    if (on) {
+      this.y += 12; this.h = 18; this.crouch = true;
+      if (Math.random() < 0.4) Particles.smoke(this.cx, this.y + this.h, '#ffffff');
+    } else {
+      const ny = this.y - 12;
+      const x1 = Math.floor((this.x + 2) / TILE), x2 = Math.floor((this.x + this.w - 2) / TILE);
+      const y1 = Math.floor(ny / TILE), y2 = Math.floor((ny + 30 - 1) / TILE);
+      for (let ty = y1; ty <= y2; ty++)
+        for (let tx = x1; tx <= x2; tx++)
+          if (lv.tileAt(tx, ty) === T_SOLID) return;    /* soffitto: resta giù */
+      this.y = ny; this.h = 30; this.crouch = false;
+    }
+  }
+
   /* ---- navicella ---- */
   boardShip(ship) {
+    if (this.crouch) { this.y -= 12; this.h = 30; this.crouch = false; }
     this.riding = true;
     this.shipHp = SHIP_HP; this.shipT = SHIP_TIME; this.shipFlash = 0;
     this.w = 46; this.h = 28;
@@ -695,6 +719,7 @@ class Player {
     if (this.land > 0) { const k = this.land / 0.18; sx = 1 + k * 0.28; sy = 1 - k * 0.24; }
     else if (air) { const k = clamp(this.vy / 700, -1, 1); sx = 1 - Math.abs(k) * 0.1; sy = 1 + Math.abs(k) * 0.14; }
     if (this.dashT > 0) { sx = 1.28; sy = 0.8; }
+    if (this.crouch) { sx = 1.24; sy = 0.6; }
 
     ctx.save();
     ctx.translate(x, y + (1 - sy) * 12);
