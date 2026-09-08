@@ -31,9 +31,11 @@ function collideY(e, lv, dropThrough) {
         else if (e.vy < 0) { e.y = (ty + 1) * TILE; e.vy = 0; }
         return;
       }
-      if (t === T_PLAT && e.vy > 0 && !dropThrough) {
+      if ((t === T_PLAT || t === T_PAD) && e.vy > 0 && !dropThrough) {
         const top = ty * TILE;
-        if (e.prevBottom <= top + 2 && y2 >= top) { e.y = top - e.h; e.vy = 0; e.onGround = true; return; }
+        if (e.prevBottom <= top + 2 && y2 >= top) {
+          e.y = top - e.h; e.vy = 0; e.onGround = true; e.onPad = t === T_PAD; return;
+        }
       }
     }
   }
@@ -42,6 +44,7 @@ function collideY(e, lv, dropThrough) {
 function moveEntity(e, lv, dt, dropThrough) {
   e.prevBottom = e.y + e.h;
   e.hitWall = 0;
+  e.onPad = false;
   e.x += e.vx * dt; collideX(e, lv);
   e.onGround = false;
   e.vy = Math.min(e.vy, MAXFALL);
@@ -127,6 +130,7 @@ const PICK_TYPES = [
   { k: 'rapid',  col: '#5ee08a', label: 'RAPIDO', w: 4 },
   { k: 'laser',  col: '#c98ff7', label: 'LASER',  w: 3 },
   { k: 'coin',   col: '#ffd166', label: '+250',   w: 6 },
+  { k: 'volt',   col: '#66ffe0', label: 'ENERGIA', w: 5 },
   /* peso 0: non esce a caso, lo lascia solo il boss */
   { k: 'maxheart', col: '#ff2f6e', label: 'CUORE IN PIÙ', w: 0 }
 ];
@@ -181,11 +185,11 @@ class Pickup {
       ctx.quadraticCurveTo(7, 6, 0, 8);
       ctx.quadraticCurveTo(-7, 6, -7, 2); ctx.lineTo(-7, -4);
       ctx.closePath(); ctx.fill();
-    } else if (k === 'coin') {
+    } else if (k === 'coin' || k === 'volt') {
       ctx.beginPath(); ctx.arc(0, 0, 6.5, 0, TAU); ctx.fill();
       ctx.fillStyle = col; ctx.font = '800 9px Nunito, sans-serif';
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText('$', 0, 0.5);
+      ctx.fillText(k === 'volt' ? 'V' : '$', 0, 0.5);
     } else {
       ctx.beginPath();
       for (let i = 0; i < 8; i++) {
@@ -241,6 +245,8 @@ class Player {
 
   hurt(dmg) {
     if (this.invuln > 0 || this.dashT > 0 || this.dead) return false;
+    Game.sectorNoHit = false;
+    if (Game.rushT <= 0) Game.volt = Math.max(0, Game.volt - 18);
     if (this.shield > 0) {
       this.shield--; this.invuln = 1.0; this.flash = 0.3;
       Sfx.hurt(); Game.shake(8, 0.22);
@@ -324,7 +330,8 @@ class Player {
 
     const mx = Input.moveX();
     const ACC = this.onGround ? 4200 : 2600;
-    const MAXV = 300 + (this.weapon === 'rapid' ? 24 : 0);
+    const rush = Game.rushT > 0;
+    const MAXV = (300 + (this.weapon === 'rapid' ? 24 : 0)) * (rush ? 1.2 : 1);
 
     if (this.dashT > 0) {
       this.dashT -= dt;
@@ -364,8 +371,8 @@ class Player {
 
     if (Input.wantDash() && this.dashCd <= 0 && this.dashT <= 0) {
       const dx = mx !== 0 ? mx : (Math.abs(this.aimX) > 0.3 ? sign(this.aimX) : this.facing);
-      this.dashT = 0.17; this.dashCd = 0.62;
-      this.vx = dx * 820; this.facing = dx;
+      this.dashT = rush ? 0.21 : 0.17; this.dashCd = rush ? 0.38 : 0.62;
+      this.vx = dx * (rush ? 930 : 820); this.facing = dx;
       this.invuln = Math.max(this.invuln, 0.22);
       Sfx.dash();
       Particles.burst(this.cx, this.cy, 14, '#8ff0ff', 260, 4, 0);
@@ -376,6 +383,14 @@ class Player {
     const dropThrough = Input.moveY() > 0.6;
     const wasAir = !this.onGround;
     moveEntity(this, lv, dt, dropThrough);
+    if (this.onPad) {
+      this.vy = -1040; this.onGround = false; this.jumpsLeft = 1;
+      this.land = 0; this.dashT = 0;
+      Game.addVolt(7);
+      Particles.burst(this.cx, this.y + this.h, 22, '#66ffe0', 300, 4.5, 180);
+      Rings.add(this.cx, this.y + this.h, '#ffffff', 74, 0.34, 5);
+      Sfx.jump();
+    }
     if (wasAir && this.onGround) {
       this.land = 0.18;
       Particles.burst(this.cx, this.y + this.h, 6, '#ffffff', 120, 3, 300);
@@ -434,8 +449,10 @@ class Player {
     const W = this.weapon;
     const bx = this.cx + this.aimX * 18, by = this.cy + this.aimY * 18 - 2;
     const spd = W === 'laser' ? 1500 : 900;
+    const rush = Game.rushT > 0;
+    const heatBefore = this.heat;
     const mk = (ang, opt) => {
-      const o = Object.assign({ dmg: 1, r: 4.5, col: '#38e8ff', life: 1.4 }, opt || {});
+      const o = Object.assign({ dmg: rush ? 2 : 1, r: rush ? 5.5 : 4.5, col: rush ? '#75ffe0' : '#38e8ff', life: 1.4 }, opt || {});
       bullets.push(new Bullet(bx, by, Math.cos(ang) * spd, Math.sin(ang) * spd, o));
     };
     const base = Math.atan2(this.aimY, this.aimX);
@@ -447,11 +464,15 @@ class Player {
       mk(base + (Math.random() - 0.5) * 0.07, { col: '#5ee08a', r: 4 });
       this.fireCd = 0.075; this.heat += 6.5; Sfx.shoot();
     } else if (W === 'laser') {
-      mk(base, { col: '#c98ff7', dmg: 2, pierce: 4, r: 5, life: 1.1 });
+      mk(base, { col: rush ? '#ffffff' : '#c98ff7', dmg: rush ? 3 : 2, pierce: 4, r: rush ? 6 : 5, life: 1.1 });
       this.fireCd = 0.26; this.heat += 20; Sfx.laser();
     } else {
       mk(base, { col: '#38e8ff' });
       this.fireCd = 0.155; this.heat += 10; Sfx.shoot();
+    }
+    if (rush) {
+      this.fireCd *= 0.68;
+      this.heat = heatBefore + (this.heat - heatBefore) * 0.42;
     }
     this.muzzle = 0.07;
     this.vx -= this.aimX * 26;
@@ -477,6 +498,8 @@ class Player {
         Floaters.add(this.cx, this.y - 8, '+SCUDO', '#48d7ff', 16); break;
       case 'coin':
         Game.addScore(250); Floaters.add(this.cx, this.y - 8, '+250', '#ffd166', 16); break;
+      case 'volt':
+        Game.addVolt(24); Floaters.add(this.cx, this.y - 8, '+24 VOLT', '#66ffe0', 16); break;
       default:
         this.weapon = kind; this.weaponT = 15;
         this.heat = 0; this.overheat = 0;
@@ -498,6 +521,13 @@ class Player {
 
     Gfx.shadow(ctx, x, feet + 3, 38, this.onGround ? 0.42 : 0.2);
     if (this.dashT > 0) Gfx.light(ctx, x, y, 54, '#8ff0ff', 0.5);
+    if (Game.rushT > 0) {
+      Gfx.light(ctx, x, y, 74 + Math.sin(this.anim * 12) * 8, '#75ffe0', 0.65);
+      ctx.save();
+      ctx.globalAlpha = 0.55; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.arc(x, y, 29 + Math.sin(this.anim * 15) * 3, 0, TAU); ctx.stroke();
+      ctx.restore();
+    }
 
     /* sciarpa dietro al corpo */
     ctx.save();

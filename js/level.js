@@ -2,7 +2,7 @@
 'use strict';
 
 const TILE = 32;
-const T_EMPTY = 0, T_SOLID = 1, T_PLAT = 2, T_SPIKE = 3;
+const T_EMPTY = 0, T_SOLID = 1, T_PLAT = 2, T_SPIKE = 3, T_PAD = 4;
 
 const OUTLINE = '#20183f';
 
@@ -92,6 +92,19 @@ function generateLevel(n) {
   /* zona finale piatta col portale */
   gy = clamp(gy, minY + 3, maxY);
   for (; x < w; x++) fillColumn(x, gy);
+
+  /* trampolini VOLT: scorciatoie verticali che spezzano la sola corsa orizzontale */
+  if (!boss) {
+    const padCount = 1 + Math.floor(Math.min(2, n / 6));
+    let made = 0, tries = 0;
+    while (made < padCount && tries++ < 40) {
+      const px = rndInt(rng, 13, w - 13);
+      const top = groundY[px];
+      if (top < 3 || groundY[px - 1] !== top || groundY[px + 1] !== top) continue;
+      if (tiles[at(px, top - 1)] !== T_EMPTY) continue;
+      set(px, top - 1, T_PAD); made++;
+    }
+  }
 
   /* --- piattaforme sospese --- */
   const platCount = boss ? 5 : Math.floor(w / 9);

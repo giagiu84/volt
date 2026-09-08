@@ -24,6 +24,14 @@ Con la tastiera si spara dritto davanti a sé; con il mouse si mira dove punta i
 
 Regola del settore: **uccidi tutti i mostri**, il portale si apre, entraci per passare al successivo. Cadere nel vuoto costa una vita ma non la partita: si rientra sull'ultimo appoggio sicuro. Sparare scalda l'arma: se la barra arriva a fondo, il blaster si blocca per un secondo.
 
+## Novità della versione 7
+
+- **VOLT Rush**: eliminazioni, combo, celle energia e trampolini caricano la barra. Al 100% parte automaticamente un sovraccarico di 6,5 secondi con velocità, cadenza, potenza e punteggio raddoppiato.
+- **Trampolini VOLT**: nuovi elementi del terreno lanciano il giocatore in alto, ricaricano energia e aprono percorsi più verticali.
+- **Bonus di settore**: tempo di completamento e settore senza danni aumentano il premio del portale.
+- **Valutazione finale**: grado C/B/A/S e migliore combo nella schermata di fine partita.
+- **HUD rinnovato**: avanzamento nel settore, barra VOLT, stato del Rush e gerarchia visiva più leggibile.
+
 ## Pubblicarlo su un sito
 
 La cartella è già pronta: contiene solo file statici.

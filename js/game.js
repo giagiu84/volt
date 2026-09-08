@@ -12,7 +12,9 @@ const Game = {
   enemies: [], bullets: [], pickups: [], explosions: [],
   camX: 0, camY: 0, shakeAmt: 0, shakeT: 0,
   level: 1, score: 0, best: Store.get('volt_best', 0), kills: 0,
-  combo: 0, comboT: 0,
+  combo: 0, comboT: 0, maxCombo: 0,
+  volt: 0, rushT: 0, hitStop: 0,
+  sectorTime: 0, sectorNoHit: true,
   enemiesLeft: 0, portalOn: false, portalT: 0,
   bannerT: 0, transition: 0, flashT: 0,
   hudCache: {},
@@ -102,7 +104,8 @@ const Game = {
     }
     Sfx.init(); Sfx.resume(); Sfx.startMusic();
     this.level = 1; this.score = 0; this.kills = 0;
-    this.combo = 0; this.comboT = 0;
+    this.combo = 0; this.comboT = 0; this.maxCombo = 0;
+    this.volt = 0; this.rushT = 0; this.hitStop = 0;
     this.nextLifeAt = LIFE_EVERY;
     this.loadLevel(1, true);
     document.getElementById('menu').classList.add('hidden');
@@ -146,6 +149,7 @@ const Game = {
 
     this.enemiesLeft = this.enemies.length;
     this.portalOn = false; this.portalT = 0;
+    this.sectorTime = 0; this.sectorNoHit = true;
     this.camX = clamp(p.cx - this.viewW / 2, 0, Math.max(0, lv.pxW - this.viewW));
     this.camY = this.clampCamY(p.cy - this.viewH / 2);
     this.banner(lv.boss ? 'BOSS — ' + lv.theme.name : 'SETTORE ' + n);
@@ -183,6 +187,24 @@ const Game = {
     if (this.score > this.best) { this.best = this.score; Store.set('volt_best', this.best); }
   },
 
+  addVolt(v) {
+    if (this.rushT > 0 || this.state !== 'play') return;
+    this.volt = clamp(this.volt + v, 0, 100);
+    if (this.volt >= 100) this.startRush();
+  },
+
+  startRush() {
+    const p = this.player;
+    if (!p || p.dead) return;
+    this.volt = 100; this.rushT = 6.5;
+    p.heat = 0; p.overheat = 0;
+    this.banner('VOLT RUSH!');
+    this.flashT = 0.22; this.shake(12, 0.3);
+    Particles.burst(p.cx, p.cy, 42, '#75ffe0', 340, 5, 0);
+    Rings.add(p.cx, p.cy, '#ffffff', 130, 0.5, 7);
+    Sfx.levelUp();
+  },
+
   /* premio arcade: a punti si conquista una vita, e se sei già pieno
      il cuore in più resta tuo per il resto della partita */
   grantLife() {
@@ -209,9 +231,13 @@ const Game = {
   onEnemyKilled(e) {
     this.kills++;
     this.combo++; this.comboT = 2.6;
+    this.maxCombo = Math.max(this.maxCombo, this.combo);
     const mult = 1 + Math.min(this.combo - 1, 9) * 0.25;
-    const pts = Math.round(e.score * mult);
+    const pts = Math.round(e.score * mult * (this.rushT > 0 ? 2 : 1));
     this.addScore(pts);
+    if (this.rushT > 0) this.rushT = Math.min(8, this.rushT + 0.24);
+    else this.addVolt((e.type === 'boss' ? 36 : 11) + Math.min(8, this.combo));
+    this.hitStop = e.type === 'boss' ? 0.08 : 0.025;
     Floaters.add(e.cx, e.cy - 10, '+' + pts, this.combo > 2 ? '#7dff8d' : '#ffe98a', this.combo > 4 ? 19 : 15);
 
     /* all'ultima vita il gioco allunga la mano: più oggetti, più cuori */
@@ -271,6 +297,12 @@ const Game = {
   update(dt) {
     const lv = this.lv, p = this.player;
 
+    if (this.hitStop > 0) {
+      this.hitStop -= dt;
+      Particles.update(dt * 0.2); Rings.update(dt * 0.2);
+      return;
+    }
+
     if (this.transition > 0) {
       this.transition -= dt;
       if (this.transition <= 0) { this.level++; this.loadLevel(this.level, false); }
@@ -279,6 +311,12 @@ const Game = {
     }
 
     p.update(dt, lv, this.enemies, this.bullets, this.camX, this.camY);
+    this.sectorTime += dt;
+    if (this.rushT > 0) {
+      this.rushT = Math.max(0, this.rushT - dt);
+      this.volt = this.rushT > 0 ? clamp((this.rushT / 6.5) * 100, 0, 100) : 0;
+      if (this.rushT === 0) Floaters.add(p.cx, p.y - 10, 'RUSH TERMINATO', '#b9d9ff', 13);
+    }
 
     /* combo */
     if (this.comboT > 0) { this.comboT -= dt; if (this.comboT <= 0) this.combo = 0; }
@@ -359,8 +397,13 @@ const Game = {
          e la zona è alta quanto il varco, così ci si entra anche camminando */
       if (p.cx > px - 46 && p.cy > py - 80 && p.cy < py + 96) {
         this.transition = 0.55;
-        this.addScore(500 + this.level * 100);
-        Floaters.add(p.cx, p.cy - 20, 'SETTORE PULITO +' + (500 + this.level * 100), '#4dffd5', 16);
+        const base = 500 + this.level * 100;
+        const speedBonus = Math.max(0, Math.round((75 - this.sectorTime) * 12));
+        const perfectBonus = this.sectorNoHit ? 750 : 0;
+        const clearBonus = base + speedBonus + perfectBonus;
+        this.addScore(clearBonus);
+        const clearText = this.sectorNoHit ? 'SETTORE PERFETTO +' + clearBonus : 'SETTORE PULITO +' + clearBonus;
+        Floaters.add(p.cx, p.cy - 20, clearText, '#4dffd5', 16);
         Sfx.portal(); Sfx.levelUp();
         Particles.burst(p.cx, p.cy, 60, '#4dffd5', 340, 5, -40);
       }
@@ -399,6 +442,8 @@ const Game = {
     document.getElementById('ovLevel').textContent = this.level;
     document.getElementById('ovKills').textContent = this.kills;
     document.getElementById('ovBest').textContent = this.best;
+    const rank = this.score >= 30000 ? 'S' : this.score >= 18000 ? 'A' : this.score >= 9000 ? 'B' : 'C';
+    document.getElementById('ovRank').textContent = 'GRADO ' + rank + ' · COMBO ' + this.maxCombo;
     document.getElementById('over').classList.remove('hidden');
     document.getElementById('hud').classList.add('hidden');
   },
@@ -432,6 +477,16 @@ const Game = {
 
     const wp = p.weapon.toUpperCase() + (p.weaponT > 0 ? ' ' + Math.ceil(p.weaponT) + 's' : '');
     if (c.wp !== wp) { c.wp = wp; document.getElementById('weapon').textContent = wp; }
+
+    const volt = Math.round(this.volt);
+    if (c.volt !== volt) { c.volt = volt; document.getElementById('voltbar').style.width = volt + '%'; }
+    const rush = this.rushT > 0;
+    const voltText = rush ? 'VOLT RUSH ' + this.rushT.toFixed(1) + 's' : 'CARICA VOLT ' + volt + '%';
+    if (c.voltText !== voltText) { c.voltText = voltText; document.getElementById('voltState').textContent = voltText; }
+    document.querySelector('.power-hud').classList.toggle('rush', rush);
+
+    const progress = Math.round(clamp((p.cx - this.lv.startX) / Math.max(1, this.lv.portalX - this.lv.startX), 0, 1) * 100);
+    if (c.progress !== progress) { c.progress = progress; document.getElementById('sectorbar').style.width = progress + '%'; }
   },
 
   /* ---------------- render ---------------- */
@@ -629,11 +684,11 @@ const Game = {
       }
     }
 
-    /* 4) piattaforme e spine */
+    /* 4) piattaforme, spine e trampolini */
     for (let y = y0; y <= y1; y++) {
       for (let x = x0; x <= x1; x++) {
         const t = lv.tiles[y * lv.w + x];
-        if (t !== T_PLAT && t !== T_SPIKE) continue;
+        if (t !== T_PLAT && t !== T_SPIKE && t !== T_PAD) continue;
         const px = x * TILE - camX, py = y * TILE - camY;
         if (t === T_PLAT) {
           const left = lv.tileAt(x - 1, y) !== T_PLAT, right = lv.tileAt(x + 1, y) !== T_PLAT;
@@ -643,7 +698,7 @@ const Game = {
           ctx.fillStyle = th.plat;
           roundRect(ctx, px - (left ? 2 : 0), py, TILE + ext, 13, 6.5); ctx.fill();
           Gfx.gloss(ctx, px + 3, py + 2, TILE - 6, 4, 0.4);
-        } else {
+        } else if (t === T_SPIKE) {
           ctx.fillStyle = th.spike;
           for (let i = 0; i < 3; i++) {
             const sx = px + 3 + i * 10;
@@ -660,6 +715,12 @@ const Game = {
             ctx.lineTo(sx + 2.5, py + TILE - 17); ctx.lineTo(sx + 3.5, py + TILE - 4);
             ctx.closePath(); ctx.fill();
           }
+        } else {
+          const pulse = 0.65 + Math.sin(this.portalT * 7 + x) * 0.18;
+          Gfx.light(ctx, px + TILE / 2, py + TILE / 2, 38, '#66ffe0', pulse);
+          ctx.fillStyle = '#273064'; roundRect(ctx, px + 1, py + 15, TILE - 2, 12, 5); ctx.fill();
+          ctx.fillStyle = '#66ffe0'; roundRect(ctx, px - 2, py + 8, TILE + 4, 11, 6); ctx.fill();
+          ctx.fillStyle = '#ffffff'; roundRect(ctx, px + 5, py + 9, TILE - 10, 4, 2); ctx.fill();
         }
       }
     }
