@@ -75,6 +75,7 @@ const Game = {
   mode: 'campaign', progress: Store.get('volt_progress', { cleared: false, cp: null }),
   law: null, lawDef: null, platsOff: false, platT: 0, meteorT: 0, stormOn: false,
   ampere: null, cariche: [],
+  canSwap: false, swapCd: 0,
   hero: Store.get('volt_hero', 'aren'),
   stormX: -9999,
   camX: 0, camY: 0, shakeAmt: 0, shakeT: 0,
@@ -198,6 +199,10 @@ const Game = {
     this.level = 1; this.score = 0; this.kills = 0; this.eliteSeen = {};
     /* Ampere esiste solo oltre la Frattura: la Corrente Verde e' sparsa di la' */
     this.ampere = null; this.cariche.length = 0;
+    /* oltre la Frattura i due custodi sono insieme e ci si passa da uno all'altra */
+    this.canSwap = this.mode === 'endless';
+    this.swapCd = 0;
+    if (this.canSwap) this.heroStart = this.hero;
     this.combo = 0; this.comboT = 0; this.maxCombo = 0;
     this.volt = 0; this.rushT = 0; this.hitStop = 0;
     this.hasShip = false;
@@ -314,6 +319,10 @@ const Game = {
 
   toMenu() {
     this.state = 'menu';
+    /* al menu torna il custode scelto dal giocatore, non quello con cui è finita */
+    if (this.canSwap && this.heroStart) this.hero = this.heroStart;
+    this.canSwap = false; this.swapCd = 0;
+    document.body.classList.remove('canswap');
     const ab = document.getElementById('ampHud');
     if (ab) ab.classList.add('hidden');
     GRAV = GRAV0; this.law = null; this.lawDef = null; this.platsOff = false;
@@ -522,6 +531,43 @@ const Game = {
   refreshActionButtons() {
     document.body.classList.toggle('voltready', this.volt >= 100 && this.rushT <= 0 && this.state === 'play');
     document.body.classList.toggle('hasship', !!this.hasShip && !(this.player && this.player.riding));
+    document.body.classList.toggle('canswap', this.canSwap && this.state === 'play');
+    const sb = document.getElementById('btnSwap');
+    if (sb) {
+      sb.classList.toggle('cool', this.swapCd > 0);
+      sb.textContent = this.hero === 'aren' ? 'LYRA' : 'AREN';
+    }
+  },
+
+  /* Il cambio fra i custodi. Il corpo e' lo stesso — posizione, cuori, armi,
+     potenziamenti restano — cambia chi lo abita: velocita', peso del colpo,
+     cadenza, scatto e salto sono quelli del custode che entra. Chi esce non
+     sparisce: torna corrente, ed e' per questo che il passaggio si vede. */
+  swapHero() {
+    const p = this.player;
+    if (!this.canSwap || !p || p.dead || this.state !== 'play') return;
+    if (this.swapCd > 0) {
+      Floaters.add(p.cx, p.y - 12, 'CAMBIO FRA ' + Math.ceil(this.swapCd) + 's', '#c9b6ff', 13);
+      return;
+    }
+    const nuovo = this.hero === 'aren' ? 'lyra' : 'aren';
+    const H = HEROES[nuovo];
+    this.hero = nuovo;
+    this.swapCd = SWAP_CD;
+    /* niente invulnerabilita': il cambio serve a combattere meglio, non a
+       schivare. Del resto lampeggiare qui coprirebbe proprio il passaggio. */
+    p.swapFx = 0.45; p.flash = 0.2;
+    p.heat = Math.max(0, p.heat - 22);     /* l'arma che entra e' fredda */
+    p.overheat = 0;
+
+    Particles.burst(p.cx, p.cy, 30, H.trail, 300, 5, -60);
+    Particles.burst(p.cx, p.cy, 16, '#ffffff', 200, 3.5, 0);
+    Rings.add(p.cx, p.cy, H.trim, 110, 0.42, 6);
+    Floaters.add(p.cx, p.y - 18, H.name, H.trail, 19);
+    this.shake(7, 0.18);
+    Sfx.tone(420, 0.12, 'triangle', 0.05, 1100);
+    Sfx.tone(880, 0.16, 'sine', 0.04, 1500);
+    this.refreshActionButtons();
   },
 
   startRush() {
@@ -776,6 +822,11 @@ const Game = {
       return;
     }
 
+    if (this.swapCd > 0) {
+      this.swapCd = Math.max(0, this.swapCd - dt);
+      if (this.swapCd === 0) this.refreshActionButtons();
+    }
+    if (Input.wantSwap()) this.swapHero();
     if (Input.wantVolt() && this.volt >= 100 && this.rushT <= 0) this.startRush();
     if (Input.wantShip() && this.hasShip && !p.riding && !p.dead) {
       this.hasShip = false;
@@ -1290,6 +1341,14 @@ const Game = {
             amp >= 100 ? 'AMPERE CARICA' : 'AMPERE ' + amp + '%';
         }
       }
+    }
+
+    /* chi sta combattendo, e quanto manca al cambio */
+    const chi = this.canSwap ? (HEROES[this.hero] || HEROES.aren).name + (this.swapCd > 0 ? ' ' + Math.ceil(this.swapCd) : '') : '';
+    if (c.chi !== chi) {
+      c.chi = chi;
+      const el = document.getElementById('heroTag');
+      if (el) { el.textContent = chi; el.classList.toggle('hidden', !chi); }
     }
 
     const heat = Math.round(p.overheat > 0 ? 100 : p.heat);

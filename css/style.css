@@ -88,7 +88,7 @@ body.touch .power-hud{bottom:calc(8px + env(safe-area-inset-bottom));width:min(2
   background:linear-gradient(180deg,#ff7ba4,#ff3d78);box-shadow:0 7px 0 #c62b5c,0 12px 24px rgba(0,0,0,.3)}
 .tbtn.jump{right:96px;bottom:4px;width:84px;height:84px;font-size:15px;
   background:linear-gradient(180deg,#7ce0ff,#22b6f0);box-shadow:0 7px 0 #1088b9,0 12px 22px rgba(0,0,0,.28)}
-.tbtn.volt,.tbtn.ship{display:none;width:60px;height:60px;font-size:11px;letter-spacing:.5px}
+.tbtn.volt,.tbtn.ship,.tbtn.swap{display:none;width:60px;height:60px;font-size:11px;letter-spacing:.5px}
 .tbtn.volt{right:6px;bottom:196px;background:linear-gradient(180deg,#ffe89a,#ffc247);
   box-shadow:0 5px 0 #d1930f,0 8px 18px rgba(0,0,0,.26);color:#4a3200;
   animation:voltpulse 1s ease-in-out infinite}
@@ -96,6 +96,10 @@ body.touch .power-hud{bottom:calc(8px + env(safe-area-inset-bottom));width:min(2
   box-shadow:0 5px 0 #1d8fbd,0 8px 18px rgba(0,0,0,.26);color:#053348}
 body.voltready .tbtn.volt{display:flex}
 body.hasship .tbtn.ship{display:flex}
+.tbtn.swap{right:142px;bottom:196px;background:linear-gradient(180deg,#e3c9ff,#a06bff);
+  box-shadow:0 5px 0 #6a35c4,0 8px 18px rgba(0,0,0,.26);color:#25084a}
+body.canswap .tbtn.swap{display:flex}
+.tbtn.swap.cool{filter:grayscale(.7);opacity:.45}
 @keyframes voltpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}
 .tbtn.volt.pressed,.tbtn.ship.pressed{animation:none}
 .tbtn.fire.pressed{box-shadow:0 3px 0 #c62b5c,0 6px 14px rgba(0,0,0,.3)}
@@ -231,6 +235,9 @@ body.is-touch .help .help-row{margin-bottom:8px;line-height:1.65}
   font-size:12px;font-weight:800;color:var(--go-d);line-height:1.5}
 .unlock small{font-weight:700;color:var(--ink-soft);font-size:11px}
 .rank{margin-top:10px;font-size:13px;font-weight:900;letter-spacing:2px;color:var(--accent-d)}
+
+.hero-tag{margin-top:5px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:11px;
+  letter-spacing:1.6px;color:#e8ddff;text-shadow:0 1px 3px rgba(0,0,0,.5)}
 
 /* ---------- Ampere: la lanterna ---------- */
 .amp-hud{position:absolute;left:50%;transform:translateX(-50%);

@@ -22,8 +22,8 @@ const Input = {
   lastPointerT: 0, lastKeyT: 0,
   touchMode: false,
 
-  btn: { jump: false, fire: false, volt: false, ship: false },
-  voltEdge: false, shipEdge: false,
+  btn: { jump: false, fire: false, volt: false, ship: false, swap: false },
+  voltEdge: false, shipEdge: false, swapEdge: false,
   axisX: 0, axisY: 0,
   orb: { x: 0, y: 0, r: 66, active: false, id: null, dx: 0, dy: 0, tDown: 0, lastUp: 0, glow: 0 },
   _fingers: Object.create(null),   /* identifier -> nome pulsante */
@@ -83,6 +83,7 @@ const Input = {
           if (name === 'jump') this.jumpEdge = true;
           if (name === 'volt') this.voltEdge = true;
           if (name === 'ship') this.shipEdge = true;
+          if (name === 'swap') this.swapEdge = true;
           if (name === 'left' || name === 'right') {
             if (now - this._lastTap[name] < DTAP_MS) { this.dashEdge = true; this._lastTap[name] = 0; }
             this._downAt = now;
@@ -120,6 +121,7 @@ const Input = {
     bind('btnJump', 'jump');
     bind('btnVolt', 'volt');
     bind('btnShip', 'ship');
+    bind('btnSwap', 'swap');
     bind('btnFire', 'fire');
 
     /* --- sfera al plasma: joystick disegnato dal gioco --- */
@@ -252,6 +254,13 @@ const Input = {
   wantShip() {
     const e = this.shipEdge || this.pressed['q'];
     this.shipEdge = false;
+    return !!e;
+  },
+
+  /* il cambio fra i due custodi */
+  wantSwap() {
+    const e = this.swapEdge || this.pressed['f'] || this.pressed['c'];
+    this.swapEdge = false;
     return !!e;
   },
 

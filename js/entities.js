@@ -3,6 +3,7 @@
 
 let GRAV = 2050;              /* la Frattura puo' cambiarla: vedi le leggi */
 const GRAV0 = 2050;
+const SWAP_CD = 6;            /* secondi fra un cambio di custode e l'altro */
 const MAXFALL = 1150;
 
 /* ---------- collisione AABB contro la tilemap ---------- */
@@ -273,6 +274,7 @@ class Player {
     this.dashT = 0; this.dashCd = 0;
     this.invuln = 0; this.flash = 0;
     this.fireCd = 0; this.heat = 0; this.overheat = 0;
+    this.swapFx = 0;            /* il lampo del cambio */
     this.weapon = 'blaster'; this.weaponT = 0;
     this.aimX = 1; this.aimY = 0;
     this.anim = 0; this.dead = false;
@@ -372,6 +374,7 @@ class Player {
     if (this.riding) { this.updateFlight(dt, lv, enemies, bullets, camX, camY); return; }
     this.anim += dt;
     this.invuln = Math.max(0, this.invuln - dt);
+    this.swapFx = Math.max(0, this.swapFx - dt);
     this.flash = Math.max(0, this.flash - dt);
     this.land = Math.max(0, this.land - dt);
     this.dashCd = Math.max(0, this.dashCd - dt);
@@ -765,6 +768,16 @@ class Player {
     const air = !this.onGround;
 
     Gfx.shadow(ctx, x, feet + 3, 38, this.onGround ? 0.42 : 0.2);
+    /* il lampo del cambio: chi entra si riaccende, chi esce e' tornato corrente */
+    if (this.swapFx > 0) {
+      const k = this.swapFx / 0.45;
+      Gfx.light(ctx, x, y - 4, 34 + (1 - k) * 52, hero().trail, k * 0.85);
+      ctx.save();
+      ctx.globalAlpha = k * 0.8;
+      ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.ellipse(x, y, 16 + (1 - k) * 8, 30 * k + 8, 0, 0, TAU); ctx.stroke();
+      ctx.restore();
+    }
     if (this.dashT > 0) Gfx.light(ctx, x, y, 54, '#8ff0ff', 0.5);
     if (Game.rushT > 0) {
       Gfx.light(ctx, x, y, 74 + Math.sin(this.anim * 12) * 8, '#75ffe0', 0.65);
