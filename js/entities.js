@@ -1,7 +1,8 @@
 /* VOLT — entità: giocatore, mostri, proiettili, pickup */
 'use strict';
 
-const GRAV = 2050;
+let GRAV = 2050;              /* la Frattura puo' cambiarla: vedi le leggi */
+const GRAV0 = 2050;
 const MAXFALL = 1150;
 
 /* ---------- collisione AABB contro la tilemap ---------- */
@@ -31,6 +32,8 @@ function collideY(e, lv, dropThrough) {
         else if (e.vy < 0) { e.y = (ty + 1) * TILE; e.vy = 0; }
         return;
       }
+      /* legge PIATTAFORME INSTABILI: da fermi non c'e' niente sotto i piedi */
+      if (t === T_PLAT && Game.platsOff) continue;
       if ((t === T_PLAT || t === T_PAD) && e.vy > 0 && !dropThrough) {
         const top = ty * TILE;
         if (e.prevBottom <= top + 2 && y2 >= top) {
@@ -508,6 +511,7 @@ class Player {
 
   shoot(bullets) {
     const W = this.weapon;
+    const primo = bullets.length;
     const bx = this.cx + this.aimX * 18, by = this.cy + this.aimY * 18 - 2;
     const spd = W === 'laser' ? 1500 : 900;
     const rush = Game.rushT > 0;
@@ -548,6 +552,16 @@ class Player {
     this.fireCd *= H.rate;          /* ogni custode ha la sua cadenza */
     const rf = Game.perkLevel('rapidfire');
     if (rf) { this.fireCd *= (1 - 0.13 * rf); this.heat -= (this.heat - heatBefore) * 0.25 * rf; }
+    /* legge ECO: ogni colpo si sdoppia, e la copia arriva un attimo dopo */
+    if (Game.law === 'echo') {
+      const ultimo = bullets.length;
+      for (let i = primo; i < ultimo; i++) {
+        const b = bullets[i];
+        bullets.push(new Bullet(b.x - b.vx * 0.055, b.y - b.vy * 0.055, b.vx * 0.85, b.vy * 0.85,
+          { dmg: b.dmg, r: b.r * 0.8, col: b.col, life: b.life,
+            pierce: b.pierce, bounces: b.bounces, freeze: b.freeze }));
+      }
+    }
     this.muzzle = 0.07;
     this.vx -= this.aimX * 26;
     Particles.spark(bx, by, this.aimX * 200, this.aimY * 200, '#ffffff');
@@ -922,6 +936,7 @@ class Enemy {
     this.hp = this.maxHp;
     this.speed = d.speed * (1 + Math.min(0.75, (level - 1) * 0.035 + oltre * 0.015)) * (E ? E.speed : 1);
     this.score = Math.round(d.score * (E ? E.score : 1));
+    this.touch = d.touch;         /* i giganti fanno piu' male: qui si puo' alzare */
     this.pulse = 2 + Math.random();
     this.dir = -1; this.t = Math.random() * 4;
     this.flash = 0; this.dead = false; this.stun = 0;

@@ -45,6 +45,51 @@ const MISSIONS = {
   boss:    { name: 'BOSS',         hint: 'Abbatti il boss' }
 };
 
+/* ---------- le leggi della Frattura ----------
+   Oltre la Frattura il mondo non e' piu' stabile: ogni tre settori una regola
+   cambia. Non sono contenuti nuovi da disegnare, sono le stesse cose viste
+   sotto un'altra luce, ed e' quello che tiene in piedi una modalita' infinita
+   senza farla diventare la stessa partita all'infinito. */
+const LAWS = {
+  lowgrav: { name: 'BASSA GRAVITÀ', hint: 'Salti lunghi, cadute lente', col: '#8fe9ff', grav: 0.5 },
+  dark:    { name: 'BUIO',          hint: 'Vedi solo quello che si accende',  col: '#b06bff' },
+  blink:   { name: 'PIATTAFORME INSTABILI', hint: 'Esistono solo mentre ti muovi', col: '#ffd166' },
+  giants:  { name: 'GIGANTI',       hint: 'Pochi mostri, enormi',        col: '#ff8a3d' },
+  echo:    { name: 'ECO',           hint: 'Ogni tuo colpo si sdoppia',   col: '#66ffe0' },
+  storm:   { name: 'TEMPESTA',      hint: 'Il muro avanza: non fermarti', col: '#e79bff' },
+  meteors: { name: 'PIOGGIA DI FUOCO', hint: 'Guarda anche in alto',     col: '#ff6b6b' }
+};
+const LAW_ORDER = ['lowgrav', 'dark', 'blink', 'giants', 'echo', 'storm', 'meteors'];
+
+/* Il ciclo dura tre settori. I primi tre non hanno legge: servono a riprendere
+   il ritmo. Poi le sette leggi escono tutte, mescolate: nello stesso giro non
+   se ne ripete nessuna, e il giro dopo l'ordine cambia. Uguale per tutti. */
+/* Non tutte le leggi vanno d'accordo con tutte le missioni: il muro di
+   tempesta in un settore dove bisogna restare fermi o tornare indietro a
+   raccogliere non e' difficile, e' impossibile. In quel caso si passa alla
+   legge successiva del giro. */
+const LAW_BAN = { storm: ['survive', 'assault', 'cores', 'targets', 'boss'] };
+
+function lawFor(n, mode, missionType) {
+  if (mode !== 'endless') return null;      /* la campagna dei 20 resta com'e' */
+  const cycle = Math.floor((n - 1) / 3);
+  if (cycle === 0) return null;
+  const idx = cycle - 1;
+  const giro = Math.floor(idx / LAW_ORDER.length);
+  const rng = makeRng(0x517f + giro * 2654435761);
+  const bag = LAW_ORDER.slice();
+  for (let i = bag.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    const t = bag[i]; bag[i] = bag[j]; bag[j] = t;
+  }
+  for (let k = 0; k < bag.length; k++) {
+    const l = bag[(idx + k) % bag.length];
+    const ban = LAW_BAN[l];
+    if (!ban || ban.indexOf(missionType) < 0) return l;
+  }
+  return null;
+}
+
 function generateLevel(n) {
   const rng = makeRng(0x9e37 + n * 2654435761);
   const boss = (n % 5 === 0);

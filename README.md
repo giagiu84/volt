@@ -71,7 +71,21 @@ vita sola) resta intera nei primi cinque settori e si ritira piano dopo.
 
 **Entrando in ogni portale si sceglie un potenziamento** fra tre pescati a caso; restano per tutta la partita e si sommano. Dopo un Comandante la scelta comprende un potenziamento leggendario (droncino alleato, vampiro elettrico, scudo d'emergenza, brace, arsenale).
 
-**Oltre la Frattura**: finita la campagna si sblocca la modalità infinita, dove i settori non finiscono e conta solo il punteggio.
+**Oltre la Frattura**: finita la campagna si sblocca la modalità infinita, dove i settori non finiscono e conta solo il punteggio. **Ogni tre settori cambia una legge del mondo**, e il mondo diventa un altro:
+
+| Legge | Cosa cambia |
+|---|---|
+| BASSA GRAVITÀ | la gravità si dimezza: salti lunghissimi, cadute lente, per tutti |
+| BUIO | il mondo si spegne, resta acceso solo quello che emette luce: tu, i mostri, i colpi, il portale |
+| PIATTAFORME INSTABILI | le piattaforme sospese reggono solo mentre ti muovi; da fermo svaniscono (restano in trasparenza per capire dove torneranno) |
+| GIGANTI | metà dei mostri, ma grossi il doppio, con il doppio della vita e un cuore di danno in più |
+| ECO | ogni tuo colpo si sdoppia: la copia parte un attimo dopo e arriva più lenta |
+| TEMPESTA | il muro viola avanza anche dove non c'è la fuga: non ci si ferma a combattere |
+| PIOGGIA DI FUOCO | cade roba dal cielo, sempre vicino a te |
+
+Le leggi escono mescolate: nello stesso giro non se ne ripete nessuna, e il giro dopo l'ordine cambia. Sono sempre le stesse per tutti, come i settori. La campagna dei primi 20 non ne ha: là il mondo è stabile.
+
+Una legge che renderebbe impossibile la missione del settore (la tempesta dove bisogna restare fermi o tornare indietro a raccogliere) viene scartata e si passa alla successiva.
 
 ## Pubblicarlo su un sito
 

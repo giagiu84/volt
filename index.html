@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=26">
+<link rel="stylesheet" href="css/style.css?v=27">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>%E2%9A%A1</text></svg>">
 </head>
 <body>
@@ -142,7 +142,7 @@
         <div class="stat"><span id="winKills">0</span><small>mostri</small></div>
         <div class="stat"><span id="winRank">A</span><small>grado</small></div>
       </div>
-      <div class="unlock">SBLOCCATA — <b>OLTRE LA FRATTURA</b><br><small>i settori non finiscono più: conta solo il punteggio</small></div>
+      <div class="unlock">SBLOCCATA — <b>OLTRE LA FRATTURA</b><br><small>i settori non finiscono più e ogni tre il mondo cambia legge: buio, bassa gravità, giganti, tempesta…</small></div>
       <button id="winEndlessBtn" class="big-btn">OLTRE LA FRATTURA</button>
       <button id="winMenuBtn" class="mini-btn">Menu</button>
     </div>
@@ -160,7 +160,7 @@
 /* Se il telefono ha in cache una versione vecchia della pagina, se ne accorge
    da solo e si ricarica: senza questo si continuerebbero a vedere i comandi
    di ieri per una decina di minuti. */
-window.VOLT_VERSION = 26;
+window.VOLT_VERSION = 27;
 fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   .then(function (r) { return r.json(); })
   .then(function (d) {
@@ -174,12 +174,12 @@ fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   })
   .catch(function () { /* offline: pazienza, si gioca con quello che c'è */ });
 </script>
-<script src="js/util.js?v=26"></script>
-<script src="js/gfx.js?v=26"></script>
-<script src="js/audio.js?v=26"></script>
-<script src="js/input.js?v=26"></script>
-<script src="js/level.js?v=26"></script>
-<script src="js/entities.js?v=26"></script>
-<script src="js/game.js?v=26"></script>
+<script src="js/util.js?v=27"></script>
+<script src="js/gfx.js?v=27"></script>
+<script src="js/audio.js?v=27"></script>
+<script src="js/input.js?v=27"></script>
+<script src="js/level.js?v=27"></script>
+<script src="js/entities.js?v=27"></script>
+<script src="js/game.js?v=27"></script>
 </body>
 </html>

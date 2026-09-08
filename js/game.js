@@ -73,6 +73,7 @@ const Game = {
   mission: null, missionT: 0, wave: 0, waveCool: 0, spawnCool: 0, missionDone: false,
   perks: {}, pendingLevel: 0, shieldGenT: 0, drone: null,
   mode: 'campaign', progress: Store.get('volt_progress', { cleared: false, cp: null }),
+  law: null, lawDef: null, platsOff: false, platT: 0, meteorT: 0, stormOn: false,
   hero: Store.get('volt_hero', 'aren'),
   stormX: -9999,
   camX: 0, camY: 0, shakeAmt: 0, shakeT: 0,
@@ -302,7 +303,7 @@ const Game = {
     const eb = document.getElementById('endlessBtn');
     eb.classList.toggle('locked', !this.progress.cleared);
     eb.textContent = this.progress.cleared
-      ? 'OLTRE LA FRATTURA — modalità infinita'
+      ? 'OLTRE LA FRATTURA — ogni 3 settori cambia una legge'
       : 'Oltre la Frattura — si sblocca finendo la campagna';
   },
 
@@ -310,6 +311,7 @@ const Game = {
 
   toMenu() {
     this.state = 'menu';
+    GRAV = GRAV0; this.law = null; this.lawDef = null; this.platsOff = false;
     document.getElementById('choice').classList.add('hidden');
     document.getElementById('win').classList.add('hidden');
     document.getElementById('cinema').classList.add('hidden');
@@ -348,6 +350,13 @@ const Game = {
     for (const sh of (lv.ships || [])) this.ships.push(new Ship(sh.x, sh.y));
 
     /* missione del settore */
+    /* la legge di questo settore: nella campagna non c'e', oltre la Frattura
+       cambia ogni tre */
+    this.law = lawFor(n, this.mode, lv.boss ? 'boss' : (lv.mission || {}).type);
+    this.lawDef = this.law ? LAWS[this.law] : null;
+    GRAV = GRAV0 * ((this.lawDef && this.lawDef.grav) || 1);
+    this.platsOff = false; this.platT = 0.45; this.meteorT = 2.2;
+
     this.mission = lv.mission || { type: 'hunt' };
     this.missionDone = false;
     this.missionT = this.mission.time || 0;
@@ -358,6 +367,21 @@ const Game = {
       else this.gens.push(new Generator(q.x, q.y - 20, n));
     }
 
+    /* legge GIGANTI: la meta' dei mostri, ma il doppio abbondante di stazza */
+    if (this.law === 'giants') {
+      for (let i = this.enemies.length - 1; i >= 0; i--) {
+        const e = this.enemies[i];
+        if (e.type === 'boss') continue;
+        if (i % 2) { this.enemies.splice(i, 1); continue; }
+        e.w = Math.round(e.w * 1.75); e.h = Math.round(e.h * 1.75);
+        e.y -= e.h * 0.45;
+        e.maxHp = Math.round(e.maxHp * 2.3); e.hp = e.maxHp;
+        e.score = Math.round(e.score * 2.4);
+        e.touch = e.def.touch + 1;
+        e.baseSpeed *= 0.82; e.speed = e.baseSpeed;
+      }
+    }
+
     this.enemiesLeft = this.enemies.length;
     this.portalOn = false; this.portalT = 0;
     if (this.mission.type === 'escape') {
@@ -366,6 +390,10 @@ const Game = {
       this.missionDone = true;
       this.stormX = lv.startX - 340;
     }
+    /* legge TEMPESTA: il muro c'e' comunque, ma piu' lento — qui si combatte
+       davvero, non si scappa soltanto */
+    this.stormOn = this.mission.type === 'escape' || this.law === 'storm';
+    if (this.law === 'storm' && this.mission.type !== 'escape') this.stormX = lv.startX - 620;
     this.sectorTime = 0; this.sectorNoHit = true;
     this.transition = 0;
     this.camX = clamp(p.cx - this.viewW / 2, 0, Math.max(0, lv.pxW - this.viewW));
@@ -398,7 +426,13 @@ const Game = {
         Floaters.add(this.player.cx, this.player.y - 40,
           LYRA_LINES[(n / 2) % LYRA_LINES.length].replace('@', HEROES[this.hero].other), '#ffb3f0', 13);
     }, 2600);
-    if (!lv.boss) setTimeout(() => {
+    if (this.lawDef) setTimeout(() => {
+      if (this.state === 'play' && this.level === n) {
+        this.banner('LEGGE · ' + this.lawDef.name);
+        if (this.player) Floaters.add(this.player.cx, this.player.y - 46, this.lawDef.hint, this.lawDef.col, 14);
+      }
+    }, 1500);
+    else if (!lv.boss) setTimeout(() => {
       if (this.state === 'play' && this.level === n && !this.portalOn) this.banner(md.hint);
     }, 1500);
     if (lv.boss) Sfx.boss(); else Sfx.levelUp();
@@ -733,8 +767,9 @@ const Game = {
     }
 
     /* muro di tempesta: avanza sempre, non si combatte, si corre */
-    if (this.mission && this.mission.type === 'escape' && !p.dead) {
-      this.stormX += (112 + Math.min(90, this.level * 4)) * dt;
+    if (this.stormOn && !p.dead) {
+      const fuga = this.mission && this.mission.type === 'escape';
+      this.stormX += (fuga ? 112 + Math.min(90, this.level * 4) : 52 + Math.min(34, this.level)) * dt;
       if (p.cx < this.stormX + 54 && p.hurt(1)) {
         this.stormX = p.cx - 240;              /* respinta, per non restare dentro */
         p.vx = Math.max(p.vx, 340);
@@ -753,6 +788,24 @@ const Game = {
           (Math.random() - 0.5) * 60, 0.5, 5, '#e79bff', -30, 1);
       }
     }
+
+    /* legge PIOGGIA DI FUOCO: cade roba dal cielo, sempre vicino a te */
+    if (this.law === 'meteors' && !p.dead) {
+      this.meteorT -= dt;
+      if (this.meteorT <= 0) {
+        this.meteorT = 0.85 + Math.random() * 0.7;
+        const mx = clamp(p.cx + (Math.random() - 0.5) * this.viewW * 0.85, 40, lv.pxW - 40);
+        this.bullets.push(new Bullet(mx, this.camY - 40, (Math.random() - 0.5) * 50, 240,
+          { foe: true, col: '#ff8a3d', r: 8, life: 9, grav: 700, bomb: true }));
+      }
+    }
+
+    /* legge PIATTAFORME INSTABILI: reggono finche' ti muovi, poi svaniscono */
+    if (this.law === 'blink') {
+      if (Math.abs(p.vx) > 45 && !p.dead) this.platT = 0.45;
+      else this.platT = Math.max(0, this.platT - dt);
+      this.platsOff = this.platT <= 0;
+    } else this.platsOff = false;
 
     /* combo */
     if (this.comboT > 0) { this.comboT -= dt; if (this.comboT <= 0) this.combo = 0; }
@@ -773,7 +826,7 @@ const Game = {
             this.shake(9, 0.2);
           }
         }
-        else if (p.hurt(e.def.touch)) {
+        else if (p.hurt(e.touch === undefined ? e.def.touch : e.touch)) {
           const away = sign(p.cx - e.cx) || 1;
           p.vx = away * 300; p.vy = -320;
           /* respingo anche il mostro e lo stordisco: senza questo, finita
@@ -1194,7 +1247,7 @@ const Game = {
     const tot = this.mode === 'campaign' ? '/' + CAMPAIGN_END : '';
     const lvName = this.lv.boss
       ? (this.mode === 'campaign' && this.level >= CAMPAIGN_END ? 'IL DIVORATORE' : 'COMANDANTE ' + this.level + tot)
-      : 'SETTORE ' + this.level + tot + ' · ' + md.name;
+      : 'SETTORE ' + this.level + tot + ' · ' + (this.lawDef ? this.lawDef.name : md.name);
     if (c.lvName !== lvName) { c.lvName = lvName; document.getElementById('levelName').textContent = lvName; }
 
     let tg;
@@ -1246,7 +1299,7 @@ const Game = {
     this.drawTiles(ctx, camX, camY, lv);
     if (this.state !== 'menu') {
       this.drawPortal(ctx, camX, camY, lv);
-      if (this.mission && this.mission.type === 'escape') this.drawStorm(ctx, camX);
+      if (this.stormOn) this.drawStorm(ctx, camX);
       for (const g of this.gens) g.draw(ctx, camX, camY);
       for (const c of this.cores) c.draw(ctx, camX, camY);
       for (const sh of this.ships) sh.draw(ctx, camX, camY);
@@ -1260,6 +1313,7 @@ const Game = {
     Particles.draw(ctx, camX, camY);
     Rings.draw(ctx, camX, camY);
     Floaters.draw(ctx, camX, camY);
+    if (this.law === 'dark' && this.state !== 'menu') this.drawDark(ctx, camX, camY);
     if (this.state !== 'menu') {
       this.drawBossBar(ctx);
       this.drawOffscreenHints(ctx, camX, camY, lv);
@@ -1439,6 +1493,9 @@ const Game = {
         if (t !== T_PLAT && t !== T_SPIKE && t !== T_PAD) continue;
         const px = x * TILE - camX, py = y * TILE - camY;
         if (t === T_PLAT) {
+          /* quando la legge le spegne restano un contorno: si vede dove
+             tornerebbero, ma non ci si appoggia */
+          if (this.platsOff) ctx.globalAlpha = 0.22;
           const left = lv.tileAt(x - 1, y) !== T_PLAT, right = lv.tileAt(x + 1, y) !== T_PLAT;
           const ext = (left ? 2 : 0) + (right ? 2 : 0);
           ctx.fillStyle = 'rgba(20,14,45,.20)';
@@ -1446,6 +1503,7 @@ const Game = {
           ctx.fillStyle = th.plat;
           roundRect(ctx, px - (left ? 2 : 0), py, TILE + ext, 13, 6.5); ctx.fill();
           Gfx.gloss(ctx, px + 3, py + 2, TILE - 6, 4, 0.4);
+          ctx.globalAlpha = 1;
         } else if (t === T_SPIKE) {
           ctx.fillStyle = th.spike;
           for (let i = 0; i < 3; i++) {
@@ -1667,6 +1725,40 @@ const Game = {
   },
 
   /* il muro di tempesta che insegue: bordo elettrico e buio dietro */
+  /* legge BUIO: il mondo si spegne e resta acceso solo quello che emette
+     luce — tu, i mostri, i colpi, il portale. Si disegna su una tela a parte
+     e poi si appoggia sopra: cosi il buio non cancella la scena, la copre. */
+  drawDark(ctx, camX, camY) {
+    const W = Math.ceil(this.viewW), H = Math.ceil(this.viewH);
+    let c = this._darkC;
+    if (!c) c = this._darkC = document.createElement('canvas');
+    if (c.width !== W || c.height !== H) { c.width = W; c.height = H; }
+    const d = c.getContext('2d');
+    d.setTransform(1, 0, 0, 1, 0, 0);
+    d.globalCompositeOperation = 'source-over';
+    d.globalAlpha = 1;
+    d.clearRect(0, 0, W, H);
+    d.fillStyle = 'rgba(7,4,22,0.94)';
+    d.fillRect(0, 0, W, H);
+    d.globalCompositeOperation = 'destination-out';
+    const tex = Gfx.glowTex('#ffffff');
+    const buco = (x, y, r, a) => {
+      if (x < -r || x > W + r || y < -r || y > H + r) return;
+      d.globalAlpha = a;
+      d.drawImage(tex, x - r, y - r, r * 2, r * 2);
+    };
+    const p = this.player;
+    if (p) buco(p.cx - camX, p.cy - camY, p.riding ? 210 : 165, 1);
+    for (const e of this.enemies) buco(e.cx - camX, e.cy - camY, e.w * 1.9, 0.8);
+    for (const b of this.bullets) buco(b.x - camX, b.y - camY, 34, 0.85);
+    for (const q of this.pickups) buco(q.x + 10 - camX, q.y + 10 - camY, 46, 0.7);
+    for (const g of this.gens) buco(g.x - camX, g.y - camY, 70, 0.7);
+    for (const co of this.cores) buco(co.x - camX, co.y - camY, 70, 0.75);
+    if (this.portalOn) buco(this.lv.portalX - camX, this.lv.portalY - camY, 120, 0.9);
+    d.globalAlpha = 1;
+    ctx.drawImage(c, 0, 0, this.viewW, this.viewH);
+  },
+
   drawStorm(ctx, camX) {
     const x = this.stormX - camX;
     if (x < -260 || x > this.viewW + 60) return;
