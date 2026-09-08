@@ -9,7 +9,8 @@ const Game = {
   cssW: 0, cssH: 0, dpr: 1, scale: 1, viewW: 0, viewH: 0,
   state: 'menu',
   lv: null, player: null,
-  enemies: [], bullets: [], pickups: [], explosions: [], ships: [],
+  enemies: [], bullets: [], pickups: [], explosions: [], ships: [], cores: [], gens: [],
+  mission: null, missionT: 0, wave: 0, waveCool: 0, spawnCool: 0, missionDone: false,
   camX: 0, camY: 0, shakeAmt: 0, shakeT: 0,
   level: 1, score: 0, best: Store.get('volt_best', 0), kills: 0,
   combo: 0, comboT: 0, maxCombo: 0,
@@ -107,6 +108,7 @@ const Game = {
     this.level = 1; this.score = 0; this.kills = 0;
     this.combo = 0; this.comboT = 0; this.maxCombo = 0;
     this.volt = 0; this.rushT = 0; this.hitStop = 0;
+    this.hasShip = false;
     this.nextLifeAt = LIFE_EVERY;
     if (this.player) this.player.riding = false;
     this.onShipChange();
@@ -141,6 +143,7 @@ const Game = {
     const lv = this.lv;
     this.enemies.length = 0; this.bullets.length = 0;
     this.pickups.length = 0; this.explosions.length = 0; this.ships.length = 0;
+    this.cores.length = 0; this.gens.length = 0;
     if (this.player && this.player.riding) this.player.leaveShip(false);
     Particles.clear(); Floaters.clear(); Rings.clear();
 
@@ -152,13 +155,27 @@ const Game = {
     for (const q of lv.pickups) this.pickups.push(new Pickup(q.x, q.y, Pickup.randomKind()));
     for (const sh of (lv.ships || [])) this.ships.push(new Ship(sh.x, sh.y));
 
+    /* missione del settore */
+    this.mission = lv.mission || { type: 'hunt' };
+    this.missionDone = false;
+    this.missionT = this.mission.time || 0;
+    this.wave = 0; this.waveCool = 1.2; this.spawnCool = 3;
+    for (const q of (this.mission.spots || [])) {
+      if (this.mission.type === 'cores') this.cores.push(new Core(q.x, q.y));
+      else this.gens.push(new Generator(q.x, q.y - 20, n));
+    }
+
     this.enemiesLeft = this.enemies.length;
     this.portalOn = false; this.portalT = 0;
     this.sectorTime = 0; this.sectorNoHit = true;
+    this.transition = 0;
     this.camX = clamp(p.cx - this.viewW / 2, 0, Math.max(0, lv.pxW - this.viewW));
     this.camY = this.clampCamY(p.cy - this.viewH / 2);
-    this.banner(lv.boss ? 'BOSS — ' + lv.theme.name : 'SETTORE ' + n);
-    if (n === 1) setTimeout(() => { if (this.state === 'play' && this.level === 1) this.banner('RIPULISCI E CORRI AL PORTALE'); }, 1700);
+    const md = MISSIONS[this.mission.type] || MISSIONS.hunt;
+    this.banner(lv.boss ? 'BOSS — ' + lv.theme.name : md.name);
+    if (!lv.boss) setTimeout(() => {
+      if (this.state === 'play' && this.level === n && !this.portalOn) this.banner(md.hint);
+    }, 1500);
     if (lv.boss) Sfx.boss(); else Sfx.levelUp();
     Sfx.setIntensity(Math.min(1, n / 14));
   },
@@ -174,6 +191,7 @@ const Game = {
   /* i comandi cambiano forma quando si vola: croce a quattro direzioni
      e il tasto del salto diventa la spinta */
   onShipChange() {
+    this.refreshActionButtons();
     const flying = !!(this.player && this.player.riding);
     document.body.classList.toggle('flying', flying);
     const j = document.getElementById('btnJump');
@@ -203,14 +221,29 @@ const Game = {
 
   addVolt(v) {
     if (this.rushT > 0 || this.state !== 'play') return;
+    const before = this.volt;
     this.volt = clamp(this.volt + v, 0, 100);
-    if (this.volt >= 100) this.startRush();
+    /* a pieno carico il Rush resta in canna: lo fa scattare il giocatore */
+    if (before < 100 && this.volt >= 100) {
+      this.banner('VOLT CARICO!');
+      Sfx.portal();
+      const p = this.player;
+      if (p) Floaters.add(p.cx, p.y - 16, Input.touchMode ? 'PREMI VOLT' : 'PREMI E', '#66ffe0', 15);
+      this.refreshActionButtons();
+    }
+  },
+
+  /* mostra i tasti contestuali solo quando servono davvero */
+  refreshActionButtons() {
+    document.body.classList.toggle('voltready', this.volt >= 100 && this.rushT <= 0 && this.state === 'play');
+    document.body.classList.toggle('hasship', !!this.hasShip && !(this.player && this.player.riding));
   },
 
   startRush() {
     const p = this.player;
-    if (!p || p.dead) return;
+    if (!p || p.dead || this.rushT > 0 || this.volt < 100) return;
     this.volt = 100; this.rushT = 6.5;
+    this.refreshActionButtons();
     p.heat = 0; p.overheat = 0;
     this.banner('VOLT RUSH!');
     this.flashT = 0.22; this.shake(12, 0.3);
@@ -324,6 +357,12 @@ const Game = {
       return;
     }
 
+    if (Input.wantVolt() && this.volt >= 100 && this.rushT <= 0) this.startRush();
+    if (Input.wantShip() && this.hasShip && !p.riding && !p.dead) {
+      this.hasShip = false;
+      p.boardShip({ x: p.cx - 23, y: p.cy - 14 });
+    }
+
     p.update(dt, lv, this.enemies, this.bullets, this.camX, this.camY);
     this.sectorTime += dt;
     if (this.rushT > 0) {
@@ -350,7 +389,7 @@ const Game = {
     }
 
     this.enemiesLeft = this.enemies.length;
-    if (this.enemiesLeft === 0 && !this.portalOn) this.openPortal();
+    this.updateMission(dt);
 
     /* proiettili */
     for (let i = this.bullets.length - 1; i >= 0; i--) {
@@ -364,6 +403,12 @@ const Game = {
             else { p.hurt(b.dmg); Particles.spark(b.x, b.y, -b.vx, -b.vy, b.col); }
           }
         } else {
+          for (const g of this.gens) {
+            if (g.dead || !this.hitCircle(b, g)) continue;
+            g.hurt(b.dmg, b.x);
+            if (b.pierce > 0) b.pierce--; else b.dead = true;
+            break;
+          }
           for (const e of this.enemies) {
             if (e.dead || !this.hitCircle(b, e)) continue;
             e.hurt(b.dmg, b.x);
@@ -393,9 +438,15 @@ const Game = {
     for (let i = this.ships.length - 1; i >= 0; i--) {
       const sh = this.ships[i];
       sh.update(dt);
-      if (!p.dead && !p.riding && this.overlap(p, sh)) {
-        p.boardShip(sh);
+      if (!p.dead && !p.riding && !this.hasShip && this.overlap(p, sh)) {
         this.ships.splice(i, 1);
+        this.hasShip = true;
+        this.refreshActionButtons();
+        this.banner('NAVICELLA PRONTA');
+        Floaters.add(p.cx, p.y - 16, Input.touchMode ? 'PREMI NAVE' : 'PREMI Q', '#8ff0ff', 15);
+        Particles.burst(sh.cx, sh.cy, 30, '#8ff0ff', 280, 4.5, 0);
+        Rings.add(sh.cx, sh.cy, '#ffffff', 100, 0.4, 5);
+        Sfx.pickup();
       }
     }
 
@@ -442,6 +493,7 @@ const Game = {
     this.camY = lerp(this.camY, this.clampCamY(targetY), Math.min(1, dt * 6));
 
     if (this.shakeT > 0) { this.shakeT -= dt; if (this.shakeT <= 0) this.shakeAmt = 0; }
+    this.refreshActionButtons();
 
     Sfx.setIntensity(clamp(0.2 + this.level / 16 + (this.combo > 3 ? 0.2 : 0), 0, 1));
 
@@ -449,6 +501,106 @@ const Game = {
     if (p.dead) {
       this.deathT = (this.deathT || 0) + dt;
       if (this.deathT > 1.1) { this.deathT = 0; this.gameOver(); }
+    }
+  },
+
+  /* ---- missioni ---- */
+  updateMission(dt) {
+    const m = this.mission, p = this.player;
+    if (!m) return;
+
+    /* nuclei e generatori vivono qui */
+    for (let i = this.cores.length - 1; i >= 0; i--) {
+      const c = this.cores[i];
+      c.update(dt);
+      if (!p.dead && this.overlap(p, c)) {
+        this.cores.splice(i, 1);
+        this.addScore(300); this.addVolt(20);
+        Floaters.add(c.cx, c.cy - 12, 'NUCLEO!', '#66ffe0', 17);
+        Particles.burst(c.cx, c.cy, 34, '#66ffe0', 300, 5, 0);
+        Rings.add(c.cx, c.cy, '#ffffff', 90, 0.4, 6);
+        Sfx.pickup();
+      }
+    }
+    for (let i = this.gens.length - 1; i >= 0; i--) {
+      const g = this.gens[i];
+      g.update(dt);
+      if (g.dead) this.gens.splice(i, 1);
+    }
+
+    if (this.missionDone) return;
+    let done = false;
+
+    /* rete di sicurezza: nessun settore puo' diventare una prigione.
+       Se dopo tre minuti l'obiettivo non e' compiuto, il portale si apre lo stesso. */
+    if (this.sectorTime > 180) {
+      this.missionDone = true;
+      this.banner('VIA LIBERA');
+      this.openPortal();
+      return;
+    }
+
+    switch (m.type) {
+      case 'survive':
+        this.missionT = Math.max(0, this.missionT - dt);
+        /* mostri che arrivano di continuo: il settore non si "svuota" */
+        this.spawnCool -= dt;
+        if (this.spawnCool <= 0 && this.enemies.length < 14) {
+          this.spawnCool = Math.max(1.1, 3.2 - this.level * 0.08);
+          this.spawnAroundPlayer(1 + (Math.random() < 0.4 ? 1 : 0));
+        }
+        if (this.missionT <= 0) done = true;
+        break;
+
+      case 'cores':
+        done = this.cores.length === 0;
+        break;
+
+      case 'targets':
+        done = this.gens.length === 0;
+        break;
+
+      case 'assault':
+        this.waveCool -= dt;
+        if (this.enemies.length === 0 && this.waveCool <= 0) {
+          if (this.wave >= (m.waves || 3)) done = true;
+          else {
+            this.wave++;
+            this.waveCool = 0.8;
+            this.spawnAroundPlayer(m.perWave || 4);
+            this.banner('ONDATA ' + this.wave);
+            Sfx.boss();
+          }
+        }
+        break;
+
+      default:   /* caccia e boss */
+        done = this.enemies.length === 0;
+    }
+
+    if (done) {
+      this.missionDone = true;
+      if (m.type !== 'hunt' && m.type !== 'boss') {
+        this.addScore(600);
+        Floaters.add(p.cx, p.cy - 26, 'OBIETTIVO +600', '#4dffd5', 16);
+      }
+      this.openPortal();
+    }
+  },
+
+  /* mostri che entrano in scena dai lati, appena fuori dalla vista */
+  spawnAroundPlayer(count) {
+    const lv = this.lv, p = this.player;
+    const types = ['crawler', 'flyer', 'spitter', 'charger', 'bomber']
+      .slice(0, Math.max(2, Math.min(5, 1 + Math.floor(this.level / 3))));
+    for (let i = 0; i < count; i++) {
+      const side = Math.random() < 0.5 ? -1 : 1;
+      let tx = Math.floor((p.cx + side * (this.viewW * 0.55 + Math.random() * 90)) / TILE);
+      tx = clamp(tx, 3, lv.w - 4);
+      const gy = lv.groundY[tx];
+      const type = types[Math.floor(Math.random() * types.length)];
+      const y = (gy > 0 ? gy - 3 : Math.floor(lv.h * 0.5)) * TILE;
+      this.spawnEnemy(type, tx * TILE, y);
     }
   },
 
@@ -490,10 +642,21 @@ const Game = {
     if (c.heat !== heat) { c.heat = heat; document.getElementById('heatbar').style.width = heat + '%'; }
     if (c.score !== this.score) { c.score = this.score; document.getElementById('score').textContent = this.score; }
 
-    const lvName = (this.lv.boss ? 'BOSS ' : 'SETTORE ') + this.level;
+    const md = MISSIONS[(this.mission || {}).type] || MISSIONS.hunt;
+    const lvName = (this.lv.boss ? 'BOSS ' : 'SETTORE ') + this.level +
+      (this.lv.boss ? '' : ' · ' + md.name);
     if (c.lvName !== lvName) { c.lvName = lvName; document.getElementById('levelName').textContent = lvName; }
 
-    const tg = this.portalOn ? '➜ PORTALE' : 'MOSTRI ' + this.enemiesLeft;
+    let tg;
+    if (this.portalOn) tg = '➜ PORTALE';
+    else {
+      const m = this.mission || { type: 'hunt' };
+      if (m.type === 'survive') tg = 'RESISTI ' + Math.ceil(this.missionT) + 's';
+      else if (m.type === 'cores') tg = 'NUCLEI ' + (m.need - this.cores.length) + '/' + m.need;
+      else if (m.type === 'targets') tg = 'GENERATORI ' + (m.need - this.gens.length) + '/' + m.need;
+      else if (m.type === 'assault') tg = 'ONDATA ' + Math.max(1, this.wave) + '/' + (m.waves || 3);
+      else tg = 'MOSTRI ' + this.enemiesLeft;
+    }
     if (c.tg !== tg) { c.tg = tg; document.getElementById('targets').textContent = tg; }
 
     const cb = this.combo > 1 ? 'COMBO x' + this.combo : '';
@@ -507,7 +670,9 @@ const Game = {
     const volt = Math.round(this.volt);
     if (c.volt !== volt) { c.volt = volt; document.getElementById('voltbar').style.width = volt + '%'; }
     const rush = this.rushT > 0;
-    const voltText = rush ? 'VOLT RUSH ' + this.rushT.toFixed(1) + 's' : 'CARICA VOLT ' + volt + '%';
+    const voltText = rush ? 'VOLT RUSH ' + this.rushT.toFixed(1) + 's'
+      : (this.volt >= 100 ? (Input.touchMode ? 'VOLT PRONTO — PREMI VOLT' : 'VOLT PRONTO — PREMI E')
+                          : 'CARICA VOLT ' + volt + '%');
     if (c.voltText !== voltText) { c.voltText = voltText; document.getElementById('voltState').textContent = voltText; }
     document.querySelector('.power-hud').classList.toggle('rush', rush);
 
@@ -530,6 +695,8 @@ const Game = {
     this.drawTiles(ctx, camX, camY, lv);
     if (this.state !== 'menu') {
       this.drawPortal(ctx, camX, camY, lv);
+      for (const g of this.gens) g.draw(ctx, camX, camY);
+      for (const c of this.cores) c.draw(ctx, camX, camY);
       for (const sh of this.ships) sh.draw(ctx, camX, camY);
       for (const q of this.pickups) q.draw(ctx, camX, camY);
       for (const e of this.enemies) e.draw(ctx, camX, camY);
@@ -833,6 +1000,8 @@ const Game = {
   drawOffscreenHints(ctx, camX, camY, lv) {
     const marks = [];
     for (const sh of this.ships) marks.push({ x: sh.cx, y: sh.cy, col: '#8ff0ff' });
+    for (const c of this.cores) marks.push({ x: c.cx, y: c.cy, col: '#66ffe0' });
+    for (const g of this.gens) marks.push({ x: g.cx, y: g.cy, col: '#ffc247' });
     if (this.portalOn) marks.push({ x: lv.portalX + 16, y: lv.portalY + 24, col: '#7cf7c4' });
     else for (const e of this.enemies) if (!e.dead) marks.push({ x: e.cx, y: e.cy, col: e.def.col });
 

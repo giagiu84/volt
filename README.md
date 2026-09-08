@@ -22,7 +22,11 @@ Con la tastiera si spara dritto davanti a sé; con il mouse si mira dove punta i
 
 **Vite.** Si parte con tre cuori. Ogni **8.000 punti** si conquista una vita; se sei già al massimo, il premio alza il massimo stesso (fino a sei cuori). Il boss lascia un cuore dorato che alza il massimo, e quando resti a una sola vita i mostri lasciano cadere più cuori.
 
-**Navicella.** Un settore su tre, dal terzo in poi, ne ha una parcheggiata a mezz'aria: salici sopra e per 22 secondi si vola. In volo la sfera comanda anche la salita e la discesa, SALTA diventa BOOST e i cannoni sparano doppio. Lo scafo regge tre colpi: quando finisce, o quando finisce il carburante, torni a terra senza perdere vite.
+**Missioni.** Dal terzo settore ognuno pesca una missione diversa: caccia (elimina tutti), sopravvivenza (resisti mentre arrivano ondate), sovraccarico (raccogli tre nuclei), bersagli (distruggi i generatori), assalto (respingi tre ondate). Il portale si apre quando l'obiettivo è compiuto.
+
+**VOLT Rush a comando.** La barra si carica combattendo; quando è piena il Rush non parte da solo: lo attivi tu con `E` (o col tasto VOLT che compare sul telefono), scegliendo il momento.
+
+**Navicella.** Un settore su tre, dal terzo in poi, ne ha una parcheggiata a mezz'aria: raccogliendola resta in attesa finche' non la chiami con `Q` (o col tasto NAVE), anche settori dopo. Una volta chiamata si vola per 15 secondi. In volo la sfera comanda anche la salita e la discesa, SALTA diventa BOOST e i cannoni sparano doppio. Lo scafo regge tre colpi: quando finisce, o quando finisce il carburante, torni a terra senza perdere vite.
 
 Regola del settore: **uccidi tutti i mostri**, il portale si apre, entraci per passare al successivo. Cadere nel vuoto costa una vita ma non la partita: si rientra sull'ultimo appoggio sicuro. Sparare scalda l'arma: se la barra arriva a fondo, il blaster si blocca per un secondo.
 

@@ -22,7 +22,8 @@ const Input = {
   lastPointerT: 0, lastKeyT: 0,
   touchMode: false,
 
-  btn: { jump: false, fire: false },
+  btn: { jump: false, fire: false, volt: false, ship: false },
+  voltEdge: false, shipEdge: false,
   axisX: 0, axisY: 0,
   orb: { x: 0, y: 0, r: 66, active: false, id: null, dx: 0, dy: 0, tDown: 0, lastUp: 0, glow: 0 },
   _fingers: Object.create(null),   /* identifier -> nome pulsante */
@@ -80,6 +81,8 @@ const Input = {
         if (t !== null) this._fingers[t] = name;
         if (!this.btn[name]) {
           if (name === 'jump') this.jumpEdge = true;
+          if (name === 'volt') this.voltEdge = true;
+          if (name === 'ship') this.shipEdge = true;
           if (name === 'left' || name === 'right') {
             if (now - this._lastTap[name] < DTAP_MS) { this.dashEdge = true; this._lastTap[name] = 0; }
             this._downAt = now;
@@ -115,6 +118,8 @@ const Input = {
     };
 
     bind('btnJump', 'jump');
+    bind('btnVolt', 'volt');
+    bind('btnShip', 'ship');
     bind('btnFire', 'fire');
 
     /* --- sfera al plasma: joystick disegnato dal gioco --- */
@@ -238,6 +243,18 @@ const Input = {
     this.dashEdge = false;
     return !!e;
   },
+  /* il Rush e la navicella si attivano quando lo decide il giocatore */
+  wantVolt() {
+    const e = this.voltEdge || this.pressed['e'];
+    this.voltEdge = false;
+    return !!e;
+  },
+  wantShip() {
+    const e = this.shipEdge || this.pressed['q'];
+    this.shipEdge = false;
+    return !!e;
+  },
+
   wantFire() {
     return this.fire || this.btn.fire || !!this.keys['j'] || !!this.keys['x'] || !!this.keys['control'];
   },

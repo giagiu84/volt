@@ -1084,7 +1084,7 @@ class Enemy {
 }
 
 /* ---------- navicella ---------- */
-const SHIP_TIME = 22, SHIP_HP = 3;
+const SHIP_TIME = 15, SHIP_HP = 3;
 
 /* scafo condiviso: lo usano sia la navicella posata sia quella pilotata */
 function drawShipBody(ctx, t, facing, thrust, flash, pilot) {
@@ -1175,6 +1175,98 @@ class Ship {
     ctx.strokeText('SALI!', x, y - 26);
     ctx.fillStyle = '#ffffff';
     ctx.fillText('SALI!', x, y - 26);
+    ctx.restore();
+  }
+}
+
+/* ---------- nucleo VOLT: da raccogliere nella missione SOVRACCARICO ---------- */
+class Core {
+  constructor(x, y) {
+    this.x = x; this.y = y; this.w = 26; this.h = 26;
+    this.t = Math.random() * 5; this.dead = false;
+  }
+  get cx() { return this.x + this.w / 2; }
+  get cy() { return this.y + this.h / 2; }
+  update(dt) { this.t += dt; }
+  draw(ctx, camX, camY) {
+    const bob = Math.sin(this.t * 2.6) * 5;
+    const x = this.cx - camX, y = this.cy - camY + bob;
+    Gfx.light(ctx, x, y, 52 + Math.sin(this.t * 5) * 6, '#66ffe0', 0.6);
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(this.t * 1.1);
+    ctx.fillStyle = '#66ffe0';
+    ctx.beginPath();
+    for (let i = 0; i < 6; i++) {
+      const a = (i / 6) * TAU, r = i % 2 ? 8 : 14;
+      const px = Math.cos(a) * r, py = Math.sin(a) * r;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath(); ctx.fill();
+    ctx.lineWidth = 3; ctx.strokeStyle = OUTLINE; ctx.stroke();
+    ctx.restore();
+    ctx.save();
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.arc(x, y, 5 + Math.sin(this.t * 7) * 1.5, 0, TAU); ctx.fill();
+    ctx.restore();
+  }
+}
+
+/* ---------- generatore: bersaglio della missione BERSAGLI ---------- */
+class Generator {
+  constructor(x, y, level) {
+    this.x = x; this.y = y; this.w = 34; this.h = 44;
+    this.maxHp = 10 + level * 2; this.hp = this.maxHp;
+    this.t = Math.random() * 4; this.flash = 0; this.dead = false;
+  }
+  get cx() { return this.x + this.w / 2; }
+  get cy() { return this.y + this.h / 2; }
+  update(dt) { this.t += dt; this.flash = Math.max(0, this.flash - dt); }
+  hurt(dmg, fromX) {
+    if (this.dead) return;
+    this.hp -= dmg; this.flash = 0.09;
+    Particles.spark(this.cx, this.cy, sign(this.cx - fromX) * 90, -60, '#ffc247');
+    Sfx.hitEnemy();
+    if (this.hp <= 0) this.die();
+  }
+  die() {
+    if (this.dead) return;
+    this.dead = true;
+    Particles.burst(this.cx, this.cy, 50, '#ffc247', 380, 6, 260);
+    Particles.burst(this.cx, this.cy, 20, '#ffffff', 240, 4, 200);
+    Rings.add(this.cx, this.cy, '#ffd9a0', 130, 0.45, 7);
+    Game.shake(16, 0.35);
+    Sfx.bomb();
+    Game.addScore(400);
+    Floaters.add(this.cx, this.cy - 12, '+400', '#ffd166', 17);
+  }
+  draw(ctx, camX, camY) {
+    if (this.dead) return;
+    const x = this.cx - camX, y = this.y - camY;
+    const col = this.flash > 0 ? '#ffffff' : '#ffc247';
+    Gfx.shadow(ctx, x, y + this.h + 2, 46, 0.35);
+    Gfx.light(ctx, x, y + 14, 46, '#ffc247', 0.35 + Math.sin(this.t * 4) * 0.12);
+    ctx.save();
+    ctx.lineWidth = 3; ctx.strokeStyle = OUTLINE;
+    /* basamento */
+    ctx.fillStyle = '#3a4a86';
+    roundRect(ctx, x - 19, y + this.h - 12, 38, 12, 5); ctx.fill(); ctx.stroke();
+    /* colonna */
+    ctx.fillStyle = '#e9f1ff';
+    roundRect(ctx, x - 13, y + 6, 26, this.h - 16, 8); ctx.fill(); ctx.stroke();
+    /* cuore energetico */
+    ctx.fillStyle = col;
+    ctx.beginPath(); ctx.arc(x, y + 16, 9 + Math.sin(this.t * 6) * 1.5, 0, TAU); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,.85)';
+    ctx.beginPath(); ctx.arc(x - 2.5, y + 13.5, 3.4, 0, TAU); ctx.fill();
+    ctx.restore();
+    /* barra vita */
+    const bw = 40, bx = x - bw / 2, by = y - 10;
+    ctx.save();
+    ctx.fillStyle = 'rgba(26,18,52,.45)';
+    roundRect(ctx, bx - 1, by - 1, bw + 2, 7, 3.5); ctx.fill();
+    ctx.fillStyle = '#ffc247';
+    roundRect(ctx, bx, by, bw * (this.hp / this.maxHp), 5, 2.5); ctx.fill();
     ctx.restore();
   }
 }

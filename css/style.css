@@ -83,11 +83,21 @@ body.touch .power-hud{bottom:calc(8px + env(safe-area-inset-bottom));width:min(2
 
 /* azioni in basso a destra */
 .acts{position:absolute;right:calc(12px + env(safe-area-inset-right));
-  bottom:calc(14px + env(safe-area-inset-bottom));width:180px;height:180px;pointer-events:none}
+  bottom:calc(14px + env(safe-area-inset-bottom));width:180px;height:262px;pointer-events:none}
 .tbtn.fire{right:0;bottom:88px;width:94px;height:94px;font-size:15px;
   background:linear-gradient(180deg,#ff7ba4,#ff3d78);box-shadow:0 7px 0 #c62b5c,0 12px 24px rgba(0,0,0,.3)}
 .tbtn.jump{right:96px;bottom:4px;width:84px;height:84px;font-size:15px;
   background:linear-gradient(180deg,#7ce0ff,#22b6f0);box-shadow:0 7px 0 #1088b9,0 12px 22px rgba(0,0,0,.28)}
+.tbtn.volt,.tbtn.ship{display:none;width:60px;height:60px;font-size:11px;letter-spacing:.5px}
+.tbtn.volt{right:6px;bottom:196px;background:linear-gradient(180deg,#ffe89a,#ffc247);
+  box-shadow:0 5px 0 #d1930f,0 8px 18px rgba(0,0,0,.26);color:#4a3200;
+  animation:voltpulse 1s ease-in-out infinite}
+.tbtn.ship{right:74px;bottom:196px;background:linear-gradient(180deg,#b8f2ff,#5ed6ff);
+  box-shadow:0 5px 0 #1d8fbd,0 8px 18px rgba(0,0,0,.26);color:#053348}
+body.voltready .tbtn.volt{display:flex}
+body.hasship .tbtn.ship{display:flex}
+@keyframes voltpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}
+.tbtn.volt.pressed,.tbtn.ship.pressed{animation:none}
 .tbtn.fire.pressed{box-shadow:0 3px 0 #c62b5c,0 6px 14px rgba(0,0,0,.3)}
 .tbtn.jump.pressed{box-shadow:0 3px 0 #1088b9,0 6px 14px rgba(0,0,0,.28)}
 

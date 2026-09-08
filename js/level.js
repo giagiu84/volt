@@ -33,6 +33,17 @@ const THEMES = [
    alla camera di tenere il giocatore alto sullo schermo, sopra i comandi touch. */
 const LEVEL_H = 32;
 
+/* Le missioni: ogni settore ne pesca una. I primi due sono sempre CACCIA,
+   così si impara il gioco prima delle sorprese. */
+const MISSIONS = {
+  hunt:    { name: 'CACCIA',       hint: 'Elimina tutti i mostri' },
+  survive: { name: 'SOPRAVVIVENZA', hint: 'Resisti fino alla fine' },
+  cores:   { name: 'SOVRACCARICO', hint: 'Raccogli i nuclei VOLT' },
+  targets: { name: 'BERSAGLI',     hint: 'Distruggi i generatori' },
+  assault: { name: 'ASSALTO',      hint: 'Respingi le ondate' },
+  boss:    { name: 'BOSS',         hint: 'Abbatti il boss' }
+};
+
 function generateLevel(n) {
   const rng = makeRng(0x9e37 + n * 2654435761);
   const boss = (n % 5 === 0);
@@ -106,6 +117,37 @@ function generateLevel(n) {
     }
   }
 
+  /* --- missione del settore --- */
+  let mission;
+  if (boss) mission = { type: 'boss' };
+  else if (n <= 2) mission = { type: 'hunt' };
+  else {
+    const pool = ['hunt', 'survive', 'cores', 'targets', 'assault'];
+    /* la caccia resta la piu' frequente: e' l'identita' del gioco */
+    const type = pick(rng, ['hunt'].concat(pool));
+    mission = { type };
+    if (type === 'survive') mission.time = 30 + Math.min(12, n);
+    if (type === 'cores') mission.need = 3;
+    if (type === 'targets') mission.need = 3;
+    if (type === 'assault') { mission.waves = 3; mission.perWave = 3 + Math.floor(n / 4); }
+  }
+
+  /* posti dove appoggiare nuclei e generatori: terreno pieno e cielo libero */
+  const spots = [];
+  if (mission.type === 'cores' || mission.type === 'targets') {
+    const wanted = mission.need;
+    for (let t = 0; t < 400 && spots.length < wanted; t++) {
+      const sx = rndInt(rng, 14, w - 8);
+      const top = groundY[sx];
+      if (top < 4 || tiles[at(sx, top - 1)] !== T_EMPTY) continue;
+      if (spots.some(q => Math.abs(q.tx - sx) < 12)) continue;
+      /* i nuclei in alto restano dentro un salto pieno: mai irraggiungibili */
+      const high = mission.type === 'cores' && rng() < 0.4;
+      spots.push({ tx: sx, x: sx * TILE + 6, y: (top - (high ? 4 : 1)) * TILE - 4 });
+    }
+  }
+  mission.spots = spots;
+
   /* --- navicella: un settore su tre, dal terzo in poi --- */
   const ships = [];
   if (!boss && n >= 3 && n % 3 === 0) {
@@ -153,7 +195,9 @@ function generateLevel(n) {
       spawns.push({ type: pick(rng, types), x: sx * TILE, y: sy * TILE });
     }
   } else {
-    const count = Math.min(6 + Math.floor(n * 1.6), 26);
+    let count = Math.min(6 + Math.floor(n * 1.6), 26);
+    if (mission.type === 'cores' || mission.type === 'targets') count = Math.round(count * 0.6);
+    if (mission.type === 'survive' || mission.type === 'assault') count = Math.round(count * 0.45);
     let attempts = 0;
     while (spawns.length < count && attempts < count * 30) {
       attempts++;
@@ -197,7 +241,7 @@ function generateLevel(n) {
     clouds.push({ x: rng(), y: rndRange(rng, 0.04, 0.42), s: rndRange(rng, 0.55, 1.5), spd: rndRange(rng, 3, 11) });
 
   return {
-    n, boss, theme, w, h, tiles, spawns, pickups, hills, clouds, motes, ships,
+    n, boss, theme, w, h, tiles, spawns, pickups, hills, clouds, motes, ships, mission,
     pxW: w * TILE, pxH: h * TILE,
     startX: 5 * TILE, startY: (groundY[5] - 2) * TILE,
     portalX: (w - 3) * TILE, portalY: (groundY[w - 3] - 2) * TILE,
