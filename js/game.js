@@ -482,11 +482,13 @@ const Game = {
     }
   },
 
-  /* I custodi girano sul piedistallo. Le viste vengono dai turnaround, quindi
-     combaciano fra loro; fra una posa e l'altra c'è una dissolvenza, così il
-     cambio non si vede. */
+  /* Presentazione dei custodi.
+     Niente rotazione: con tre disegni non esiste modo di girare una figura
+     senza che scatti. Fermi, illuminati e vivi, come nelle schermate di
+     selezione dei giochi di oggi, che infatti non ruotano i personaggi. */
   drawHeroPicks(dt) {
     this.heroSpin = (this.heroSpin || 0) + dt;
+    if (this._pick === undefined) this._pick = {};
     for (const id of ['aren', 'lyra']) {
       const cv = document.getElementById(id === 'aren' ? 'canvAren' : 'canvLyra');
       if (!cv) continue;
@@ -494,68 +496,102 @@ const Game = {
       const W = cv.width, H = cv.height;
       g.clearRect(0, 0, W, H);
       const sel = this.hero === id;
-      const t = this.heroSpin + (id === 'lyra' ? 1.3 : 0);
+      const t = this.heroSpin + (id === 'lyra' ? 1.7 : 0);
       const col = id === 'aren' ? '#22c8f5' : '#ff5d8f';
-      const baseY = H * 0.80;
+      const baseY = H * 0.82;
 
-      /* piedistallo: due anelli che ruotano in senso opposto */
+      /* quanto è "acceso": sale e scende con dolcezza quando cambi scelta */
+      const k = this._pick[id] === undefined ? (sel ? 1 : 0) : this._pick[id];
+      this._pick[id] = k + ((sel ? 1 : 0) - k) * Math.min(1, dt * 6);
+      const on = this._pick[id];
+
+      /* alone dietro la figura */
+      g.save();
+      g.translate(W / 2, H * 0.5);
+      const halo = g.createRadialGradient(0, 0, 6, 0, 0, W * 0.62);
+      halo.addColorStop(0, Gfx.alpha(col, 0.10 + on * 0.26));
+      halo.addColorStop(1, Gfx.alpha(col, 0));
+      g.fillStyle = halo;
+      g.beginPath(); g.ellipse(0, 0, W * 0.62, H * 0.52, 0, 0, TAU); g.fill();
+      g.restore();
+
+      /* pedana: ellisse luminosa con un anello che pulsa */
       g.save();
       g.translate(W / 2, baseY);
-      const grd = g.createRadialGradient(0, 0, 4, 0, 0, 78);
-      grd.addColorStop(0, Gfx.alpha(col, sel ? 0.55 : 0.18));
-      grd.addColorStop(1, Gfx.alpha(col, 0));
-      g.fillStyle = grd;
-      g.beginPath(); g.ellipse(0, 0, 78, 28, 0, 0, TAU); g.fill();
-      for (let r = 0; r < 2; r++) {
-        const rot = t * (r ? -0.9 : 1.3);
-        g.save();
-        g.rotate(0);
-        g.strokeStyle = Gfx.alpha(col, sel ? 0.85 - r * 0.35 : 0.3 - r * 0.12);
-        g.lineWidth = 3 - r;
-        g.beginPath();
-        /* anello tratteggiato che gira */
-        const rr = 50 - r * 13, seg = 10 + r * 4;
-        for (let i = 0; i < seg; i++) {
-          const a0 = rot + (i / seg) * TAU, a1 = a0 + TAU / seg * 0.55;
-          g.moveTo(Math.cos(a0) * rr, Math.sin(a0) * rr * 0.32);
-          g.lineTo(Math.cos(a1) * rr, Math.sin(a1) * rr * 0.32);
-        }
-        g.stroke();
-        g.restore();
+      const pg = g.createRadialGradient(0, 0, 3, 0, 0, 64);
+      pg.addColorStop(0, Gfx.alpha(col, 0.30 + on * 0.45));
+      pg.addColorStop(1, Gfx.alpha(col, 0));
+      g.fillStyle = pg;
+      g.beginPath(); g.ellipse(0, 0, 64, 20, 0, 0, TAU); g.fill();
+      const puls = (t * 0.55) % 1;
+      g.strokeStyle = Gfx.alpha('#ffffff', (1 - puls) * (0.15 + on * 0.5));
+      g.lineWidth = 2;
+      g.beginPath(); g.ellipse(0, 0, 24 + puls * 34, (24 + puls * 34) * 0.31, 0, 0, TAU); g.stroke();
+      g.restore();
+
+      const breathe = 1 + Math.sin(t * 1.7) * 0.014;
+      const h = H * (0.78 + on * 0.06);
+      const dip = Math.sin(t * 1.7) * 1.6;
+
+      /* riflesso sul pavimento */
+      g.save();
+      g.translate(W / 2, baseY + 2);
+      g.scale(1, -0.34);
+      g.globalAlpha = 0.14 + on * 0.12;
+      if (!HeroArt.drawFront(g, id, h)) {
+        g.scale(1.9, 1.9); g.translate(0, -22);
+        drawHeroPose(g, HEROES[id], 0, t, 1);
       }
       g.restore();
 
-      /* scintille che salgono dal piedistallo, solo per quello scelto */
-      if (sel) {
+      /* la figura */
+      g.save();
+      g.translate(W / 2, baseY + 3 + dip);
+      g.scale(1, breathe);
+      g.globalAlpha = 0.55 + on * 0.45;
+      const disegnata = HeroArt.drawFront(g, id, h);
+      if (!disegnata) {
+        g.scale(1.95, 1.95); g.translate(0, -22);
+        drawHeroPose(g, HEROES[id], 0, t, 1);
+      }
+      g.restore();
+
+      /* riflesso di luce che scorre sulla figura, ogni tanto */
+      if (disegnata && on > 0.05) {
+        const sweep = (t * 0.42) % 3;          /* passa una volta ogni tre secondi */
+        if (sweep < 1) {
+          g.save();
+          g.globalCompositeOperation = 'source-atop';
+          g.translate(W / 2, baseY + 3 + dip);
+          g.scale(1, breathe);
+          HeroArt.drawFront(g, id, h);          /* ridisegno per avere la sagoma */
+          const y = -h + sweep * h * 1.2;
+          const lg = g.createLinearGradient(0, y - h * 0.18, 0, y + h * 0.18);
+          lg.addColorStop(0, 'rgba(255,255,255,0)');
+          lg.addColorStop(0.5, 'rgba(255,255,255,' + (0.34 * on) + ')');
+          lg.addColorStop(1, 'rgba(255,255,255,0)');
+          g.fillStyle = lg;
+          g.fillRect(-W, y - h * 0.2, W * 2, h * 0.4);
+          g.restore();
+        }
+      }
+
+      /* scintille che salgono attorno a chi è scelto */
+      if (on > 0.15) {
         g.save();
         g.fillStyle = col;
-        for (let i = 0; i < 7; i++) {
-          const ph = (t * 0.55 + i / 7) % 1;
-          const a = i * 2.4 + t * 0.5;
-          g.globalAlpha = (1 - ph) * 0.75;
-          const rr = 34 + Math.sin(a) * 14;
+        for (let i = 0; i < 8; i++) {
+          const ph = (t * 0.5 + i / 8) % 1;
+          const a = i * 2.4 + t * 0.4;
+          g.globalAlpha = (1 - ph) * 0.7 * on;
+          const rr = 30 + Math.sin(a) * 16;
           g.beginPath();
-          g.arc(W / 2 + Math.cos(a) * rr, baseY - ph * H * 0.5 + Math.sin(a) * 4,
-                2.2 - ph, 0, TAU);
+          g.arc(W / 2 + Math.cos(a) * rr, baseY - ph * H * 0.62 + Math.sin(a) * 4,
+                2.4 - ph * 1.4, 0, TAU);
           g.fill();
         }
         g.restore();
       }
-
-      /* il custode gira: quello scelto più svelto, l'altro con calma */
-      const breathe = 1 + Math.sin(t * 1.8) * 0.012;
-      const h = H * (sel ? 0.82 : 0.71);
-      const ang = t * (sel ? 0.85 : 0.42) + (id === 'lyra' ? 2.2 : 0);
-      g.save();
-      g.globalAlpha = sel ? 1 : 0.72;
-      g.translate(W / 2, baseY + 3);
-      g.scale(1, breathe);
-      if (!HeroArt.draw(g, id, ang, h)) {
-        g.scale(sel ? 2.05 : 1.85, sel ? 2.05 : 1.85);
-        g.translate(0, -22);
-        drawHeroPose(g, HEROES[id], ang, t, 1);
-      }
-      g.restore();
     }
   },
 
