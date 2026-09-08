@@ -73,6 +73,8 @@ class Bullet {
     this.pierce = opt.pierce || 0;
     this.grav = opt.grav || 0;
     this.bomb = !!opt.bomb;
+    this.bounces = opt.bounces || 0;
+    this.freeze = !!opt.freeze;
     this.dead = false;
     this.trail = 0;
   }
@@ -83,10 +85,21 @@ class Bullet {
     this.y += this.vy * dt;
     if (this.life <= 0) { this.dead = true; return; }
     if (lv.solidAt(this.x, this.y)) {
-      this.dead = true;
-      Particles.spark(this.x, this.y, -this.vx, -this.vy, this.col);
-      Rings.add(this.x, this.y, this.col, 22, 0.2, 3);
-      if (this.bomb) this.explode();
+      if (this.bounces > 0) {
+        /* rimbalzo: capisco da che lato ho toccato e inverto quell'asse */
+        this.bounces--;
+        this.x -= this.vx * dt; this.y -= this.vy * dt;
+        if (lv.solidAt(this.x + this.vx * dt, this.y)) this.vx = -this.vx;
+        else this.vy = -this.vy;
+        Particles.spark(this.x, this.y, this.vx, this.vy, this.col);
+        Rings.add(this.x, this.y, this.col, 18, 0.18, 2.5);
+        Sfx.tone(700, 0.05, 'square', 0.04, 300);
+      } else {
+        this.dead = true;
+        Particles.spark(this.x, this.y, -this.vx, -this.vy, this.col);
+        Rings.add(this.x, this.y, this.col, 22, 0.2, 3);
+        if (this.bomb) this.explode();
+      }
     }
     this.trail -= dt;
     if (this.trail <= 0) {
@@ -370,7 +383,7 @@ class Player {
 
     if (Input.wantJump()) this.buffer = 0.13;
     this.buffer = Math.max(0, this.buffer - dt);
-    if (this.onGround) { this.coyote = 0.11; this.jumpsLeft = 2; }
+    if (this.onGround) { this.coyote = 0.11; this.jumpsLeft = Game.hasPerk('jump3') ? 3 : 2; }
     else this.coyote = Math.max(0, this.coyote - dt);
 
     if (this.buffer > 0) {
@@ -379,7 +392,8 @@ class Player {
         const doubleJump = !(this.coyote > 0);
         this.vy = doubleJump ? -720 : -790;
         this.buffer = 0; this.coyote = 0;
-        this.jumpsLeft = doubleJump ? 0 : 1;
+        this.jumpsLeft = doubleJump ? Math.max(0, this.jumpsLeft - 1)
+                                    : (Game.hasPerk('jump3') ? 2 : 1);
         this.dashT = 0;
         Sfx.jump();
         Particles.burst(this.cx, this.y + this.h, doubleJump ? 12 : 8, '#ffffff', 170, 3.5, 240);
@@ -469,8 +483,16 @@ class Player {
     const spd = W === 'laser' ? 1500 : 900;
     const rush = Game.rushT > 0;
     const heatBefore = this.heat;
+    const bonus = Game.perkLevel('power');
+    const extra = {
+      bounces: Game.hasPerk('bounce') ? 1 : 0,
+      freeze: Game.hasPerk('freeze')
+    };
     const mk = (ang, opt) => {
-      const o = Object.assign({ dmg: rush ? 2 : 1, r: rush ? 5.5 : 4.5, col: rush ? '#75ffe0' : '#38e8ff', life: 1.4 }, opt || {});
+      const o = Object.assign({ dmg: rush ? 2 : 1, r: rush ? 5.5 : 4.5, col: rush ? '#75ffe0' : '#38e8ff', life: 1.4 },
+                              opt || {}, extra);
+      o.dmg += bonus;
+      if (extra.freeze) o.col = '#7fe8ff';
       bullets.push(new Bullet(bx, by, Math.cos(ang) * spd, Math.sin(ang) * spd, o));
     };
     const base = Math.atan2(this.aimY, this.aimX);
@@ -492,6 +514,9 @@ class Player {
       this.fireCd *= 0.68;
       this.heat = heatBefore + (this.heat - heatBefore) * 0.42;
     }
+    /* raffica: si spara più in fretta e si scalda di meno */
+    const rf = Game.perkLevel('rapidfire');
+    if (rf) { this.fireCd *= (1 - 0.13 * rf); this.heat -= (this.heat - heatBefore) * 0.25 * rf; }
     this.muzzle = 0.07;
     this.vx -= this.aimX * 26;
     Particles.spark(bx, by, this.aimX * 200, this.aimY * 200, '#ffffff');
@@ -519,7 +544,9 @@ class Player {
   boardShip(ship) {
     if (this.crouch) { this.y -= 12; this.h = 30; this.crouch = false; }
     this.riding = true;
-    this.shipHp = SHIP_HP; this.shipT = SHIP_TIME; this.shipFlash = 0;
+    const hull = Game.perkLevel('hull');
+    this.shipHp = SHIP_HP + hull; this.shipMax = SHIP_HP + hull;
+    this.shipT = SHIP_TIME + hull * 5; this.shipFlash = 0;
     this.w = 46; this.h = 28;
     this.x = ship.x; this.y = ship.y;
     this.vx = 0; this.vy = 0; this.dashT = 0;
@@ -674,7 +701,7 @@ class Player {
     }
     /* scafo residuo sopra la navicella */
     ctx.save();
-    for (let i = 0; i < SHIP_HP; i++) {
+    for (let i = 0; i < (this.shipMax || SHIP_HP); i++) {
       ctx.fillStyle = i < this.shipHp ? '#8ff0ff' : 'rgba(255,255,255,.22)';
       roundRect(ctx, x - 17 + i * 12, y - 26, 9, 5, 2.5); ctx.fill();
     }
@@ -813,15 +840,20 @@ class Enemy {
     this.tier = tier || 1;
     this.phase = 0;
     this.awake = false; this.hunting = false; this.jumped = false;
+    this.baseSpeed = this.speed; this.slow = 0;
     if (type === 'boss') { this.w = 76; this.h = 76; }
   }
   get cx() { return this.x + this.w / 2; }
   get cy() { return this.y + this.h / 2; }
 
-  hurt(dmg, fromX) {
+  hurt(dmg, fromX, freeze) {
     if (this.dead) return;
     this.hp -= dmg;
     this.flash = 0.09;
+    if (freeze) {
+      this.slow = 1.6 + Game.perkLevel('freeze') * 0.6;
+      Particles.burst(this.cx, this.cy, 6, '#9fe8ff', 130, 3, 60);
+    }
     Particles.spark(this.cx, this.cy, sign(this.cx - fromX) * 100, -60, this.def.col);
     if (this.hp <= 0) { this.die(); return; }
     Sfx.hitEnemy();
@@ -844,6 +876,8 @@ class Enemy {
     this.t += dt;
     this.flash = Math.max(0, this.flash - dt);
     this.stun = Math.max(0, this.stun - dt);
+    this.slow = Math.max(0, this.slow - dt);
+    this.speed = this.baseSpeed * (this.slow > 0 ? 0.42 : 1);
     this.cool -= dt;
     const dx = player.cx - this.cx, dy = player.cy - this.cy;
     const distX = Math.abs(dx), distY = Math.abs(dy);
@@ -1000,6 +1034,7 @@ class Enemy {
     const py = Game.player ? Game.player.cy - this.cy : 0;
 
     Gfx.shadow(ctx, x, feet + 2, this.w * 1.5, this.onGround ? 0.4 : 0.2);
+    if (this.slow > 0) Gfx.light(ctx, x, y, this.w * 1.1, '#7fe8ff', 0.4);
 
     ctx.save();
     ctx.translate(x, y);

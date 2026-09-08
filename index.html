@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=11">
+<link rel="stylesheet" href="css/style.css?v=12">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>%E2%9A%A1</text></svg>">
 </head>
 <body>
@@ -63,7 +63,7 @@
         <h1 class="logo">VOLT</h1>
         <div class="bolt">⚡</div>
       </div>
-      <p class="tag">Corri. Combatti. Entra in sovraccarico.</p>
+      <p class="tag">Hanno preso Lyra. Hanno spento Lumina. Ora VOLT accende la guerra.</p>
       <div class="feature-row" aria-label="Caratteristiche della partita">
         <span>MONDI INFINITI</span><span>BOSS</span><span>VOLT RUSH</span>
       </div>
@@ -82,6 +82,15 @@
         <div class="help-row muted">Elimina i nemici senza fermarti: riempi la barra VOLT e scatena automaticamente il Rush.</div>
       </div>
       <button id="muteBtn" class="mini-btn">Audio: ON</button>
+    </div>
+  </div>
+
+  <div id="choice" class="overlay hidden">
+    <div class="panel choice-panel">
+      <h2 class="ptitle">POTENZIAMENTO</h2>
+      <p class="choice-sub">Lyra ti lascia tre frammenti. Prendine uno.</p>
+      <div id="choiceCards" class="cards"></div>
+      <div class="choice-hint">Su PC: <span class="key">1</span> <span class="key">2</span> <span class="key">3</span></div>
     </div>
   </div>
 
@@ -115,7 +124,7 @@
 /* Se il telefono ha in cache una versione vecchia della pagina, se ne accorge
    da solo e si ricarica: senza questo si continuerebbero a vedere i comandi
    di ieri per una decina di minuti. */
-window.VOLT_VERSION = 11;
+window.VOLT_VERSION = 12;
 fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   .then(function (r) { return r.json(); })
   .then(function (d) {
@@ -129,12 +138,12 @@ fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   })
   .catch(function () { /* offline: pazienza, si gioca con quello che c'è */ });
 </script>
-<script src="js/util.js?v=11"></script>
-<script src="js/gfx.js?v=11"></script>
-<script src="js/audio.js?v=11"></script>
-<script src="js/input.js?v=11"></script>
-<script src="js/level.js?v=11"></script>
-<script src="js/entities.js?v=11"></script>
-<script src="js/game.js?v=11"></script>
+<script src="js/util.js?v=12"></script>
+<script src="js/gfx.js?v=12"></script>
+<script src="js/audio.js?v=12"></script>
+<script src="js/input.js?v=12"></script>
+<script src="js/level.js?v=12"></script>
+<script src="js/entities.js?v=12"></script>
+<script src="js/game.js?v=12"></script>
 </body>
 </html>

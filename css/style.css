@@ -179,6 +179,30 @@ body.is-touch .help .help-row{margin-bottom:8px;line-height:1.65}
 .rank{width:max-content;margin:14px auto 2px;padding:7px 16px;border-radius:999px;background:linear-gradient(135deg,#554cff,#b555ff);
   color:#fff;font:700 16px 'Fredoka',sans-serif;letter-spacing:1px;box-shadow:0 7px 18px rgba(97,73,225,.28)}
 
+/* ---------- Scelta del potenziamento ---------- */
+.choice-panel{width:min(680px,96vw)}
+.choice-sub{margin:-8px 0 18px;font-size:13px;font-weight:800;color:var(--ink-soft)}
+.cards{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.card{flex:1 1 170px;max-width:200px;min-height:150px;padding:16px 12px;border:0;cursor:pointer;
+  border-radius:20px;background:#fff;text-align:center;font-family:inherit;
+  box-shadow:0 6px 0 rgba(36,26,77,.12),0 10px 24px rgba(10,6,36,.14);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  transition:transform .08s,box-shadow .08s}
+.card:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(36,26,77,.12)}
+.card .ic{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+  font-size:26px;color:#fff}
+.card .nm{font-family:'Fredoka',sans-serif;font-weight:600;font-size:16px;color:var(--ink);line-height:1.1}
+.card .ds{font-size:11.5px;font-weight:700;line-height:1.45;color:var(--ink-soft)}
+.card .lv{font-size:10px;font-weight:900;letter-spacing:1px;color:var(--accent-d)}
+.choice-hint{margin-top:16px;font-size:11px;font-weight:800;color:var(--ink-soft);opacity:.8}
+@media (max-width:520px){
+  .cards{gap:8px}
+  .card{flex:1 1 100px;min-height:132px;padding:12px 8px;border-radius:16px}
+  .card .ic{width:42px;height:42px;font-size:21px;border-radius:13px}
+  .card .nm{font-size:13.5px}
+  .card .ds{font-size:10.5px}
+}
+
 /* ---------- Banner ---------- */
 .banner{position:absolute;top:30%;left:0;right:0;text-align:center;pointer-events:none;z-index:4}
 .banner span{display:inline-block;font-family:'Fredoka',sans-serif;font-weight:700;

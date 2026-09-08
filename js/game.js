@@ -4,6 +4,35 @@
 const MINW = 580, MINH = 400, MAXSCALE = 2.8;
 const LIFE_EVERY = 8000;      /* punti necessari per una vita in più */
 
+/* I potenziamenti: si scelgono uno per settore e restano per tutta la partita.
+   `max` limita quante volte si possono ripetere. */
+const PERKS = [
+  { id: 'bounce',  name: 'RIMBALZO',    ic: '⤡', col: '#7c8cff', max: 1,
+    ds: 'I tuoi colpi rimbalzano una volta sulle pareti' },
+  { id: 'jump3',   name: 'TRIPLO SALTO', ic: '⇧', col: '#22c8f5', max: 1,
+    ds: 'Un salto in più a mezz\'aria' },
+  { id: 'boom',    name: 'DASH ESPLOSIVO', ic: '✹', col: '#ff8a3d', max: 1,
+    ds: 'Lo scatto danneggia i mostri che attraversi' },
+  { id: 'freeze',  name: 'COLPI GELIDI', ic: '❄', col: '#5ed6ff', max: 2,
+    ds: 'I colpi rallentano i mostri colpiti' },
+  { id: 'shieldgen', name: 'SCUDO VIVO', ic: '◉', col: '#48d7ff', max: 2,
+    ds: 'Uno scudo si rigenera ogni 18 secondi' },
+  { id: 'rushlong', name: 'RUSH LUNGO', ic: '⚡', col: '#ffc247', max: 3,
+    ds: 'Rush più lungo e carica più in fretta' },
+  { id: 'hull',    name: 'NAVE CORAZZATA', ic: '▲', col: '#8ff0ff', max: 2,
+    ds: 'La navicella regge più colpi e dura di più' },
+  { id: 'power',   name: 'COLPI PESANTI', ic: '✦', col: '#ff5d8f', max: 3,
+    ds: 'Più danno a ogni colpo' },
+  { id: 'rapidfire', name: 'RAFFICA', ic: '»', col: '#5ee08a', max: 3,
+    ds: 'Spari più veloce e scaldi di meno' },
+  { id: 'heart',   name: 'CUORE IN PIÙ', ic: '♥', col: '#ff2f6e', max: 3,
+    ds: 'Una vita massima in più, e ti cura' },
+  { id: 'magnet',  name: 'CALAMITA', ic: '◎', col: '#c98ff7', max: 1,
+    ds: 'Gli oggetti volano verso di te' },
+  { id: 'luck',    name: 'FORTUNA', ic: '★', col: '#ffd166', max: 2,
+    ds: 'I mostri lasciano molti più oggetti' }
+];
+
 const Game = {
   canvas: null, ctx: null,
   cssW: 0, cssH: 0, dpr: 1, scale: 1, viewW: 0, viewH: 0,
@@ -11,6 +40,7 @@ const Game = {
   lv: null, player: null,
   enemies: [], bullets: [], pickups: [], explosions: [], ships: [], cores: [], gens: [],
   mission: null, missionT: 0, wave: 0, waveCool: 0, spawnCool: 0, missionDone: false,
+  perks: {}, pendingLevel: 0, shieldGenT: 0,
   stormX: -9999,
   camX: 0, camY: 0, shakeAmt: 0, shakeT: 0,
   level: 1, score: 0, best: Store.get('volt_best', 0), kills: 0,
@@ -56,6 +86,10 @@ const Game = {
     document.getElementById('menuBtn').onclick = () => this.toMenu();
     addEventListener('keydown', (e) => {
       const k = e.key.toLowerCase();
+      if (this.state === 'choice' && (k === '1' || k === '2' || k === '3')) {
+        this.takePerk(Number(k) - 1);
+        return;
+      }
       if (k !== 'escape' && k !== 'p') return;
       if (this.state === 'pause') this.setPause(false);
       else if (this.state === 'play') this.setPause(true);
@@ -110,6 +144,7 @@ const Game = {
     this.combo = 0; this.comboT = 0; this.maxCombo = 0;
     this.volt = 0; this.rushT = 0; this.hitStop = 0;
     this.hasShip = false;
+    this.perks = {}; this.shieldGenT = 0;
     this.nextLifeAt = LIFE_EVERY;
     if (this.player) this.player.riding = false;
     this.onShipChange();
@@ -123,6 +158,7 @@ const Game = {
 
   toMenu() {
     this.state = 'menu';
+    document.getElementById('choice').classList.add('hidden');
     Sfx.stopMusic();
     document.getElementById('menu').classList.remove('hidden');
     document.getElementById('over').classList.add('hidden');
@@ -232,6 +268,7 @@ const Game = {
     const before = this.volt;
     this.volt = clamp(this.volt + v, 0, 100);
     /* a pieno carico il Rush resta in canna: lo fa scattare il giocatore */
+    if (this.hasPerk('rushlong')) this.volt = clamp(before + v * (1 + this.perkLevel('rushlong') * 0.2), 0, 100);
     if (before < 100 && this.volt >= 100) {
       this.banner('VOLT CARICO!');
       Sfx.portal();
@@ -250,7 +287,7 @@ const Game = {
   startRush() {
     const p = this.player;
     if (!p || p.dead || this.rushT > 0 || this.volt < 100) return;
-    this.volt = 100; this.rushT = 6.5;
+    this.volt = 100; this.rushT = 6.5 + this.perkLevel('rushlong') * 1.8;
     this.refreshActionButtons();
     p.heat = 0; p.overheat = 0;
     this.banner('VOLT RUSH!');
@@ -297,7 +334,8 @@ const Game = {
 
     /* all'ultima vita il gioco allunga la mano: più oggetti, più cuori */
     const lowHp = this.player && this.player.hp <= 1;
-    const dropChance = e.type === 'boss' ? 1 : (lowHp ? 0.30 : 0.17);
+    let dropChance = e.type === 'boss' ? 1 : (lowHp ? 0.30 : 0.17);
+    dropChance += this.perkLevel('luck') * 0.22;
     if (Math.random() < dropChance) {
       let kind = Pickup.randomKind();
       if (lowHp && Math.random() < 0.5) kind = 'heart';
@@ -360,7 +398,10 @@ const Game = {
 
     if (this.transition > 0) {
       this.transition -= dt;
-      if (this.transition <= 0) { this.level++; this.loadLevel(this.level, false); }
+      if (this.transition <= 0) {
+        this.pendingLevel = this.level + 1;
+        this.openChoice();
+      }
       Particles.update(dt);
       return;
     }
@@ -375,7 +416,8 @@ const Game = {
     this.sectorTime += dt;
     if (this.rushT > 0) {
       this.rushT = Math.max(0, this.rushT - dt);
-      this.volt = this.rushT > 0 ? clamp((this.rushT / 6.5) * 100, 0, 100) : 0;
+      const full = 6.5 + this.perkLevel('rushlong') * 1.8;
+      this.volt = this.rushT > 0 ? clamp((this.rushT / full) * 100, 0, 100) : 0;
       if (this.rushT === 0) Floaters.add(p.cx, p.y - 10, 'RUSH TERMINATO', '#b9d9ff', 13);
     }
 
@@ -411,7 +453,15 @@ const Game = {
       if (e.dead) { this.enemies.splice(i, 1); continue; }
       /* danno da contatto */
       if (!p.dead && this.overlap(p, e)) {
-        if (p.dashT > 0) { e.hurt(2, p.cx); }
+        if (p.dashT > 0) {
+          const boom = this.hasPerk('boom');
+          e.hurt(boom ? 6 : 2, p.cx, this.hasPerk('freeze'));
+          if (boom) {
+            Rings.add(e.cx, e.cy, '#ffb37a', 80, 0.3, 6);
+            Particles.burst(e.cx, e.cy, 18, '#ff8a3d', 280, 4.5, 160);
+            this.shake(9, 0.2);
+          }
+        }
         else if (p.hurt(e.def.touch)) {
           p.vx = sign(p.cx - e.cx) * 300; p.vy = -320;
         }
@@ -441,7 +491,7 @@ const Game = {
           }
           for (const e of this.enemies) {
             if (e.dead || !this.hitCircle(b, e)) continue;
-            e.hurt(b.dmg, b.x);
+            e.hurt(b.dmg, b.x, b.freeze);
             if (b.pierce > 0) b.pierce--; else { b.dead = true; }
             break;
           }
@@ -486,6 +536,28 @@ const Game = {
       q.update(dt, lv);
       if (!q.dead && !p.dead && this.overlap(p, q)) { p.give(q.kind); q.dead = true; }
       if (q.dead || q.y > lv.pxH + 100) this.pickups.splice(i, 1);
+    }
+
+    /* scudo che si rigenera da solo */
+    if (this.hasPerk('shieldgen') && !p.dead) {
+      this.shieldGenT -= dt;
+      if (this.shieldGenT <= 0) {
+        this.shieldGenT = 18;
+        const cap = 1 + this.perkLevel('shieldgen');
+        if (p.shield < cap) {
+          p.shield++;
+          Floaters.add(p.cx, p.y - 10, '+SCUDO', '#48d7ff', 15);
+          Rings.add(p.cx, p.cy, '#9be9ff', 70, 0.35, 5);
+          Sfx.pickup();
+        }
+      }
+    }
+    /* calamita: gli oggetti vengono a te */
+    if (this.hasPerk('magnet') && !p.dead) {
+      for (const q of this.pickups) {
+        const dx = p.cx - q.x, dy = p.cy - q.y, d = Math.hypot(dx, dy);
+        if (d < 190 && d > 1) { q.x += (dx / d) * 260 * dt; q.y += (dy / d) * 260 * dt; }
+      }
     }
 
     Particles.update(dt);
@@ -534,6 +606,62 @@ const Game = {
     }
   },
 
+  /* ---- potenziamenti ---- */
+  perkLevel(id) { return this.perks[id] || 0; },
+  hasPerk(id) { return (this.perks[id] || 0) > 0; },
+
+  openChoice() {
+    /* tre proposte diverse fra quelle non ancora esaurite */
+    const pool = PERKS.filter(p => this.perkLevel(p.id) < p.max);
+    const pick3 = [];
+    while (pick3.length < 3 && pool.length) {
+      pick3.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
+    }
+    if (!pick3.length) { this.startNextLevel(); return; }
+
+    this.choices = pick3;
+    const box = document.getElementById('choiceCards');
+    box.innerHTML = '';
+    pick3.forEach((pk, i) => {
+      const lvl = this.perkLevel(pk.id);
+      const b = document.createElement('button');
+      b.className = 'card';
+      b.innerHTML = '<div class="ic" style="background:' + pk.col + '">' + pk.ic + '</div>' +
+        '<div class="nm">' + pk.name + '</div>' +
+        '<div class="ds">' + pk.ds + '</div>' +
+        (lvl ? '<div class="lv">GIÀ PRESO ×' + lvl + '</div>' : '');
+      b.onclick = () => this.takePerk(i);
+      box.appendChild(b);
+    });
+    document.getElementById('choice').classList.remove('hidden');
+    document.getElementById('hud').classList.add('hidden');
+    this.state = 'choice';
+    Sfx.stopMusic();
+  },
+
+  takePerk(i) {
+    if (this.state !== 'choice') return;
+    const pk = this.choices && this.choices[i];
+    if (!pk) return;
+    this.perks[pk.id] = this.perkLevel(pk.id) + 1;
+    const p = this.player;
+    if (pk.id === 'heart' && p) { p.maxHp = Math.min(9, p.maxHp + 1); p.hp = p.maxHp; }
+    document.getElementById('choice').classList.add('hidden');
+    Sfx.levelUp();
+    this.startNextLevel();
+    this.banner(pk.name);
+  },
+
+  startNextLevel() {
+    document.getElementById('choice').classList.add('hidden');
+    document.getElementById('hud').classList.remove('hidden');
+    this.state = 'play';
+    this.level = this.pendingLevel || (this.level + 1);
+    this.pendingLevel = 0;
+    Sfx.resume(); Sfx.startMusic();
+    this.loadLevel(this.level, false);
+  },
+
   /* ---- missioni ---- */
   updateMission(dt) {
     const m = this.mission, p = this.player;
@@ -546,7 +674,7 @@ const Game = {
       if (!p.dead && this.overlap(p, c)) {
         this.cores.splice(i, 1);
         this.addScore(300); this.addVolt(20);
-        Floaters.add(c.cx, c.cy - 12, 'NUCLEO!', '#66ffe0', 17);
+        Floaters.add(c.cx, c.cy - 12, 'FRAMMENTO!', '#66ffe0', 17);
         Particles.burst(c.cx, c.cy, 34, '#66ffe0', 300, 5, 0);
         Rings.add(c.cx, c.cy, '#ffffff', 90, 0.4, 6);
         Sfx.pickup();
@@ -691,7 +819,7 @@ const Game = {
       const m = this.mission || { type: 'hunt' };
       if (m.type === 'escape') tg = 'SCAPPA!';
       else if (m.type === 'survive') tg = 'RESISTI ' + Math.ceil(this.missionT) + 's';
-      else if (m.type === 'cores') tg = 'NUCLEI ' + (m.need - this.cores.length) + '/' + m.need;
+      else if (m.type === 'cores') tg = 'FRAMMENTI ' + (m.need - this.cores.length) + '/' + m.need;
       else if (m.type === 'targets') tg = 'GENERATORI ' + (m.need - this.gens.length) + '/' + m.need;
       else if (m.type === 'assault') tg = 'ONDATA ' + Math.max(1, this.wave) + '/' + (m.waves || 3);
       else tg = 'MOSTRI ' + this.enemiesLeft;

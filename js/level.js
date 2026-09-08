@@ -38,7 +38,7 @@ const LEVEL_H = 32;
 const MISSIONS = {
   hunt:    { name: 'CACCIA',       hint: 'Elimina tutti i mostri' },
   survive: { name: 'SOPRAVVIVENZA', hint: 'Resisti fino alla fine' },
-  cores:   { name: 'SOVRACCARICO', hint: 'Raccogli i nuclei VOLT' },
+  cores:   { name: 'TRACCE DI LYRA', hint: 'Raccogli i frammenti che ha lasciato' },
   targets: { name: 'BERSAGLI',     hint: 'Distruggi i generatori' },
   assault: { name: 'ASSALTO',      hint: 'Respingi le ondate' },
   escape:  { name: 'FUGA',         hint: 'Corri al portale, la tempesta avanza' },
