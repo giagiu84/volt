@@ -150,9 +150,7 @@ const Rings = {
    personaggio disegnato dal codice. Nessun errore se mancano: si prova e basta. */
 const HeroArt = {
   imgs: {}, tried: false,
-  /* serve solo la posa frontale: la rotazione della figura e' stata tolta
-     perche' le tre viste fornite non combaciavano */
-  poses: ['front'],
+  poses: ['front', 'side', 'back'],
 
   load() {
     if (this.tried) return;
@@ -175,8 +173,11 @@ const HeroArt = {
   /* pronto solo se ci sono tutte e tre le viste: mezze illustrazioni
      darebbero una rotazione che salta */
   ready(who) {
-    const im = this.imgs[who + '_front'];
-    return !!(im && !im._failed && im.complete && im.naturalWidth);
+    for (const pose of this.poses) {
+      const im = this.imgs[who + '_' + pose];
+      if (!im || im._failed || !im.complete || !im.naturalWidth) return false;
+    }
+    return true;
   },
 
   /* disegna il custode all'angolo richiesto, alto `h` pixel e centrato sui piedi */
@@ -213,27 +214,53 @@ const HeroArt = {
     return true;
   },
 
+  /* Rotazione con tre viste: il trucco è non sostituire mai una vista di
+     colpo. Fra una posa e l'altra le due si sovrappongono in dissolvenza
+     mentre entrambe si comprimono, così l'occhio non coglie il cambio. */
   draw(ctx, who, ang, h) {
-    const si = Math.sin(ang), co = Math.cos(ang);
-    const side = Math.abs(si) > 0.7071;          /* si cambia vista a 45° */
-    const key = who + '_' + (side ? 'side' : (co > 0 ? 'front' : 'back'));
-    const im = this.imgs[key];
-    if (!im || !im.naturalWidth) return false;
+    const QUARTO = Math.PI / 2;
+    let a = ang % (Math.PI * 2);
+    if (a < 0) a += Math.PI * 2;
+    const k = Math.floor(a / QUARTO) % 4;          /* 0 fronte, 1 destra, 2 dietro, 3 sinistra */
+    const t = (a - Math.floor(a / QUARTO) * QUARTO) / QUARTO;
 
-    /* Larghezza apparente come in una rotazione vera: le due viste hanno
-       ingombri diversi, quindi interpolo fra i due e adatto la scala della
-       vista mostrata. Senza questo, al cambio vista la figura fa uno scatto. */
-    const sFront = this.span(who + '_' + (co > 0 ? 'front' : 'back'));
-    const sSide = this.span(who + '_side');
-    const shown = side ? sSide : sFront;
-    const target = sFront * Math.abs(co) + sSide * Math.abs(si);
-    const squeeze = (shown > 0 ? target / shown : 1) * (side ? Math.sign(si) : (co > 0 ? 1 : -1));
+    /* le quattro posizioni della giostra */
+    const POSA = ['front', 'side', 'back', 'side'];
+    const VERSO = [1, 1, 1, -1];
+    const kA = k, kB = (k + 1) % 4;
 
+    /* pesi: somma dei quadrati costante, così la figura non "pulsa" */
+    const wA = Math.cos(t * QUARTO), wB = Math.sin(t * QUARTO);
+
+    const disegna = (idx, peso, alfa) => {
+      const im = this.imgs[who + '_' + POSA[idx]];
+      if (!im || !im.naturalWidth || alfa <= 0.004) return;
+      const mio = this.span(who + '_' + POSA[idx]);
+      /* larghezza apparente comune alle due viste: nessuno scatto al cambio */
+      const target = this.span(who + '_' + POSA[kA]) * wA + this.span(who + '_' + POSA[kB]) * wB;
+      const scala = (mio > 0 ? target / mio : 1) * peso * VERSO[idx];
+      const w = h * (im.naturalWidth / im.naturalHeight);
+      ctx.save();
+      ctx.globalAlpha = alfa;
+      ctx.scale(scala, 1);
+      ctx.drawImage(im, -w / 2, -h, w, h);
+      ctx.restore();
+    };
+
+    /* la vista che sta uscendo sotto, quella che entra sopra */
+    const aA = Math.pow(wA, 1.7), aB = Math.pow(wB, 1.7);
+    const somma = aA + aB || 1;
+    disegna(kA, wA, aA / somma);
+    disegna(kB, wB, aB / somma);
+    return true;
+  },
+
+  /* una posa sola, di fronte */
+  drawFront(ctx, who, h) {
+    const im = this.imgs[who + '_front'];
+    if (!im || !im.naturalWidth || im._failed) return false;
     const w = h * (im.naturalWidth / im.naturalHeight);
-    ctx.save();
-    ctx.scale(squeeze, 1);
     ctx.drawImage(im, -w / 2, -h, w, h);
-    ctx.restore();
     return true;
   }
 };

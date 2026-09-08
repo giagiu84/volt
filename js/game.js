@@ -482,10 +482,9 @@ const Game = {
     }
   },
 
-  /* I custodi restano fermi di fronte: gira il piedistallo.
-     Le tre viste fornite non sono un turnaround coerente (proporzioni diverse
-     e in lyra_back manca una gamba), quindi far ruotare la figura produceva
-     scatti. Meglio una posa sola, giusta, con il movimento tutto attorno. */
+  /* I custodi girano sul piedistallo. Le viste vengono dai turnaround, quindi
+     combaciano fra loro; fra una posa e l'altra c'è una dissolvenza, così il
+     cambio non si vede. */
   drawHeroPicks(dt) {
     this.heroSpin = (this.heroSpin || 0) + dt;
     for (const id of ['aren', 'lyra']) {
@@ -543,17 +542,18 @@ const Game = {
         g.restore();
       }
 
-      /* il custode, sempre di fronte: respira e basta */
+      /* il custode gira: quello scelto più svelto, l'altro con calma */
       const breathe = 1 + Math.sin(t * 1.8) * 0.012;
       const h = H * (sel ? 0.82 : 0.71);
+      const ang = t * (sel ? 0.85 : 0.42) + (id === 'lyra' ? 2.2 : 0);
       g.save();
       g.globalAlpha = sel ? 1 : 0.72;
       g.translate(W / 2, baseY + 3);
       g.scale(1, breathe);
-      if (!HeroArt.drawFront(g, id, h)) {
+      if (!HeroArt.draw(g, id, ang, h)) {
         g.scale(sel ? 2.05 : 1.85, sel ? 2.05 : 1.85);
         g.translate(0, -22);
-        drawHeroPose(g, HEROES[id], 0, t, 1);
+        drawHeroPose(g, HEROES[id], ang, t, 1);
       }
       g.restore();
     }
