@@ -2,14 +2,14 @@
 'use strict';
 
 const MINW = 580, MINH = 400, MAXSCALE = 2.8;
-const LIFE_EVERY = 4000;      /* punti necessari per una vita in più */
+const LIFE_EVERY = 8000;      /* punti necessari per una vita in più */
 
 const Game = {
   canvas: null, ctx: null,
   cssW: 0, cssH: 0, dpr: 1, scale: 1, viewW: 0, viewH: 0,
   state: 'menu',
   lv: null, player: null,
-  enemies: [], bullets: [], pickups: [], explosions: [],
+  enemies: [], bullets: [], pickups: [], explosions: [], ships: [],
   camX: 0, camY: 0, shakeAmt: 0, shakeT: 0,
   level: 1, score: 0, best: Store.get('volt_best', 0), kills: 0,
   combo: 0, comboT: 0, maxCombo: 0,
@@ -107,6 +107,8 @@ const Game = {
     this.combo = 0; this.comboT = 0; this.maxCombo = 0;
     this.volt = 0; this.rushT = 0; this.hitStop = 0;
     this.nextLifeAt = LIFE_EVERY;
+    if (this.player) this.player.riding = false;
+    this.onShipChange();
     this.loadLevel(1, true);
     document.getElementById('menu').classList.add('hidden');
     document.getElementById('over').classList.add('hidden');
@@ -137,7 +139,8 @@ const Game = {
     this.lv = generateLevel(n);
     const lv = this.lv;
     this.enemies.length = 0; this.bullets.length = 0;
-    this.pickups.length = 0; this.explosions.length = 0;
+    this.pickups.length = 0; this.explosions.length = 0; this.ships.length = 0;
+    if (this.player && this.player.riding) this.player.leaveShip(false);
     Particles.clear(); Floaters.clear(); Rings.clear();
 
     const p = (keepPlayer || !this.player) ? new Player(lv.startX, lv.startY) : this.player;
@@ -146,6 +149,7 @@ const Game = {
 
     for (const s of lv.spawns) this.enemies.push(new Enemy(s.type, s.x, s.y, n, s.tier));
     for (const q of lv.pickups) this.pickups.push(new Pickup(q.x, q.y, Pickup.randomKind()));
+    for (const sh of (lv.ships || [])) this.ships.push(new Ship(sh.x, sh.y));
 
     this.enemiesLeft = this.enemies.length;
     this.portalOn = false; this.portalT = 0;
@@ -164,6 +168,15 @@ const Game = {
        e sopra resta il cielo: mai un bordo di mondo visibile */
     if (this.viewH >= lv.pxH) return lv.pxH - this.viewH;
     return clamp(y, 0, lv.pxH - this.viewH);
+  },
+
+  /* i comandi cambiano forma quando si vola: croce a quattro direzioni
+     e il tasto del salto diventa la spinta */
+  onShipChange() {
+    const flying = !!(this.player && this.player.riding);
+    document.body.classList.toggle('flying', flying);
+    const j = document.getElementById('btnJump');
+    if (j) j.textContent = flying ? 'BOOST' : 'SALTA';
   },
 
   banner(text) {
@@ -375,6 +388,16 @@ const Game = {
       if (ex.life <= 0) this.explosions.splice(i, 1);
     }
 
+    /* navicelle parcheggiate: si sale passandoci sopra */
+    for (let i = this.ships.length - 1; i >= 0; i--) {
+      const sh = this.ships[i];
+      sh.update(dt);
+      if (!p.dead && !p.riding && this.overlap(p, sh)) {
+        p.boardShip(sh);
+        this.ships.splice(i, 1);
+      }
+    }
+
     /* pickup */
     for (let i = this.pickups.length - 1; i >= 0; i--) {
       const q = this.pickups[i];
@@ -475,7 +498,9 @@ const Game = {
     const cb = this.combo > 1 ? 'COMBO x' + this.combo : '';
     if (c.cb !== cb) { c.cb = cb; document.getElementById('combo').textContent = cb; }
 
-    const wp = p.weapon.toUpperCase() + (p.weaponT > 0 ? ' ' + Math.ceil(p.weaponT) + 's' : '');
+    const wp = p.riding
+      ? 'NAVICELLA ' + Math.ceil(p.shipT) + 's'
+      : p.weapon.toUpperCase() + (p.weaponT > 0 ? ' ' + Math.ceil(p.weaponT) + 's' : '');
     if (c.wp !== wp) { c.wp = wp; document.getElementById('weapon').textContent = wp; }
 
     const volt = Math.round(this.volt);
@@ -504,6 +529,7 @@ const Game = {
     this.drawTiles(ctx, camX, camY, lv);
     if (this.state !== 'menu') {
       this.drawPortal(ctx, camX, camY, lv);
+      for (const sh of this.ships) sh.draw(ctx, camX, camY);
       for (const q of this.pickups) q.draw(ctx, camX, camY);
       for (const e of this.enemies) e.draw(ctx, camX, camY);
       for (const b of this.bullets) b.draw(ctx, camX, camY);
@@ -804,6 +830,7 @@ const Game = {
 
   drawOffscreenHints(ctx, camX, camY, lv) {
     const marks = [];
+    for (const sh of this.ships) marks.push({ x: sh.cx, y: sh.cy, col: '#8ff0ff' });
     if (this.portalOn) marks.push({ x: lv.portalX + 16, y: lv.portalY + 24, col: '#7cf7c4' });
     else for (const e of this.enemies) if (!e.dead) marks.push({ x: e.cx, y: e.cy, col: e.def.col });
 

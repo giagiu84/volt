@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=7">
+<link rel="stylesheet" href="css/style.css?v=8">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>%E2%9A%A1</text></svg>">
 </head>
 <body>
@@ -45,6 +45,7 @@
   <!-- Comandi a pulsanti (telefono) -->
   <div id="touch" class="hidden">
     <div class="pad">
+      <button id="btnUp" class="tbtn up" aria-label="Sali">▲</button>
       <button id="btnDown" class="tbtn down" aria-label="Scendi">▼</button>
       <button id="btnLeft" class="tbtn dir" aria-label="Indietro">◀</button>
       <button id="btnRight" class="tbtn dir" aria-label="Avanti">▶</button>
@@ -78,6 +79,7 @@
         </div>
         <div class="help-touch">
           <div class="help-row"><b>Sinistra</b> — ◀ ▶ per correre (doppio tocco = scatto) · ▼ per scendere dalle piattaforme</div>
+          <div class="help-row"><b>Navicella</b> — quando la trovi salici sopra: si vola con ◀ ▶ ▲ ▼ e SALTA diventa BOOST</div>
           <div class="help-row"><b>Destra</b> — SALTA (due volte = doppio salto, tenuto = salto più alto) · SPARA, la mira è automatica</div>
         </div>
         <div class="help-row muted">Elimina i nemici senza fermarti: riempi la barra VOLT e scatena automaticamente il Rush.</div>
@@ -116,7 +118,7 @@
 /* Se il telefono ha in cache una versione vecchia della pagina, se ne accorge
    da solo e si ricarica: senza questo si continuerebbero a vedere i comandi
    di ieri per una decina di minuti. */
-window.VOLT_VERSION = 7;
+window.VOLT_VERSION = 8;
 fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   .then(function (r) { return r.json(); })
   .then(function (d) {
@@ -130,12 +132,12 @@ fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   })
   .catch(function () { /* offline: pazienza, si gioca con quello che c'è */ });
 </script>
-<script src="js/util.js?v=7"></script>
-<script src="js/gfx.js?v=7"></script>
-<script src="js/audio.js?v=7"></script>
-<script src="js/input.js?v=7"></script>
-<script src="js/level.js?v=7"></script>
-<script src="js/entities.js?v=7"></script>
-<script src="js/game.js?v=7"></script>
+<script src="js/util.js?v=8"></script>
+<script src="js/gfx.js?v=8"></script>
+<script src="js/audio.js?v=8"></script>
+<script src="js/input.js?v=8"></script>
+<script src="js/level.js?v=8"></script>
+<script src="js/entities.js?v=8"></script>
+<script src="js/game.js?v=8"></script>
 </body>
 </html>

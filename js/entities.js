@@ -238,6 +238,8 @@ class Player {
     this.scarf = [];
     for (let i = 0; i < 5; i++) this.scarf.push({ x: x, y: y });
     this.safeX = x; this.safeY = y; this.safeT = 0;
+    /* navicella */
+    this.riding = false; this.shipHp = 0; this.shipT = 0; this.shipFlash = 0;
   }
 
   get cx() { return this.x + this.w / 2; }
@@ -245,6 +247,15 @@ class Player {
 
   hurt(dmg) {
     if (this.invuln > 0 || this.dashT > 0 || this.dead) return false;
+    /* a bordo paga la navicella: si perde il mezzo, non una vita */
+    if (this.riding) {
+      this.shipHp--; this.invuln = 0.75; this.shipFlash = 0.28;
+      Sfx.hurt(); Game.shake(11, 0.26);
+      Particles.burst(this.cx, this.cy, 20, '#ffc46b', 260, 4, 120);
+      Floaters.add(this.cx, this.y - 8, 'SCAFO ' + Math.max(0, this.shipHp), '#ffc46b', 15);
+      if (this.shipHp <= 0) this.leaveShip(true);
+      return true;
+    }
     Game.sectorNoHit = false;
     if (Game.rushT <= 0) Game.volt = Math.max(0, Game.volt - 18);
     if (this.shield > 0) {
@@ -312,6 +323,7 @@ class Player {
 
   update(dt, lv, enemies, bullets, camX, camY) {
     if (this.dead) return;
+    if (this.riding) { this.updateFlight(dt, lv, enemies, bullets, camX, camY); return; }
     this.anim += dt;
     this.invuln = Math.max(0, this.invuln - dt);
     this.flash = Math.max(0, this.flash - dt);
@@ -480,6 +492,118 @@ class Player {
     if (this.heat >= 100) { this.heat = 100; this.overheat = 1.15; Floaters.add(this.cx, this.y - 8, 'SURRISCALDATO', '#ff9f68', 14); }
   }
 
+  /* ---- navicella ---- */
+  boardShip(ship) {
+    this.riding = true;
+    this.shipHp = SHIP_HP; this.shipT = SHIP_TIME; this.shipFlash = 0;
+    this.w = 46; this.h = 28;
+    this.x = ship.x; this.y = ship.y;
+    this.vx = 0; this.vy = 0; this.dashT = 0;
+    this.invuln = Math.max(this.invuln, 0.8);
+    Game.banner('NAVICELLA!');
+    Game.shake(10, 0.25); Game.flashT = 0.18;
+    Particles.burst(this.cx, this.cy, 40, '#8ff0ff', 320, 5, 0);
+    Rings.add(this.cx, this.cy, '#ffffff', 120, 0.45, 6);
+    Sfx.levelUp();
+    Game.onShipChange();
+  }
+
+  leaveShip(exploded) {
+    if (!this.riding) return;
+    const cx = this.cx, cy = this.cy;
+    this.riding = false;
+    this.w = 20; this.h = 30;
+    this.x = cx - this.w / 2; this.y = cy - this.h / 2;
+    this.vx *= 0.3; this.vy = -280;
+    this.invuln = Math.max(this.invuln, exploded ? 1.5 : 0.9);
+    this.shipT = 0; this.shipHp = 0;
+    for (const sc of this.scarf) { sc.x = this.cx; sc.y = this.y + 9; }
+    if (exploded) {
+      Particles.burst(cx, cy, 60, '#ffc46b', 420, 6, 260);
+      Particles.burst(cx, cy, 26, '#ff7a5c', 300, 5, 200);
+      Rings.add(cx, cy, '#ffd9a0', 150, 0.5, 8);
+      Game.shake(22, 0.45); Game.flashT = 0.25;
+      Sfx.bomb();
+      Floaters.add(cx, cy - 20, 'NAVICELLA DISTRUTTA', '#ffc46b', 15);
+    } else {
+      Particles.burst(cx, cy, 30, '#8ff0ff', 260, 4.5, 120);
+      Floaters.add(cx, cy - 20, 'CARBURANTE FINITO', '#b9d9ff', 14);
+      Sfx.portal();
+    }
+    Game.onShipChange();
+  }
+
+  updateFlight(dt, lv, enemies, bullets, camX, camY) {
+    this.anim += dt;
+    this.invuln = Math.max(0, this.invuln - dt);
+    this.shipFlash = Math.max(0, this.shipFlash - dt);
+    this.fireCd = Math.max(0, this.fireCd - dt);
+    this.muzzle = Math.max(0, this.muzzle - dt);
+    this.dashCd = Math.max(0, this.dashCd - dt);
+    this.dashT = Math.max(0, this.dashT - dt);
+
+    this.shipT -= dt;
+    if (this.shipT <= 0) { this.leaveShip(false); return; }
+
+    this.aim(lv, enemies, camX, camY);
+
+    const mx = Input.moveX(), my = Input.moveY();
+    if (mx !== 0) this.facing = sign(mx);
+
+    if (this.dashT > 0) {
+      this.vy = approach(this.vy, 0, 2400 * dt);
+    } else {
+      this.vx = approach(this.vx, mx * 350, 2200 * dt);
+      this.vy = approach(this.vy, my * 300, 2200 * dt);
+      /* il tasto del salto diventa una spinta in avanti */
+      if (Input.wantJump() && this.dashCd <= 0) {
+        this.dashT = 0.22; this.dashCd = 0.8;
+        this.vx = this.facing * 780;
+        this.invuln = Math.max(this.invuln, 0.3);
+        Sfx.dash();
+        Particles.burst(this.cx, this.cy, 16, '#8ff0ff', 280, 4.5, 0);
+      }
+    }
+
+    /* vola: niente gravita, attraversa le piattaforme, si ferma sui muri */
+    this.prevBottom = this.y + this.h;
+    this.hitWall = 0;
+    this.x += this.vx * dt; collideX(this, lv);
+    this.onGround = false;
+    this.y += this.vy * dt; collideY(this, lv, true);
+    if (this.onGround) this.vy = Math.min(this.vy, 0);
+
+    const minX = TILE * 0.5, maxX = lv.pxW - TILE * 0.5 - this.w;
+    if (this.x < minX) { this.x = minX; this.vx = 0; }
+    if (this.x > maxX) { this.x = maxX; this.vx = 0; }
+    if (this.y < 4) { this.y = 4; this.vy = Math.max(0, this.vy); }
+    if (this.y > lv.pxH - this.h - 8) { this.y = lv.pxH - this.h - 8; this.vy = Math.min(0, this.vy); }
+
+    if (Input.wantFire() && this.fireCd <= 0) this.shootShip(bullets);
+
+    /* scia del reattore */
+    if (Math.random() < 0.8) {
+      Particles.spawn(this.cx - this.facing * 24, this.cy + 4,
+        -this.facing * (60 + Math.random() * 60), (Math.random() - 0.5) * 30,
+        0.3, 5, this.shipT < 4 ? '#ff9f68' : '#8ff0ff', -20, 1);
+    }
+  }
+
+  shootShip(bullets) {
+    const rush = Game.rushT > 0;
+    const a = Math.atan2(this.aimY, this.aimX);
+    const spd = 1000;
+    for (const off of [-7, 7]) {
+      bullets.push(new Bullet(this.cx + this.aimX * 22 - this.aimY * off,
+        this.cy + this.aimY * 22 + this.aimX * off,
+        Math.cos(a) * spd, Math.sin(a) * spd,
+        { dmg: rush ? 2 : 1, r: rush ? 5 : 4, col: rush ? '#75ffe0' : '#8ff0ff', life: 1.2 }));
+    }
+    this.fireCd = rush ? 0.085 : 0.13;
+    this.muzzle = 0.06;
+    Sfx.shoot();
+  }
+
   give(kind) {
     switch (kind) {
       case 'maxheart':
@@ -509,9 +633,34 @@ class Player {
     Sfx.pickup();
   }
 
+  drawFlight(ctx, cx, cy) {
+    const x = this.cx - cx, y = this.cy - cy;
+    const low = this.shipT < 4;
+    Gfx.shadow(ctx, x, this.y - cy + this.h + 30, 52, 0.2);
+    Gfx.light(ctx, x, y, 60, low ? '#ff9f68' : '#8ff0ff', 0.45);
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(clamp(this.vy / 1400, -0.22, 0.22) * (this.facing >= 0 ? 1 : -1));
+    drawShipBody(ctx, this.anim, this.facing, Math.abs(this.vx) / 350 + 0.3,
+                 this.shipFlash > 0 || (low && Math.floor(this.shipT * 6) % 2 === 0), true);
+    ctx.restore();
+    if (this.muzzle > 0) {
+      const mx = x + this.aimX * 30, my = y + this.aimY * 30;
+      Gfx.light(ctx, mx, my, 30, '#fff6c9', 0.85);
+    }
+    /* scafo residuo sopra la navicella */
+    ctx.save();
+    for (let i = 0; i < SHIP_HP; i++) {
+      ctx.fillStyle = i < this.shipHp ? '#8ff0ff' : 'rgba(255,255,255,.22)';
+      roundRect(ctx, x - 17 + i * 12, y - 26, 9, 5, 2.5); ctx.fill();
+    }
+    ctx.restore();
+  }
+
   draw(ctx, cx, cy) {
     if (this.dead) return;
     if (this.invuln > 0 && Math.floor(this.invuln * 20) % 2 === 0) return;
+    if (this.riding) { this.drawFlight(ctx, cx, cy); return; }
 
     const x = this.x - cx + this.w / 2;
     const y = this.y - cy + this.h / 2;
@@ -931,5 +1080,101 @@ class Enemy {
       roundRect(ctx, bx, by, bw * (this.hp / this.maxHp), 5, 2.5); ctx.fill();
       ctx.restore();
     }
+  }
+}
+
+/* ---------- navicella ---------- */
+const SHIP_TIME = 22, SHIP_HP = 3;
+
+/* scafo condiviso: lo usano sia la navicella posata sia quella pilotata */
+function drawShipBody(ctx, t, facing, thrust, flash, pilot) {
+  ctx.save();
+  ctx.scale(facing >= 0 ? 1 : -1, 1);
+  ctx.lineWidth = 3; ctx.strokeStyle = OUTLINE;
+
+  if (thrust > 0) {
+    const f = 12 + Math.sin(t * 30) * 5 + thrust * 12;
+    ctx.fillStyle = '#ffc46b';
+    ctx.beginPath();
+    ctx.moveTo(-20, -5); ctx.quadraticCurveTo(-20 - f, 0, -20, 5);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#fff3cd';
+    ctx.beginPath();
+    ctx.moveTo(-20, -2.5); ctx.quadraticCurveTo(-20 - f * 0.55, 0, -20, 2.5);
+    ctx.closePath(); ctx.fill();
+  }
+
+  ctx.fillStyle = flash ? '#ffffff' : '#3f7ad6';
+  ctx.beginPath();
+  ctx.moveTo(-6, -2); ctx.lineTo(-18, -16); ctx.lineTo(-2, -8);
+  ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(-6, 2); ctx.lineTo(-18, 15); ctx.lineTo(-2, 8);
+  ctx.closePath(); ctx.fill(); ctx.stroke();
+
+  ctx.fillStyle = flash ? '#ffffff' : '#e9f1ff';
+  ctx.beginPath();
+  ctx.moveTo(24, 0);
+  ctx.quadraticCurveTo(16, -13, -6, -12);
+  ctx.quadraticCurveTo(-22, -11, -22, 0);
+  ctx.quadraticCurveTo(-22, 11, -6, 12);
+  ctx.quadraticCurveTo(16, 13, 24, 0);
+  ctx.closePath(); ctx.fill(); ctx.stroke();
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(24, 0);
+  ctx.quadraticCurveTo(16, -13, -6, -12);
+  ctx.quadraticCurveTo(-22, -11, -22, 0);
+  ctx.quadraticCurveTo(-22, 11, -6, 12);
+  ctx.quadraticCurveTo(16, 13, 24, 0);
+  ctx.closePath(); ctx.clip();
+  ctx.fillStyle = flash ? '#dddddd' : '#22c8f5';
+  ctx.fillRect(-24, 2, 52, 14);
+  ctx.restore();
+
+  ctx.fillStyle = 'rgba(120,220,255,.85)';
+  ctx.beginPath(); ctx.ellipse(4, -6, 12, 8, 0, Math.PI, TAU); ctx.fill(); ctx.stroke();
+  if (pilot) {
+    ctx.fillStyle = '#22c8f5';
+    ctx.beginPath(); ctx.arc(3, -7, 5, 0, TAU); ctx.fill();
+    ctx.fillStyle = '#1b2340';
+    roundRect(ctx, 3, -9, 6, 3.5, 1.8); ctx.fill();
+  }
+  Gfx.gloss(ctx, -6, -9, 12, 3.5, 0.7);
+
+  ctx.fillStyle = '#ffc247';
+  roundRect(ctx, 14, -9, 12, 5, 2.5); ctx.fill(); ctx.stroke();
+  roundRect(ctx, 14, 4, 12, 5, 2.5); ctx.fill(); ctx.stroke();
+  ctx.restore();
+}
+
+class Ship {
+  constructor(x, y) {
+    this.x = x; this.y = y; this.w = 46; this.h = 28;
+    this.t = Math.random() * 5; this.dead = false;
+  }
+  get cx() { return this.x + this.w / 2; }
+  get cy() { return this.y + this.h / 2; }
+  update(dt) { this.t += dt; }
+  draw(ctx, camX, camY) {
+    const bob = Math.sin(this.t * 2.2) * 6;
+    const x = this.cx - camX, y = this.cy - camY + bob;
+    Gfx.shadow(ctx, x, this.y - camY + this.h + 26, 54, 0.22);
+    Gfx.light(ctx, x, y, 66 + Math.sin(this.t * 3) * 6, '#8ff0ff', 0.45);
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(Math.sin(this.t * 1.6) * 0.06);
+    drawShipBody(ctx, this.t, 1, 0.2, false, false);
+    ctx.restore();
+    ctx.save();
+    ctx.globalAlpha = 0.7 + Math.sin(this.t * 4) * 0.3;
+    ctx.textAlign = 'center';
+    ctx.font = '800 11px Nunito, system-ui, sans-serif';
+    ctx.lineWidth = 4; ctx.strokeStyle = 'rgba(26,18,52,.6)'; ctx.lineJoin = 'round';
+    ctx.strokeText('SALI!', x, y - 26);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('SALI!', x, y - 26);
+    ctx.restore();
   }
 }

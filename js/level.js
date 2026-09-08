@@ -106,6 +106,19 @@ function generateLevel(n) {
     }
   }
 
+  /* --- navicella: un settore su tre, dal terzo in poi --- */
+  const ships = [];
+  if (!boss && n >= 3 && n % 3 === 0) {
+    for (let tryN = 0; tryN < 30 && ships.length === 0; tryN++) {
+      const sx = rndInt(rng, Math.floor(w * 0.25), Math.floor(w * 0.7));
+      const top = groundY[sx];
+      if (top < 6) continue;
+      const sy = clamp(top - rndInt(rng, 4, 6), minY, h - 6);
+      if (tiles[at(sx, sy)] !== T_EMPTY || tiles[at(sx + 1, sy)] !== T_EMPTY) continue;
+      ships.push({ x: sx * TILE, y: sy * TILE });
+    }
+  }
+
   /* --- piattaforme sospese --- */
   const platCount = boss ? 5 : Math.floor(w / 9);
   for (let i = 0; i < platCount; i++) {
@@ -184,7 +197,7 @@ function generateLevel(n) {
     clouds.push({ x: rng(), y: rndRange(rng, 0.04, 0.42), s: rndRange(rng, 0.55, 1.5), spd: rndRange(rng, 3, 11) });
 
   return {
-    n, boss, theme, w, h, tiles, spawns, pickups, hills, clouds, motes,
+    n, boss, theme, w, h, tiles, spawns, pickups, hills, clouds, motes, ships,
     pxW: w * TILE, pxH: h * TILE,
     startX: 5 * TILE, startY: (groundY[5] - 2) * TILE,
     portalX: (w - 3) * TILE, portalY: (groundY[w - 3] - 2) * TILE,

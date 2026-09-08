@@ -21,7 +21,7 @@ const Input = {
   lastPointerT: 0, lastKeyT: 0,
   touchMode: false,
 
-  btn: { left: false, right: false, down: false, jump: false, fire: false },
+  btn: { left: false, right: false, down: false, up: false, jump: false, fire: false },
   _fingers: Object.create(null),   /* identifier -> nome pulsante */
   _lastTap: { left: 0, right: 0 },
   hasAim: false, aimDX: 1, aimDY: 0,
@@ -112,6 +112,7 @@ const Input = {
     bind('btnLeft', 'left');
     bind('btnRight', 'right');
     bind('btnDown', 'down');
+    bind('btnUp', 'up');
     bind('btnJump', 'jump');
     bind('btnFire', 'fire');
 
@@ -166,8 +167,8 @@ const Input = {
     return clamp(x, -1, 1);
   },
   moveY() {
+    if (this.btn.up || this.keys['w'] || this.keys['arrowup']) return -1;
     if (this.btn.down || this.keys['s'] || this.keys['arrowdown']) return 1;
-    if (this.keys['w'] || this.keys['arrowup']) return -1;
     return 0;
   },
   wantJump() {
