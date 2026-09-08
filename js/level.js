@@ -197,7 +197,7 @@ function generateLevel(n) {
       spawns.push({ type: pick(rng, types), x: sx * TILE, y: sy * TILE });
     }
   } else {
-    let count = Math.min(6 + Math.floor(n * 1.6), 26);
+    let count = Math.min(4 + Math.floor(n * 1.4), 26);
     if (mission.type === 'cores' || mission.type === 'targets') count = Math.round(count * 0.6);
     if (mission.type === 'survive' || mission.type === 'assault') count = Math.round(count * 0.45);
     if (mission.type === 'escape') count = Math.round(count * 0.5);

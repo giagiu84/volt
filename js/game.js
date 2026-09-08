@@ -2,7 +2,8 @@
 'use strict';
 
 const MINW = 580, MINH = 400, MAXSCALE = 2.8;
-const LIFE_EVERY = 8000;      /* punti necessari per una vita in più */
+const LIFE_EVERY = 8000;      /* punti fra una vita e l'altra */
+const FIRST_LIFE_AT = 2500;   /* la prima arriva presto: serve nei settori d'apertura */
 const CAMPAIGN_END = 20;      /* la campagna finisce col Divoratore */
 const CHECKPOINTS = [5, 10, 15];
 
@@ -182,7 +183,7 @@ const Game = {
     this.volt = 0; this.rushT = 0; this.hitStop = 0;
     this.hasShip = false;
     this.perks = {}; this.shieldGenT = 0; this.drone = null;
-    this.nextLifeAt = LIFE_EVERY;
+    this.nextLifeAt = FIRST_LIFE_AT;
     if (this.player) this.player.riding = false;
     this.onShipChange();
     this.loadLevel(1, true);
@@ -193,7 +194,7 @@ const Game = {
       this.perks = Object.assign({}, cp.perks || {});
       this.level = cp.level;
       this.loadLevel(this.level, true);
-      this.player.maxHp = cp.maxHp || 3;
+      this.player.maxHp = cp.maxHp || 4;
       this.player.hp = this.player.maxHp;
       this.score = cp.score || 0;
       if (this.hasPerk('drone')) this.drone = new Drone(this.player.cx, this.player.cy - 30);
@@ -551,7 +552,12 @@ const Game = {
           }
         }
         else if (p.hurt(e.def.touch)) {
-          p.vx = sign(p.cx - e.cx) * 300; p.vy = -320;
+          const away = sign(p.cx - e.cx) || 1;
+          p.vx = away * 300; p.vy = -320;
+          /* respingo anche il mostro e lo stordisco: senza questo, finita
+             l'invulnerabilità ti ricolpisce subito perché ti è rimasto addosso */
+          e.vx = -away * 430; e.vy = -240; e.stun = 0.5;
+          Particles.burst((p.cx + e.cx) / 2, (p.cy + e.cy) / 2, 10, '#ffffff', 200, 3.5, 120);
         }
       }
     }

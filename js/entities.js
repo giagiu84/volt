@@ -239,7 +239,7 @@ class Player {
     this.vx = 0; this.vy = 0;
     this.onGround = false; this.prevBottom = y + 30;
     this.facing = 1;
-    this.hp = 3; this.maxHp = 3; this.shield = 0;
+    this.hp = 4; this.maxHp = 4; this.shield = 0;
     this.coyote = 0; this.buffer = 0; this.jumpsLeft = 2;
     this.dashT = 0; this.dashCd = 0;
     this.invuln = 0; this.flash = 0;
@@ -281,7 +281,7 @@ class Player {
       return true;
     }
     this.hp -= dmg;
-    this.invuln = 1.25; this.flash = 0.35;
+    this.invuln = 1.7; this.flash = 0.35;
     Game.combo = 0; Game.comboT = 0;
     Sfx.hurt(); Game.shake(14, 0.32);
     Particles.burst(this.cx, this.cy, 24, '#ff5d8f', 300, 4.5, 200);
@@ -815,7 +815,7 @@ class Player {
 
 /* ---------- mostri ---------- */
 const ENEMY_DEF = {
-  crawler: { w: 26, h: 26, hp: 3,  speed: 120, score: 100, col: '#ff5d8f', dark: '#c72f68', touch: 1 },
+  crawler: { w: 26, h: 26, hp: 2,  speed: 120, score: 100, col: '#ff5d8f', dark: '#c72f68', touch: 1 },
   flyer:   { w: 24, h: 22, hp: 2,  speed: 155, score: 120, col: '#ffc247', dark: '#d18c17', touch: 1 },
   spitter: { w: 28, h: 30, hp: 4,  speed: 55,  score: 160, col: '#a06bff', dark: '#6d3fc4', touch: 1 },
   charger: { w: 32, h: 28, hp: 6,  speed: 80,  score: 220, col: '#ff8a3d', dark: '#c85a15', touch: 2 },
@@ -899,8 +899,11 @@ class Enemy {
   }
 
   updateWalker(dt, lv, dx, distX, chaseMul) {
-    if (distX < 420 || this.hunting) this.dir = sign(dx) || this.dir;
-    this.vx = this.dir * this.speed * chaseMul * (this.hunting ? 1.25 : 1);
+    /* nei settori d'apertura i mostri sono meno arrembanti: serve tempo
+       per imparare a muoversi prima di essere braccati */
+    const early = Game.level <= 3 ? 1 : 0;
+    if (distX < (early ? 250 : 420) || this.hunting) this.dir = sign(dx) || this.dir;
+    this.vx = this.dir * this.speed * chaseMul * (this.hunting ? 1.25 : 1) * (early ? 0.78 : 1);
     this.vy += GRAV * dt;
     moveEntity(this, lv, dt, false);
     /* muro davanti: se sta inseguendo prova a saltarlo, altrimenti torna indietro */
