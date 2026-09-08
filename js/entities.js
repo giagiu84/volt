@@ -1330,3 +1330,48 @@ class Generator {
     ctx.restore();
   }
 }
+
+/* ---------- droncino alleato (potenziamento leggendario) ---------- */
+class Drone {
+  constructor(x, y) {
+    this.x = x; this.y = y; this.t = Math.random() * 4; this.cool = 0.4;
+  }
+  update(dt, player, enemies, bullets) {
+    this.t += dt;
+    /* sta dietro le spalle, ondeggiando */
+    const tx = player.cx - player.facing * 34;
+    const ty = player.cy - 34 + Math.sin(this.t * 2.4) * 6;
+    this.x = lerp(this.x, tx, Math.min(1, dt * 5));
+    this.y = lerp(this.y, ty, Math.min(1, dt * 5));
+
+    this.cool -= dt;
+    if (this.cool > 0) return;
+    let best = null, bd = 470 * 470;
+    for (const e of enemies) {
+      if (e.dead || !e.awake) continue;
+      const d = dist2(this.x, this.y, e.cx, e.cy);
+      if (d < bd) { bd = d; best = e; }
+    }
+    if (!best) return;
+    this.cool = 0.62 - Math.min(0.2, Game.perkLevel('drone') * 0.1);
+    const a = Math.atan2(best.cy - this.y, best.cx - this.x);
+    bullets.push(new Bullet(this.x, this.y, Math.cos(a) * 820, Math.sin(a) * 820,
+      { dmg: 1 + Game.perkLevel('power'), r: 3.6, col: '#c98ff7', life: 1.1,
+        freeze: Game.hasPerk('freeze') }));
+    Sfx.tone(900, 0.05, 'square', 0.03, 500);
+  }
+  draw(ctx, camX, camY) {
+    const x = this.x - camX, y = this.y - camY;
+    Gfx.light(ctx, x, y, 30, '#c98ff7', 0.5);
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(Math.sin(this.t * 3) * 0.2);
+    ctx.lineWidth = 2.5; ctx.strokeStyle = OUTLINE;
+    ctx.fillStyle = '#e6d4ff';
+    roundRect(ctx, -9, -7, 18, 14, 6); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#c98ff7';
+    roundRect(ctx, -11, -1, 22, 5, 2.5); ctx.fill();
+    Gfx.eye(ctx, 0, -1, 4.5, Game.player ? Game.player.facing : 1, 0);
+    ctx.restore();
+  }
+}

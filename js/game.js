@@ -3,6 +3,18 @@
 
 const MINW = 580, MINH = 400, MAXSCALE = 2.8;
 const LIFE_EVERY = 8000;      /* punti necessari per una vita in più */
+const CAMPAIGN_END = 20;      /* la campagna finisce col Divoratore */
+const CHECKPOINTS = [5, 10, 15];
+
+/* la voce di Lyra fra un settore e l'altro: ricorda perché si corre */
+const LYRA_LINES = [
+  'Segnale di Lyra rilevato.',
+  'La traccia attraversa il prossimo portale.',
+  'Ha lasciato un frammento: è passata di qui.',
+  'La frattura si allarga. Vai avanti.',
+  'Un comandante presidia il settore.',
+  'Lumina è ancora spenta. Continua.'
+];
 
 /* I potenziamenti: si scelgono uno per settore e restano per tutta la partita.
    `max` limita quante volte si possono ripetere. */
@@ -33,6 +45,20 @@ const PERKS = [
     ds: 'I mostri lasciano molti più oggetti' }
 ];
 
+/* leggendari: si scelgono solo dopo aver abbattuto un Comandante */
+const LEGENDS = [
+  { id: 'drone',   name: 'DRONCINO', ic: '◆', col: '#a06bff', max: 2, leg: true,
+    ds: 'Un alleato ti segue e spara da solo' },
+  { id: 'vampire', name: 'VAMPIRO ELETTRICO', ic: '⚡', col: '#ff5d8f', max: 1, leg: true,
+    ds: 'Ogni uccisione ridà molta più carica VOLT' },
+  { id: 'emergency', name: 'SCUDO D\'EMERGENZA', ic: '◈', col: '#48d7ff', max: 1, leg: true,
+    ds: 'Inizi ogni settore con uno scudo' },
+  { id: 'afterburn', name: 'BRACE', ic: '✷', col: '#ff8a3d', max: 1, leg: true,
+    ds: 'Finito il Rush resti carico a metà' },
+  { id: 'arsenal', name: 'ARSENALE', ic: '⁂', col: '#ffc247', max: 1, leg: true,
+    ds: 'Ogni settore inizia con un\'arma speciale' }
+];
+
 const Game = {
   canvas: null, ctx: null,
   cssW: 0, cssH: 0, dpr: 1, scale: 1, viewW: 0, viewH: 0,
@@ -40,7 +66,8 @@ const Game = {
   lv: null, player: null,
   enemies: [], bullets: [], pickups: [], explosions: [], ships: [], cores: [], gens: [],
   mission: null, missionT: 0, wave: 0, waveCool: 0, spawnCool: 0, missionDone: false,
-  perks: {}, pendingLevel: 0, shieldGenT: 0,
+  perks: {}, pendingLevel: 0, shieldGenT: 0, drone: null,
+  mode: 'campaign', progress: Store.get('volt_progress', { cleared: false, cp: null }),
   stormX: -9999,
   camX: 0, camY: 0, shakeAmt: 0, shakeT: 0,
   level: 1, score: 0, best: Store.get('volt_best', 0), kills: 0,
@@ -78,7 +105,16 @@ const Game = {
       mute.textContent = 'AUDIO: ' + (Sfx.enabled ? 'ON' : 'OFF');
     };
 
-    document.getElementById('playBtn').onclick = () => this.start(true);
+    document.getElementById('playBtn').onclick = () => this.start(true, 'campaign', false);
+    document.getElementById('resumeRunBtn').onclick = () => this.start(true, 'campaign', true);
+    document.getElementById('endlessBtn').onclick = () => {
+      if (!this.progress.cleared) { this.banner('PRIMA RITROVA LYRA'); return; }
+      this.start(true, 'endless', false);
+    };
+    document.getElementById('winEndlessBtn').onclick = () => this.start(true, 'endless', false);
+    document.getElementById('winMenuBtn').onclick = () => this.toMenu();
+    document.getElementById('ovResumeBtn').onclick = () => this.start(true, 'campaign', true);
+    this.refreshMenu();
     document.getElementById('retryBtn').onclick = () => this.start(true);
     document.getElementById('resumeBtn').onclick = () => this.setPause(false);
     document.getElementById('pauseBtn').onclick = () => this.setPause(this.state === 'play');
@@ -126,7 +162,7 @@ const Game = {
     Input.placeOrb(w, h);
   },
 
-  start(fromClick) {
+  start(fromClick, mode, fromCheckpoint) {
     /* su telefono a schermo intero si gioca molto meglio: va chiesto dentro il gesto */
     if (fromClick && (Input.touchMode || matchMedia('(pointer:coarse)').matches)) {
       try {
@@ -140,25 +176,57 @@ const Game = {
       } catch (e) { /* niente schermo intero: pazienza */ }
     }
     Sfx.init(); Sfx.resume(); Sfx.startMusic();
+    this.mode = mode || this.mode || 'campaign';
     this.level = 1; this.score = 0; this.kills = 0;
     this.combo = 0; this.comboT = 0; this.maxCombo = 0;
     this.volt = 0; this.rushT = 0; this.hitStop = 0;
     this.hasShip = false;
-    this.perks = {}; this.shieldGenT = 0;
+    this.perks = {}; this.shieldGenT = 0; this.drone = null;
     this.nextLifeAt = LIFE_EVERY;
     if (this.player) this.player.riding = false;
     this.onShipChange();
     this.loadLevel(1, true);
+
+    /* ripresa dopo un comandante: si torna con i poteri conquistati */
+    const cp = this.progress.cp;
+    if (fromCheckpoint && cp && this.mode === 'campaign') {
+      this.perks = Object.assign({}, cp.perks || {});
+      this.level = cp.level;
+      this.loadLevel(this.level, true);
+      this.player.maxHp = cp.maxHp || 3;
+      this.player.hp = this.player.maxHp;
+      this.score = cp.score || 0;
+      if (this.hasPerk('drone')) this.drone = new Drone(this.player.cx, this.player.cy - 30);
+    }
     document.getElementById('menu').classList.add('hidden');
     document.getElementById('over').classList.add('hidden');
     document.getElementById('pause').classList.add('hidden');
+    document.getElementById('win').classList.add('hidden');
     document.getElementById('hud').classList.remove('hidden');
     this.state = 'play';
   },
 
+  /* il menu racconta a che punto sei */
+  refreshMenu() {
+    const cp = this.progress.cp;
+    const rb = document.getElementById('resumeRunBtn');
+    rb.classList.toggle('hidden', !cp);
+    if (cp) document.getElementById('cpLevel').textContent = cp.level;
+    document.getElementById('playSub').textContent = 'CAMPAGNA · ' + CAMPAIGN_END + ' SETTORI';
+    const eb = document.getElementById('endlessBtn');
+    eb.classList.toggle('locked', !this.progress.cleared);
+    eb.textContent = this.progress.cleared
+      ? 'OLTRE LA FRATTURA — modalità infinita'
+      : 'Oltre la Frattura — si sblocca finendo la campagna';
+  },
+
+  saveProgress() { Store.set('volt_progress', this.progress); },
+
   toMenu() {
     this.state = 'menu';
     document.getElementById('choice').classList.add('hidden');
+    document.getElementById('win').classList.add('hidden');
+    this.refreshMenu();
     Sfx.stopMusic();
     document.getElementById('menu').classList.remove('hidden');
     document.getElementById('over').classList.add('hidden');
@@ -215,8 +283,21 @@ const Game = {
     this.transition = 0;
     this.camX = clamp(p.cx - this.viewW / 2, 0, Math.max(0, lv.pxW - this.viewW));
     this.camY = this.clampCamY(p.cy - this.viewH / 2);
+    /* premi che agiscono all'inizio di ogni settore */
+    if (this.hasPerk('emergency') && p && p.shield < 1) p.shield = 1;
+    if (this.hasPerk('arsenal') && p) {
+      p.weapon = ['spread', 'rapid', 'laser'][Math.floor(Math.random() * 3)];
+      p.weaponT = 20; p.heat = 0; p.overheat = 0;
+    }
+    if (this.drone && p) { this.drone.x = p.cx; this.drone.y = p.cy - 30; }
+
     const md = MISSIONS[this.mission.type] || MISSIONS.hunt;
-    this.banner(lv.boss ? 'BOSS — ' + lv.theme.name : md.name);
+    const finale = this.mode === 'campaign' && n >= CAMPAIGN_END;
+    this.banner(lv.boss ? (finale ? 'IL DIVORATORE' : 'COMANDANTE') : md.name);
+    if (!lv.boss && n > 1 && n % 2 === 0) setTimeout(() => {
+      if (this.state === 'play' && this.level === n && this.player)
+        Floaters.add(this.player.cx, this.player.y - 40, LYRA_LINES[(n / 2) % LYRA_LINES.length], '#ffb3f0', 13);
+    }, 2600);
     if (!lv.boss) setTimeout(() => {
       if (this.state === 'play' && this.level === n && !this.portalOn) this.banner(md.hint);
     }, 1500);
@@ -328,7 +409,7 @@ const Game = {
     const pts = Math.round(e.score * mult * (this.rushT > 0 ? 2 : 1));
     this.addScore(pts);
     if (this.rushT > 0) this.rushT = Math.min(8, this.rushT + 0.24);
-    else this.addVolt((e.type === 'boss' ? 36 : 11) + Math.min(8, this.combo));
+    else this.addVolt(((e.type === 'boss' ? 36 : 11) + Math.min(8, this.combo)) * (this.hasPerk('vampire') ? 2.2 : 1));
     this.hitStop = e.type === 'boss' ? 0.08 : 0.025;
     Floaters.add(e.cx, e.cy - 10, '+' + pts, this.combo > 2 ? '#7dff8d' : '#ffe98a', this.combo > 4 ? 19 : 15);
 
@@ -345,7 +426,10 @@ const Game = {
         this.pickups.push(new Pickup(e.cx - 50, e.cy - 10, 'shield'));
       }
     }
-    if (e.type === 'boss') { this.shake(30, 0.7); this.flashT = 0.4; }
+    if (e.type === 'boss') {
+      this.shake(30, 0.7); this.flashT = 0.4;
+      if (CHECKPOINTS.indexOf(this.level) >= 0) this.saveCheckpoint();
+    }
   },
 
   openPortal() {
@@ -399,6 +483,7 @@ const Game = {
     if (this.transition > 0) {
       this.transition -= dt;
       if (this.transition <= 0) {
+        if (this.mode === 'campaign' && this.level >= CAMPAIGN_END) { this.winCampaign(); return; }
         this.pendingLevel = this.level + 1;
         this.openChoice();
       }
@@ -418,7 +503,10 @@ const Game = {
       this.rushT = Math.max(0, this.rushT - dt);
       const full = 6.5 + this.perkLevel('rushlong') * 1.8;
       this.volt = this.rushT > 0 ? clamp((this.rushT / full) * 100, 0, 100) : 0;
-      if (this.rushT === 0) Floaters.add(p.cx, p.y - 10, 'RUSH TERMINATO', '#b9d9ff', 13);
+      if (this.rushT === 0) {
+        Floaters.add(p.cx, p.y - 10, 'RUSH TERMINATO', '#b9d9ff', 13);
+        if (this.hasPerk('afterburn')) { this.volt = 50; this.refreshActionButtons(); }
+      }
     }
 
     /* muro di tempesta: avanza sempre, non si combatte, si corre */
@@ -538,6 +626,9 @@ const Game = {
       if (q.dead || q.y > lv.pxH + 100) this.pickups.splice(i, 1);
     }
 
+    /* droncino alleato */
+    if (this.drone && !p.dead) this.drone.update(dt, p, this.enemies, this.bullets);
+
     /* scudo che si rigenera da solo */
     if (this.hasPerk('shieldgen') && !p.dead) {
       this.shieldGenT -= dt;
@@ -611,14 +702,28 @@ const Game = {
   hasPerk(id) { return (this.perks[id] || 0) > 0; },
 
   openChoice() {
-    /* tre proposte diverse fra quelle non ancora esaurite */
-    const pool = PERKS.filter(p => this.perkLevel(p.id) < p.max);
+    /* dopo un Comandante il premio è di un altro livello */
+    const afterBoss = !!(this.lv && this.lv.boss);
+    const src = afterBoss ? LEGENDS.concat(PERKS) : PERKS;
+    const pool = src.filter(p => this.perkLevel(p.id) < p.max);
+    if (afterBoss) {
+      document.querySelector('#choice .ptitle').textContent = 'PREMIO DEL COMANDANTE';
+      document.querySelector('.choice-sub').textContent = 'Hai abbattuto un Comandante. Prendi il tuo premio.';
+    } else {
+      document.querySelector('#choice .ptitle').textContent = 'POTENZIAMENTO';
+      document.querySelector('.choice-sub').textContent = 'Lyra ti lascia tre frammenti. Prendine uno.';
+    }
     const pick3 = [];
     while (pick3.length < 3 && pool.length) {
       pick3.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
     }
     if (!pick3.length) { this.startNextLevel(); return; }
 
+    /* dopo un boss almeno una carta è leggendaria */
+    if (afterBoss && !pick3.some(c => c.leg)) {
+      const legs = LEGENDS.filter(p => this.perkLevel(p.id) < p.max);
+      if (legs.length) pick3[0] = legs[Math.floor(Math.random() * legs.length)];
+    }
     this.choices = pick3;
     const box = document.getElementById('choiceCards');
     box.innerHTML = '';
@@ -626,6 +731,7 @@ const Game = {
       const lvl = this.perkLevel(pk.id);
       const b = document.createElement('button');
       b.className = 'card';
+      b.className = 'card' + (pk.leg ? ' legend' : '');
       b.innerHTML = '<div class="ic" style="background:' + pk.col + '">' + pk.ic + '</div>' +
         '<div class="nm">' + pk.name + '</div>' +
         '<div class="ds">' + pk.ds + '</div>' +
@@ -646,10 +752,39 @@ const Game = {
     this.perks[pk.id] = this.perkLevel(pk.id) + 1;
     const p = this.player;
     if (pk.id === 'heart' && p) { p.maxHp = Math.min(9, p.maxHp + 1); p.hp = p.maxHp; }
+    if (pk.id === 'drone' && p && !this.drone) this.drone = new Drone(p.cx, p.cy - 30);
     document.getElementById('choice').classList.add('hidden');
     Sfx.levelUp();
     this.startNextLevel();
     this.banner(pk.name);
+  },
+
+  /* battuto un comandante: si salva il punto di ripresa */
+  saveCheckpoint() {
+    if (this.mode !== 'campaign' || !this.player) return;
+    this.progress.cp = {
+      level: this.level + 1,
+      perks: Object.assign({}, this.perks),
+      maxHp: this.player.maxHp,
+      score: this.score
+    };
+    this.saveProgress();
+    Floaters.add(this.player.cx, this.player.cy - 30, 'PUNTO DI RIPRESA', '#7cf7c4', 15);
+  },
+
+  winCampaign() {
+    this.state = 'win';
+    Sfx.stopMusic();
+    this.progress.cleared = true;
+    this.progress.cp = null;
+    this.saveProgress();
+    const rank = this.score >= 60000 ? 'S' : this.score >= 40000 ? 'A' : this.score >= 25000 ? 'B' : 'C';
+    document.getElementById('winScore').textContent = this.score;
+    document.getElementById('winKills').textContent = this.kills;
+    document.getElementById('winRank').textContent = rank;
+    document.getElementById('win').classList.remove('hidden');
+    document.getElementById('hud').classList.add('hidden');
+    [523, 659, 784, 1046, 1318].forEach((f, i) => setTimeout(() => Sfx.tone(f, 0.4, 'triangle', 0.1), i * 220));
   },
 
   startNextLevel() {
@@ -786,6 +921,10 @@ const Game = {
     document.getElementById('ovBest').textContent = this.best;
     const rank = this.score >= 30000 ? 'S' : this.score >= 18000 ? 'A' : this.score >= 9000 ? 'B' : 'C';
     document.getElementById('ovRank').textContent = 'GRADO ' + rank + ' · COMBO ' + this.maxCombo;
+    const cp = this.progress.cp, canResume = !!cp && this.mode === 'campaign';
+    const rb = document.getElementById('ovResumeBtn');
+    rb.classList.toggle('hidden', !canResume);
+    if (canResume) document.getElementById('ovCp').textContent = cp.level;
     document.getElementById('over').classList.remove('hidden');
     document.getElementById('hud').classList.add('hidden');
   },
@@ -809,8 +948,10 @@ const Game = {
     if (c.score !== this.score) { c.score = this.score; document.getElementById('score').textContent = this.score; }
 
     const md = MISSIONS[(this.mission || {}).type] || MISSIONS.hunt;
-    const lvName = (this.lv.boss ? 'BOSS ' : 'SETTORE ') + this.level +
-      (this.lv.boss ? '' : ' · ' + md.name);
+    const tot = this.mode === 'campaign' ? '/' + CAMPAIGN_END : '';
+    const lvName = this.lv.boss
+      ? (this.mode === 'campaign' && this.level >= CAMPAIGN_END ? 'IL DIVORATORE' : 'COMANDANTE ' + this.level + tot)
+      : 'SETTORE ' + this.level + tot + ' · ' + md.name;
     if (c.lvName !== lvName) { c.lvName = lvName; document.getElementById('levelName').textContent = lvName; }
 
     let tg;
@@ -870,6 +1011,7 @@ const Game = {
       for (const e of this.enemies) e.draw(ctx, camX, camY);
       for (const b of this.bullets) b.draw(ctx, camX, camY);
       this.drawExplosions(ctx, camX, camY);
+      if (this.drone) this.drone.draw(ctx, camX, camY);
       if (this.player) this.player.draw(ctx, camX, camY);
     }
     Particles.draw(ctx, camX, camY);

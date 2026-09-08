@@ -38,6 +38,14 @@ Regola del settore: **uccidi tutti i mostri**, il portale si apre, entraci per p
 - **Valutazione finale**: grado C/B/A/S e migliore combo nella schermata di fine partita.
 - **HUD rinnovato**: avanzamento nel settore, barra VOLT, stato del Rush e gerarchia visiva più leggibile.
 
+## Struttura del gioco
+
+**Campagna** di 20 settori: si insegue il Divoratore che ha rapito Lyra, seguendo i frammenti che lei lascia. Un Comandante ogni cinque settori (5, 10, 15) e lo scontro finale al ventesimo. Dopo ogni Comandante il gioco salva un punto di ripresa: morendo si può ripartire da lì con i poteri conquistati.
+
+**Entrando in ogni portale si sceglie un potenziamento** fra tre pescati a caso; restano per tutta la partita e si sommano. Dopo un Comandante la scelta comprende un potenziamento leggendario (droncino alleato, vampiro elettrico, scudo d'emergenza, brace, arsenale).
+
+**Oltre la Frattura**: finita la campagna si sblocca la modalità infinita, dove i settori non finiscono e conta solo il punteggio.
+
 ## Pubblicarlo su un sito
 
 La cartella è già pronta: contiene solo file statici.

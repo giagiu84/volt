@@ -190,7 +190,7 @@ function generateLevel(n) {
 
   if (boss) {
     spawns.push({ type: 'boss', x: (w - 16) * TILE, y: (groundY[w - 16] - 6) * TILE, tier: Math.ceil(n / 5) });
-    const guards = 2 + Math.floor(n / 5);
+    const guards = (n >= 20 ? 4 : 2) + Math.floor(n / 5);   /* il Divoratore arriva con la scorta */
     for (let i = 0; i < guards; i++) {
       const sx = rndInt(rng, 16, w - 20);
       const sy = groundY[sx] > 0 ? groundY[sx] - 2 : h - 8;

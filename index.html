@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=12">
+<link rel="stylesheet" href="css/style.css?v=13">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>%E2%9A%A1</text></svg>">
 </head>
 <body>
@@ -63,11 +63,13 @@
         <h1 class="logo">VOLT</h1>
         <div class="bolt">⚡</div>
       </div>
-      <p class="tag">Hanno preso Lyra. Hanno spento Lumina. Ora VOLT accende la guerra.</p>
+      <p class="tag">Segui i frammenti. Ritrova Lyra. Riaccendi Lumina.</p>
       <div class="feature-row" aria-label="Caratteristiche della partita">
         <span>MONDI INFINITI</span><span>BOSS</span><span>VOLT RUSH</span>
       </div>
-      <button id="playBtn" class="big-btn"><span>GIOCA ORA</span><small>SETTORE 1</small></button>
+      <button id="playBtn" class="big-btn"><span>GIOCA ORA</span><small id="playSub">CAMPAGNA · SETTORE 1</small></button>
+      <button id="resumeRunBtn" class="mini-btn hidden">Riprendi dal settore <b id="cpLevel">6</b></button>
+      <button id="endlessBtn" class="mini-btn locked">Oltre la Frattura — si sblocca finendo la campagna</button>
       <div class="best">Record <b id="bestScore">0</b></div>
       <div class="help">
         <div class="help-pc">
@@ -79,7 +81,7 @@
           <div class="help-row"><b>VOLT Rush</b> — quando la barra è carica compare il tasto VOLT: lo attivi tu, nel momento che scegli (su PC: <span class="key">E</span>)</div>
           <div class="help-row"><b>Destra</b> — SALTA (due volte = doppio salto, tenuto = salto più alto) · SPARA, la mira è automatica</div>
         </div>
-        <div class="help-row muted">Elimina i nemici senza fermarti: riempi la barra VOLT e scatena automaticamente il Rush.</div>
+        <div class="help-row muted">Ogni 8.000 punti conquisti una vita. Dopo ogni Comandante il gioco salva il punto di ripresa.</div>
       </div>
       <button id="muteBtn" class="mini-btn">Audio: ON</button>
     </div>
@@ -111,9 +113,26 @@
         <div class="stat"><span id="ovKills">0</span><small>mostri</small></div>
       </div>
       <div id="ovRank" class="rank">GRADO C</div>
+      <button id="ovResumeBtn" class="big-btn hidden">RIPRENDI DAL SETTORE <b id="ovCp">6</b></button>
       <div class="best">Record <b id="ovBest">0</b></div>
       <button id="retryBtn" class="big-btn">RIPROVA</button>
       <button id="menuBtn" class="mini-btn">Menu</button>
+    </div>
+  </div>
+
+  <div id="win" class="overlay hidden">
+    <div class="panel">
+      <h2 class="ptitle win">LYRA È LIBERA</h2>
+      <p class="win-text">Il Divoratore è caduto. La frattura si chiude alle vostre spalle
+        e la luce torna su Lumina.</p>
+      <div class="stats">
+        <div class="stat"><span id="winScore">0</span><small>punti</small></div>
+        <div class="stat"><span id="winKills">0</span><small>mostri</small></div>
+        <div class="stat"><span id="winRank">A</span><small>grado</small></div>
+      </div>
+      <div class="unlock">SBLOCCATA — <b>OLTRE LA FRATTURA</b><br><small>i settori non finiscono più: conta solo il punteggio</small></div>
+      <button id="winEndlessBtn" class="big-btn">OLTRE LA FRATTURA</button>
+      <button id="winMenuBtn" class="mini-btn">Menu</button>
     </div>
   </div>
 
@@ -124,7 +143,7 @@
 /* Se il telefono ha in cache una versione vecchia della pagina, se ne accorge
    da solo e si ricarica: senza questo si continuerebbero a vedere i comandi
    di ieri per una decina di minuti. */
-window.VOLT_VERSION = 12;
+window.VOLT_VERSION = 13;
 fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   .then(function (r) { return r.json(); })
   .then(function (d) {
@@ -138,12 +157,12 @@ fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   })
   .catch(function () { /* offline: pazienza, si gioca con quello che c'è */ });
 </script>
-<script src="js/util.js?v=12"></script>
-<script src="js/gfx.js?v=12"></script>
-<script src="js/audio.js?v=12"></script>
-<script src="js/input.js?v=12"></script>
-<script src="js/level.js?v=12"></script>
-<script src="js/entities.js?v=12"></script>
-<script src="js/game.js?v=12"></script>
+<script src="js/util.js?v=13"></script>
+<script src="js/gfx.js?v=13"></script>
+<script src="js/audio.js?v=13"></script>
+<script src="js/input.js?v=13"></script>
+<script src="js/level.js?v=13"></script>
+<script src="js/entities.js?v=13"></script>
+<script src="js/game.js?v=13"></script>
 </body>
 </html>
