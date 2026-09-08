@@ -40,7 +40,7 @@ Regola del settore: **uccidi tutti i mostri**, il portale si apre, entraci per p
 
 ## Struttura del gioco
 
-**Si sceglie chi essere**, VOLT o Lyra: stesse capacità, aspetto e racconto rispecchiati. Chi non giochi è quello che il Divoratore ha trascinato oltre la frattura, e il gioco lo chiama per nome nei messaggi e nel finale.
+**VOLT non è un nome: è il potere.** Due custodi vegliano sul Nucleo di Lumina, Aren e Lyra. Quello che scegli assorbe l'energia e diventa VOLT; l'altro viene catturato dal Divoratore mentre cerca di proteggerlo. Stessi poteri, stessi danni, stessa difficoltà: Aren spara col blaster, Lyra col guanto energetico. Messaggi e finale cambiano nome e genere da soli.
 
 **Campagna** di 20 settori: si insegue il Divoratore, seguendo i frammenti che l'altro protagonista lascia come traccia. Un Comandante ogni cinque settori (5, 10, 15) e lo scontro finale al ventesimo. Dopo ogni Comandante il gioco salva un punto di ripresa: morendo si può ripartire da lì con i poteri conquistati.
 

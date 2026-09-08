@@ -235,14 +235,18 @@ class Pickup {
 /* ---------- i due protagonisti ----------
    Stesse capacità, aspetto e racconto diversi: chi non giochi è quello
    che il Divoratore ha trascinato oltre la frattura. */
+/* VOLT non è un nome: è il potere del Nucleo. Chi lo assorbe diventa VOLT,
+   l'altro viene catturato dal Divoratore mentre cerca di proteggerlo.
+   Stessi poteri, stessi danni, stessa difficoltà: cambia solo come si spara. */
 const HEROES = {
-  volt: { name: 'VOLT', other: 'LYRA', otherLabel: 'Lyra', otherFree: 'LYRA È LIBERA',
-          body: '#f2f7ff', trim: '#22c8f5', trail: '#ff5d8f', legs: '#3a4a86', ponytail: false },
-  /* colori presi dalla tavola ufficiale: tuta rosa e bianca, capelli viola
-     con la ciocca gialla, dettagli ciano */
-  lyra: { name: 'LYRA', other: 'VOLT', otherLabel: 'VOLT', otherFree: 'VOLT È LIBERO',
+  aren: { name: 'AREN', other: 'LYRA', otherLabel: 'Lyra', otherFree: 'LYRA È LIBERA',
+          body: '#f2f7ff', trim: '#22c8f5', trail: '#ff5d8f', legs: '#3a4a86',
+          ponytail: false, glove: false },
+  /* colori della tavola ufficiale: tuta rosa e bianca, capelli viola con la
+     ciocca gialla. Lyra non usa il blaster ma il guanto energetico. */
+  lyra: { name: 'LYRA', other: 'AREN', otherLabel: 'Aren', otherFree: 'AREN È LIBERO',
           body: '#fff0f6', trim: '#ff5d8f', trail: '#7a3fd6', hair2: '#ffd166',
-          legs: '#4a2f7a', ponytail: true }
+          legs: '#4a2f7a', ponytail: true, glove: true }
 };
 function hero() { return HEROES[Game.hero] || HEROES.volt; }
 
@@ -812,10 +816,23 @@ class Player {
     /* braccio + blaster verso la mira */
     ctx.save();
     ctx.rotate(Math.atan2(this.aimY, this.aimX));
-    Gfx.capsule(ctx, 2, -4.5, 15, 9, '#e7edff', OUTLINE, 3);
-    Gfx.capsule(ctx, 11, -6, 16, 12, '#ffc247', OUTLINE, 3);
-    ctx.fillStyle = '#ff8a3d';
-    roundRect(ctx, 20, -3.5, 8, 7, 3); ctx.fill();
+    if (H.glove) {
+      /* guanto energetico: il colpo parte dal palmo */
+      Gfx.capsule(ctx, 2, -4.5, 13, 9, '#ffe3f1', OUTLINE, 3);
+      Gfx.capsule(ctx, 12, -6.5, 11, 13, H.trim, OUTLINE, 3);
+      ctx.save();
+      ctx.globalAlpha = 0.55 + Math.sin(this.anim * 8) * 0.2;
+      ctx.strokeStyle = '#ffd166'; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.arc(19, 0, 6.5, 0, TAU); ctx.stroke();
+      ctx.restore();
+      ctx.fillStyle = '#ffd166';
+      ctx.beginPath(); ctx.arc(19, 0, 3, 0, TAU); ctx.fill();
+    } else {
+      Gfx.capsule(ctx, 2, -4.5, 15, 9, '#e7edff', OUTLINE, 3);
+      Gfx.capsule(ctx, 11, -6, 16, 12, '#ffc247', OUTLINE, 3);
+      ctx.fillStyle = '#ff8a3d';
+      roundRect(ctx, 20, -3.5, 8, 7, 3); ctx.fill();
+    }
     ctx.restore();
     ctx.restore();
 

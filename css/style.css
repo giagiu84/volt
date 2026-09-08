@@ -207,6 +207,9 @@ body.is-touch .help .help-row{margin-bottom:8px;line-height:1.65}
 }
 
 /* ---------- Scelta del personaggio ---------- */
+.who{margin:2px 0 10px;font-size:12px;font-weight:800;color:var(--ink-soft);line-height:1.5}
+.who b{display:block;font-family:'Fredoka',sans-serif;font-weight:600;font-size:17px;color:var(--ink);
+  letter-spacing:.4px;margin-top:2px}
 .heroes{display:flex;gap:10px;justify-content:center;margin:0 0 16px}
 .hero-btn{flex:0 1 130px;padding:10px 8px 12px;border:0;cursor:pointer;border-radius:18px;
   background:rgba(36,26,77,.05);font-family:inherit;display:flex;flex-direction:column;
