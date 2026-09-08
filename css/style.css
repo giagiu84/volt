@@ -218,8 +218,8 @@ body.is-touch .help .help-row{margin-bottom:8px;line-height:1.65}
 .hero-btn small{font-size:10px;font-weight:800;color:var(--ink-soft);letter-spacing:.3px}
 .hero-btn.on{background:#fff;box-shadow:0 4px 0 rgba(36,26,77,.14),0 8px 18px rgba(10,6,36,.12),
   inset 0 0 0 2px var(--blue)}
-.hero-canvas{width:124px;height:146px;display:block}
-.hero-btn{flex:0 1 150px}
+.hero-canvas{width:142px;height:168px;display:block}
+.hero-btn{flex:0 1 166px}
 
 /* ---------- Campagna e vittoria ---------- */
 .big-btn small{display:block;font-size:11px;letter-spacing:2px;opacity:.75;margin-top:2px;font-weight:600}

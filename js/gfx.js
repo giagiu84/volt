@@ -150,7 +150,9 @@ const Rings = {
    personaggio disegnato dal codice. Nessun errore se mancano: si prova e basta. */
 const HeroArt = {
   imgs: {}, tried: false,
-  poses: ['front', 'side', 'back'],
+  /* serve solo la posa frontale: la rotazione della figura e' stata tolta
+     perche' le tre viste fornite non combaciavano */
+  poses: ['front'],
 
   load() {
     if (this.tried) return;
@@ -173,11 +175,8 @@ const HeroArt = {
   /* pronto solo se ci sono tutte e tre le viste: mezze illustrazioni
      darebbero una rotazione che salta */
   ready(who) {
-    for (const pose of this.poses) {
-      const im = this.imgs[who + '_' + pose];
-      if (!im || im._failed || !im.complete || !im.naturalWidth) return false;
-    }
-    return true;
+    const im = this.imgs[who + '_front'];
+    return !!(im && !im._failed && im.complete && im.naturalWidth);
   },
 
   /* disegna il custode all'angolo richiesto, alto `h` pixel e centrato sui piedi */
@@ -203,6 +202,15 @@ const HeroArt = {
     } catch (e) { return (im._span = im.naturalWidth); }
     im._span = Math.max(1, max - min) / im.naturalWidth;   /* frazione della larghezza */
     return im._span;
+  },
+
+  /* una posa sola, di fronte, appoggiata sui piedi */
+  drawFront(ctx, who, h) {
+    const im = this.imgs[who + '_front'];
+    if (!im || !im.naturalWidth || im._failed) return false;
+    const w = h * (im.naturalWidth / im.naturalHeight);
+    ctx.drawImage(im, -w / 2, -h, w, h);
+    return true;
   },
 
   draw(ctx, who, ang, h) {

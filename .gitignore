@@ -1,3 +1,8 @@
 .claude/
 .DS_Store
 Thumbs.db
+# nella pagina va solo la posa frontale in webp: gli originali e le altre
+# viste restano fuori dal repo, in Desktop/VOLT_viste_extra
+assets/heroes/*.png
+assets/heroes/*_side.webp
+assets/heroes/*_back.webp

@@ -482,7 +482,10 @@ const Game = {
     }
   },
 
-  /* i custodi girano sul piedistallo finché sei nel menu */
+  /* I custodi restano fermi di fronte: gira il piedistallo.
+     Le tre viste fornite non sono un turnaround coerente (proporzioni diverse
+     e in lyra_back manca una gamba), quindi far ruotare la figura produceva
+     scatti. Meglio una posa sola, giusta, con il movimento tutto attorno. */
   drawHeroPicks(dt) {
     this.heroSpin = (this.heroSpin || 0) + dt;
     for (const id of ['aren', 'lyra']) {
@@ -492,32 +495,65 @@ const Game = {
       const W = cv.width, H = cv.height;
       g.clearRect(0, 0, W, H);
       const sel = this.hero === id;
-      const t = this.heroSpin;
-      /* quello scelto gira spedito, l'altro fa un giro lento */
-      const ang = t * (sel ? 1.9 : 0.7) + (id === 'lyra' ? 1.6 : 0);
+      const t = this.heroSpin + (id === 'lyra' ? 1.3 : 0);
       const col = id === 'aren' ? '#22c8f5' : '#ff5d8f';
+      const baseY = H * 0.80;
 
-      /* piedistallo */
+      /* piedistallo: due anelli che ruotano in senso opposto */
       g.save();
-      g.translate(W / 2, H * 0.78);
-      const grd = g.createRadialGradient(0, 0, 4, 0, 0, 74);
-      grd.addColorStop(0, Gfx.alpha(col, sel ? 0.5 : 0.2));
+      g.translate(W / 2, baseY);
+      const grd = g.createRadialGradient(0, 0, 4, 0, 0, 78);
+      grd.addColorStop(0, Gfx.alpha(col, sel ? 0.55 : 0.18));
       grd.addColorStop(1, Gfx.alpha(col, 0));
       g.fillStyle = grd;
-      g.beginPath(); g.ellipse(0, 0, 74, 26, 0, 0, TAU); g.fill();
-      g.strokeStyle = Gfx.alpha(col, sel ? 0.9 : 0.35);
-      g.lineWidth = 3;
-      g.beginPath(); g.ellipse(0, 0, 46, 15, 0, 0, TAU); g.stroke();
+      g.beginPath(); g.ellipse(0, 0, 78, 28, 0, 0, TAU); g.fill();
+      for (let r = 0; r < 2; r++) {
+        const rot = t * (r ? -0.9 : 1.3);
+        g.save();
+        g.rotate(0);
+        g.strokeStyle = Gfx.alpha(col, sel ? 0.85 - r * 0.35 : 0.3 - r * 0.12);
+        g.lineWidth = 3 - r;
+        g.beginPath();
+        /* anello tratteggiato che gira */
+        const rr = 50 - r * 13, seg = 10 + r * 4;
+        for (let i = 0; i < seg; i++) {
+          const a0 = rot + (i / seg) * TAU, a1 = a0 + TAU / seg * 0.55;
+          g.moveTo(Math.cos(a0) * rr, Math.sin(a0) * rr * 0.32);
+          g.lineTo(Math.cos(a1) * rr, Math.sin(a1) * rr * 0.32);
+        }
+        g.stroke();
+        g.restore();
+      }
       g.restore();
 
-      /* il custode: illustrazione se disponibile, altrimenti disegnato dal codice */
+      /* scintille che salgono dal piedistallo, solo per quello scelto */
+      if (sel) {
+        g.save();
+        g.fillStyle = col;
+        for (let i = 0; i < 7; i++) {
+          const ph = (t * 0.55 + i / 7) % 1;
+          const a = i * 2.4 + t * 0.5;
+          g.globalAlpha = (1 - ph) * 0.75;
+          const rr = 34 + Math.sin(a) * 14;
+          g.beginPath();
+          g.arc(W / 2 + Math.cos(a) * rr, baseY - ph * H * 0.5 + Math.sin(a) * 4,
+                2.2 - ph, 0, TAU);
+          g.fill();
+        }
+        g.restore();
+      }
+
+      /* il custode, sempre di fronte: respira e basta */
+      const breathe = 1 + Math.sin(t * 1.8) * 0.012;
+      const h = H * (sel ? 0.82 : 0.71);
       g.save();
-      if (HeroArt.ready(id)) {
-        g.translate(W / 2, H * 0.80);
-        HeroArt.draw(g, id, ang, H * (sel ? 0.74 : 0.68));
-      } else {
-        g.translate(W / 2, H * 0.63);
-        drawHeroPose(g, HEROES[id], ang, t, sel ? 2.05 : 1.85);
+      g.globalAlpha = sel ? 1 : 0.72;
+      g.translate(W / 2, baseY + 3);
+      g.scale(1, breathe);
+      if (!HeroArt.drawFront(g, id, h)) {
+        g.scale(sel ? 2.05 : 1.85, sel ? 2.05 : 1.85);
+        g.translate(0, -22);
+        drawHeroPose(g, HEROES[id], 0, t, 1);
       }
       g.restore();
     }
