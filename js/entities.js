@@ -881,17 +881,48 @@ const ENEMY_DEF = {
   boss:    { w: 76, h: 76, hp: 60, speed: 105, score: 2500, col: '#ff4d7d', dark: '#b41f52', touch: 2 }
 };
 
+/* ---------- gli élite ----------
+   Dal sesto settore in poi una parte dei mostri arriva temprata: stessa
+   specie, un vantaggio in piu' e un modo diverso di affrontarla. Servono a
+   far salire la tensione senza toccare i primi cinque settori, che restano
+   la porta d'ingresso per chi prova il gioco la prima volta. */
+const ELITES = {
+  sprint: { label: 'SCATTANTE',   col: '#ff2f2f', from: 6,  hp: 0.6,  speed: 1.85, score: 2 },
+  armor:  { label: 'CORAZZATO',   col: '#c8d8ee', from: 8,  hp: 1,    speed: 0.85, score: 2.2 },
+  jammer: { label: 'DISTURBATORE', col: '#63f4ff', from: 11, hp: 1.15, speed: 1,    score: 2.4 }
+};
+
+/* Chi diventa élite lo decide il numero del settore: cosi il settore 12 e'
+   lo stesso per tutti. rnd e' la funzione casuale del settore (o Math.random
+   per le ondate che nascono durante la partita). */
+function eliteRoll(rnd, n, type) {
+  if (type === 'boss' || n < ELITES.sprint.from) return null;
+  if (rnd() > Math.min(0.40, (n - 5) * 0.055)) return null;
+  const pool = ['sprint', 'sprint'];
+  /* la corazza si porta sulla schiena: solo chi cammina e ha una direzione */
+  if (n >= ELITES.armor.from && (type === 'crawler' || type === 'spitter' || type === 'charger'))
+    pool.push('armor', 'armor');
+  if (n >= ELITES.jammer.from) pool.push('jammer');
+  return pool[Math.floor(rnd() * pool.length)];
+}
+
 class Enemy {
-  constructor(type, x, y, level, tier) {
+  constructor(type, x, y, level, tier, elite) {
     const d = ENEMY_DEF[type];
     this.type = type; this.def = d;
     this.x = x; this.y = y; this.w = d.w; this.h = d.h;
     this.vx = 0; this.vy = 0; this.onGround = false; this.prevBottom = y + d.h;
-    const scale = 1 + (level - 1) * 0.065;   /* i mostri non devono diventare spugne */
-    this.maxHp = Math.round(d.hp * (type === 'boss' ? (1 + (tier - 1) * 0.85) : scale));
+    this.elite = type === 'boss' ? null : (elite || null);
+    const E = this.elite ? ELITES[this.elite] : null;
+    /* dopo il quinto settore la curva si impenna: fino a li' resta com'era */
+    const oltre = Math.max(0, level - 5);
+    const scale = 1 + (level - 1) * 0.065 + oltre * 0.045;
+    this.maxHp = Math.max(1, Math.round(
+      d.hp * (type === 'boss' ? (1 + (tier - 1) * 0.85) : scale) * (E ? E.hp : 1)));
     this.hp = this.maxHp;
-    this.speed = d.speed * (1 + Math.min(0.55, (level - 1) * 0.035));
-    this.score = d.score;
+    this.speed = d.speed * (1 + Math.min(0.75, (level - 1) * 0.035 + oltre * 0.015)) * (E ? E.speed : 1);
+    this.score = Math.round(d.score * (E ? E.score : 1));
+    this.pulse = 2 + Math.random();
     this.dir = -1; this.t = Math.random() * 4;
     this.flash = 0; this.dead = false; this.stun = 0;
     this.cool = 0.8 + Math.random(); this.state = 0; this.stateT = 0;
@@ -906,6 +937,19 @@ class Enemy {
 
   hurt(dmg, fromX, freeze) {
     if (this.dead) return;
+    /* il corazzato porta la piastra sul davanti: di fronte i colpi scivolano,
+       alle spalle entrano il doppio. Non e' invulnerabile, e' scomodo. */
+    if (this.elite === 'armor' && fromX !== undefined) {
+      if (sign(fromX - this.cx) === this.dir) {
+        dmg *= 0.35;
+        Sfx.tone(900, 0.05, 'square', 0.025, 640);
+        Particles.burst(this.cx + this.dir * this.w * 0.4, this.cy, 4, '#e8f2ff', 150, 2.5, 40);
+        if (this.t - (this._clang || -9) > 1.2) {
+          this._clang = this.t;
+          Floaters.add(this.cx, this.cy - 26, 'ALLE SPALLE!', '#cfe0ff', 12);
+        }
+      } else dmg *= 2;
+    }
     this.hp -= dmg;
     this.flash = 0.09;
     if (freeze) {
@@ -944,6 +988,7 @@ class Enemy {
     this.hunting = Game.enemiesLeft <= 2;
     if (!this.awake && (distX < 760 || this.hunting)) this.awake = true;
     if (!this.awake) return;
+    if (this.elite) this.updateElite(dt, player);
     if (this.stun > 0) { this.vy += GRAV * dt; moveEntity(this, lv, dt, false); return; }
 
     switch (this.type) {
@@ -953,6 +998,35 @@ class Enemy {
       case 'flyer':   this.updateFlyer(dt, lv, player, dx, dy); break;
       case 'bomber':  this.updateBomber(dt, lv, player, bullets, dx, dy); break;
       case 'boss':    this.updateBoss(dt, lv, player, bullets, dx, dy); break;
+    }
+  }
+
+  /* quel che fanno in piu' gli élite */
+  updateElite(dt, player) {
+    if (this.elite === 'sprint') {
+      if (Math.abs(this.vx) > 60 && Math.random() < 0.6)
+        Particles.spawn(this.cx, this.cy + 4, -this.vx * 0.12, -20, 0.26, 4.5, ELITES.sprint.col, 0, 1);
+      return;
+    }
+    if (this.elite !== 'jammer') return;
+    /* il disturbatore non fa male: manda in corto il blaster. Va tolto di
+       mezzo per primo, oppure gli si sta lontano. */
+    if (Math.abs(player.cx - this.cx) > 380) return;
+    this.pulse -= dt;
+    /* mezzo secondo di scintille prima della scarica: si fa in tempo a
+       scappare o a farlo fuori, ma bisogna accorgersene */
+    if (this.pulse > 0) {
+      if (this.pulse < 0.5 && Math.random() < 0.5)
+        Particles.spawn(this.cx + (Math.random() - 0.5) * 26, this.cy + (Math.random() - 0.5) * 26,
+          0, -40, 0.3, 3.5, ELITES.jammer.col, 0, 1);
+      return;
+    }
+    this.pulse = 3.4;
+    Rings.add(this.cx, this.cy, ELITES.jammer.col, 200, 0.45, 6);
+    Sfx.tone(190, 0.22, 'sawtooth', 0.045, 900);
+    if (!player.dead && player.shield <= 0 && dist2(player.cx, player.cy, this.cx, this.cy) < 200 * 200) {
+      player.heat = 100; player.overheat = Math.max(player.overheat, 0.85);
+      Floaters.add(player.cx, player.y - 14, 'ARMA IN CORTO', ELITES.jammer.col, 14);
     }
   }
 
@@ -1004,7 +1078,7 @@ class Enemy {
   updateSpitter(dt, lv, player, bullets, dx, distX) {
     this.updateWalker(dt, lv, dx, distX, 0.6);
     if (this.cool <= 0 && distX < 520) {
-      this.cool = 1.6;
+      this.cool = 1.6 - Math.min(0.55, Math.max(0, Game.level - 5) * 0.05);
       const a = Math.atan2(player.cy - this.cy, player.cx - this.cx);
       const spd = 330;
       bullets.push(new Bullet(this.cx, this.cy, Math.cos(a) * spd, Math.sin(a) * spd,
@@ -1032,7 +1106,7 @@ class Enemy {
     this.y += this.vy * dt;
     if (lv.solidAt(this.cx, this.y)) { this.y -= this.vy * dt; this.vy = 60; }
     if (this.cool <= 0 && Math.abs(dx) < 90 && dy > 0) {
-      this.cool = 3.1;
+      this.cool = 3.1 - Math.min(0.9, Math.max(0, Game.level - 5) * 0.07);
       bullets.push(new Bullet(this.cx, this.y + this.h + 6, this.vx * 0.4, 60,
         { foe: true, col: '#7ef0a8', r: 7, life: 4, grav: 900, bomb: true }));
     }
@@ -1058,13 +1132,18 @@ class Enemy {
         Particles.burst(this.cx, this.y + this.h, 26, this.def.col, 300, 5, 400);
         Rings.add(this.cx, this.y + this.h, '#ffffff', 150, 0.4, 7);
         Sfx.noise(0.3, 0.2, 700, 90);
+        /* dal secondo Comandante l'atterraggio manda onde lungo il terreno:
+           non basta piu' stargli lontano, bisogna saltarle */
+        if (this.tier >= 2) for (const sv of [-1, 1])
+          bullets.push(new Bullet(this.cx + sv * 34, this.y + this.h - 12, sv * 330, 0,
+            { foe: true, col: '#ffd166', r: 9, life: 2.2 }));
       } else if (this.stateT <= 0) { this.jumped = false; this.state = 0; this.stateT = 1.1; }
     } else if (this.state === 2) {
       this.vx = approach(this.vx, 0, 1400 * dt);
       if (this.cool <= 0) {
-        this.cool = 0.34 - this.phase * 0.07;
+        this.cool = Math.max(0.12, 0.34 - this.phase * 0.07 - (this.tier - 1) * 0.02);
         const base = Math.atan2(player.cy - this.cy, player.cx - this.cx);
-        const n = 3 + this.phase * 2;
+        const n = 3 + this.phase * 2 + (this.tier >= 3 ? 1 : 0);
         for (let i = 0; i < n; i++) {
           const a = base + (i - (n - 1) / 2) * 0.24 + (Math.random() - 0.5) * 0.05;
           bullets.push(new Bullet(this.cx, this.cy, Math.cos(a) * 380, Math.sin(a) * 380,
@@ -1096,6 +1175,7 @@ class Enemy {
 
     Gfx.shadow(ctx, x, feet + 2, this.w * 1.5, this.onGround ? 0.4 : 0.2);
     if (this.slow > 0) Gfx.light(ctx, x, y, this.w * 1.1, '#7fe8ff', 0.4);
+    if (this.elite) Gfx.light(ctx, x, y, this.w * 1.3, ELITES[this.elite].col, 0.28 + Math.sin(this.t * 5) * 0.1);
 
     ctx.save();
     ctx.translate(x, y);
@@ -1188,8 +1268,38 @@ class Enemy {
         Gfx.blob(ctx, this.w * 1.1, this.h * 1.05, 0.05, this.t); ctx.fill();
         ctx.globalAlpha = 1;
       }
+      /* la piastra del corazzato: sta davanti agli occhi, cosi si vede da che
+         parte e' girato e si capisce da dove va colpito */
+      if (this.elite === 'armor') {
+        ctx.save();
+        ctx.scale(this.dir < 0 ? -1 : 1, 1);
+        ctx.fillStyle = ELITES.armor.col;
+        roundRect(ctx, this.w * 0.26, -this.h * 0.44, 11, this.h * 0.88, 5); ctx.fill(); ctx.stroke();
+        Gfx.gloss(ctx, this.w * 0.29, -this.h * 0.34, 4, this.h * 0.36, 0.55);
+        ctx.fillStyle = '#8fa4c4';
+        for (let i = -1; i <= 1; i++) {
+          ctx.beginPath(); ctx.arc(this.w * 0.26 + 5.5, i * this.h * 0.26, 1.6, 0, TAU); ctx.fill();
+        }
+        ctx.restore();
+      }
     }
     ctx.restore();
+
+    /* galloni degli élite */
+    if (this.elite) {
+      const E = ELITES[this.elite];
+      const gy2 = this.y - cy - (this.hp < this.maxHp ? 20 : 12);
+      ctx.save();
+      ctx.strokeStyle = E.col; ctx.lineWidth = 2.5; ctx.lineCap = 'round';
+      for (let i = 0; i < 2; i++) {
+        ctx.beginPath();
+        ctx.moveTo(x - 6, gy2 - i * 4.5);
+        ctx.lineTo(x, gy2 - 3.4 - i * 4.5);
+        ctx.lineTo(x + 6, gy2 - i * 4.5);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
 
     /* barra vita sopra la testa */
     if (this.type !== 'boss' && this.hp < this.maxHp) {

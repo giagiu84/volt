@@ -2,7 +2,11 @@
 'use strict';
 
 const MINW = 580, MINH = 400, MAXSCALE = 2.8;
-const LIFE_EVERY = 8000;      /* punti fra una vita e l'altra */
+const LIFE_EVERY = 8000;      /* punti fra la prima vita e la seconda */
+/* Ogni vita costa piu' della precedente. Senza questo, dal decimo settore in
+   poi il punteggio corre cosi in fretta da regalare una vita ogni pochi
+   secondi: si finiva la campagna senza mai rischiare davvero. */
+const LIFE_GROW = 1.25;
 const FIRST_LIFE_AT = 2500;   /* la prima arriva presto: serve nei settori d'apertura */
 const CAMPAIGN_END = 20;      /* la campagna finisce col Divoratore */
 const CHECKPOINTS = [5, 10, 15];
@@ -189,13 +193,13 @@ const Game = {
     }
     Sfx.init(); Sfx.resume(); Sfx.startMusic();
     this.mode = mode || this.mode || 'campaign';
-    this.level = 1; this.score = 0; this.kills = 0;
+    this.level = 1; this.score = 0; this.kills = 0; this.eliteSeen = {};
     this.combo = 0; this.comboT = 0; this.maxCombo = 0;
     this.volt = 0; this.rushT = 0; this.hitStop = 0;
     this.hasShip = false;
     this.perks = {}; this.shieldGenT = 0; this.drone = null;
     this._winCinema = false;
-    this.nextLifeAt = FIRST_LIFE_AT;
+    this.nextLifeAt = FIRST_LIFE_AT; this.lifeStep = LIFE_EVERY;
     if (this.player) this.player.riding = false;
     this.onShipChange();
     this.loadLevel(1, true);
@@ -339,7 +343,7 @@ const Game = {
     if (!keepPlayer && this.player) { p.x = lv.startX; p.y = lv.startY; p.vx = 0; p.vy = 0; p.invuln = 1.2; }
     this.player = p;
 
-    for (const s of lv.spawns) this.enemies.push(new Enemy(s.type, s.x, s.y, n, s.tier));
+    for (const s of lv.spawns) this.enemies.push(new Enemy(s.type, s.x, s.y, n, s.tier, s.elite));
     for (const q of lv.pickups) this.pickups.push(new Pickup(q.x, q.y, Pickup.randomKind()));
     for (const sh of (lv.ships || [])) this.ships.push(new Ship(sh.x, sh.y));
 
@@ -373,6 +377,18 @@ const Game = {
       p.weaponT = 20; p.heat = 0; p.overheat = 0;
     }
     if (this.drone && p) { this.drone.x = p.cx; this.drone.y = p.cy - 30; }
+
+    /* la prima volta che ne compare uno, il gioco lo presenta per nome */
+    if (!this.eliteSeen) this.eliteSeen = {};
+    for (const e of this.enemies) {
+      if (!e.elite || this.eliteSeen[e.elite]) continue;
+      this.eliteSeen[e.elite] = 1;
+      const E = ELITES[e.elite];
+      setTimeout(() => {
+        if (this.state === 'play' && this.level === n) this.banner('ÉLITE · ' + E.label);
+      }, 2900);
+      break;
+    }
 
     const md = MISSIONS[this.mission.type] || MISSIONS.hunt;
     const finale = this.mode === 'campaign' && n >= CAMPAIGN_END;
@@ -424,7 +440,11 @@ const Game = {
 
   addScore(v) {
     this.score += Math.round(v);
-    if (this.score >= this.nextLifeAt) { this.nextLifeAt += LIFE_EVERY; this.grantLife(); }
+    if (this.score >= this.nextLifeAt) {
+      this.nextLifeAt += this.lifeStep;
+      this.lifeStep = Math.round(this.lifeStep * LIFE_GROW);
+      this.grantLife();
+    }
     if (this.score > this.best) { this.best = this.score; Store.set('volt_best', this.best); }
   },
 
@@ -477,9 +497,9 @@ const Game = {
     Sfx.levelUp();
   },
 
-  spawnEnemy(type, x, y) {
+  spawnEnemy(type, x, y, elite) {
     if (this.enemies.length > 44) return;
-    const e = new Enemy(type, x, y, this.level, 1);
+    const e = new Enemy(type, x, y, this.level, 1, elite);
     e.awake = true;
     this.enemies.push(e);
     Particles.burst(x, y, 16, '#b06bff', 220, 4, 0);
@@ -499,11 +519,14 @@ const Game = {
 
     /* all'ultima vita il gioco allunga la mano: più oggetti, più cuori */
     const lowHp = this.player && this.player.hp <= 1;
-    let dropChance = e.type === 'boss' ? 1 : (lowHp ? 0.30 : 0.17);
+    /* la mano tesa all'ultima vita resta intera nei primi cinque settori, poi
+       si ritira piano: piu' avanti si va, meno il gioco ti salva da solo */
+    const pieta = this.level <= 5 ? 1 : Math.max(0.55, 1 - (this.level - 5) * 0.035);
+    let dropChance = e.type === 'boss' ? 1 : (lowHp ? 0.30 * pieta : 0.17);
     dropChance += this.perkLevel('luck') * 0.22;
     if (Math.random() < dropChance) {
       let kind = Pickup.randomKind();
-      if (lowHp && Math.random() < 0.5) kind = 'heart';
+      if (lowHp && Math.random() < 0.5 * pieta) kind = 'heart';
       this.pickups.push(new Pickup(e.cx - 10, e.cy - 10, kind));
       if (e.type === 'boss') {
         this.pickups.push(new Pickup(e.cx + 30, e.cy - 10, 'maxheart'));
@@ -1113,7 +1136,7 @@ const Game = {
       const gy = lv.groundY[tx];
       const type = types[Math.floor(Math.random() * types.length)];
       const y = (gy > 0 ? gy - 3 : Math.floor(lv.h * 0.5)) * TILE;
-      this.spawnEnemy(type, tx * TILE, y);
+      this.spawnEnemy(type, tx * TILE, y, eliteRoll(Math.random, this.level, type));
     }
   },
 

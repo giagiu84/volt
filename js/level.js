@@ -128,7 +128,7 @@ function generateLevel(n) {
     /* la caccia resta la piu' frequente: e' l'identita' del gioco */
     const type = pick(rng, ['hunt'].concat(pool));
     mission = { type };
-    if (type === 'survive') mission.time = 30 + Math.min(12, n);
+    if (type === 'survive') mission.time = 30 + Math.min(12, n) + Math.min(8, Math.max(0, n - 5));
     if (type === 'cores') mission.need = 3;
     if (type === 'targets') mission.need = 3;
     if (type === 'assault') { mission.waves = 3; mission.perWave = 3 + Math.floor(n / 4); }
@@ -194,10 +194,12 @@ function generateLevel(n) {
     for (let i = 0; i < guards; i++) {
       const sx = rndInt(rng, 16, w - 20);
       const sy = groundY[sx] > 0 ? groundY[sx] - 2 : h - 8;
-      spawns.push({ type: pick(rng, types), x: sx * TILE, y: sy * TILE });
+      const gt = pick(rng, types);
+      spawns.push({ type: gt, x: sx * TILE, y: sy * TILE, elite: eliteRoll(rng, n, gt) });
     }
   } else {
-    let count = Math.min(4 + Math.floor(n * 1.4), 26);
+    /* dopo il quinto settore ne arrivano sempre di piu': fino a li' invariato */
+    let count = Math.min(4 + Math.floor(n * 1.4 + Math.max(0, n - 5) * 0.6), 30);
     if (mission.type === 'cores' || mission.type === 'targets') count = Math.round(count * 0.6);
     if (mission.type === 'survive' || mission.type === 'assault') count = Math.round(count * 0.45);
     if (mission.type === 'escape') count = Math.round(count * 0.5);
@@ -211,7 +213,7 @@ function generateLevel(n) {
         ? clamp(groundY[sx] - rndInt(rng, 4, 9), minY, h - 4)
         : groundY[sx] - 2;
       if (tiles[at(sx, sy)] !== T_EMPTY) continue;
-      spawns.push({ type, x: sx * TILE, y: sy * TILE });
+      spawns.push({ type, x: sx * TILE, y: sy * TILE, elite: eliteRoll(rng, n, type) });
     }
   }
 

@@ -30,6 +30,31 @@ Con la tastiera si spara dritto davanti a sé; con il mouse si mira dove punta i
 
 Regola del settore: **uccidi tutti i mostri**, il portale si apre, entraci per passare al successivo. Cadere nel vuoto costa una vita ma non la partita: si rientra sull'ultimo appoggio sicuro. Sparare scalda l'arma: se la barra arriva a fondo, il blaster si blocca per un secondo.
 
+## La curva di difficolta'
+
+I primi cinque settori sono la porta d'ingresso e restano come sono: servono a
+imparare a muoversi. **Dal sesto in poi il gioco si indurisce**, e lo fa in
+quattro modi:
+
+- **Élite.** Una parte dei mostri (dal 5% del sesto settore fino al 40% dal
+  tredicesimo) arriva temprata. Stessa specie, un vantaggio in piu':
+  - **scattante** (dal 6°) — quasi il doppio della velocita', ma meta' vita;
+  - **corazzato** (dall'8°) — porta la piastra sul davanti: di fronte i colpi
+    scivolano via, alle spalle entrano doppi. Si vede da che parte e' girato;
+  - **disturbatore** (dall'11°) — mezzo secondo di scintille e poi una scarica
+    che manda in corto il blaster per un attimo. Non fa danno: toglie l'arma.
+- **Numeri e statistiche.** Da li' in poi il conto dei mostri, la loro vita e la
+  loro velocita' salgono piu' in fretta, e spitter e bombardieri sparano piu'
+  spesso.
+- **Vite a scalare.** La prima vita a punti arriva presto come prima, ma ognuna
+  costa il 25% in piu' della precedente: prima se ne guadagnavano quasi sessanta
+  in una campagna, adesso una decina. Il punteggio corre, le vite no.
+- **Comandanti.** Dal secondo in poi l'atterraggio manda onde lungo il terreno,
+  e ai gradi alti le raffiche sono piu' fitte.
+
+La rete di sicurezza per chi e' in difficolta' (piu' cuori quando resti a una
+vita sola) resta intera nei primi cinque settori e si ritira piano dopo.
+
 ## Novità della versione 7
 
 - **VOLT Rush**: eliminazioni, combo, celle energia e trampolini caricano la barra. Al 100% parte automaticamente un sovraccarico di 6,5 secondi con velocità, cadenza, potenza e punteggio raddoppiato.
