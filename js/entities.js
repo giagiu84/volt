@@ -232,6 +232,20 @@ class Pickup {
   }
 }
 
+/* ---------- i due protagonisti ----------
+   Stesse capacità, aspetto e racconto diversi: chi non giochi è quello
+   che il Divoratore ha trascinato oltre la frattura. */
+const HEROES = {
+  volt: { name: 'VOLT', other: 'LYRA', otherLabel: 'Lyra', otherFree: 'LYRA È LIBERA',
+          body: '#f2f7ff', trim: '#22c8f5', trail: '#ff5d8f', legs: '#3a4a86', ponytail: false },
+  /* colori presi dalla tavola ufficiale: tuta rosa e bianca, capelli viola
+     con la ciocca gialla, dettagli ciano */
+  lyra: { name: 'LYRA', other: 'VOLT', otherLabel: 'VOLT', otherFree: 'VOLT È LIBERO',
+          body: '#fff0f6', trim: '#ff5d8f', trail: '#7a3fd6', hair2: '#ffd166',
+          legs: '#4a2f7a', ponytail: true }
+};
+function hero() { return HEROES[Game.hero] || HEROES.volt; }
+
 /* ---------- giocatore ---------- */
 class Player {
   constructor(x, y) {
@@ -731,7 +745,8 @@ class Player {
 
     /* sciarpa dietro al corpo */
     ctx.save();
-    ctx.strokeStyle = '#ff5d8f'; ctx.lineWidth = 7; ctx.lineCap = 'round';
+    const H = hero();
+    ctx.strokeStyle = H.trail; ctx.lineWidth = H.ponytail ? 8 : 7; ctx.lineCap = 'round';
     ctx.beginPath();
     for (let i = 0; i < this.scarf.length; i++) {
       const s = this.scarf[i];
@@ -753,13 +768,13 @@ class Player {
     ctx.scale(sx, sy);
 
     const legPhase = run ? Math.sin(this.anim * 17) : 0;
-    const bodyCol = this.flash > 0 ? '#ffffff' : '#f2f7ff';
-    const trim = this.shield > 0 ? '#48d7ff' : '#22c8f5';
+    const bodyCol = this.flash > 0 ? '#ffffff' : H.body;
+    const trim = this.shield > 0 ? '#48d7ff' : H.trim;
 
     /* gambe */
     const legY = air ? 6 : 8;
-    Gfx.capsule(ctx, -8, legY, 7, air ? 10 : 11 + legPhase * 3, '#3a4a86', OUTLINE, 3);
-    Gfx.capsule(ctx, 1, legY, 7, air ? 10 : 11 - legPhase * 3, '#3a4a86', OUTLINE, 3);
+    Gfx.capsule(ctx, -8, legY, 7, air ? 10 : 11 + legPhase * 3, H.legs, OUTLINE, 3);
+    Gfx.capsule(ctx, 1, legY, 7, air ? 10 : 11 - legPhase * 3, H.legs, OUTLINE, 3);
 
     /* corpo */
     Gfx.capsule(ctx, -11, -13, 22, 24, bodyCol, OUTLINE, 3);
@@ -773,6 +788,19 @@ class Player {
     /* casco + visiera che guarda dove si mira */
     ctx.save();
     ctx.translate(0, -16);
+    if (H.ponytail) {
+      /* ciuffo che sbuca dal visore */
+      ctx.fillStyle = H.trail;
+      ctx.beginPath();
+      ctx.moveTo(-2, -9); ctx.quadraticCurveTo(-15, -17, -13, -3);
+      ctx.quadraticCurveTo(-8, -8, -2, -6); ctx.closePath();
+      ctx.fill(); ctx.lineWidth = 2.5; ctx.strokeStyle = OUTLINE; ctx.stroke();
+      /* la ciocca gialla della tavola */
+      ctx.fillStyle = H.hair2 || '#ffd166';
+      ctx.beginPath();
+      ctx.moveTo(-3, -9); ctx.quadraticCurveTo(-9, -14, -8, -7);
+      ctx.quadraticCurveTo(-6, -8, -3, -7); ctx.closePath(); ctx.fill();
+    }
     Gfx.capsule(ctx, -10, -9, 20, 18, trim, OUTLINE, 3);
     ctx.fillStyle = '#1b2340';
     const vx = clamp(this.aimX, -1, 1) * 2.4;

@@ -9,11 +9,11 @@ const CHECKPOINTS = [5, 10, 15];
 
 /* la voce di Lyra fra un settore e l'altro: ricorda perché si corre */
 const LYRA_LINES = [
-  'Segnale di Lyra rilevato.',
+  'Segnale di @ rilevato.',
   'La traccia attraversa il prossimo portale.',
-  'Ha lasciato un frammento: è passata di qui.',
+  'Un frammento: è passato di qui.',
   'La frattura si allarga. Vai avanti.',
-  'Un comandante presidia il settore.',
+  'Un Comandante presidia il settore.',
   'Lumina è ancora spenta. Continua.'
 ];
 
@@ -69,6 +69,7 @@ const Game = {
   mission: null, missionT: 0, wave: 0, waveCool: 0, spawnCool: 0, missionDone: false,
   perks: {}, pendingLevel: 0, shieldGenT: 0, drone: null,
   mode: 'campaign', progress: Store.get('volt_progress', { cleared: false, cp: null }),
+  hero: Store.get('volt_hero', 'volt'),
   stormX: -9999,
   camX: 0, camY: 0, shakeAmt: 0, shakeT: 0,
   level: 1, score: 0, best: Store.get('volt_best', 0), kills: 0,
@@ -115,6 +116,14 @@ const Game = {
     document.getElementById('winEndlessBtn').onclick = () => this.start(true, 'endless', false);
     document.getElementById('winMenuBtn').onclick = () => this.toMenu();
     document.getElementById('ovResumeBtn').onclick = () => this.start(true, 'campaign', true);
+    for (const b of document.querySelectorAll('.hero-btn')) {
+      b.onclick = () => {
+        this.hero = b.dataset.hero;
+        Store.set('volt_hero', this.hero);
+        this.refreshMenu();
+        Sfx.init(); Sfx.resume(); Sfx.pickup();
+      };
+    }
     this.refreshMenu();
     document.getElementById('retryBtn').onclick = () => this.start(true);
     document.getElementById('resumeBtn').onclick = () => this.setPause(false);
@@ -209,6 +218,12 @@ const Game = {
 
   /* il menu racconta a che punto sei */
   refreshMenu() {
+    /* il claim e la scelta raccontano chi stai cercando */
+    const H = HEROES[this.hero] || HEROES.volt;
+    for (const b of document.querySelectorAll('.hero-btn'))
+      b.classList.toggle('on', b.dataset.hero === this.hero);
+    const claim = document.getElementById('claim');
+    if (claim) claim.textContent = 'Segui i frammenti. Ritrova ' + H.otherLabel + '. Riaccendi Lumina.';
     const cp = this.progress.cp;
     const rb = document.getElementById('resumeRunBtn');
     rb.classList.toggle('hidden', !cp);
@@ -297,7 +312,8 @@ const Game = {
     this.banner(lv.boss ? (finale ? 'IL DIVORATORE' : 'COMANDANTE') : md.name);
     if (!lv.boss && n > 1 && n % 2 === 0) setTimeout(() => {
       if (this.state === 'play' && this.level === n && this.player)
-        Floaters.add(this.player.cx, this.player.y - 40, LYRA_LINES[(n / 2) % LYRA_LINES.length], '#ffb3f0', 13);
+        Floaters.add(this.player.cx, this.player.y - 40,
+          LYRA_LINES[(n / 2) % LYRA_LINES.length].replace('@', HEROES[this.hero].other), '#ffb3f0', 13);
     }, 2600);
     if (!lv.boss) setTimeout(() => {
       if (this.state === 'play' && this.level === n && !this.portalOn) this.banner(md.hint);
@@ -785,6 +801,10 @@ const Game = {
     this.progress.cp = null;
     this.saveProgress();
     const rank = this.score >= 60000 ? 'S' : this.score >= 40000 ? 'A' : this.score >= 25000 ? 'B' : 'C';
+    const H = HEROES[this.hero] || HEROES.volt;
+    document.getElementById('winTitle').textContent = H.otherFree;
+    document.getElementById('winText').textContent =
+      'Il Divoratore è caduto. ' + H.otherLabel + ' è di nuovo al tuo fianco.';
     document.getElementById('winScore').textContent = this.score;
     document.getElementById('winKills').textContent = this.kills;
     document.getElementById('winRank').textContent = rank;

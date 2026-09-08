@@ -206,6 +206,25 @@ body.is-touch .help .help-row{margin-bottom:8px;line-height:1.65}
   .card .ds{font-size:10.5px}
 }
 
+/* ---------- Scelta del personaggio ---------- */
+.heroes{display:flex;gap:10px;justify-content:center;margin:0 0 16px}
+.hero-btn{flex:0 1 130px;padding:10px 8px 12px;border:0;cursor:pointer;border-radius:18px;
+  background:rgba(36,26,77,.05);font-family:inherit;display:flex;flex-direction:column;
+  align-items:center;gap:5px;transition:transform .08s,box-shadow .08s,background .15s}
+.hero-btn b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;color:var(--ink)}
+.hero-btn small{font-size:10px;font-weight:800;color:var(--ink-soft);letter-spacing:.3px}
+.hero-btn.on{background:#fff;box-shadow:0 4px 0 rgba(36,26,77,.14),0 8px 18px rgba(10,6,36,.12),
+  inset 0 0 0 2px var(--blue)}
+.hero-face{width:46px;height:46px;border-radius:14px;position:relative;display:block}
+.hero-face.volt{background:linear-gradient(180deg,#7ce0ff,#22c8f5)}
+.hero-face.lyra{background:linear-gradient(180deg,#ff9ec4,#ff5d8f)}
+.hero-face::after{content:"";position:absolute;left:9px;right:9px;top:17px;height:9px;
+  border-radius:5px;background:#1b2340}
+.hero-face.volt::before,.hero-face.lyra::before{content:"";position:absolute;width:30px;height:7px;
+  border-radius:6px;top:32px;left:8px}
+.hero-face.volt::before{background:#ff5d8f}
+.hero-face.lyra::before{background:#7a3fd6}
+
 /* ---------- Campagna e vittoria ---------- */
 .big-btn small{display:block;font-size:11px;letter-spacing:2px;opacity:.75;margin-top:2px;font-weight:600}
 .mini-btn.locked{opacity:.5;font-size:11px}

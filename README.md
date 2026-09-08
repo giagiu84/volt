@@ -40,7 +40,9 @@ Regola del settore: **uccidi tutti i mostri**, il portale si apre, entraci per p
 
 ## Struttura del gioco
 
-**Campagna** di 20 settori: si insegue il Divoratore che ha rapito Lyra, seguendo i frammenti che lei lascia. Un Comandante ogni cinque settori (5, 10, 15) e lo scontro finale al ventesimo. Dopo ogni Comandante il gioco salva un punto di ripresa: morendo si può ripartire da lì con i poteri conquistati.
+**Si sceglie chi essere**, VOLT o Lyra: stesse capacità, aspetto e racconto rispecchiati. Chi non giochi è quello che il Divoratore ha trascinato oltre la frattura, e il gioco lo chiama per nome nei messaggi e nel finale.
+
+**Campagna** di 20 settori: si insegue il Divoratore, seguendo i frammenti che l'altro protagonista lascia come traccia. Un Comandante ogni cinque settori (5, 10, 15) e lo scontro finale al ventesimo. Dopo ogni Comandante il gioco salva un punto di ripresa: morendo si può ripartire da lì con i poteri conquistati.
 
 **Entrando in ogni portale si sceglie un potenziamento** fra tre pescati a caso; restano per tutta la partita e si sommano. Dopo un Comandante la scelta comprende un potenziamento leggendario (droncino alleato, vampiro elettrico, scudo d'emergenza, brace, arsenale).
 
