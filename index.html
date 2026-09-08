@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=21">
+<link rel="stylesheet" href="css/style.css?v=23">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>%E2%9A%A1</text></svg>">
 </head>
 <body>
@@ -71,11 +71,11 @@
       <div class="heroes" role="group" aria-label="Scegli chi diventa VOLT">
         <button id="heroAren" class="hero-btn on" data-hero="aren">
           <canvas class="hero-canvas" id="canvAren" width="220" height="260"></canvas>
-          <b>AREN</b><small>blaster</small>
+          <b>AREN</b><small>colpi pesanti · resistente</small>
         </button>
         <button id="heroLyra" class="hero-btn" data-hero="lyra">
           <canvas class="hero-canvas" id="canvLyra" width="220" height="260"></canvas>
-          <b>LYRA</b><small>guanto energetico</small>
+          <b>LYRA</b><small>veloce · raffica rapida</small>
         </button>
       </div>
       <button id="playBtn" class="big-btn"><span>GIOCA ORA</span><small id="playSub">CAMPAGNA · SETTORE 1</small></button>
@@ -154,7 +154,7 @@
 /* Se il telefono ha in cache una versione vecchia della pagina, se ne accorge
    da solo e si ricarica: senza questo si continuerebbero a vedere i comandi
    di ieri per una decina di minuti. */
-window.VOLT_VERSION = 21;
+window.VOLT_VERSION = 23;
 fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   .then(function (r) { return r.json(); })
   .then(function (d) {
@@ -168,12 +168,12 @@ fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   })
   .catch(function () { /* offline: pazienza, si gioca con quello che c'è */ });
 </script>
-<script src="js/util.js?v=21"></script>
-<script src="js/gfx.js?v=21"></script>
-<script src="js/audio.js?v=21"></script>
-<script src="js/input.js?v=21"></script>
-<script src="js/level.js?v=21"></script>
-<script src="js/entities.js?v=21"></script>
-<script src="js/game.js?v=21"></script>
+<script src="js/util.js?v=23"></script>
+<script src="js/gfx.js?v=23"></script>
+<script src="js/audio.js?v=23"></script>
+<script src="js/input.js?v=23"></script>
+<script src="js/level.js?v=23"></script>
+<script src="js/entities.js?v=23"></script>
+<script src="js/game.js?v=23"></script>
 </body>
 </html>

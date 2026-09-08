@@ -241,12 +241,19 @@ class Pickup {
 const HEROES = {
   aren: { name: 'AREN', other: 'LYRA', otherLabel: 'Lyra', otherFree: 'LYRA È LIBERA',
           body: '#f2f7ff', trim: '#22c8f5', trail: '#ff5d8f', legs: '#3a4a86',
-          ponytail: false, glove: false },
+          ponytail: false, glove: false,
+          /* Due stili, stessa possibilità di arrivare in fondo: Aren picchia
+             duro e incassa, Lyra corre e martella. Il tempo per abbattere un
+             mostro resta quasi identico, cambia il modo. */
+          speed: 0.94, dmg: 1, rate: 1.42, hp: 5, dash: 1.10, jump: 0.97, invuln: 1.3,
+          tratto: 'colpi pesanti · più resistente' },
   /* colori della tavola ufficiale: tuta rosa e bianca, capelli viola con la
      ciocca gialla. Lyra non usa il blaster ma il guanto energetico. */
   lyra: { name: 'LYRA', other: 'AREN', otherLabel: 'Aren', otherFree: 'AREN È LIBERO',
           body: '#fff0f6', trim: '#ff5d8f', trail: '#7a3fd6', hair2: '#ffd166',
-          legs: '#4a2f7a', ponytail: true, glove: true }
+          legs: '#4a2f7a', ponytail: true, glove: true,
+          speed: 1.12, dmg: 0, rate: 0.78, hp: 4, dash: 0.75, jump: 1.04, invuln: 1,
+          tratto: 'veloce · raffica rapida' }
 };
 function hero() { return HEROES[Game.hero] || HEROES.volt; }
 
@@ -257,7 +264,8 @@ class Player {
     this.vx = 0; this.vy = 0;
     this.onGround = false; this.prevBottom = y + 30;
     this.facing = 1;
-    this.hp = 4; this.maxHp = 4; this.shield = 0;
+    const H0 = HEROES[Game.hero] || HEROES.aren;
+    this.hp = this.maxHp = H0.hp; this.shield = 0;
     this.coyote = 0; this.buffer = 0; this.jumpsLeft = 2;
     this.dashT = 0; this.dashCd = 0;
     this.invuln = 0; this.flash = 0;
@@ -299,7 +307,7 @@ class Player {
       return true;
     }
     this.hp -= dmg;
-    this.invuln = 1.7; this.flash = 0.35;
+    this.invuln = 1.7 * (hero().invuln || 1); this.flash = 0.35;
     Game.combo = 0; Game.comboT = 0;
     Sfx.hurt(); Game.shake(14, 0.32);
     Particles.burst(this.cx, this.cy, 24, '#ff5d8f', 300, 4.5, 200);
@@ -327,7 +335,10 @@ class Player {
       let best = null, bd = 520 * 520;
       for (const e of enemies) {
         if (e.dead) continue;
-        const d = dist2(this.cx, this.cy, e.cx, e.cy);
+        let d = dist2(this.cx, this.cy, e.cx, e.cy);
+        /* chi vola sopra di te conta come piu vicino: altrimenti la mira
+           resta incollata ai mostri a terra mentre ti bombardano */
+        if ((e.type === 'bomber' || e.type === 'flyer') && Math.abs(e.cx - this.cx) < 150) d *= 0.45;
         if (d < bd) { bd = d; best = e; }
       }
       if (best) {
@@ -379,7 +390,7 @@ class Player {
     const mx = Input.moveX();
     const ACC = this.onGround ? 4200 : 2600;
     const rush = Game.rushT > 0;
-    const MAXV = (300 + (this.weapon === 'rapid' ? 24 : 0)) * (rush ? 1.2 : 1) * (this.crouch ? 0.42 : 1);
+    const MAXV = (300 + (this.weapon === 'rapid' ? 24 : 0)) * (rush ? 1.2 : 1) * (this.crouch ? 0.42 : 1) * hero().speed;
 
     if (this.dashT > 0) {
       this.dashT -= dt;
@@ -408,7 +419,7 @@ class Player {
       if (this.coyote > 0 || this.jumpsLeft > 0) {
         this.setCrouch(false, lv);          /* si salta sempre in piedi */
         const doubleJump = !(this.coyote > 0);
-        this.vy = doubleJump ? -720 : -790;
+        this.vy = (doubleJump ? -720 : -790) * hero().jump;
         this.buffer = 0; this.coyote = 0;
         this.jumpsLeft = doubleJump ? Math.max(0, this.jumpsLeft - 1)
                                     : (Game.hasPerk('jump3') ? 2 : 1);
@@ -421,7 +432,7 @@ class Player {
 
     if (Input.wantDash() && this.dashCd <= 0 && this.dashT <= 0) {
       const dx = mx !== 0 ? mx : (Math.abs(this.aimX) > 0.3 ? sign(this.aimX) : this.facing);
-      this.dashT = rush ? 0.21 : 0.17; this.dashCd = rush ? 0.38 : 0.62;
+      this.dashT = rush ? 0.21 : 0.17; this.dashCd = (rush ? 0.38 : 0.62) * hero().dash;
       this.vx = dx * (rush ? 930 : 820); this.facing = dx;
       this.invuln = Math.max(this.invuln, 0.22);
       Sfx.dash();
@@ -501,7 +512,8 @@ class Player {
     const spd = W === 'laser' ? 1500 : 900;
     const rush = Game.rushT > 0;
     const heatBefore = this.heat;
-    const bonus = Game.perkLevel('power');
+    const H = hero();
+    const bonus = Game.perkLevel('power') + H.dmg;
     const extra = {
       bounces: Game.hasPerk('bounce') ? 1 : 0,
       freeze: Game.hasPerk('freeze')
@@ -533,6 +545,7 @@ class Player {
       this.heat = heatBefore + (this.heat - heatBefore) * 0.42;
     }
     /* raffica: si spara più in fretta e si scalda di meno */
+    this.fireCd *= H.rate;          /* ogni custode ha la sua cadenza */
     const rf = Game.perkLevel('rapidfire');
     if (rf) { this.fireCd *= (1 - 0.13 * rf); this.heat -= (this.heat - heatBefore) * 0.25 * rf; }
     this.muzzle = 0.07;
@@ -864,7 +877,7 @@ const ENEMY_DEF = {
   flyer:   { w: 24, h: 22, hp: 2,  speed: 155, score: 120, col: '#ffc247', dark: '#d18c17', touch: 1 },
   spitter: { w: 28, h: 30, hp: 4,  speed: 55,  score: 160, col: '#a06bff', dark: '#6d3fc4', touch: 1 },
   charger: { w: 32, h: 28, hp: 6,  speed: 80,  score: 220, col: '#ff8a3d', dark: '#c85a15', touch: 2 },
-  bomber:  { w: 30, h: 24, hp: 3,  speed: 110, score: 200, col: '#5ee08a', dark: '#2c9d5a', touch: 1 },
+  bomber:  { w: 30, h: 24, hp: 2,  speed: 110, score: 220, col: '#5ee08a', dark: '#2c9d5a', touch: 1 },
   boss:    { w: 76, h: 76, hp: 60, speed: 105, score: 2500, col: '#ff4d7d', dark: '#b41f52', touch: 2 }
 };
 
@@ -1012,14 +1025,14 @@ class Enemy {
   }
 
   updateBomber(dt, lv, player, bullets, dx, dy) {
-    const targetY = player.cy - 190;
+    const targetY = player.cy - 138;   /* piu bassi: si possono colpire davvero */
     this.vx = approach(this.vx, sign(dx) * this.speed, 500 * dt);
     this.vy = approach(this.vy, clamp((targetY - this.cy) * 2.2, -190, 190), 620 * dt);
     this.x += this.vx * dt; collideX(this, lv);
     this.y += this.vy * dt;
     if (lv.solidAt(this.cx, this.y)) { this.y -= this.vy * dt; this.vy = 60; }
     if (this.cool <= 0 && Math.abs(dx) < 90 && dy > 0) {
-      this.cool = 2.4;
+      this.cool = 3.1;
       bullets.push(new Bullet(this.cx, this.y + this.h + 6, this.vx * 0.4, 60,
         { foe: true, col: '#7ef0a8', r: 7, life: 4, grav: 900, bomb: true }));
     }

@@ -90,6 +90,7 @@ const Game = {
     this.ctx = this.canvas.getContext('2d', { alpha: false });
     Gfx.init();
     HeroArt.load();
+    HeroSpin.load();
     Input.init(this.canvas);
     this.resize();
     addEventListener('resize', () => this.resize());
@@ -482,10 +483,9 @@ const Game = {
     }
   },
 
-  /* Presentazione dei custodi.
-     Niente rotazione: con tre disegni non esiste modo di girare una figura
-     senza che scatti. Fermi, illuminati e vivi, come nelle schermate di
-     selezione dei giochi di oggi, che infatti non ruotano i personaggi. */
+  /* Presentazione dei custodi: girano davvero, un fotogramma ogni pochi gradi
+     preso dal foglio di rotazione. Attorno: alone, pedana, riflesso a terra,
+     un bagliore che scorre e le scintille per chi è scelto. */
   drawHeroPicks(dt) {
     this.heroSpin = (this.heroSpin || 0) + dt;
     if (this._pick === undefined) this._pick = {};
@@ -538,18 +538,21 @@ const Game = {
       g.translate(W / 2, baseY + 2);
       g.scale(1, -0.34);
       g.globalAlpha = 0.14 + on * 0.12;
-      if (!HeroArt.drawFront(g, id, h)) {
+      const angR = t * (sel ? 1.25 : 0.6) + (id === 'lyra' ? 2.4 : 0);
+      if (!(HeroSpin.ready(id) ? HeroSpin.draw(g, id, angR, h) : HeroArt.drawFront(g, id, h))) {
         g.scale(1.9, 1.9); g.translate(0, -22);
         drawHeroPose(g, HEROES[id], 0, t, 1);
       }
       g.restore();
 
-      /* la figura */
+      /* la figura: se c'è il giro completo gira davvero, altrimenti resta ferma */
+      const gira = HeroSpin.ready(id);
+      const ang = t * (sel ? 1.25 : 0.6) + (id === 'lyra' ? 2.4 : 0);
       g.save();
       g.translate(W / 2, baseY + 3 + dip);
       g.scale(1, breathe);
       g.globalAlpha = 0.55 + on * 0.45;
-      const disegnata = HeroArt.drawFront(g, id, h);
+      let disegnata = gira ? HeroSpin.draw(g, id, ang, h) : HeroArt.drawFront(g, id, h);
       if (!disegnata) {
         g.scale(1.95, 1.95); g.translate(0, -22);
         drawHeroPose(g, HEROES[id], 0, t, 1);
@@ -564,7 +567,7 @@ const Game = {
           g.globalCompositeOperation = 'source-atop';
           g.translate(W / 2, baseY + 3 + dip);
           g.scale(1, breathe);
-          HeroArt.drawFront(g, id, h);          /* ridisegno per avere la sagoma */
+          if (gira) HeroSpin.draw(g, id, ang, h); else HeroArt.drawFront(g, id, h);
           const y = -h + sweep * h * 1.2;
           const lg = g.createLinearGradient(0, y - h * 0.18, 0, y + h * 0.18);
           lg.addColorStop(0, 'rgba(255,255,255,0)');

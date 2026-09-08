@@ -148,6 +148,53 @@ const Rings = {
    Se in assets/heroes/ ci sono i disegni (aren_front, aren_side, aren_back e
    gli stessi per lyra, in webp o png) la scelta li usa; altrimenti resta il
    personaggio disegnato dal codice. Nessun errore se mancano: si prova e basta. */
+/* ---------- giro completo dei custodi ----------
+   Una striscia di fotogrammi (uno ogni pochi gradi) ricavata dal foglio di
+   rotazione: qui non si inventa nulla, si mostra il fotogramma giusto. */
+const HERO_FRAME_W = 150, HERO_FRAME_H = 210;
+
+const HeroSpin = {
+  data: {}, tried: false,
+  load() {
+    if (this.tried) return;
+    this.tried = true;
+    for (const who of ['aren', 'lyra']) {
+      const im = new Image();
+      const rec = { img: im, frames: 0 };
+      im.onload = () => { rec.frames = Math.round(im.naturalWidth / HERO_FRAME_W); };
+      im.onerror = () => { rec.frames = 0; };
+      im.src = 'assets/heroes/' + who + '_spin.webp';
+      this.data[who] = rec;
+    }
+  },
+  ready(who) {
+    const r = this.data[who];
+    return !!(r && r.frames > 1 && r.img.naturalWidth);
+  },
+  /* Disegna l'angolo richiesto. Fra un fotogramma e il successivo il secondo
+     entra in dissolvenza: cosi la rotazione resta liscia anche da ferma, senza
+     dover girare in fretta per nascondere gli scatti. */
+  draw(ctx, who, ang, h) {
+    const r = this.data[who];
+    if (!this.ready(who)) return false;
+    const n = r.frames;
+    let a = ang % (Math.PI * 2);
+    if (a < 0) a += Math.PI * 2;
+    const pos = a / (Math.PI * 2) * n;
+    const i0 = Math.floor(pos) % n, i1 = (i0 + 1) % n;
+    const f = pos - Math.floor(pos);
+    const w = h * (HERO_FRAME_W / HERO_FRAME_H);
+    ctx.drawImage(r.img, i0 * HERO_FRAME_W, 0, HERO_FRAME_W, HERO_FRAME_H, -w / 2, -h, w, h);
+    if (f > 0.02) {
+      const alfa = ctx.globalAlpha;
+      ctx.globalAlpha = alfa * f;
+      ctx.drawImage(r.img, i1 * HERO_FRAME_W, 0, HERO_FRAME_W, HERO_FRAME_H, -w / 2, -h, w, h);
+      ctx.globalAlpha = alfa;
+    }
+    return true;
+  }
+};
+
 const HeroArt = {
   imgs: {}, tried: false,
   poses: ['front', 'side', 'back'],
