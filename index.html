@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=27">
+<link rel="stylesheet" href="css/style.css?v=28">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>%E2%9A%A1</text></svg>">
 </head>
 <body>
@@ -36,6 +36,13 @@
     <div class="power-hud">
       <div class="power-head"><span id="voltState">CARICA VOLT</span><span id="weapon">BLASTER</span></div>
       <div class="power-track"><div id="voltbar" class="power-fill"></div></div>
+    </div>
+    <div id="ampHud" class="amp-hud hidden">
+      <span class="amp-lamp" aria-hidden="true"></span>
+      <div class="amp-body">
+        <span id="ampState">AMPERE 0%</span>
+        <div class="amp-track"><div id="ampFill" class="amp-fill"></div></div>
+      </div>
     </div>
     <button id="pauseBtn" class="icon-btn" aria-label="Pausa">
       <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="2" fill="currentColor"/><rect x="14" y="4" width="4" height="16" rx="2" fill="currentColor"/></svg>
@@ -160,7 +167,7 @@
 /* Se il telefono ha in cache una versione vecchia della pagina, se ne accorge
    da solo e si ricarica: senza questo si continuerebbero a vedere i comandi
    di ieri per una decina di minuti. */
-window.VOLT_VERSION = 27;
+window.VOLT_VERSION = 28;
 fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   .then(function (r) { return r.json(); })
   .then(function (d) {
@@ -174,12 +181,12 @@ fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   })
   .catch(function () { /* offline: pazienza, si gioca con quello che c'è */ });
 </script>
-<script src="js/util.js?v=27"></script>
-<script src="js/gfx.js?v=27"></script>
-<script src="js/audio.js?v=27"></script>
-<script src="js/input.js?v=27"></script>
-<script src="js/level.js?v=27"></script>
-<script src="js/entities.js?v=27"></script>
-<script src="js/game.js?v=27"></script>
+<script src="js/util.js?v=28"></script>
+<script src="js/gfx.js?v=28"></script>
+<script src="js/audio.js?v=28"></script>
+<script src="js/input.js?v=28"></script>
+<script src="js/level.js?v=28"></script>
+<script src="js/entities.js?v=28"></script>
+<script src="js/game.js?v=28"></script>
 </body>
 </html>

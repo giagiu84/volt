@@ -83,6 +83,10 @@ vita sola) resta intera nei primi cinque settori e si ritira piano dopo.
 | TEMPESTA | il muro viola avanza anche dove non c'è la fuga: non ci si ferma a combattere |
 | PIOGGIA DI FUOCO | cade roba dal cielo, sempre vicino a te |
 
+**AMPERE.** Oltre la Frattura, dietro le spalle del custode galleggia la lanterna dei vecchi Custodi. Non è un oggetto da raccogliere: è un contenitore. Nei settori è sparsa la **Corrente Verde** — cariche sospese, che i mostri lasciano cadere morendo e che si trovano in giro per il settore — e Ampere le raccoglie da sola quando ci passa vicino. Più si carica, più la lanterna si accende (e al BUIO diventa la vera fonte di luce). Quando è piena la corrente scorre da sola: un filo verde parte dalla lanterna e **salta da un mostro all'altro**, fino a cinque, poi la lanterna si spegne e ricomincia. Si allarma quando arriva un mostro: si scosta, trema e diventa arancione.
+
+VOLT è la tensione accumulata, Ampere è il flusso che la libera: la carica resta fra un settore e l'altro, e nella campagna dei primi 20 la lanterna non c'è.
+
 Le leggi escono mescolate: nello stesso giro non se ne ripete nessuna, e il giro dopo l'ordine cambia. Sono sempre le stesse per tutti, come i settori. La campagna dei primi 20 non ne ha: là il mondo è stabile.
 
 Una legge che renderebbe impossibile la missione del settore (la tempesta dove bisogna restare fermi o tornare indietro a raccogliere) viene scartata e si passa alla successiva.

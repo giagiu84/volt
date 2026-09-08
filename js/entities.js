@@ -1562,6 +1562,249 @@ class Drone {
   }
 }
 
+/* ---------- AMPERE ----------
+   La lanterna dei vecchi Custodi. Non e' un oggetto da raccogliere: e' un
+   contenitore che raccoglie la Corrente Verde sparsa oltre la Frattura, la
+   ordina e la rende utilizzabile. Galleggia dietro le spalle, si accende man
+   mano che si carica, si allarma quando arriva un pericolo, e quando e' piena
+   scarica la corrente lungo un filo che salta da un mostro all'altro.
+   VOLT e' la tensione accumulata: Ampere e' il flusso che la libera. */
+const AMP_FULL = 100;
+const ARC_TIME = 0.55;   /* quanto resta acceso il filo di corrente */
+
+class Ampere {
+  constructor(x, y) {
+    this.x = x; this.y = y;
+    this.t = Math.random() * 6;
+    this.charge = 0;
+    this.alarm = 0;          /* 0..1: quanto e' spaventata */
+    this.arc = null;         /* il filo di corrente durante la scarica */
+    this.arcT = 0;
+    this.pop = 0;            /* sussulto quando entra una carica */
+  }
+  get piena() { return this.charge >= AMP_FULL; }
+  /* il raggio della sua luce cresce con la carica: al buio e' lei che apre la strada */
+  get luce() { return 60 + (this.charge / AMP_FULL) * 130; }
+
+  prendi(v) {
+    this.charge = Math.min(AMP_FULL, this.charge + v);
+    this.pop = 1;
+    Sfx.tone(520 + this.charge * 4, 0.07, 'triangle', 0.045, 900);
+  }
+
+  update(dt, player, enemies) {
+    this.t += dt;
+    this.pop = Math.max(0, this.pop - dt * 3);
+    this.arcT = Math.max(0, this.arcT - dt);
+    if (this.arcT <= 0) this.arc = null;
+
+    /* sta dietro le spalle del custode, un po' piu' in alto del droncino */
+    let tx = player.cx - player.facing * 40;
+    let ty = player.cy - 44 + Math.sin(this.t * 1.9) * 7;
+
+    /* reagisce al pericolo: si scosta dal mostro piu' vicino e si agita */
+    let vicino = null, vd = 240 * 240;
+    for (const e of enemies) {
+      if (e.dead || !e.awake) continue;
+      const d = dist2(this.x, this.y, e.cx, e.cy);
+      if (d < vd) { vd = d; vicino = e; }
+    }
+    if (vicino) {
+      const d = Math.sqrt(vd) || 1;
+      this.alarm = Math.min(1, this.alarm + dt * 3);
+      tx -= ((vicino.cx - this.x) / d) * 26;
+      ty -= ((vicino.cy - this.y) / d) * 18;
+      ty += Math.sin(this.t * 22) * 3;      /* tremito */
+    } else {
+      this.alarm = Math.max(0, this.alarm - dt * 1.4);
+    }
+
+    this.x = lerp(this.x, tx, Math.min(1, dt * 4.4));
+    this.y = lerp(this.y, ty, Math.min(1, dt * 4.4));
+
+    if (this.charge > 6 && Math.random() < 0.25)
+      Particles.spawn(this.x + (Math.random() - 0.5) * 12, this.y + 8,
+        (Math.random() - 0.5) * 20, 20 + Math.random() * 20, 0.4, 3, '#5effa8', -30, 1);
+
+    /* piena: la corrente vuole scorrere, e scorre da sola */
+    if (this.piena && this.arcT <= 0) this.scarica(enemies);
+  }
+
+  /* La scarica: un filo verde che parte dalla lanterna e salta di mostro in
+     mostro. Non e' il Rush (quello lo decidi tu): questa e' la corrente che
+     trova il suo percorso appena ne ha uno. */
+  scarica(enemies) {
+    const raggio = 430, salto = 300;
+    const presi = [];
+    let px = this.x, py = this.y;
+    const max = 5;
+    for (let k = 0; k < max; k++) {
+      let best = null, bd = (k === 0 ? raggio : salto) ** 2;
+      for (const e of enemies) {
+        if (e.dead || presi.indexOf(e) >= 0) continue;
+        const d = dist2(px, py, e.cx, e.cy);
+        if (d < bd) { bd = d; best = e; }
+      }
+      if (!best) break;
+      presi.push(best);
+      px = best.cx; py = best.cy;
+    }
+    if (!presi.length) return;
+
+    this.charge = 0;
+    this.arcT = ARC_TIME;
+    this.arcSeed = Math.random() * 9;
+    this.arc = [{ x: this.x, y: this.y }].concat(presi.map(e => ({ x: e.cx, y: e.cy })));
+    const dmg = 3 + Math.floor(Game.level / 6);
+    let fx = this.x;                    /* da dove arriva il filo: conta per le corazze */
+    for (const e of presi) {
+      e.hurt(dmg, fx);
+      e.stun = Math.max(e.stun, 0.28);
+      fx = e.cx;
+      Particles.burst(e.cx, e.cy, 10, '#5effa8', 220, 4, 60);
+      Rings.add(e.cx, e.cy, '#5effa8', 54, 0.3, 4);
+    }
+    Game.shake(8, 0.22);
+    Floaters.add(this.x, this.y - 26, 'CORRENTE!', '#5effa8', 16);
+    Sfx.tone(180, 0.28, 'sawtooth', 0.06, 1400);
+    Sfx.tone(900, 0.16, 'triangle', 0.05, 300);
+  }
+
+  draw(ctx, camX, camY) {
+    const x = this.x - camX, y = this.y - camY;
+    const k = this.charge / AMP_FULL;
+    /* Gfx.light tiene in cache una texture per colore: qui vanno passati
+       colori fissi, non sfumature calcolate a ogni fotogramma */
+    const col = this.alarm > 0.5 ? '#ff8a3d' : '#5effa8';
+
+    /* il filo di corrente, disegnato prima della lanterna */
+    if (this.arc && this.arcT > 0) {
+      const a = this.arcT / ARC_TIME;
+      ctx.save();
+      ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+      /* tre passate: contorno scuro, corpo verde, cuore bianco. Come tutto il
+         resto del gioco: senza il contorno, su un cielo chiaro sparisce. */
+      const passi = [
+        { col: OUTLINE,   w: 9,   al: 0.85, add: false },
+        { col: '#2fd18a', w: 5.5, al: 1,    add: false },
+        { col: '#eafff2', w: 2.2, al: 1,    add: true }
+      ];
+      for (const q of passi) {
+        ctx.globalCompositeOperation = q.add ? 'lighter' : 'source-over';
+        ctx.strokeStyle = q.col; ctx.lineWidth = q.w;
+        ctx.globalAlpha = a * q.al;
+        ctx.beginPath();
+        for (let i = 0; i < this.arc.length - 1; i++) {
+          const p0 = this.arc[i], p1 = this.arc[i + 1];
+          ctx.moveTo(p0.x - camX, p0.y - camY);
+          /* zig zag: il fulmine non va mai dritto */
+          const seg = 7;
+          for (let j = 1; j <= seg; j++) {
+            const f = j / seg;
+            const mx = lerp(p0.x, p1.x, f) - camX;
+            const my = lerp(p0.y, p1.y, f) - camY;
+            const off = j === seg ? 0 : Math.sin(j * 2.3 + this.arcSeed + i * 1.7) * 17;
+            ctx.lineTo(mx + off * 0.35, my + off);
+          }
+        }
+        ctx.stroke();
+      }
+      ctx.restore();
+      for (let i = 1; i < this.arc.length; i++)
+        Gfx.light(ctx, this.arc[i].x - camX, this.arc[i].y - camY, 40, '#5effa8', a * 0.7);
+    }
+
+    Gfx.light(ctx, x, y, 26 + k * 34 + this.pop * 12, col, 0.35 + k * 0.5);
+
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(Math.sin(this.t * 2.4) * 0.13 + this.alarm * Math.sin(this.t * 20) * 0.05);
+    const sq = 1 + this.pop * 0.16;
+    ctx.scale(sq, 2 - sq);
+    ctx.lineWidth = 2.5; ctx.strokeStyle = OUTLINE; ctx.lineJoin = 'round';
+
+    /* manico */
+    ctx.beginPath(); ctx.arc(0, -15, 6, Math.PI, 0); ctx.stroke();
+    /* cappello */
+    ctx.fillStyle = '#3b4a7a';
+    roundRect(ctx, -9, -13, 18, 6, 3); ctx.fill(); ctx.stroke();
+    /* vetro */
+    ctx.fillStyle = 'rgba(120,255,190,.30)';
+    roundRect(ctx, -8, -8, 16, 17, 6); ctx.fill(); ctx.stroke();
+    /* la corrente dentro: sale col carico */
+    const h = 2 + k * 14;
+    ctx.fillStyle = col;
+    roundRect(ctx, -6, 7 - h, 12, h, 4); ctx.fill();
+    /* il nucleo che pulsa */
+    const pulse = 2.6 + Math.sin(this.t * (3 + k * 6)) * 0.7 + k * 2.4;
+    ctx.fillStyle = '#eafff2';
+    ctx.beginPath(); ctx.arc(0, 1, pulse, 0, TAU); ctx.fill();
+    /* base */
+    ctx.fillStyle = '#3b4a7a';
+    roundRect(ctx, -9, 8, 18, 5, 2.5); ctx.fill(); ctx.stroke();
+    Gfx.gloss(ctx, -5.5, -6, 4, 9, 0.4);
+    ctx.restore();
+  }
+}
+
+/* Una carica di Corrente Verde: se ne sta sospesa finche' Ampere non le
+   arriva vicino, poi corre da lei. Non la raccoglie il giocatore: la
+   raccoglie la lanterna. */
+class Carica {
+  constructor(x, y) {
+    this.x = x; this.y = y; this.baseY = y - 18;
+    this.t = Math.random() * 6;
+    this.vx = (Math.random() - 0.5) * 90; this.vy = -70 - Math.random() * 70;
+    this.dead = false; this.life = 34; this.presa = false;
+  }
+  update(dt, amp) {
+    this.t += dt; this.life -= dt;
+    if (this.life <= 0) { this.dead = true; return; }
+    if (!amp) return;
+    const dx = amp.x - this.x, dy = amp.y - this.y;
+    const d = Math.hypot(dx, dy) || 1;
+    if (d < 210) this.presa = true;
+    if (this.presa) {
+      const v = 260 + (210 - Math.min(210, d)) * 3.4;
+      this.x += (dx / d) * v * dt;
+      this.y += (dy / d) * v * dt;
+      if (Math.random() < 0.5)
+        Particles.spawn(this.x, this.y, 0, 0, 0.25, 3, '#5effa8', 0, 1);
+      if (d < 16) {
+        this.dead = true;
+        amp.prendi(14);
+        Particles.burst(amp.x, amp.y, 8, '#5effa8', 160, 3.5, 0);
+      }
+    } else {
+      /* non cade: e' corrente, non una moneta. Sbuffa fuori dal mostro e poi
+         resta sospesa dov'e' nata, ondeggiando. */
+      this.vx *= 0.93; this.vy *= 0.93;
+      this.vy += (this.baseY - this.y) * 2.6 * dt;
+      this.x += this.vx * dt; this.y += this.vy * dt;
+      if (Math.random() < 0.08)
+        Particles.spawn(this.x, this.y, 0, -12, 0.4, 2.4, '#5effa8', 0, 1);
+    }
+  }
+  draw(ctx, camX, camY) {
+    const x = this.x - camX, y = this.y - camY + Math.sin(this.t * 3) * 2;
+    Gfx.light(ctx, x, y, 22, '#5effa8', 0.55);
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(this.t * 2.2);
+    ctx.fillStyle = '#bdffdb';
+    ctx.beginPath();
+    for (let i = 0; i < 4; i++) {
+      const a = (i / 4) * TAU, r = i % 2 ? 3 : 7;
+      const px = Math.cos(a) * r, py = Math.sin(a) * r;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#5effa8';
+    ctx.beginPath(); ctx.arc(0, 0, 3.4, 0, TAU); ctx.fill();
+    ctx.restore();
+  }
+}
+
 /* ---------- ritratto rotante per la scelta del personaggio ----------
    Alla maniera dei vecchi arcade: il custode gira sul piedistallo e lo si
    vede di fronte, di profilo e di schiena. */

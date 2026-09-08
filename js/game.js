@@ -74,6 +74,7 @@ const Game = {
   perks: {}, pendingLevel: 0, shieldGenT: 0, drone: null,
   mode: 'campaign', progress: Store.get('volt_progress', { cleared: false, cp: null }),
   law: null, lawDef: null, platsOff: false, platT: 0, meteorT: 0, stormOn: false,
+  ampere: null, cariche: [],
   hero: Store.get('volt_hero', 'aren'),
   stormX: -9999,
   camX: 0, camY: 0, shakeAmt: 0, shakeT: 0,
@@ -195,6 +196,8 @@ const Game = {
     Sfx.init(); Sfx.resume(); Sfx.startMusic();
     this.mode = mode || this.mode || 'campaign';
     this.level = 1; this.score = 0; this.kills = 0; this.eliteSeen = {};
+    /* Ampere esiste solo oltre la Frattura: la Corrente Verde e' sparsa di la' */
+    this.ampere = null; this.cariche.length = 0;
     this.combo = 0; this.comboT = 0; this.maxCombo = 0;
     this.volt = 0; this.rushT = 0; this.hitStop = 0;
     this.hasShip = false;
@@ -311,6 +314,8 @@ const Game = {
 
   toMenu() {
     this.state = 'menu';
+    const ab = document.getElementById('ampHud');
+    if (ab) ab.classList.add('hidden');
     GRAV = GRAV0; this.law = null; this.lawDef = null; this.platsOff = false;
     document.getElementById('choice').classList.add('hidden');
     document.getElementById('win').classList.add('hidden');
@@ -337,7 +342,7 @@ const Game = {
     const lv = this.lv;
     this.enemies.length = 0; this.bullets.length = 0;
     this.pickups.length = 0; this.explosions.length = 0; this.ships.length = 0;
-    this.cores.length = 0; this.gens.length = 0;
+    this.cores.length = 0; this.gens.length = 0; this.cariche.length = 0;
     if (this.player && this.player.riding) this.player.leaveShip(false);
     Particles.clear(); Floaters.clear(); Rings.clear();
 
@@ -347,6 +352,22 @@ const Game = {
 
     for (const s of lv.spawns) this.enemies.push(new Enemy(s.type, s.x, s.y, n, s.tier, s.elite));
     for (const q of lv.pickups) this.pickups.push(new Pickup(q.x, q.y, Pickup.randomKind()));
+
+    /* la lanterna e le cariche sparse nel settore */
+    if (this.mode === 'endless') {
+      if (!this.ampere) this.ampere = new Ampere(lv.startX, lv.startY - 40);
+      else { this.ampere.x = lv.startX; this.ampere.y = lv.startY - 40; this.ampere.arc = null; this.ampere.arcT = 0; }
+      const quante = 3 + Math.floor(n / 7);
+      const rng = makeRng(0x9a5f + n * 2654435761);
+      for (let i = 0; i < quante; i++) {
+        const tx = rndInt(rng, 14, lv.w - 10);
+        const gy = lv.groundY[tx];
+        if (gy < 0) continue;
+        const c = new Carica(tx * TILE, (gy - 2 - Math.floor(rng() * 4)) * TILE);
+        c.vx = 0; c.vy = 0;
+        this.cariche.push(c);
+      }
+    } else this.ampere = null;
     for (const sh of (lv.ships || [])) this.ships.push(new Ship(sh.x, sh.y));
 
     /* missione del settore */
@@ -558,6 +579,13 @@ const Game = {
     const pieta = this.level <= 5 ? 1 : Math.max(0.55, 1 - (this.level - 5) * 0.035);
     let dropChance = e.type === 'boss' ? 1 : (lowHp ? 0.30 * pieta : 0.17);
     dropChance += this.perkLevel('luck') * 0.22;
+    /* oltre la Frattura i mostri sono fatti anche di Corrente Verde: cadendo
+       ne lasciano un po', ed e' quella che ricarica Ampere */
+    if (this.ampere && Math.random() < (e.type === 'boss' ? 1 : 0.24)) {
+      const quante = e.type === 'boss' ? 6 : 1;
+      for (let i = 0; i < quante; i++) this.cariche.push(new Carica(e.cx, e.cy - 6));
+    }
+
     if (Math.random() < dropChance) {
       let kind = Pickup.randomKind();
       if (lowHp && Math.random() < 0.5 * pieta) kind = 'heart';
@@ -907,6 +935,16 @@ const Game = {
       if (q.dead || q.y > lv.pxH + 100) this.pickups.splice(i, 1);
     }
 
+    /* la lanterna e la sua corrente */
+    if (this.ampere && !p.dead) {
+      this.ampere.update(dt, p, this.enemies);
+      for (let i = this.cariche.length - 1; i >= 0; i--) {
+        const c = this.cariche[i];
+        c.update(dt, this.ampere);
+        if (c.dead || c.y > lv.pxH + 200) this.cariche.splice(i, 1);
+      }
+    }
+
     /* droncino alleato */
     if (this.drone && !p.dead) this.drone.update(dt, p, this.enemies, this.bullets);
 
@@ -1239,6 +1277,21 @@ const Game = {
       for (let i = 0; i < p.shield; i++) html += '<div class="heart shield"></div>';
       document.getElementById('hearts').innerHTML = html;
     }
+    /* la carica della lanterna */
+    const amp = this.ampere ? Math.round(this.ampere.charge) : -1;
+    if (c.amp !== amp) {
+      c.amp = amp;
+      const box = document.getElementById('ampHud');
+      if (box) {
+        box.classList.toggle('hidden', amp < 0);
+        if (amp >= 0) {
+          document.getElementById('ampFill').style.width = amp + '%';
+          document.getElementById('ampState').textContent =
+            amp >= 100 ? 'AMPERE CARICA' : 'AMPERE ' + amp + '%';
+        }
+      }
+    }
+
     const heat = Math.round(p.overheat > 0 ? 100 : p.heat);
     if (c.heat !== heat) { c.heat = heat; document.getElementById('heatbar').style.width = heat + '%'; }
     if (c.score !== this.score) { c.score = this.score; document.getElementById('score').textContent = this.score; }
@@ -1304,10 +1357,12 @@ const Game = {
       for (const c of this.cores) c.draw(ctx, camX, camY);
       for (const sh of this.ships) sh.draw(ctx, camX, camY);
       for (const q of this.pickups) q.draw(ctx, camX, camY);
+      for (const c of this.cariche) c.draw(ctx, camX, camY);
       for (const e of this.enemies) e.draw(ctx, camX, camY);
       for (const b of this.bullets) b.draw(ctx, camX, camY);
       this.drawExplosions(ctx, camX, camY);
       if (this.drone) this.drone.draw(ctx, camX, camY);
+      if (this.ampere) this.ampere.draw(ctx, camX, camY);
       if (this.player) this.player.draw(ctx, camX, camY);
     }
     Particles.draw(ctx, camX, camY);
@@ -1754,6 +1809,8 @@ const Game = {
     for (const q of this.pickups) buco(q.x + 10 - camX, q.y + 10 - camY, 46, 0.7);
     for (const g of this.gens) buco(g.x - camX, g.y - camY, 70, 0.7);
     for (const co of this.cores) buco(co.x - camX, co.y - camY, 70, 0.75);
+    if (this.ampere) buco(this.ampere.x - camX, this.ampere.y - camY, this.ampere.luce, 0.95);
+    for (const c of this.cariche) buco(c.x - camX, c.y - camY, 40, 0.7);
     if (this.portalOn) buco(this.lv.portalX - camX, this.lv.portalY - camY, 120, 0.9);
     d.globalAlpha = 1;
     ctx.drawImage(c, 0, 0, this.viewW, this.viewH);
