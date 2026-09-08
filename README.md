@@ -63,6 +63,12 @@ vita sola) resta intera nei primi cinque settori e si ritira piano dopo.
 - **Valutazione finale**: grado C/B/A/S e migliore combo nella schermata di fine partita.
 - **HUD rinnovato**: avanzamento nel settore, barra VOLT, stato del Rush e gerarchia visiva più leggibile.
 
+## La storia
+
+Il racconto, i personaggi, le regole dell'universo e quello che deve ancora
+succedere stanno in **[STORIA.md](STORIA.md)** — la Bibbia di VOLT. È l'unica
+fonte: se una cosa non è scritta là, non è ancora vera.
+
 ## Struttura del gioco
 
 **VOLT non è un nome: è il potere.** Due custodi vegliano sul Nucleo di Lumina, Aren e Lyra. Quello che scegli assorbe l'energia e diventa VOLT; l'altro viene catturato dal Divoratore mentre cerca di proteggerlo. Stessi poteri, stessi danni, stessa difficoltà: Aren spara col blaster, Lyra col guanto energetico. Messaggi e finale cambiano nome e genere da soli.

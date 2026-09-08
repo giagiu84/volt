@@ -450,7 +450,7 @@ const Game = {
 
     const md = MISSIONS[this.mission.type] || MISSIONS.hunt;
     const finale = this.mode === 'campaign' && n >= CAMPAIGN_END;
-    this.banner(lv.boss ? (finale ? 'IL DIVORATORE' : 'COMANDANTE') : md.name);
+    this.banner(lv.boss ? (finale ? 'IL DIVORATORE' : 'COMANDANTE') : missionName(this.mission.type));
     if (!lv.boss && n > 1 && n % 2 === 0) setTimeout(() => {
       if (this.state === 'play' && this.level === n && this.player)
         Floaters.add(this.player.cx, this.player.y - 40,
@@ -1359,7 +1359,7 @@ const Game = {
     const tot = this.mode === 'campaign' ? '/' + CAMPAIGN_END : '';
     const lvName = this.lv.boss
       ? (this.mode === 'campaign' && this.level >= CAMPAIGN_END ? 'IL DIVORATORE' : 'COMANDANTE ' + this.level + tot)
-      : 'SETTORE ' + this.level + tot + ' · ' + (this.lawDef ? this.lawDef.name : md.name);
+      : 'SETTORE ' + this.level + tot + ' · ' + (this.lawDef ? this.lawDef.name : missionName((this.mission || {}).type));
     if (c.lvName !== lvName) { c.lvName = lvName; document.getElementById('levelName').textContent = lvName; }
 
     let tg;

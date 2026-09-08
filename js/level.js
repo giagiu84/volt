@@ -90,6 +90,15 @@ function lawFor(n, mode, missionType) {
   return null;
 }
 
+/* Il nome della missione dei frammenti dipende da chi e' stato rapito: chi
+   gioca Lyra insegue le tracce di Aren, non le proprie. */
+function missionName(type) {
+  const m = MISSIONS[type] || MISSIONS.hunt;
+  if (type === 'cores' && typeof HEROES !== 'undefined')
+    return 'TRACCE DI ' + ((HEROES[Game.hero] || HEROES.aren).other);
+  return m.name;
+}
+
 function generateLevel(n) {
   const rng = makeRng(0x9e37 + n * 2654435761);
   const boss = (n % 5 === 0);
