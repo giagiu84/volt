@@ -145,8 +145,8 @@ const Rings = {
 };
 
 /* ---------- illustrazioni dei custodi ----------
-   Se in assets/heroes/ ci sono i disegni (aren_front.png, aren_side.png,
-   aren_back.png e gli stessi per lyra) la scelta li usa; altrimenti resta il
+   Se in assets/heroes/ ci sono i disegni (aren_front, aren_side, aren_back e
+   gli stessi per lyra, in webp o png) la scelta li usa; altrimenti resta il
    personaggio disegnato dal codice. Nessun errore se mancano: si prova e basta. */
 const HeroArt = {
   imgs: {}, tried: false,
@@ -159,8 +159,12 @@ const HeroArt = {
       for (const pose of this.poses) {
         const key = who + '_' + pose;
         const im = new Image();
-        im.onerror = () => { im._failed = true; };
-        im.src = 'assets/heroes/' + key + '.png';
+        /* prima il webp (pesa un quinto), e se manca si ripiega sul png */
+        im.onerror = () => {
+          if (!im._png) { im._png = true; im.src = 'assets/heroes/' + key + '.png'; }
+          else im._failed = true;
+        };
+        im.src = 'assets/heroes/' + key + '.webp';
         this.imgs[key] = im;
       }
     }
@@ -177,16 +181,48 @@ const HeroArt = {
   },
 
   /* disegna il custode all'angolo richiesto, alto `h` pixel e centrato sui piedi */
+  /* larghezza reale della figura dentro il PNG (i margini trasparenti non
+     contano): serve per far combaciare le viste quando si danno il cambio */
+  span(key) {
+    const im = this.imgs[key];
+    if (!im || !im.naturalWidth) return 0;
+    if (im._span) return im._span;
+    const c = document.createElement('canvas');
+    c.width = im.naturalWidth; c.height = im.naturalHeight;
+    const g = c.getContext('2d');
+    g.drawImage(im, 0, 0);
+    let min = c.width, max = 0;
+    try {
+      const d = g.getImageData(0, 0, c.width, c.height).data;
+      for (let y = 0; y < c.height; y += 2) {
+        const row = y * c.width;
+        for (let x = 0; x < c.width; x++) {
+          if (d[(row + x) * 4 + 3] > 20) { if (x < min) min = x; if (x > max) max = x; }
+        }
+      }
+    } catch (e) { return (im._span = im.naturalWidth); }
+    im._span = Math.max(1, max - min) / im.naturalWidth;   /* frazione della larghezza */
+    return im._span;
+  },
+
   draw(ctx, who, ang, h) {
-    const sx = Math.sin(ang), front = Math.cos(ang) > 0;
-    const side = Math.abs(sx) > 0.45;
-    const key = who + '_' + (side ? 'side' : (front ? 'front' : 'back'));
+    const si = Math.sin(ang), co = Math.cos(ang);
+    const side = Math.abs(si) > 0.7071;          /* si cambia vista a 45° */
+    const key = who + '_' + (side ? 'side' : (co > 0 ? 'front' : 'back'));
     const im = this.imgs[key];
     if (!im || !im.naturalWidth) return false;
+
+    /* Larghezza apparente come in una rotazione vera: le due viste hanno
+       ingombri diversi, quindi interpolo fra i due e adatto la scala della
+       vista mostrata. Senza questo, al cambio vista la figura fa uno scatto. */
+    const sFront = this.span(who + '_' + (co > 0 ? 'front' : 'back'));
+    const sSide = this.span(who + '_side');
+    const shown = side ? sSide : sFront;
+    const target = sFront * Math.abs(co) + sSide * Math.abs(si);
+    const squeeze = (shown > 0 ? target / shown : 1) * (side ? Math.sign(si) : (co > 0 ? 1 : -1));
+
     const w = h * (im.naturalWidth / im.naturalHeight);
     ctx.save();
-    /* la compressione orizzontale è ciò che fa "girare" la figura */
-    const squeeze = side ? (Math.abs(sx) * 0.5 + 0.5) * Math.sign(sx) : (front ? 1 : -1);
     ctx.scale(squeeze, 1);
     ctx.drawImage(im, -w / 2, -h, w, h);
     ctx.restore();

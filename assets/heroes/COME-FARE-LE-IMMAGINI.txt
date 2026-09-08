@@ -1,14 +1,17 @@
 COSA SERVE PER LA GIOSTRA DEI CUSTODI
 =====================================
 
-Sei file PNG con SFONDO TRASPARENTE, da mettere in questa cartella:
+Sei immagini con SFONDO TRASPARENTE in questa cartella (.webp oppure .png):
 
-  aren_front.png    Aren visto di fronte
-  aren_side.png     Aren visto di profilo, rivolto a DESTRA
-  aren_back.png     Aren visto di schiena
-  lyra_front.png    Lyra vista di fronte
-  lyra_side.png     Lyra vista di profilo, rivolta a DESTRA
-  lyra_back.png     Lyra vista di schiena
+  aren_front    Aren visto di fronte
+  aren_side     Aren visto di profilo, rivolto a DESTRA
+  aren_back     Aren visto di schiena
+  lyra_front    Lyra vista di fronte
+  lyra_side     Lyra vista di profilo, rivolta a DESTRA
+  lyra_back     Lyra vista di schiena
+
+Il gioco cerca prima il .webp e poi il .png. Genera pure in PNG: qui vengono
+poi convertiti in webp, che pesa un quinto (1,4 MB diventano 200 KB).
 
 Il gioco le usa da solo appena ci sono. Se ne manca anche una sola per un
 personaggio, quel personaggio resta disegnato dal codice (nessun errore).

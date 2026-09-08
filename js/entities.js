@@ -1430,7 +1430,7 @@ class Drone {
 function drawHeroPose(ctx, H, ang, t, scale) {
   const sx = Math.sin(ang);            /* quanto siamo di profilo: -1..1 */
   const front = Math.cos(ang) > 0;     /* davanti o dietro */
-  const side = Math.abs(sx) > 0.45;
+  const side = Math.abs(sx) > 0.7071;  /* si cambia vista a 45° */
   const bob = Math.sin(t * 2.2) * 2;
 
   ctx.save();
@@ -1453,7 +1453,7 @@ function drawHeroPose(ctx, H, ang, t, scale) {
   }
 
   ctx.save();
-  ctx.scale(side ? Math.abs(sx) * 0.55 + 0.45 : 1, 1);
+  ctx.scale(side ? Math.abs(sx) : Math.abs(Math.cos(ang)), 1);
 
   /* gambe */
   Gfx.capsule(ctx, -9, 8, 8, 13, H.legs, OUTLINE, 3);
