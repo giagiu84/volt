@@ -87,6 +87,7 @@ const Game = {
     this.scale = clamp(Math.min(w / minW, h / minH), 0.25, MAXSCALE);
     this.viewW = w / this.scale;
     this.viewH = h / this.scale;
+    Input.placeOrb(w, h);
   },
 
   start(fromClick) {
@@ -544,6 +545,7 @@ const Game = {
       this.drawOffscreenHints(ctx, camX, camY, lv);
     }
     this.drawVignette(ctx);
+    this.drawOrb(ctx, dt);
 
     if (this.flashT > 0) {
       ctx.fillStyle = 'rgba(255,255,255,' + (this.flashT * 1.4) + ')';
@@ -854,6 +856,92 @@ const Game = {
       ctx.restore();
       shown++;
     }
+  },
+
+  /* ---- sfera al plasma: il joystick del telefono ----
+     Le scariche partono dal nucleo e inseguono il pollice, come nelle sfere
+     di vetro vere. Disegnata in coordinate schermo, sopra a tutto. */
+  drawOrb(ctx, dt) {
+    if (!Input.touchMode) return;
+    const o = Input.orb;
+    if (!o.r) return;
+    const k = 1 / this.scale;                 /* da pixel schermo a unità di disegno */
+    const cx = o.x * k, cy = o.y * k, R = o.r * k;
+    const t = this.portalT;
+    o.glow = lerp(o.glow, o.active ? 1 : 0.35, Math.min(1, (dt || 0.016) * 8));
+
+    ctx.save();
+
+    /* vetro */
+    const g = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.35, R * 0.1, cx, cy, R);
+    g.addColorStop(0, 'rgba(120,200,255,' + (0.16 + o.glow * 0.14) + ')');
+    g.addColorStop(0.55, 'rgba(30,60,150,' + (0.20 + o.glow * 0.14) + ')');
+    g.addColorStop(1, 'rgba(10,20,60,' + (0.26 + o.glow * 0.16) + ')');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, TAU); ctx.fill();
+
+    /* scariche: partono dal nucleo e inseguono il pollice, serpeggiando */
+    const tx = o.active ? cx + o.dx * k : cx + Math.cos(t * 0.7) * R * 0.5;
+    const ty = o.active ? cy + o.dy * k : cy + Math.sin(t * 0.9) * R * 0.5;
+    const toX = tx - cx, toY = ty - cy;
+    const baseAng = Math.atan2(toY, toX);
+    const reach = clamp(Math.hypot(toX, toY) * 0.9 + R * 0.35, R * 0.55, R * 0.98);
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    const bolts = 5;
+    for (let b = 0; b < bolts; b++) {
+      const spread = o.active ? 0.42 : 1.35;
+      const ang = baseAng + (b - (bolts - 1) / 2) * spread;
+      const dirX = Math.cos(ang), dirY = Math.sin(ang);
+      const perpX = -dirY, perpY = dirX;
+      const len = reach * (0.82 + ((b * 37) % 10) / 40);
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      const steps = 9;
+      for (let i = 1; i <= steps; i++) {
+        const f = i / steps;
+        /* l'ampiezza è nulla al nucleo e alla punta: il filamento resta attaccato a entrambi */
+        const amp = R * 0.17 * Math.sin(f * Math.PI);
+        const n = Math.sin(t * 13 + b * 4.1 + f * 9) * 0.7 + Math.sin(t * 21 + b * 2.3 + f * 17) * 0.3;
+        ctx.lineTo(cx + dirX * len * f + perpX * amp * n,
+                   cy + dirY * len * f + perpY * amp * n);
+      }
+      ctx.strokeStyle = 'rgba(90,200,255,' + (0.18 + o.glow * 0.42) + ')';
+      ctx.lineWidth = 4.2 * k; ctx.stroke();
+      ctx.strokeStyle = 'rgba(170,235,255,' + (0.2 + o.glow * 0.5) + ')';
+      ctx.lineWidth = 2.1 * k; ctx.stroke();
+      ctx.strokeStyle = 'rgba(255,255,255,' + (0.16 + o.glow * 0.5) + ')';
+      ctx.lineWidth = 0.9 * k; ctx.stroke();
+    }
+
+    /* nucleo */
+    const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 0.4);
+    core.addColorStop(0, 'rgba(255,255,255,' + (0.75 + o.glow * 0.25) + ')');
+    core.addColorStop(0.4, 'rgba(110,220,255,.65)');
+    core.addColorStop(1, 'rgba(60,160,255,0)');
+    ctx.fillStyle = core;
+    ctx.beginPath(); ctx.arc(cx, cy, R * 0.42 + Math.sin(t * 6) * R * 0.02, 0, TAU); ctx.fill();
+
+    /* punto luminoso sotto il pollice */
+    if (o.active) {
+      const pg = ctx.createRadialGradient(tx, ty, 0, tx, ty, R * 0.32);
+      pg.addColorStop(0, 'rgba(255,255,255,.9)');
+      pg.addColorStop(1, 'rgba(120,220,255,0)');
+      ctx.fillStyle = pg;
+      ctx.beginPath(); ctx.arc(tx, ty, R * 0.32, 0, TAU); ctx.fill();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+
+    /* bordo di vetro e riflesso */
+    ctx.strokeStyle = 'rgba(190,235,255,' + (0.5 + o.glow * 0.35) + ')';
+    ctx.lineWidth = 2.5 * k;
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, TAU); ctx.stroke();
+    ctx.globalAlpha = 0.5;
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.ellipse(cx - R * 0.34, cy - R * 0.44, R * 0.26, R * 0.13, -0.7, 0, TAU);
+    ctx.fill();
+    ctx.restore();
   },
 
   drawVignette(ctx) {

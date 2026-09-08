@@ -81,24 +81,6 @@ body.touch .power-hud{bottom:calc(8px + env(safe-area-inset-bottom));width:min(2
   -webkit-user-select:none;user-select:none}
 .tbtn.pressed{transform:translateY(4px)!important;filter:brightness(1.12)}
 
-/* croce direzionale in basso a sinistra — misure pensate per non toccare mai
-   i pulsanti di destra nemmeno sui telefoni stretti */
-.pad{position:absolute;left:calc(12px + env(safe-area-inset-left));
-  bottom:calc(14px + env(safe-area-inset-bottom));width:150px;height:132px;pointer-events:none}
-body.flying .pad{height:196px}
-.tbtn.dir{width:72px;height:72px;bottom:0;font-size:26px;line-height:1;
-  background:linear-gradient(180deg,#8fa4ff,#5064e8);box-shadow:0 6px 0 #33409f,0 10px 20px rgba(0,0,0,.28)}
-#btnLeft{left:0}
-#btnRight{left:78px}
-.tbtn.up{display:none;width:52px;height:52px;left:49px;bottom:140px;font-size:18px;
-  background:linear-gradient(180deg,#b8c2ff,#7a86dd);box-shadow:0 5px 0 #4a56ad,0 8px 16px rgba(0,0,0,.24)}
-body.flying .tbtn.up{display:flex}
-.tbtn.up.pressed{box-shadow:0 2px 0 #4a56ad,0 4px 10px rgba(0,0,0,.24)}
-.tbtn.down{width:52px;height:52px;left:49px;bottom:78px;font-size:18px;
-  background:linear-gradient(180deg,#b8c2ff,#7a86dd);box-shadow:0 5px 0 #4a56ad,0 8px 16px rgba(0,0,0,.24)}
-.tbtn.dir.pressed{box-shadow:0 2px 0 #33409f,0 5px 12px rgba(0,0,0,.28)}
-.tbtn.down.pressed{box-shadow:0 2px 0 #4a56ad,0 4px 10px rgba(0,0,0,.24)}
-
 /* azioni in basso a destra */
 .acts{position:absolute;right:calc(12px + env(safe-area-inset-right));
   bottom:calc(14px + env(safe-area-inset-bottom));width:180px;height:180px;pointer-events:none}
@@ -111,18 +93,12 @@ body.flying .tbtn.up{display:flex}
 
 /* schermi più larghi: pulsanti più generosi */
 @media (min-width:430px){
-  .pad{width:172px;height:150px}
-  .tbtn.dir{width:82px;height:82px;font-size:30px}
-  #btnRight{left:90px}
-  .tbtn.down{width:58px;height:58px;left:56px;bottom:88px;font-size:20px}
   .acts{width:206px;height:206px}
   .tbtn.fire{width:106px;height:106px;bottom:100px;font-size:16px}
   .tbtn.jump{width:96px;height:96px;right:110px;font-size:16px}
 }
 /* telefono coricato: tutto più basso e compatto */
 @media (max-height:430px){
-  .pad{height:110px} .tbtn.dir{width:64px;height:64px;font-size:24px} #btnRight{left:70px}
-  .tbtn.down{width:46px;height:46px;left:43px;bottom:70px}
   .acts{height:150px} .tbtn.fire{width:84px;height:84px;bottom:74px} .tbtn.jump{width:76px;height:76px;right:88px}
 }
 

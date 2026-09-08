@@ -1,8 +1,9 @@
 /* VOLT — input: tastiera, mouse e comandi a pulsanti sul telefono.
 
-   Telefono:  in basso a sinistra ◀ ▶ (e un ▼ per scendere dalle piattaforme),
+   Telefono:  in basso a sinistra la sfera al plasma (tieni il pollice e spingi:
+              destra/sinistra si corre, in basso si scende dalle piattaforme, e
+              in volo si va anche su; doppio tocco = scatto),
               in basso a destra SALTA e SPARA.
-              Doppio tocco su ◀ o ▶ = scatto in quella direzione.
               La mira è automatica sul mostro più vicino.
    Ogni pulsante ricorda quale dito lo sta premendo: si possono premere
    insieme (correre + saltare + sparare) e se un dito si perde per strada
@@ -21,7 +22,9 @@ const Input = {
   lastPointerT: 0, lastKeyT: 0,
   touchMode: false,
 
-  btn: { left: false, right: false, down: false, up: false, jump: false, fire: false },
+  btn: { jump: false, fire: false },
+  axisX: 0, axisY: 0,
+  orb: { x: 0, y: 0, r: 66, active: false, id: null, dx: 0, dy: 0, tDown: 0, lastUp: 0, glow: 0 },
   _fingers: Object.create(null),   /* identifier -> nome pulsante */
   _lastTap: { left: 0, right: 0 },
   hasAim: false, aimDX: 1, aimDY: 0,
@@ -43,6 +46,8 @@ const Input = {
       this.keys = Object.create(null);
       this.fire = false;
       for (const k in this.btn) this.btn[k] = false;
+      this.axisX = 0; this.axisY = 0;
+      this.orb.active = false; this.orb.id = null; this.orb.dx = 0; this.orb.dy = 0;
       this._fingers = Object.create(null);
       this.refreshBtns();
     };
@@ -109,17 +114,60 @@ const Input = {
       el.addEventListener('mouseleave', () => { if (this.btn[name]) up(null); });
     };
 
-    bind('btnLeft', 'left');
-    bind('btnRight', 'right');
-    bind('btnDown', 'down');
-    bind('btnUp', 'up');
     bind('btnJump', 'jump');
     bind('btnFire', 'fire');
+
+    /* --- sfera al plasma: joystick disegnato dal gioco --- */
+    const orbHit = (x, y) => {
+      const o = this.orb;
+      return Math.hypot(x - o.x, y - o.y) < o.r * 1.35;
+    };
+    const orbMove = (x, y) => {
+      const o = this.orb;
+      let dx = x - o.x, dy = y - o.y;
+      const d = Math.hypot(dx, dy) || 1;
+      if (d > o.r) { dx *= o.r / d; dy *= o.r / d; }
+      o.dx = dx; o.dy = dy;
+      const ax = dx / o.r, ay = dy / o.r;
+      this.axisX = Math.abs(ax) < 0.16 ? 0 : clamp(ax, -1, 1);
+      this.axisY = Math.abs(ay) < 0.16 ? 0 : clamp(ay, -1, 1);
+    };
+    const orbRelease = () => {
+      const o = this.orb;
+      if (o.active && performance.now() - o.tDown < 240) o.lastUp = performance.now();
+      o.active = false; o.id = null; o.dx = 0; o.dy = 0;
+      this.axisX = 0; this.axisY = 0;
+    };
+    this._orbRelease = orbRelease;
+
+    canvas.addEventListener('touchstart', (e) => {
+      e.preventDefault(); this.enableTouch();
+      for (const t of e.changedTouches) {
+        if (this.orb.active || !orbHit(t.clientX, t.clientY)) continue;
+        const now = performance.now();
+        this.orb.active = true; this.orb.id = t.identifier; this.orb.tDown = now;
+        if (now - this.orb.lastUp < 320) { this.dashEdge = true; this.orb.lastUp = 0; }
+        orbMove(t.clientX, t.clientY);
+      }
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', (e) => {
+      if (!this.orb.active) return;
+      e.preventDefault();
+      for (const t of e.changedTouches) if (t.identifier === this.orb.id) orbMove(t.clientX, t.clientY);
+    }, { passive: false });
+
+    const orbEnd = (e) => {
+      for (const t of e.changedTouches) if (t.identifier === this.orb.id) orbRelease();
+    };
+    canvas.addEventListener('touchend', orbEnd);
+    canvas.addEventListener('touchcancel', orbEnd);
 
     /* rete di sicurezza: se un dito sparisce senza rilascio, libero il pulsante */
     const sweep = (e) => {
       const live = new Set();
       for (const t of e.touches) live.add(t.identifier);
+      if (this.orb.active && !live.has(this.orb.id)) this._orbRelease();
       for (const id in this._fingers) {
         if (!live.has(Number(id))) {
           const name = this._fingers[id];
@@ -132,6 +180,14 @@ const Input = {
     addEventListener('touchend', sweep);
     addEventListener('touchcancel', sweep);
     addEventListener('touchstart', () => this.enableTouch(), { passive: true });
+  },
+
+  /* la sfera vive in basso a sinistra: il gioco ne aggiorna il centro */
+  placeOrb(w, h) {
+    const r = clamp(Math.min(w, h) * 0.175, 50, 72);
+    this.orb.r = r;
+    this.orb.x = 16 + r;
+    this.orb.y = h - 18 - r;
   },
 
   refreshBtns() {
@@ -159,17 +215,15 @@ const Input = {
 
   /* input logico letto dal gioco */
   moveX() {
-    let x = 0;
-    if (this.btn.left) x -= 1;
-    if (this.btn.right) x += 1;
+    let x = this.axisX;
     if (this.keys['a'] || this.keys['arrowleft']) x -= 1;
     if (this.keys['d'] || this.keys['arrowright']) x += 1;
     return clamp(x, -1, 1);
   },
   moveY() {
-    if (this.btn.up || this.keys['w'] || this.keys['arrowup']) return -1;
-    if (this.btn.down || this.keys['s'] || this.keys['arrowdown']) return 1;
-    return 0;
+    if (this.keys['w'] || this.keys['arrowup']) return -1;
+    if (this.keys['s'] || this.keys['arrowdown']) return 1;
+    return this.axisY;
   },
   wantJump() {
     const e = this.jumpEdge || this.pressed[' '] || this.pressed['w'] || this.pressed['arrowup'];
