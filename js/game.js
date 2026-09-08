@@ -268,6 +268,8 @@ const Game = {
     vid.currentTime = 0;
     skip.onclick = chiudi;
     box.classList.remove('hidden');
+    document.getElementById('banner').classList.add('hidden');
+    this.bannerT = 0;
     Sfx.stopMusic();
     vid.src = 'assets/video/' + nome + '.mp4';
     const p = vid.play();
