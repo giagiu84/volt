@@ -194,6 +194,7 @@ const Game = {
     this.volt = 0; this.rushT = 0; this.hitStop = 0;
     this.hasShip = false;
     this.perks = {}; this.shieldGenT = 0; this.drone = null;
+    this._winCinema = false;
     this.nextLifeAt = FIRST_LIFE_AT;
     if (this.player) this.player.riding = false;
     this.onShipChange();
@@ -216,6 +217,66 @@ const Game = {
     document.getElementById('win').classList.add('hidden');
     document.getElementById('hud').classList.remove('hidden');
     this.state = 'play';
+
+    /* la notte in cui Lumina si spense: solo all'inizio di una campagna nuova */
+    if (this.mode === 'campaign' && !fromCheckpoint) {
+      const rapito = HEROES[this.hero].other.toLowerCase();
+      this.state = 'cinema';
+      document.getElementById('hud').classList.add('hidden');
+      this.playCinema('rapimento_' + rapito, () => {
+        document.getElementById('hud').classList.remove('hidden');
+        this.state = 'play';
+        this.banner(MISSIONS[this.mission.type].name);
+      });
+    }
+  },
+
+  /* ---- filmati ----
+     Si riproducono se il file c'è; se manca, o se il browser non ne vuole
+     sapere, si prosegue subito: il gioco non deve mai restare fermo ad
+     aspettare un video. */
+  playCinema(nome, poi) {
+    const box = document.getElementById('cinema');
+    const vid = document.getElementById('cinemaVideo');
+    const skip = document.getElementById('cinemaSkip');
+    if (!box || !vid) { poi(); return; }
+
+    let chiuso = false;
+    const chiudi = () => {
+      if (chiuso) return;
+      chiuso = true;
+      clearTimeout(guardia); clearTimeout(limite);
+      try { vid.pause(); } catch (e) {}
+      vid.removeAttribute('src'); vid.load();
+      box.classList.add('hidden');
+      skip.onclick = null;
+      Sfx.resume(); Sfx.startMusic();
+      poi();
+    };
+
+    /* se il video non sta davvero andando, si tira dritto: un filmato che
+       manca non deve far aspettare nessuno */
+    const guardia = setTimeout(() => {
+      if (!vid.duration || vid.paused || vid.readyState < 2) chiudi();
+    }, 1200);
+    /* e in nessun caso si resta fermi: nessun filmato dura piu' di venti secondi */
+    const limite = setTimeout(chiudi, 20000);
+
+    vid.onended = chiudi;
+    vid.onerror = chiudi;
+    vid.onstalled = () => { if (vid.readyState < 2) chiudi(); };
+    vid.currentTime = 0;
+    skip.onclick = chiudi;
+    box.classList.remove('hidden');
+    Sfx.stopMusic();
+    vid.src = 'assets/video/' + nome + '.mp4';
+    const p = vid.play();
+    if (p && p.catch) p.catch(() => {
+      /* se l'audio è bloccato, riprovo muto: meglio muto che niente */
+      vid.muted = true;
+      const p2 = vid.play();
+      if (p2 && p2.catch) p2.catch(chiudi);
+    });
   },
 
   /* il menu racconta a che punto sei */
@@ -245,6 +306,7 @@ const Game = {
     this.state = 'menu';
     document.getElementById('choice').classList.add('hidden');
     document.getElementById('win').classList.add('hidden');
+    document.getElementById('cinema').classList.add('hidden');
     this.refreshMenu();
     Sfx.stopMusic();
     document.getElementById('menu').classList.remove('hidden');
@@ -468,7 +530,8 @@ const Game = {
     if (!isFinite(dt) || dt < 0) dt = 0;
     dt = Math.min(dt, 0.05);          /* niente salti dopo un tab in background */
 
-    if (this.state === 'play') this.update(dt);
+    if (this.state === 'cinema') { /* il gioco aspetta la fine del filmato */ }
+    else if (this.state === 'play') this.update(dt);
     else if (this.state === 'menu') { this.updateMenu(dt); this.drawHeroPicks(dt); }
     else { Particles.update(dt * 0.35); Rings.update(dt * 0.35); }
 
@@ -913,6 +976,17 @@ const Game = {
   },
 
   winCampaign() {
+    /* prima il ricongiungimento, poi i conti. Il segnalatore resta alzato
+       finché non si torna al menu, altrimenti il filmato ripartirebbe in
+       continuazione. */
+    if (!this._winCinema) {
+      this._winCinema = true;
+      const liberato = HEROES[this.hero].other.toLowerCase();
+      this.state = 'cinema';
+      document.getElementById('hud').classList.add('hidden');
+      this.playCinema('liberazione_' + liberato, () => this.winCampaign());
+      return;
+    }
     this.state = 'win';
     Sfx.stopMusic();
     this.progress.cleared = true;
