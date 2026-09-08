@@ -463,7 +463,6 @@ const Game = {
       this.drawOffscreenHints(ctx, camX, camY, lv);
     }
     this.drawVignette(ctx);
-    if (this.state === 'play') this.drawTouchFeedback(ctx);
 
     if (this.flashT > 0) {
       ctx.fillStyle = 'rgba(255,255,255,' + (this.flashT * 1.4) + ')';
@@ -767,41 +766,6 @@ const Game = {
       ctx.restore();
       shown++;
     }
-  },
-
-  /* alone discreto sotto i pollici: non ci sono tasti, ma si deve capire dove si sta premendo */
-  drawTouchFeedback(ctx) {
-    if (!Input.touchMode) return;
-    const k = 1 / this.scale;
-    ctx.save();
-    const L = Input.stick;
-    if (L) {
-      const ox = L.ox * k, oy = L.oy * k;
-      const dx = (L.x - L.ox) * k, dy = (L.y - L.oy) * k;
-      const r = 66 * k;
-      const d = Math.hypot(dx, dy), cl = Math.min(d, r) || 0;
-      const nx = d ? (dx / d) * cl : 0, ny = d ? (dy / d) * cl : 0;
-      ctx.globalAlpha = 0.16; ctx.fillStyle = '#ffffff';
-      ctx.beginPath(); ctx.arc(ox, oy, r, 0, TAU); ctx.fill();
-      ctx.globalAlpha = 0.30; ctx.lineWidth = 2 * k; ctx.strokeStyle = '#ffffff';
-      ctx.beginPath(); ctx.arc(ox, oy, r, 0, TAU); ctx.stroke();
-      ctx.globalAlpha = 0.42;
-      ctx.beginPath(); ctx.arc(ox + nx, oy + ny, 26 * k, 0, TAU); ctx.fill();
-    }
-    const R = Input.shoot;
-    if (R) {
-      const x = R.x * k, y = R.y * k;
-      ctx.globalAlpha = 0.35; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2.5 * k;
-      ctx.beginPath(); ctx.arc(x, y, 24 * k, 0, TAU); ctx.stroke();
-      if (R.moved) {
-        ctx.globalAlpha = 0.22;
-        ctx.beginPath();
-        ctx.moveTo(R.ox * k, R.oy * k); ctx.lineTo(x, y); ctx.stroke();
-        ctx.globalAlpha = 0.5;
-        ctx.beginPath(); ctx.arc(x, y, 6 * k, 0, TAU); ctx.fillStyle = '#ffffff'; ctx.fill();
-      }
-    }
-    ctx.restore();
   },
 
   drawVignette(ctx) {

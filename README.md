@@ -6,16 +6,16 @@ Niente librerie, niente build, niente server: sono file statici puri.
 
 ## Come si gioca
 
-Sul telefono non ci sono tasti a schermo: si gioca a gesti, con i due pollici.
+Sul telefono i comandi sono a pulsanti: ◀ ▶ (e ▼) in basso a sinistra, SALTA e SPARA in basso a destra.
 
 | | PC | Telefono |
 |---|---|---|
-| Muoversi | `A` `D` o frecce | trascina il pollice destro: il joystick nasce dove appoggi il dito |
-| Saltare (doppio) | `SPAZIO` o `W` | un tocco del pollice destro; due tocchi = doppio salto; tenendolo premuto il salto è più alto. Mentre corri puoi saltare appoggiando un secondo dito a destra |
-| Sparare | click sinistro o `J` | tieni premuto il pollice sinistro |
-| Mirare | mouse | trascina il pollice sinistro; se lo appoggi soltanto, mira da sola al mostro più vicino |
-| Scatto | `SHIFT` o `K` | scorrimento rapido in orizzontale col pollice destro |
-| Scendere da una piattaforma | `S` / giù | spingi il pollice destro in basso |
+| Muoversi | `A` `D` o frecce | pulsanti ◀ ▶ in basso a sinistra |
+| Saltare (doppio) | `SPAZIO` o `W` | pulsante SALTA; premuto due volte = doppio salto; tenuto premuto = salto più alto |
+| Sparare | click sinistro o `J` | pulsante SPARA |
+| Mirare | mouse | automatica, sul mostro più vicino |
+| Scatto | `SHIFT` o `K` | doppio tocco su ◀ o ▶ |
+| Scendere da una piattaforma | `S` / giù | pulsante ▼ |
 | Pausa | `ESC` o `P` | tasto in alto a destra |
 
 Con la tastiera si spara dritto davanti a sé; con il mouse si mira dove punta il cursore. Il gioco capisce da solo quale dei due stai usando.

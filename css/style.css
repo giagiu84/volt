@@ -60,19 +60,61 @@ body.touch .weapon{bottom:auto;left:calc(12px + env(safe-area-inset-left));
   background:rgba(28,20,64,.5);backdrop-filter:blur(6px);border:0;color:#fff;cursor:pointer;
   box-shadow:0 3px 10px rgba(0,0,0,.25),inset 0 0 0 1.5px rgba(255,255,255,.22)}
 
-/* ---------- Comandi a gesti: promemoria iniziale ---------- */
-.touch-hint{position:absolute;inset:0;display:flex;pointer-events:none;z-index:3;
-  opacity:1;transition:opacity .9s ease}
+/* ---------- Comandi a pulsanti (telefono) ---------- */
+#touch{position:absolute;inset:0;pointer-events:none;z-index:2}
+.tbtn{position:absolute;pointer-events:auto;touch-action:none;border:0;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fredoka',sans-serif;font-weight:600;color:#fff;
+  text-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .05s,box-shadow .05s;
+  -webkit-user-select:none;user-select:none}
+.tbtn.pressed{transform:translateY(4px)!important;filter:brightness(1.12)}
+
+/* croce direzionale in basso a sinistra — misure pensate per non toccare mai
+   i pulsanti di destra nemmeno sui telefoni stretti */
+.pad{position:absolute;left:calc(12px + env(safe-area-inset-left));
+  bottom:calc(14px + env(safe-area-inset-bottom));width:150px;height:132px;pointer-events:none}
+.tbtn.dir{width:72px;height:72px;bottom:0;font-size:26px;line-height:1;
+  background:linear-gradient(180deg,#8fa4ff,#5064e8);box-shadow:0 6px 0 #33409f,0 10px 20px rgba(0,0,0,.28)}
+#btnLeft{left:0}
+#btnRight{left:78px}
+.tbtn.down{width:52px;height:52px;left:49px;bottom:78px;font-size:18px;
+  background:linear-gradient(180deg,#b8c2ff,#7a86dd);box-shadow:0 5px 0 #4a56ad,0 8px 16px rgba(0,0,0,.24)}
+.tbtn.dir.pressed{box-shadow:0 2px 0 #33409f,0 5px 12px rgba(0,0,0,.28)}
+.tbtn.down.pressed{box-shadow:0 2px 0 #4a56ad,0 4px 10px rgba(0,0,0,.24)}
+
+/* azioni in basso a destra */
+.acts{position:absolute;right:calc(12px + env(safe-area-inset-right));
+  bottom:calc(14px + env(safe-area-inset-bottom));width:180px;height:180px;pointer-events:none}
+.tbtn.fire{right:0;bottom:88px;width:94px;height:94px;font-size:15px;
+  background:linear-gradient(180deg,#ff7ba4,#ff3d78);box-shadow:0 7px 0 #c62b5c,0 12px 24px rgba(0,0,0,.3)}
+.tbtn.jump{right:96px;bottom:4px;width:84px;height:84px;font-size:15px;
+  background:linear-gradient(180deg,#7ce0ff,#22b6f0);box-shadow:0 7px 0 #1088b9,0 12px 22px rgba(0,0,0,.28)}
+.tbtn.fire.pressed{box-shadow:0 3px 0 #c62b5c,0 6px 14px rgba(0,0,0,.3)}
+.tbtn.jump.pressed{box-shadow:0 3px 0 #1088b9,0 6px 14px rgba(0,0,0,.28)}
+
+/* schermi più larghi: pulsanti più generosi */
+@media (min-width:430px){
+  .pad{width:172px;height:150px}
+  .tbtn.dir{width:82px;height:82px;font-size:30px}
+  #btnRight{left:90px}
+  .tbtn.down{width:58px;height:58px;left:56px;bottom:88px;font-size:20px}
+  .acts{width:206px;height:206px}
+  .tbtn.fire{width:106px;height:106px;bottom:100px;font-size:16px}
+  .tbtn.jump{width:96px;height:96px;right:110px;font-size:16px}
+}
+/* telefono coricato: tutto più basso e compatto */
+@media (max-height:430px){
+  .pad{height:110px} .tbtn.dir{width:64px;height:64px;font-size:24px} #btnRight{left:70px}
+  .tbtn.down{width:46px;height:46px;left:43px;bottom:70px}
+  .acts{height:150px} .tbtn.fire{width:84px;height:84px;bottom:74px} .tbtn.jump{width:76px;height:76px;right:88px}
+}
+
+/* promemoria iniziale */
+.touch-hint{position:absolute;left:0;right:0;bottom:calc(180px + env(safe-area-inset-bottom));
+  display:flex;justify-content:center;pointer-events:none;z-index:3;opacity:1;transition:opacity .8s ease}
 .touch-hint.fade{opacity:0}
-.th-half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
-  gap:5px;padding:0 14px calc(16vh + env(safe-area-inset-bottom));text-align:center;color:#fff}
-.th-half+.th-half{border-left:1px dashed rgba(255,255,255,.28)}
-.th-icon{font-size:30px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.4));animation:tap 1.4s ease-in-out infinite}
-.th-half:last-child .th-icon{animation-delay:.5s}
-@keyframes tap{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
-.th-half b{font-size:14px;text-shadow:0 2px 8px rgba(0,0,0,.5)}
-.th-half span{font-size:11px;line-height:1.5;font-weight:700;opacity:.85;max-width:230px;
-  text-shadow:0 2px 6px rgba(0,0,0,.5)}
+.th-box{padding:9px 16px;border-radius:999px;background:rgba(28,20,64,.6);backdrop-filter:blur(6px);
+  color:#fff;font-size:12px;font-weight:800;box-shadow:0 0 0 1.5px rgba(255,255,255,.2)}
 
 /* ---------- Schermate ---------- */
 .overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:18px;z-index:5;
