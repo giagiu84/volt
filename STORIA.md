@@ -1173,7 +1173,7 @@ Il gioco mostra brevi filmati fra una fase e l'altra, come faceva *Prince of
 Persia*: non sono premi, sono **il modo in cui la storia va avanti mentre si
 gioca**.
 
-**Fatti** (già dentro il gioco, quattro):
+**Fatti** (già dentro il gioco, cinque):
 
 | File | Quando | Cosa mostra |
 |---|---|---|
@@ -1181,22 +1181,22 @@ gioca**.
 | `rapimento_aren` | inizio, se giochi Lyra | Aren protegge il Nucleo, viene sopraffatto, imprigionato |
 | `liberazione_lyra` | dopo il settore 20 | Aren spezza la cella, si abbracciano |
 | `liberazione_aren` | dopo il settore 20 | Lyra apre la cella col guanto, si abbracciano |
+| `la_luce_se_ne_va` | premendo CONTINUA, dopo il 20 | I due davanti alla Frattura: isole di Lumina sospese nel viola, saette, e la luce di casa che se ne va |
 
 **Da fare**, in ordine di importanza. I primi quattro sono **essenziali**: senza
 di loro la storia non si capisce. Gli altri fanno bella figura.
 
 | # | File | Quando | Cosa deve mostrare | Priorità |
 |---|---|---|---|---|
-| 1 | `la_luce_se_ne_va` | subito dopo la liberazione, prima del 21 | I due si abbracciano; dietro di loro Lumina si spegne a fasce. Una sagoma attraversa la Frattura con una luce verde in mano | **essenziale** |
-| 2 | `il_tradimento` | settore 35 | ECHO-0 sta per cadere; dal buio arriva ECHO-1, gli strappa Ampere e sparisce. ECHO-0 resta in ginocchio | **essenziale** |
-| 3 | `il_passaggio` | subito dopo | ECHO-0 si rialza e apre una fenditura nel fondo del viola: si intravede Eclissia | **essenziale** |
-| 4 | `il_finale` | settore 65 | L'eruzione verde che si divide in filamenti e cuce il cielo; un filo di corrente devia nel nucleo di ECHO-0; la creatura che resta; il ritorno a Lumina | **essenziale** |
-| 5 | `dentro_la_frattura` | settore 21 | I due entrano insieme; il mondo è fatto di pezzi di casa loro | desiderabile |
-| 6 | `primo_incontro` | settore 24 | ECHO-0 appare e parla per la prima volta | desiderabile |
-| 7 | `ampere_torna` | settore 30 | Gliela strappano di mano; la lanterna si accende fra i due | desiderabile |
-| 8 | `eclissia` | settore 36 | La prima immagine del mondo nuovo, con il vulcano all'orizzonte | desiderabile |
-| 9 | `il_reattore` | settore 56 | ECHO-1 cade, le tre morse si aprono, Ampere esce e si riempie di colpo | desiderabile |
-| 10 | `la_cima` | settore 65, prima dello scontro | OHM appare sopra il cratere; il segno Ω si accende | desiderabile |
+| 1 | `il_tradimento` | settore 35 | ECHO-0 sta per cadere; dal buio arriva ECHO-1, gli strappa Ampere e sparisce. ECHO-0 resta in ginocchio | **essenziale** |
+| 2 | `il_passaggio` | subito dopo | ECHO-0 si rialza e apre una fenditura nel fondo del viola: si intravede Eclissia | **essenziale** |
+| 3 | `il_finale` | settore 65 | L'eruzione verde che si divide in filamenti e cuce il cielo; un filo di corrente devia nel nucleo di ECHO-0; la creatura che resta; il ritorno a Lumina | **essenziale** |
+| 4 | `dentro_la_frattura` | settore 21 | I due entrano insieme; il mondo è fatto di pezzi di casa loro | desiderabile |
+| 5 | `primo_incontro` | settore 24 | ECHO-0 appare e parla per la prima volta | desiderabile |
+| 6 | `ampere_torna` | settore 30 | Gliela strappano di mano; la lanterna si accende fra i due | desiderabile |
+| 7 | `eclissia` | settore 36 | La prima immagine del mondo nuovo, con il vulcano all'orizzonte | desiderabile |
+| 8 | `il_reattore` | settore 56 | ECHO-1 cade, le tre morse si aprono, Ampere esce e si riempie di colpo | desiderabile |
+| 9 | `la_cima` | settore 65, prima dello scontro | OHM appare sopra il cratere; il segno Ω si accende | desiderabile |
 
 **Le trasmissioni brevi.** Oltre ai filmati servono clip di **tre o quattro
 secondi**, che il gioco mostra in un angolo mentre si gioca: ECHO-0 che compare
