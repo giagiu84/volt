@@ -66,8 +66,15 @@ vita sola) resta intera nei primi cinque settori e si ritira piano dopo.
 ## La storia
 
 Il racconto, i personaggi, le regole dell'universo e quello che deve ancora
-succedere stanno in **[STORIA.md](STORIA.md)** — la Bibbia di VOLT. È l'unica
-fonte: se una cosa non è scritta là, non è ancora vera.
+succedere stanno nella **Bibbia di VOLT**, che vive in due formati allineati:
+
+- **[STORIA.md](STORIA.md)** — la fonte, ed è questo che si dà da leggere alle IA;
+- **VOLT_Bibbia.docx** — la stampa, per chi legge da persona.
+
+Il Word **non si modifica a mano**: si scrive nell'`.md` e si rilancia
+`python strumenti/bibbia_docx.py`, che lo rigenera identico.
+
+È l'unica fonte: se una cosa non è scritta là, non è ancora vera.
 
 ## Struttura del gioco
 

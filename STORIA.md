@@ -17,6 +17,7 @@ Ogni voce porta un'etichetta:
 | **[APERTO]** | non è ancora deciso. Chi lo decide lo scrive qui |
 
 Ultimo aggiornamento: 9 settembre 2026 — gioco alla versione 30.
+Fusa con la Bibbia narrativa v1.1 scritta con l'altra IA.
 
 ---
 
@@ -39,6 +40,23 @@ I due nomi del gioco sono le due metà del principio:
 - **AMPERE** è la corrente: il flusso che la libera e la rende utile.
 
 Uno senza l'altro non risolve niente. È il tema, ed è anche la meccanica.
+
+**Logline.** *Quando una Frattura energetica divide Lumina e rapisce uno dei suoi
+due Custodi, il giocatore sceglie chi assorbirà il Nucleo e diventerà VOLT. Dopo
+venti settori il salvataggio rivela una minaccia più profonda: per richiudere la
+ferita fra i mondi, Aren e Lyra dovranno combattere insieme, ricaricare l'antico
+contenitore Ampere e decidere se distruggere o salvare la creatura nata dalla
+Frattura.*
+
+**Le frasi del canone.** Sono le uniche che si possono usare come titoli, come
+post, come cartelli nei filmati. Non se ne inventano altre senza scriverle qui.
+
+- «Non si nasce VOLT. Lo si diventa.»
+- «Due Custodi. Un solo Nucleo. Chi diventerà VOLT?»
+- «Ho osservato ogni tua scelta. Ora i tuoi poteri appartengono a me.»
+- «Se volete la corrente… dovrete riprendervela.»
+- «Voi volete salvare il vostro mondo. Io sto soltanto cercando di non scomparire.»
+- «Trova Ampere. Ricarica la sua luce. Salva due mondi… e il mostro che voleva distruggerti.»
 
 ---
 
@@ -131,6 +149,12 @@ nel secondo combattono insieme. **Non si scrivono dichiarazioni d'amore, non si
 scrivono baci.** Si abbracciano, e basta: il gioco lo guardano anche i bambini,
 e le cose dette a metà funzionano meglio.
 
+**Chi viene rapito non è una damigella.** Resiste, osserva, manda segnali
+frammentari e prepara dall'interno le condizioni della propria liberazione. Nel
+gioco è già così: i messaggi che arrivano durante i settori («Segnale di Lyra
+rilevato», «Un frammento: è passato di qui») sono la sua voce, non un
+promemoria del gioco.
+
 ### AMPERE **[GIOCO]** *(l'origine è [SCRITTO])*
 Una piccola lanterna verde, quasi viva, costruita dagli antichi Custodi per
 stabilizzare la Frattura. Dentro conserva la **Corrente Verde**.
@@ -174,10 +198,18 @@ mostri più grossi, sono **problemi diversi**.
 L'antagonista del secondo atto, e il personaggio più importante che abbiamo
 dopo i due Custodi.
 
-Nato **per sbaglio** dall'energia corrotta di Ampere. Pensa, parla e capisce
-cosa sta succedendo. Osserva la partita del giocatore, **copia i suoi
-potenziamenti** e li usa contro di lui, cambiando aspetto in base al potere
-rubato. Combatte poco e poi fugge, portandosi via Ampere.
+**Nasce per sbaglio dall'energia corrotta di Ampere, e cresce con le scelte del
+giocatore.** Le due cose non si escludono: la scintilla è Ampere, il cibo sono i
+potenziamenti raccolti nella prima campagna. Più il giocatore è diventato
+potente, più forte è diventato lui — e questo va detto esplicitamente al momento
+della rivelazione, perché è la cosa che fa male.
+
+Pensa, parla e capisce cosa sta succedendo. Osserva la partita del giocatore,
+**copia i suoi potenziamenti** e li usa contro di lui, cambiando aspetto in base
+al potere rubato. Non aspetta fermo alla fine del settore: compare sullo sfondo,
+attraversa il percorso, distrugge piattaforme, corre ai frammenti prima di te e
+sparisce dentro portali instabili. Combatte poco e poi fugge, portandosi via
+Ampere.
 
 **Non vuole conquistare Lumina. Sta cercando di non scomparire.** Se la Corrente
 Verde viene versata nella Caldera, la sovratensione si scarica e lui perde il
@@ -241,9 +273,13 @@ afferra uno dei due e lo trascina dentro. Ultima immagine: il Custode rapito
 dietro sbarre viola, e in mano all'altro un frammento giallo che si accende.
 
 **Il viaggio.** Venti settori inseguendo il Divoratore, seguendo i frammenti che
-il Custode rapito lascia come traccia. Un **Comandante** ogni cinque settori (5,
-10, 15) e il Divoratore al ventesimo. Dopo ogni Comandante il gioco salva un
-punto di ripresa.
+il Custode rapito lascia come traccia. **Tre Comandanti** — ai settori 5, 10 e
+15 — e il Divoratore al ventesimo. Dopo ogni Comandante il gioco salva un punto
+di ripresa.
+
+> **Attenzione al numero:** i Comandanti sono **tre**, non quattro. Il quarto
+> scontro è il Divoratore, che è un'altra cosa. Nomi e storie dei tre sono
+> ancora **[APERTO]**.
 
 **Finale (filmato).** La cella si spegne, il Custode liberato cade in avanti e
 viene preso al volo dall'altro. Si abbracciano. Dietro di loro la frattura si
@@ -264,6 +300,10 @@ Il secondo è: **controlla tutti e due, riprenditi Ampere, riempila.**
 Il secondo atto ha **tre fasi**, e sono tre condizioni diverse per il giocatore.
 Questa è la spina dorsale dell'atto: se una scena non sta in una di queste tre
 fasi, è fuori posto.
+
+> **Vincolo.** Il cambio fra Aren e Lyra parte dal settore 21 ed è conseguenza
+> del **ricongiungimento**, non di Ampere. Sono di nuovo insieme: per questo
+> possono combattere come una cosa sola.
 
 #### Fase 1 · L'INSEGUIMENTO — settori 21-30
 **Ampere non è con voi. Ce l'ha ECHO-0, e per questo scappa.**
@@ -346,6 +386,19 @@ piano, con un filo di luce, solo quando la Frattura è chiusa.
 Nel primo atto salviamo chi amiamo. Nel secondo scopriamo se siamo capaci di
 salvare anche il nostro nemico.
 
+### L'arco emotivo, in cinque righe **[SCRITTO]**
+
+Serve a controllare che ogni scena stia facendo il suo mestiere. Se una scena
+non sposta nessuna di queste cinque cose, probabilmente non serve.
+
+| Momento | Tema | Cosa cambia |
+|---|---|---|
+| Inizio | Separazione | Uno diventa eroe, l'altro viene portato via |
+| Settore 20 | Ricongiungimento | L'amore chiude la missione personale, non la crisi |
+| Oltre la Frattura | Parità | Non più uno che salva l'altro: due che combattono insieme |
+| La Caldera | Compassione | Estendono al nemico la salvezza che cercavano per sé |
+| Epilogo | Equilibrio | Tensione e corrente, individuo e coppia, due mondi |
+
 ### ATTO III **[APERTO]**
 ECHO-0, diventato piccolo e innocuo, potrebbe essere giocabile, conservando la
 capacità di copiare temporaneamente i poteri. Niente di più è deciso.
@@ -427,7 +480,10 @@ Formula che ha funzionato:
 L'ordine è questo e non si cambia:
 
 1. **Il gioco è il prodotto principale.** Tutto il resto viene dopo.
-2. **Instagram è il fumetto a episodi** che costruisce il pubblico.
+2. **Instagram è il fumetto a episodi** che costruisce il pubblico. Chi segue non
+   è «il pubblico»: sono gli **Operatori di Lumina**, e ricevono trasmissioni
+   numerate, dossier e indizi. Dare un nome a chi guarda è il modo più economico
+   per trasformarlo in qualcuno che partecipa.
 3. **Questo file è la Bibbia privata** da cui si ricavano dialoghi, scene e post.
 4. **Il cartone animato nasce solo dopo**, e solo se il pubblico si affeziona ad
    Aren, Lyra ed ECHO-0.
@@ -440,7 +496,7 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
 
 ---
 
-## 10. Cos'è vero oggi nel gioco (versione 29)
+## 10. Cos'è vero oggi nel gioco (versione 30)
 
 - Campagna di **20 settori**, Comandanti a 5-10-15, il Divoratore al 20, punti
   di ripresa dopo ogni Comandante.
@@ -479,26 +535,118 @@ Ampere c'è: è una partita, non un capitolo.
 **Regola che ne discende:** la modalità infinita **sta fuori dal canone**. Quello
 che succede lì non è mai successo alla storia.
 
+### Leggi proposte ma non programmate **[APERTO]**
+Girano nei documenti tre leggi che **non esistono nel gioco** e che sono le più
+care da costruire: **gravità invertita** (ribaltare il mondo vuol dire rifare
+fisica, collisioni, camera e disegno di ogni cosa), **pavimenti rotanti** e
+**tempo diverso per i due Custodi**. Sono idee buone, ma finché non sono
+programmate **non si raccontano come esistenti**: la bassa gravità che c'è già
+dà la stessa sensazione a una frazione del costo.
+
 ---
 
 ## 11. Le domande ancora aperte **[APERTO]**
 
-1. **Chi erano gli antichi Custodi** che costruirono Ampere? Servono davvero, o
+### Le due che bloccano il resto
+1. **Ampere si riprende al settore 25 o al 30?** Al 25 la si trova dietro
+   ECHO-1 e restano quindici settori per riempirla. Al 30 l'inseguimento al buio
+   dura di più e la lanterna arriva a metà atto, quando pesa di più.
+2. **Alla fine Ampere si versa o si getta?** Se si versa, la lanterna resta,
+   svuotata, e si riaccende quando la Frattura è chiusa. Se si getta, muore per
+   chiudere la ferita: più straziante, ma il finale ha già un atto di pietà —
+   quello per ECHO-0 — e due sacrifici nella stessa scena si tolgono forza a
+   vicenda.
+
+### Le altre
+3. **Come si chiama la modalità infinita?** Proposta: *Circuito Aperto*, così
+   «Oltre la Frattura» torna a essere il nome dell'atto II (vedi capitolo 10).
+4. **Chi erano gli antichi Custodi** che costruirono Ampere? Servono davvero, o
    restano un'eco?
-2. **Perché proprio Aren e Lyra** vegliavano sul Nucleo? Sono stati scelti,
+5. **Perché proprio Aren e Lyra** vegliavano sul Nucleo? Sono stati scelti,
    nati così, o si sono trovati lì?
-3. **ECHO-2 ed ECHO-3** esistono o bastano ECHO-0 e ECHO-1?
-4. **Il capitolo zero su Instagram**: cosa si racconta prima dell'inizio del
+6. **Nomi e storie dei tre Comandanti** della prima campagna.
+7. **ECHO-2 ed ECHO-3** esistono o bastano ECHO-0 e ECHO-1?
+8. **Che forma e che carattere ha** la creaturina che resta di ECHO-0?
+9. **Il capitolo zero su Instagram**: cosa si racconta prima dell'inizio del
    gioco?
 
 ---
 
-## 12. Come si aggiorna questo file
+## 12. Come si aggiorna questa Bibbia
 
-Quando si decide qualcosa di nuovo, si scrive **qui**, con la sua etichetta, e
-si aggiorna la data in cima. Quando una cosa **[SCRITTO]** entra nel gioco,
-diventa **[GIOCO]**. Quando una domanda aperta trova risposta, la risposta sale
-nel capitolo che le compete e la domanda sparisce dal capitolo 11.
+### I due file
+La Bibbia vive in **due formati allineati**:
 
-Il file sta dentro la cartella del gioco e viaggia con il codice: se cambia il
-gioco, si cambia il file nello stesso momento.
+- **`STORIA.md`** — la fonte. È qui che si scrive, ed è questo che si dà da
+  leggere alle intelligenze artificiali.
+- **`VOLT_Bibbia.docx`** — la stampa, per chi legge da persona.
+
+**Il Word non si modifica mai a mano.** Si scrive nell'`.md` e si rilancia:
+
+```
+python strumenti/bibbia_docx.py
+```
+
+Il documento si rigenera identico, con copertina, titoli e tabelle. Così i due
+file non possono litigare: uno è la fonte, l'altro è la sua fotografia.
+
+### Le tre prove
+Un'idea nuova entra nella Bibbia solo se supera tre controlli:
+
+1. **non contraddice il canone** (e se lo contraddice, si dice quale riga cambia);
+2. **migliora il gioco o l'emozione** — non solo la mitologia;
+3. **si può raccontare con chiarezza in tutti i media**: in un livello, in un
+   post, in un disegno.
+
+### La manutenzione
+Quando si decide qualcosa, si scrive **qui**, con la sua etichetta, e si
+aggiorna la data in cima. Quando una cosa **[SCRITTO]** entra nel gioco diventa
+**[GIOCO]**. Quando una domanda aperta trova risposta, la risposta sale nel
+capitolo che le compete e la domanda sparisce dal capitolo 11.
+
+Tutto sta dentro la cartella del gioco e viaggia con il codice: se cambia il
+gioco, si cambiano i file nello stesso momento.
+
+---
+
+## 13. Sinossi lunga
+
+Da usare quando serve raccontare tutto in una volta: una presentazione, un
+post lungo, una descrizione del gioco.
+
+Lumina vive di energia, ma la sua luce nasconde una tensione che cresce. Quando
+il Nucleo non riesce più a contenerla il cielo si spezza, e una Frattura collega
+il mondo a **Eclissia**, l'altro capo del circuito. Dalla ferita emerge il
+Divoratore. Aren e Lyra, i due Custodi, cercano di fermarlo — ma il Nucleo può
+legarsi a uno solo di loro. Il giocatore sceglie chi diventerà **VOLT**;
+l'altro viene rapito e rinchiuso oltre la Frattura.
+
+Il Custode scelto attraversa venti settori, abbatte tre Comandanti, impara il
+Rush e la navicella e costruisce una combinazione di poteri tutta sua. Dalla
+cella, la persona amata non sta a guardare: manda segnali, lascia frammenti,
+prepara la propria liberazione. Al ventesimo settore il Divoratore cade, la
+cella si spezza, i due si riabbracciano. **Ma la Frattura resta aperta.**
+
+Dal portale esce **ECHO-0**: una coscienza nata per sbaglio dall'energia
+corrotta di Ampere e cresciuta con ogni potere che il giocatore ha scelto.
+Conosce i loro movimenti perché li ha guardati per venti settori, copia le loro
+armi, e ha in mano **Ampere**. Non vuole conquistare niente: sa che se quella
+lanterna torna a funzionare, lui smette di esistere. Aren e Lyra attraversano la
+Frattura **insieme**, e da quel momento il giocatore li alterna: la forza di
+Aren e la velocità di Lyra diventano due parti dello stesso circuito.
+
+In Eclissia le leggi del mondo cambiano di continuo. I due inseguono ECHO-0 al
+buio, incontrano **ECHO-1** — il Condensatore, che la corrente la trattiene per
+sé — e riprendono Ampere: spenta, vuota. Da lì la lanterna torna ad accendersi
+un frammento alla volta, e più si carica più lontano si vede. Ma adesso è
+ECHO-0 a dare la caccia a loro.
+
+Alla fine c'è la **Caldera Voltaica**, il vulcano dove la differenza di
+potenziale fra i mondi tocca il massimo. Lyra apre il condotto, Aren spezza i
+sigilli, la Corrente Verde si riversa nel cratere e l'eruzione non esplode: si
+divide in migliaia di filamenti che **cuciono il cielo** lungo i bordi della
+Frattura. ECHO-0 sta per sparire insieme al mondo che lo ha creato — e i due
+Custodi scelgono di non lasciarlo andare.
+
+La Frattura non si chiude con la distruzione. Si chiude con l'equilibrio: la
+tensione ha finalmente trovato qualcosa in cui scorrere.
