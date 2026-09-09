@@ -147,6 +147,13 @@ insegnare al giocatore cosa fare, senza scritte.
 
 A carica piena può richiudere la Frattura — ma solo versandola nella Caldera.
 
+**L'arco di Ampere nel secondo atto**, e va rispettato: prima è **perduta**
+(ce l'ha ECHO-0, e per questo lui scappa), poi è **riconquistata** (spenta,
+vuota), poi va **riempita**, e alla fine si **versa**. Non è un accessorio che
+il giocatore riceve all'inizio: è la cosa che manca, poi la cosa che si è
+ripresa, poi la cosa da proteggere. Se la lanterna è lì dal primo momento e si
+carica da sola, tutto l'atto II perde il motivo per cui esiste.
+
 ---
 
 ## 4. I nemici
@@ -198,13 +205,16 @@ cristallo cambia colore e diventa instabile → si passa a **Lyra** → il guant
 ne estrae la carica → la carica va ad Ampere. Tre volte, un cristallo alla
 volta.
 
-Compare al settore 25, chiamato da ECHO-0:
+Compare al **settore 30**, e non è un servo di ECHO-0: **ha strappato Ampere
+proprio a lui** e se l'è messa nel petto insieme ai tre cristalli. Un
+condensatore non lascia uscire la corrente, nemmeno per chi l'ha creato.
+
 > «SE VOLETE LA CORRENTE… DOVRETE RIPRENDERSELA.»
 
-Dopo la sconfitta i tre cristalli liberano la prima grande quantità di Corrente
-Verde, **Ampere si accende per la prima volta**, ed ECHO-0 capisce che i due
-Custodi possono davvero chiudere la Frattura. Da quel momento smette di giocare
-con loro.
+Battendolo, i tre cristalli liberano la prima grande quantità di Corrente Verde
+e i due Custodi **riprendono Ampere: spenta, vuota, ma loro**. Da quel momento
+ECHO-0 capisce che possono davvero chiudere la Frattura, smette di giocare con
+loro e comincia a dare la caccia alla lanterna.
 
 #### ECHO-2 — Il Gemello **[APERTO]**
 Idea: duplica Aren e Lyra e li costringe a combattere contro sé stessi.
@@ -245,45 +255,89 @@ richiude e la luce torna su Lumina.
 ### ATTO II — «Trova Ampere» · settori 21-40 **[SCRITTO]**
 
 I due si abbracciano, ma la Frattura **non** si chiude. Dall'altra parte compare
-ECHO-0, che ha guardato tutto e ha imparato tutto. Aren e Lyra la attraversano
-**insieme**.
+ECHO-0, che ha guardato tutto e ha imparato tutto — e che ha in mano **Ampere**.
+Aren e Lyra attraversano la Frattura **insieme**, ed entrano in Eclissia.
 
 Il primo atto era: *scegli un Custode e salva l'altro.*
-Il secondo è: **controlla tutti e due e insegui ECHO-0.**
+Il secondo è: **controlla tutti e due, riprenditi Ampere, riempila.**
 
-**Struttura:**
+Il secondo atto ha **tre fasi**, e sono tre condizioni diverse per il giocatore.
+Questa è la spina dorsale dell'atto: se una scena non sta in una di queste tre
+fasi, è fuori posto.
 
-| Settori | Cosa succede |
+#### Fase 1 · L'INSEGUIMENTO — settori 21-30
+**Ampere non è con voi. Ce l'ha ECHO-0, e per questo scappa.**
+Non scappa per paura di perdere uno scontro: scappa perché se i Custodi
+riprendono la lanterna, lui finisce.
+
+In questa fase **non c'è lanterna, non c'è luce, non si raccoglie Corrente
+Verde**. Eclissia è buia e ostile e bisogna attraversarla al buio. Si impara a
+combattere in due, si insegue, e ogni volta che lo si raggiunge lui combatte
+poco e sparisce in un portale.
+
+| Settore | Cosa succede |
 |---|---|
-| 21-24 | Aren e Lyra imparano a combattere insieme |
-| **25** | ECHO-0 li attira in una camera e chiama **ECHO-1**. Ampere si accende per la prima volta |
-| 26-29 | Il mondo si ribalta, primi frammenti verdi |
-| **30** | ECHO-0 ruba uno dei poteri preferiti dal giocatore |
-| 31-34 | Labirinti che si passano solo alternando i due Custodi |
+| 21-24 | Aren e Lyra imparano a combattere insieme. Eclissia è buia |
+| **25** | Primo scontro con ECHO-0. Quando sta per cadere, fugge con Ampere |
+| 26-29 | L'inseguimento attraverso Eclissia, il mondo si ribalta |
+| **30** | **ECHO-1**. Ha strappato Ampere a ECHO-0 e se l'è messa nel petto insieme ai tre cristalli: un condensatore non lascia scappare la corrente, nemmeno al suo padrone. Battendolo, i due riprendono la lanterna — **spenta, vuota** |
+
+#### Fase 2 · LA CORRENTE — settori 31-37
+**Ampere è vostra, ma è al minimo.**
+Da qui in poi galleggia dietro le spalle, **illumina Eclissia** e va riempita:
+ogni settore è Corrente Verde da recuperare. Più si carica, più luce fa — e più
+lontano si vede.
+
+ECHO-0 non fugge più: adesso torna, ruba i poteri del giocatore, li usa contro
+di lui e tenta di **riprendersi la lanterna**. Non è più lui a scappare: siete
+voi a dover proteggere qualcosa.
+
+| Settore | Cosa succede |
+|---|---|
+| 31-34 | Labirinti che si passano solo alternando i due Custodi, mentre si raccoglie corrente |
 | **35** | ECHO-0 crea due copie con abilità diverse |
-| 36-39 | Inseguimento mentre la Frattura collassa |
-| **40** | La Caldera. Lo scontro, la verità, la scelta |
+| 36-37 | Ultime cariche. La Frattura comincia a collassare |
 
-**Il ciclo del secondo atto** si ripete ogni cinque settori: *caccia* (ECHO-0
-compare e ruba un potere) → *inseguimento* (attraverso portali instabili) →
-*ricarica* (tre frammenti verdi per Ampere) → *scontro* (usa contro di te il
-potere rubato) → *fuga* (scappa con Ampere verso un nuovo settore).
+#### Fase 3 · LA SALITA — settori 38-40
+**Ampere è piena. Sotto di voi c'è la Caldera Voltaica.**
+Non si insegue più nessuno: si **sale**. Tre settori in verticale lungo il
+fianco del vulcano, con la roccia magnetica che tira, le piattaforme che
+precipitano e ECHO-0 che vi aspetta più in alto, perché sa benissimo dove state
+andando e cosa succede quando arrivate.
 
-**La battaglia finale** avviene sul bordo della Caldera: Aren rompe i quattro
-sigilli del vulcano, Lyra protegge Ampere e ne tiene stabile la carica, il
-giocatore alterna i due mentre ECHO-0 copia i loro poteri, la gravità cambia e
-le piattaforme precipitano nel cratere.
+| Settore | Cosa succede |
+|---|---|
+| 38-39 | La scalata. Verticale, non più orizzontale |
+| **40** | La cima. Lo scontro, la verità, la scelta |
+
+**La battaglia finale** avviene sul bordo del cratere: Aren rompe i quattro
+sigilli, Lyra protegge Ampere e ne tiene stabile la carica, il giocatore alterna
+i due mentre ECHO-0 copia i loro poteri, la gravità cambia e le piattaforme
+precipitano dentro.
 
 > **Regola di progettazione, non narrativa:** al massimo **due richieste per
 > volta** al giocatore. Sei cose insieme su due pollici non sono difficili, sono
 > illeggibili. Lo scontro si divide in fasi.
 
-**Il finale.** Aren e Lyra non usano tutta l'energia per sigillare la Frattura:
-**ne tengono da parte un poco per salvare la coscienza di ECHO-0.** La Caldera
-erutta, una colonna verde sale e si divide in migliaia di filamenti che cuciono
-il cielo viola. Il corpo mostruoso si disgrega e dal nucleo nasce una piccola
-creatura energetica con **due occhi, uno ciano e uno rosa**. Se la portano a
-Lumina.
+**Il finale.** Lyra apre il condotto centrale col guanto, Aren spezza i sigilli,
+e la Corrente Verde di Ampere viene versata nella Caldera. Il vulcano entra in
+risonanza: una colonna verde sale, si divide in migliaia di filamenti e **cuce
+il cielo viola** lungo i due bordi della Frattura.
+
+Ma i due non versano tutto: **ne tengono da parte un poco per salvare la
+coscienza di ECHO-0.** Il corpo mostruoso si disgrega e dal nucleo nasce una
+piccola creatura energetica con **due occhi, uno ciano e uno rosa**. Se la
+portano a Lumina.
+
+Ampere resta spenta, vuota, in mano a chi l'ha portata fin lassù. Si riaccende
+piano, con un filo di luce, solo quando la Frattura è chiusa.
+
+> **[APERTO] — Ampere si versa o si getta?** Qui è scritta la versione in cui
+> **si versa e la lanterna resta**: la si è portata su, svuotata, e alla fine
+> torna ad accendersi. L'alternativa è gettarla nel cratere, e allora Ampere
+> muore per chiudere la Frattura. È più straziante, ma il finale ha già un atto
+> di pietà — quello per ECHO-0 — e due sacrifici nella stessa scena si tolgono
+> forza a vicenda. Decisione del Capo.
 
 > VOLT HA APERTO LA FRATTURA.
 > AMPERE HA PERMESSO ALL'ENERGIA DI SCORRERE.
@@ -407,6 +461,23 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
 
 **Manca tutto l'atto II:** ECHO-0, ECHO-1, la Caldera, i settori 21-40, il furto
 dei poteri, i filmati nuovi.
+
+### Una contraddizione da sciogliere **[APERTO]**
+Nel gioco di oggi la modalità infinita si chiama **Oltre la Frattura**, e lì
+Ampere è con te **dal primo settore**. Nel racconto, invece, all'inizio
+dell'atto II Ampere ce l'ha ECHO-0. Le due cose non possono stare insieme sotto
+lo stesso nome.
+
+La soluzione proposta: **il nome «Oltre la Frattura» torna al racconto**
+(l'atto II, i settori 21-40, dove la lanterna si perde e si riconquista), e la
+modalità infinita — che è un arcade a punteggio, non una storia — prende un nome
+suo. Il migliore che abbiamo trovato è **CIRCUITO APERTO**: un circuito che non
+si chiude mai è esattamente un posto dove la corrente non arriva da nessuna
+parte, e infatti non finisce. Lì le leggi del mondo cambiano ogni tre settori e
+Ampere c'è: è una partita, non un capitolo.
+
+**Regola che ne discende:** la modalità infinita **sta fuori dal canone**. Quello
+che succede lì non è mai successo alla storia.
 
 ---
 
