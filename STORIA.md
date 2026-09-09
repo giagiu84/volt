@@ -433,9 +433,31 @@ porta via Ampere. Si arrende — non perché l'hai battuto: perché l'hanno deru
 anche a lui. Si rialza e **vi mostra il passaggio per Eclissia**.
 
 Sa perfettamente dove porta quella strada. Sa che se Ampere torna a funzionare
-lui muore. **Ve la indica lo stesso.** Da quel momento non è più il nemico: è
-uno che si è già arreso a morire per voi, e alla fine sarete voi a non
-lasciarlo andare.
+lui muore. **Ve la indica lo stesso.**
+
+#### Il compagno scomodo (settori 36-56) **[SCRITTO]**
+Da lì in poi **non sparisce: viene con voi.** Non come alleato — la lanterna la
+rivuole anche lui, per il motivo opposto al vostro. Cammina avanti, apre
+passaggi, avvisa quando c'è un pericolo, ogni tanto si dilegua e non si sa se
+tornerà.
+
+Per venti settori il giocatore ha in testa una domanda sola: **quando mi
+tradisce?**
+
+**Come si gioca.** Non combatte e non si comanda. Compare sullo sfondo — una
+sagoma nera su un'isola lontana, sul bordo di un dirupo, dentro un varco — e
+ogni tanto indica una direzione. Costa poco e cambia tutto: il settore non è
+più vuoto, c'è qualcuno.
+
+#### La scelta (settore 56) **[SCRITTO]**
+Quando ECHO-1 cade e **Ampere torna piena**, ECHO-0 è lì. Potrebbe prenderla e
+sparire: è l'unica cosa che ha voluto dall'inizio, ed è a un passo.
+
+**Non lo fa.**
+
+È qui che sceglie — non al finale. Al settore 65 i due Custodi non fanno altro
+che ricambiare. Senza questo momento, salvarlo alla fine sarebbe un regalo;
+con questo momento, è un debito.
 
 #### ECHO-1 — Il Condensatore **[SCRITTO]**
 **Cos'è.** Un colosso oscuro e pesante, apparentemente senza volto. Non è un
@@ -757,6 +779,11 @@ Dietro di lui resta una scia di Corrente Verde nel buio: è la mappa e il bottin
 insieme. La segui, la raccogli, e ogni goccia è un pezzo di luce che torna a
 Lumina.
 
+**E non si va da soli.** ECHO-0 viene con voi — non al vostro fianco, davanti a
+voi: apre passaggi, avvisa, sparisce e ricompare. Non si sa mai se sta portando
+i Custodi dove serve o dove conviene a lui. È la tensione che regge questi venti
+settori (vedi *Il compagno scomodo*, capitolo 4).
+
 Ampere non ce l'hai. La corrente **te la tieni addosso** (vedi capitolo 2), con
 la barra verde in alto che si riempie e ogni tanto scarica da sola.
 
@@ -771,6 +798,9 @@ volta: tre morse che si aprono.
 
 Quando cade, **la lanterna torna a voi** — e tutta la corrente che ti sei
 portato addosso per venti settori le entra dentro in un colpo solo.
+
+**E ECHO-0 è lì, a un passo, e non la prende.** È il momento in cui sceglie:
+tutto quello che succede al settore 65 nasce da qui.
 
 #### Fase 5 · LA SALITA — settori 57-65
 Al centro di Eclissia c'è la **Caldera Voltaica**. Si sale.
@@ -844,7 +874,8 @@ non sposta nessuna di queste cinque cose, probabilmente non serve.
 | Inizio | Separazione | Uno diventa eroe, l'altro viene portato via |
 | Settore 20 | Ricongiungimento | L'amore chiude la missione personale, non la crisi |
 | Dentro la Frattura | Parità | Non più uno che salva l'altro: due che combattono insieme |
-| Eclissia | Fatica | Portarsi addosso una cosa che non si può contenere |
+| Eclissia | Fatica e sospetto | Portarsi addosso una cosa che non si può contenere, con accanto uno di cui non ti fidi |
+| Settore 56 | La scelta di lui | Potrebbe prendersi la lanterna e non lo fa |
 | La Caldera | Compassione | Estendono al nemico la salvezza che cercavano per sé |
 
 ### ATTO III **[APERTO]**

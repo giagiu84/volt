@@ -67,10 +67,15 @@ blu, mai fuoco arancione.
 Sono elencate come si incontrano giocando, dal settore 21 al 65. Accanto a
 ognuna c'è se è **essenziale** (senza, la storia ha un buco) o desiderabile.
 
-Se si deve cominciare da qualcosa, i quattro essenziali sono `il_tradimento`,
-`il_passaggio`, `la_cima` e `il_finale` — e conviene farli a coppie, perché
-`il_tradimento`+`il_passaggio` sono una scena sola divisa in due, e così
-`la_cima`+`il_finale`.
+Se si deve cominciare da qualcosa, i cinque essenziali sono `il_tradimento`,
+`il_passaggio`, `il_reattore`, `la_cima` e `il_finale` — e conviene farli a
+coppie, perché `il_tradimento`+`il_passaggio` sono una scena sola divisa in
+due, e così `la_cima`+`il_finale`.
+
+**Una cosa da sapere prima di produrli:** ECHO-0 non sparisce dopo il settore
+35. Dal 36 al 56 **cammina con Aren e Lyra** — non come alleato, come uno che
+rivuole la lanterna per il motivo opposto. Nei filmati di quel tratto può
+comparire sullo sfondo, davanti a loro, mai al loro fianco.
 
 ---
 
@@ -142,13 +147,20 @@ I due sono piccoli in basso nell'inquadratura.
 
 ---
 
-## 7 · `il_reattore` — settore 56 · desiderabile
+## 7 · `il_reattore` — settore 56 · **ESSENZIALE**
 **Dove:** settore 56, alla caduta di ECHO-1.
-**Cosa:** i **tre cristalli gialli** si spengono uno dopo l'altro; le morse si
-aprono; **Ampere esce** dal petto del colosso che si accascia. La lanterna
-fluttua verso i due e **si riempie di colpo** di tutta la corrente che si erano
-portati addosso: si accende come non l'abbiamo mai vista.
-**Frase a schermo:** nessuna.
+**Cosa deve mostrare, in tre battute:**
+1. I **tre cristalli gialli** si spengono uno dopo l'altro, le morse si aprono
+   e **Ampere esce** dal petto del colosso che si accascia. La lanterna fluttua
+   verso i due e **si riempie di colpo** di tutta la corrente che si erano
+   portati addosso: si accende come non l'abbiamo mai vista.
+2. **ECHO-0 è lì, a un passo dalla lanterna.** Allunga la mano. È l'unica cosa
+   che ha voluto dall'inizio, e nessuno potrebbe fermarlo.
+3. **Ritira la mano.** Guarda i due, si volta e si incammina verso il vulcano.
+
+**Perché conta:** è qui che ECHO-0 sceglie, non nel finale. Senza questa
+battuta, salvarlo alla fine è un regalo; con questa battuta, è un debito.
+**Frase a schermo:** nessuna. La mano che si ritira dice tutto.
 
 ---
 
