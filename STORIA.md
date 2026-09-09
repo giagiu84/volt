@@ -435,14 +435,18 @@ anche a lui. Si rialza e **vi mostra il passaggio per Eclissia**.
 Sa perfettamente dove porta quella strada. Sa che se Ampere torna a funzionare
 lui muore. **Ve la indica lo stesso.**
 
-#### Il compagno scomodo (settori 36-56) **[SCRITTO]**
-Da lì in poi **non sparisce: viene con voi.** Non come alleato — la lanterna la
-rivuole anche lui, per il motivo opposto al vostro. Cammina avanti, apre
-passaggi, avvisa quando c'è un pericolo, ogni tanto si dilegua e non si sa se
-tornerà.
+#### Il compagno scomodo (settori 36-55) **[SCRITTO]**
+Da lì in poi **non sparisce: viene con voi.** Ma a una distanza inquietante, e
+va tenuta:
 
-Per venti settori il giocatore ha in testa una domanda sola: **quando mi
-tradisce?**
+- **non diventa un alleato**, e nessuno lo tratta come tale;
+- **non combatte al vostro fianco**, mai;
+- **conosce Eclissia**: indica passaggi e segnala pericoli;
+- **compare davanti a voi o sullo sfondo, poi sparisce**;
+- **Aren e Lyra non sanno se fidarsi**, e non lo nascondono;
+- il giocatore continua ad aspettarsi un tradimento.
+
+Per venti settori la domanda in testa è una sola: **quando mi tradisce?**
 
 **Come si gioca.** Non combatte e non si comanda. Compare sullo sfondo — una
 sagoma nera su un'isola lontana, sul bordo di un dirupo, dentro un varco — e
@@ -453,11 +457,34 @@ più vuoto, c'è qualcuno.
 Quando ECHO-1 cade e **Ampere torna piena**, ECHO-0 è lì. Potrebbe prenderla e
 sparire: è l'unica cosa che ha voluto dall'inizio, ed è a un passo.
 
-**Non lo fa.**
+**Non lo fa.** Resta immobile, e rinuncia.
 
 È qui che sceglie — non al finale. Al settore 65 i due Custodi non fanno altro
 che ricambiare. Senza questo momento, salvarlo alla fine sarebbe un regalo;
 con questo momento, è un debito.
+
+Questa scena ha un filmato suo: **`la_scelta_di_echo`**.
+
+#### Dopo la scelta (settori 57-65) **[SCRITTO]**
+Li accompagna su per la Caldera. Non serve più chiedersi da che parte sta: la
+decisione l'ha presa al 56, e adesso sale con loro sapendo dove porta quella
+salita. Non parla molto. Parla una volta sola, in cima, per dire cos'è OHM.
+
+#### L'arco di ECHO-0 in dieci passi
+Questa è la sua storia, ed è la traccia da rispettare in ogni media.
+
+| # | Dove | Cosa succede |
+|---|---|---|
+| 1 | Settore 24 | Appare come nemico e copia il giocatore |
+| 2 | Settori 24-30 | Fugge e viene inseguito |
+| 3 | Settore 30 | Perde Ampere |
+| 4 | Settori 31-35 | Insegue i Custodi per riprendersela |
+| 5 | Settore 35 | ECHO-1 gli ruba Ampere; lui si arrende e apre Eclissia |
+| 6 | Settori 36-55 | Li guida a distanza, senza conquistarne la fiducia |
+| 7 | **Settore 56** | **Potrebbe riprendersi Ampere e sceglie di non farlo** |
+| 8 | Settori 57-65 | Li accompagna alla Caldera: la decisione è presa |
+| 9 | Settore 65 | La sua scintilla entra **visibilmente** dentro Ampere; il corpo si disgrega |
+| 10 | Finale | **ECLIO esce dalla lanterna**: è ECHO-0 liberato dall'energia corrotta, non una creatura nuova comparsa dal nulla |
 
 #### ECHO-1 — Il Condensatore **[SCRITTO]**
 **Cos'è.** Un colosso oscuro e pesante, apparentemente senza volto. Non è un
@@ -1255,17 +1282,23 @@ gioca**.
 **Da fare**, in ordine di importanza. I primi quattro sono **essenziali**: senza
 di loro la storia non si capisce. Gli altri fanno bella figura.
 
-| # | File | Quando | Cosa deve mostrare | Priorità |
+| # | File | Settore | Cosa deve mostrare | Priorità |
 |---|---|---|---|---|
-| 1 | `il_tradimento` | settore 35 | ECHO-0 sta per cadere; dal buio arriva ECHO-1, gli strappa Ampere e sparisce. ECHO-0 resta in ginocchio | **essenziale** |
-| 2 | `il_passaggio` | subito dopo | ECHO-0 si rialza e apre una fenditura nel fondo del viola: si intravede Eclissia | **essenziale** |
-| 3 | `il_finale` | settore 65 | L'eruzione verde che si divide in filamenti e cuce il cielo; un filo di corrente devia nel nucleo di ECHO-0; la creatura che resta; il ritorno a Lumina | **essenziale** |
-| 4 | `dentro_la_frattura` | settore 21 | I due entrano insieme; il mondo è fatto di pezzi di casa loro | desiderabile |
-| 5 | `primo_incontro` | settore 24 | ECHO-0 appare e parla per la prima volta | desiderabile |
-| 6 | `ampere_torna` | settore 30 | Gliela strappano di mano; la lanterna si accende fra i due | desiderabile |
-| 7 | `eclissia` | settore 36 | La prima immagine del mondo nuovo, con il vulcano all'orizzonte | desiderabile |
-| 8 | `il_reattore` | settore 56 | ECHO-1 cade, le tre morse si aprono, Ampere esce e si riempie di colpo | desiderabile |
-| 9 | `la_cima` | settore 65, prima dello scontro | OHM appare sopra il cratere; il segno Ω si accende | desiderabile |
+| 1 | `dentro_la_frattura` | 21 | I due entrano insieme; il mondo è fatto di pezzi di casa loro | desiderabile |
+| 2 | `primo_incontro` | 24 | ECHO-0 si compone dalle schegge e parla per la prima volta | desiderabile |
+| 3 | `ampere_torna` | 30 | Gliela strappano di mano; la lanterna si accende fra i due | desiderabile |
+| 4 | `il_tradimento` | 35 | ECHO-0 è in ginocchio con Ampere al petto; ECHO-1 gliela strappa e sparisce | **essenziale** |
+| 5 | `il_passaggio` | 35 | Si rialza e apre la fenditura su Eclissia: «È DI LÀ» | **essenziale** |
+| 6 | `eclissia` | 36 | La prima immagine del mondo nuovo, con la Caldera all'orizzonte | desiderabile |
+| 7 | `il_reattore` | 56 | I tre cristalli si spengono, Ampere esce e si riempie di colpo | **essenziale** |
+| 8 | `la_scelta_di_echo` | 56 | ECHO-0 allunga la mano verso la lanterna e la ritira | **essenziale** |
+| 9 | `la_cima` | 65 | OHM si condensa sopra il cratere; il segno Ω si accende | **essenziale** |
+| 10 | `il_finale` | 65 | L'eruzione, il cielo che si cuce, la scintilla che entra in Ampere, Eclio | **essenziale** |
+
+I sei essenziali vanno prodotti **a coppie**, perché sono tre scene divise in
+due ciascuna: `il_tradimento`+`il_passaggio`, `il_reattore`+`la_scelta_di_echo`,
+`la_cima`+`il_finale`. La commessa completa, scheda per scheda, sta in
+`assets/video/DA-FARE.md`.
 
 **Dove si semina Ampere.** Nei due rapimenti la lanterna **non si vede**: sono i
 primi secondi del gioco e non devono spiegare niente. **Nell'introduzione invece

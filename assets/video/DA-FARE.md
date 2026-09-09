@@ -3,7 +3,7 @@
 Da consegnare a chi li produce. Ogni scheda è autosufficiente: dentro c'è chi
 compare, com'è fatto, cosa succede e cosa deve restare in mente allo spettatore.
 
-**Fatti finora (6):** `introduzione`, `rapimento_lyra`, `rapimento_aren`,
+**Da fare: dieci.** **Fatti finora (6):** `introduzione`, `rapimento_lyra`, `rapimento_aren`,
 `liberazione_lyra`, `liberazione_aren`, `la_luce_se_ne_va`.
 
 ---
@@ -67,10 +67,14 @@ blu, mai fuoco arancione.
 Sono elencate come si incontrano giocando, dal settore 21 al 65. Accanto a
 ognuna c'è se è **essenziale** (senza, la storia ha un buco) o desiderabile.
 
-Se si deve cominciare da qualcosa, i cinque essenziali sono `il_tradimento`,
-`il_passaggio`, `il_reattore`, `la_cima` e `il_finale` — e conviene farli a
-coppie, perché `il_tradimento`+`il_passaggio` sono una scena sola divisa in
-due, e così `la_cima`+`il_finale`.
+**I sei essenziali** sono `il_tradimento`, `il_passaggio`, `il_reattore`,
+`la_scelta_di_echo`, `la_cima` e `il_finale`. Vanno prodotti **a coppie**,
+perché sono tre scene divise in due ciascuna:
+`il_tradimento`+`il_passaggio` · `il_reattore`+`la_scelta_di_echo` ·
+`la_cima`+`il_finale`.
+
+Se se ne dovesse fare uno solo, sarebbe **`la_scelta_di_echo`**: è il perno di
+tutto l'atto II.
 
 **Una cosa da sapere prima di produrli:** ECHO-0 non sparisce dopo il settore
 35. Dal 36 al 56 **cammina con Aren e Lyra** — non come alleato, come uno che
@@ -149,22 +153,40 @@ I due sono piccoli in basso nell'inquadratura.
 
 ## 7 · `il_reattore` — settore 56 · **ESSENZIALE**
 **Dove:** settore 56, alla caduta di ECHO-1.
-**Cosa deve mostrare, in tre battute:**
-1. I **tre cristalli gialli** si spengono uno dopo l'altro, le morse si aprono
-   e **Ampere esce** dal petto del colosso che si accascia. La lanterna fluttua
-   verso i due e **si riempie di colpo** di tutta la corrente che si erano
-   portati addosso: si accende come non l'abbiamo mai vista.
-2. **ECHO-0 è lì, a un passo dalla lanterna.** Allunga la mano. È l'unica cosa
-   che ha voluto dall'inizio, e nessuno potrebbe fermarlo.
-3. **Ritira la mano.** Guarda i due, si volta e si incammina verso il vulcano.
+**Cosa deve mostrare:**
+1. I **tre cristalli gialli** si spengono uno dopo l'altro e le morse si aprono.
+2. **Ampere esce** dal petto del colosso che si accascia.
+3. La lanterna fluttua verso i due e **si riempie di colpo** di tutta la
+   corrente che si erano portati addosso per venti settori: si accende come non
+   l'abbiamo mai vista, e per un attimo illumina tutto.
 
-**Perché conta:** è qui che ECHO-0 sceglie, non nel finale. Senza questa
-battuta, salvarlo alla fine è un regalo; con questa battuta, è un debito.
-**Frase a schermo:** nessuna. La mano che si ritira dice tutto.
+**Perché conta:** è la fine di una caccia lunga venti settori.
+**Frase a schermo:** nessuna.
+**Nota:** finisce con la lanterna accesa a mezz'aria. Da lì riparte
+`la_scelta_di_echo`, che è il seguito immediato: vanno prodotti insieme.
 
 ---
 
-## 8 · `la_cima` — settore 65 · **ESSENZIALE**
+## 8 · `la_scelta_di_echo` — settore 56 · **ESSENZIALE**
+**Dove:** subito dopo `il_reattore`, senza stacco.
+**Cosa deve mostrare, in tre battute, e va girata lenta:**
+1. La lanterna è accesa a mezz'aria. **ECHO-0 è lì, a un passo.** Aren e Lyra
+   sono lontani, storditi dallo scontro: nessuno potrebbe fermarlo.
+2. **Allunga la mano verso Ampere.** È l'unica cosa che ha voluto da quando
+   esiste, ed è a venti centimetri. La luce verde gli illumina la faccia — si
+   vede l'occhio azzurro e quello rosso.
+3. **Resta immobile. Poi ritira la mano.** Guarda i due, si volta e si incammina
+   verso il vulcano, da solo.
+
+**Perché conta:** è il momento in cui ECHO-0 sceglie, ed è il perno di tutto
+l'atto II. Senza questa scena, salvarlo al settore 65 è un regalo; con questa
+scena, è un debito. **Se si deve produrre un solo filmato, è questo.**
+**Frase a schermo:** nessuna. La mano che si ritira dice tutto.
+**Registro:** silenzio, o quasi. Nessuna musica epica: qui non vince nessuno.
+
+---
+
+## 9 · `la_cima` — settore 65 · **ESSENZIALE**
 **Dove:** settore 65, arrivati in cima, prima dello scontro.
 **Cosa:** il bordo del cratere. Sopra di esso si condensa **OHM**: una massa di
 fulmini bianchi e azzurri senza faccia, enorme. Il segno **Ω** si accende dentro
@@ -174,7 +196,7 @@ OHM.» poi «E NOI SIAMO SOLTANTO LE SUE ECO.»
 
 ---
 
-## 9 · `il_finale` — settore 65 · **ESSENZIALE**
+## 10 · `il_finale` — settore 65 · **ESSENZIALE**
 **Dove:** settore 65, in cima alla Caldera, dopo la sconfitta di OHM.
 **Cosa deve mostrare, in cinque battute (questo può arrivare a 14-16 secondi:
 è il finale del gioco, qui la durata si può sforare):**

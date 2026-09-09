@@ -23,6 +23,7 @@ DA FARE (atto II) - i primi quattro sono essenziali
   ampere_torna.mp4        settore 30
   eclissia.mp4            settore 36: il mondo nuovo
   il_reattore.mp4         settore 56: ECHO-1 cade e Ampere esce
+  la_scelta_di_echo.mp4   settore 56: ECHO-0 allunga la mano e la ritira
   la_cima.mp4             settore 65: appare OHM
 
 I nomi vanno rispettati alla lettera: il gioco cerca esattamente questi.
