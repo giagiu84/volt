@@ -862,8 +862,9 @@ class Player {
 
     /* il segno sul petto */
     if (H.bolt) {
-      /* il fulmine giallo di Aren */
-      ctx.fillStyle = '#ffd166';
+      /* Il fulmine di Aren e' CIANO, non giallo: quello giallo e' di ECHO-0,
+         che glielo ha copiato cambiandogli colore. */
+      ctx.fillStyle = '#5ed6ff';
       ctx.beginPath();
       ctx.moveTo(2.5, -10); ctx.lineTo(-3.5, -2); ctx.lineTo(0, -2);
       ctx.lineTo(-2, 4); ctx.lineTo(4, -4); ctx.lineTo(0.5, -4);

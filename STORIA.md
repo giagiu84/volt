@@ -248,15 +248,28 @@ diventato VOLT» oppure «Lyra, che è diventata VOLT».
 Custode. Combatte col **blaster**. Colpi pesanti, più resistenza, un po' più
 lento. Nel gioco: 5 cuori, corsa 282, danno per secondo 8,7.
 
-Aspetto: tuta bianca e blu notte, visore azzurro, **sciarpa fucsia**, fulmine
-giallo sul petto.
+Aspetto: tuta bianca e blu notte, visore azzurro, **sciarpa fucsia**, **fulmine
+ciano sul petto**.
 Colori esatti: corpo `#f2f7ff`, dettagli `#22c8f5`, sciarpa `#ff5d8f`, tuta
 interna `#232a52`, gambe `#2b3566`.
 
 **Nel gioco** (disegnato in codice): casco bianco con la **visiera scura a
 fascia**, cresta ciano e disco tondo sull'orecchio; spalline chiare, cintura
-ciano, **fulmine giallo sul petto**, stivali chiari con l'anello ciano alla
+ciano, **fulmine ciano sul petto**, stivali chiari con l'anello ciano alla
 caviglia. La sciarpa fucsia lo segue.
+
+#### Il volto **[SCRITTO]** — si vede una volta sola
+Capelli castani mossi e spettinati dal casco, occhi castani caldi, viso giovane
+e aperto, un sorriso appena accennato, niente barba. **Non un principe: un
+ragazzo normale**, quello che è entrato in turno alla centrale e ne è uscito
+VOLT.
+
+**Si vede soltanto nell'ultima scena del gioco** (`il_bacio`, settore 65).
+Prima di allora, mai: non nel capitolo zero, non nell'introduzione, non nei
+rapimenti, non in un post, non in un disegno di scorta. Se la faccia esce
+prima, quella scena non vale più niente.
+
+Riferimento ufficiale: la tavola **IL BACIO**.
 
 ### LYRA **[GIOCO]**
 Custode. Combatte col **guanto energetico**, non col blaster. Veloce, salto più
@@ -422,7 +435,8 @@ Colpi Pesanti, Raffica Rapida, Dash Esplosivo, Triplo Salto. Se non hai nessuno
 di quelli, te lo dice: «NON HAI NIENTE CHE MI SERVA».
 
 **Come si disegna.** Corpo nero cristallino fatto di schegge fluttuanti, nastri
-viola che si muovono da soli, fulmine giallo sul petto e **braccia diverse fra
+viola che si muovono da soli, **fulmine giallo sul petto** — giallo, non ciano come quello di Aren: e' lo
+stesso simbolo, copiato e corrotto — e **braccia diverse fra
 loro** — imitano il blaster di Aren e il guanto di Lyra.
 
 > **Il verso, e non è ambiguo.** Tutto si dice **guardandolo di fronte**, dal
@@ -1141,24 +1155,13 @@ dà la stessa sensazione a una frazione del costo.
 
 ## 11. Le domande ancora aperte
 
-**Una, e va disegnata prima di girare l'ultima scena.**
+**Nessuna.** Il volto di Aren era l'ultima, ed è stata chiusa con la tavola
+**IL BACIO**: capelli castani spettinati, occhi caldi, viso giovane e normale.
+Da adesso quella è l'unica faccia possibile, e si vede una volta sola —
+nell'ultima scena.
 
-### Il volto di Aren **[APERTO]**
-Serve la tavola canonica della sua faccia senza casco. Da quel momento non si
-cambia più, e sarà l'unica faccia che potrà comparire in quella scena e in
-qualunque immagine successiva.
-
-Le indicazioni: **bello, giovane e credibile**, coerente con Lyra — **non il
-principe perfetto**, ma il tecnico umano che abbiamo seguito per tutto il
-viaggio. Stanco, spettinato dal casco, con la faccia di uno che ha appena
-finito qualcosa di enorme.
-
-Finché quella tavola non esiste, **`il_bacio` non si gira**.
-
----
-
-Per il resto ogni decisione di racconto è presa: il mondo, i personaggi, i
-nemici, i due atti, il finale, i nomi.
+Ogni decisione di racconto è presa: il mondo, i personaggi, i nemici, i due
+atti, il finale, i nomi, le facce.
 
 Restano marcate [APERTO] solo due cose, e non sono domande:
 - **l'atto III**, che non è una decisione da prendere ma un dopo da vedere;

@@ -28,7 +28,7 @@ compare, com'è fatto, cosa succede e cosa deve restare in mente allo spettatore
 ## Chi compare (aspetto ufficiale)
 
 **AREN** — armatura bianca e blu notte con innesti ciano, casco con visiera
-scura a fascia, cresta ciano, **sciarpa fucsia**, fulmine giallo sul petto,
+scura a fascia, cresta ciano, **sciarpa fucsia**, **fulmine ciano sul petto**,
 blaster giallo-arancio.
 
 **LYRA** — **niente casco**: capelli viola corti con una **ciocca gialla**, tuta
@@ -36,7 +36,9 @@ corallo e bianca, innesti ciano, guanto energetico alla mano destra. Se ha il
 casco è sbagliata.
 
 **ECHO-0** — corpo nero cristallino fatto di schegge fluttuanti, nastri viola
-che si muovono da soli, fulmine giallo sul petto e **braccia diverse fra loro**.
+che si muovono da soli, **fulmine giallo sul petto** (giallo, non ciano come
+quello di Aren: è lo stesso simbolo copiato e corrotto) e **braccia diverse fra
+loro**.
 **Il verso si dice sempre guardandolo di fronte:** occhio **rosso alla nostra
 sinistra** e **ciano alla nostra destra**, **guanto alla nostra sinistra** e
 **cannone ciano alla nostra destra**. Dietro il fulmine si intravede una piccola
@@ -264,10 +266,9 @@ meglio — è lui a scoprirsi davanti a chi lo è andato a riprendere.
 **Frase a schermo:** nessuna. Alla fine, se serve, il claim: «NON SI NASCE VOLT.
 LO SI DIVENTA.»
 
-> ⚠️ **Prima di girarla serve la tavola canonica del volto di Aren**, e da lì
-> non si cambia più. Indicazioni: bello, giovane e credibile, coerente con Lyra,
-> **non il principe perfetto** ma il tecnico umano che abbiamo seguito per tutto
-> il viaggio.
+> ✔ **Il volto di Aren è approvato**: capelli castani mossi e spettinati dal
+> casco, occhi castani caldi, viso giovane e aperto, sorriso appena accennato,
+> niente barba. Riferimento: la tavola **IL BACIO**. Da lì non si cambia più.
 >
 > ⚠️ **E la faccia di Aren non deve comparire da nessun'altra parte prima di
 > questa scena.** Non nel capitolo zero, non nell'introduzione, non nei
