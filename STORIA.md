@@ -17,7 +17,8 @@ Ogni voce porta un'etichetta:
 | **[APERTO]** | non è ancora deciso. Chi lo decide lo scrive qui |
 
 Ultimo aggiornamento: 9 settembre 2026 — gioco alla versione 30.
-Fusa con la Bibbia narrativa v1.1 scritta con l'altra IA.
+Atto II completo, dal settore 21 al 65. Fusa con la Bibbia narrativa v1.1
+scritta con l'altra IA.
 
 ---
 
@@ -65,9 +66,63 @@ post, come cartelli nei filmati. Non se ne inventano altre senza scriverle qui.
 ### Lumina **[GIOCO]**
 Il mondo dei Custodi. Al centro c'è il **Nucleo di Lumina**, la sorgente che
 tiene acceso tutto. Non è un impero né una città: è un posto luminoso e
-abitabile, e nel gioco lo si vede attraverso i suoi cinque paesaggi — **Praterìa
+abitabile, e nel gioco lo si vede attraverso i suoi cinque paesaggi — **Prateria
 Cromo, Deserto Solare, Laguna Profonda, Giardino Viola, Ghiacciaio** — che si
 alternano ogni cinque settori.
+
+Il Nucleo produce la spinta. Ma una spinta, da sola, non illumina niente: perché
+Lumina abbia luce, quell'energia deve **scorrere**. Se ne occupa la centrale, e
+dentro la centrale c'è **Ampere**.
+
+**Come si disegna:** cieli ampi e colorati, colline morbide, tutto tondeggiante e
+pulito. Lumina non è futuristica e non è medievale: è un posto dove si sta bene.
+Il pericolo, quando arriva, arriva dal cielo.
+
+### La Frattura — che cos'è **[GIOCO]** *(l'origine è [SCRITTO])*
+Lumina ed Eclissia hanno livelli energetici opposti. La differenza di potenziale
+fra i due mondi è cresciuta finché non ha lacerato lo spazio.
+
+**La Frattura è una sovratensione rimasta senza un circuito attraverso cui
+scaricarsi**: un arco elettrico che non si spegne, perché non ha dove andare.
+
+Questo è il punto più importante di tutta la storia, e va detto sempre così:
+**la Frattura non si tappa. Si chiude dandole una strada.**
+
+**Nessuno l'ha aperta.** È successa. Ma da Lumina, per tutto il tempo, si è
+creduto che fosse un attacco — e quel malinteso è il vero antefatto della
+storia: due mondi che si sono accusati a vicenda di una cosa che è capitata e
+basta.
+
+### La Frattura — il luogo **[SCRITTO]**
+Fino al settore 20 la Frattura è una ferita nel cielo da cui escono i mostri.
+Dal 21 diventa un **posto in cui si entra**, e ci si resta per quindici settori.
+
+**Cos'è.** Il tra-i-due-mondi. Non è Eclissia e non è più Lumina: è quello che
+la lacerazione ha strappato ai bordi e tiene sospeso. Pezzi di Lumina che
+galleggiano nel viola — un tratto di prateria, il tetto di una casa, una strada
+che finisce nel vuoto, un pezzo di ghiacciaio capovolto. Riconosci casa tua a
+brandelli, ed è per questo che fa impressione: non è un mondo nuovo, è il tuo,
+fatto a pezzi.
+
+**Come si gioca.** Settori 21-35. Le piattaforme sono i frammenti; sotto non
+c'è terra ma il vuoto viola. Non ci sono ancora le leggi che cambiano — quelle
+sono di Eclissia. Qui il pericolo è il vuoto e chi ci abita.
+
+**Come si disegna.** Fondale viola profondo senza orizzonte, senza sole. Isole
+di paesaggio riconoscibile che ruotano piano, con i bordi strappati e le radici
+che pendono. Lampi lontani. Nessuna architettura nuova: solo cose di Lumina
+finite dove non dovevano.
+
+### Il passaggio nascosto **[SCRITTO]**
+Eclissia non l'aveva mai vista nessuno, perché **nessuno sapeva che ci fosse un
+dall'altra parte**. Si credeva che la Frattura fosse la fine, non un tramite.
+
+Il passaggio lo conosce solo chi è nato nella ferita. **Lo mostra ECHO-0 al
+settore 35**, quando si arrende: una fenditura nel fondo del viola che si apre
+soltanto se sai dove guardare.
+
+È il momento in cui il gioco cambia mondo, e va trattato come tale: una scena,
+non una porta.
 
 ### ECLISSIA **[SCRITTO]**
 L'altro mondo. Ha un livello energetico **opposto** a quello di Lumina: è il
@@ -83,36 +138,73 @@ riequilibrio e non con una distruzione.
 Il nome viene dal greco *ékleipsis*, «sparizione, venir meno» — la stessa
 paura che tiene in vita ECHO-0.
 
-### La Frattura **[GIOCO]** *(l'origine è [SCRITTO])*
-La differenza di potenziale fra i due mondi è cresciuta finché non ha lacerato
-lo spazio. **La Frattura è una sovratensione rimasta senza un circuito
-attraverso cui scaricarsi**: un arco elettrico che non si spegne, perché non ha
-dove andare.
+**Eclissia non vuole niente.** Non ha un esercito, non ha un piano, non ha un
+re: è un mondo, non un nemico. Chi ruba e chi minaccia sono creature nate nella
+ferita, non ambasciatori di Eclissia. Questa riga non si tocca mai.
 
-Questo è il punto più importante di tutta la storia, e va detto sempre così:
-**la Frattura non si tappa. Si chiude dandole una strada.**
+**Come si gioca.** Settori 36-55. È qui che il mondo cambia legge ogni tre
+settori (vedi capitolo 10): bassa gravità, buio, piattaforme instabili, giganti,
+eco, tempesta, pioggia di fuoco. Non sono effetti speciali: sono il clima del
+posto.
 
-Dalla Frattura escono i mostri, e oltre la Frattura c'è un mondo instabile dove
-le leggi cambiano ogni tre settori.
+**Come si disegna.** Un mondo vero, non un incubo: ha terra, ha cielo, ha
+orizzonte — ma tutto è illuminato al contrario, come sotto un'eclissi. Luce
+radente, ombre lunghe, colori profondi (indaco, prugna, verde marcio) e in
+lontananza, sempre, la sagoma del vulcano. Bello e scomodo, mai brutto.
 
 ### La Corrente Verde **[GIOCO]**
-Particelle di energia sparse nei settori oltre la Frattura. Non sono monete:
-sono **cariche**, restano sospese in aria e le raccoglie Ampere, non il
-giocatore. I mostri, morendo, ne lasciano cadere.
+**Cos'è.** L'energia che riesce davvero a fluire. Non è una moneta e non è un
+potere: è la sostanza che, versata dove serve, fa scorrere il resto. In natura
+sta sparsa in cariche sospese, che non cadono e non si consumano.
+
+**Come si gioca.** Le cariche restano ferme a mezz'aria. Non le raccoglie il
+giocatore: le raccoglie il contenitore. Con Ampere in mano, corrono da sola
+verso la lanterna. Senza Ampere (settori 36-55) le raccolgono i Custodi
+addosso — vedi *La corrente addosso*, qui sotto.
+
+**Come si disegna.** Piccoli cristalli verde fluo che ruotano piano, con un
+alone. Verde `#5effa8`, cuore chiaro `#eafff2`. Mai monete, mai gemme, mai
+soldi: sono scintille ordinate.
+
+### La corrente addosso **[SCRITTO]**
+**Cos'è.** Dal settore 36 al 55 Ampere non ce l'hanno: la corrente se la tengono
+dentro. Aren e Lyra sono i Custodi di VOLT, sono fatti per **reggere la
+tensione** — ma non sono contenitori. Tenersi la corrente in corpo è scomodo e
+pericoloso.
+
+Ed è esattamente il motivo per cui devono riprendersi la lanterna. Non è un
+capriccio: è che senza un contenitore l'energia non serve a niente e fa solo
+male. È il tema del gioco, applicato addosso ai protagonisti.
+
+**Come si gioca.** Una **barra verde fluo in alto** che si riempie mano a mano
+che si raccoglie. Più è piena, più è instabile: ogni tanto **scarica da sola** —
+un lampo, una scossa, il personaggio che perde un istante il controllo — e più
+sale, più capita spesso. Non toglie vite: toglie tranquillità. Al settore 56,
+appena Ampere torna, **si svuota dentro il vetro in un colpo solo** e la
+lanterna si accende come non l'hai mai vista.
+
+**Come si disegna.** Nei post e nei disegni: vene verdi che si accendono sotto
+la tuta lungo le braccia, il petto che pulsa, scariche che saltano fra i due
+quando camminano vicini. Sono pieni di una cosa che non è loro.
 
 ### La Caldera Voltaica **[SCRITTO]**
-Un immenso vulcano energetico al centro del mondo oltre la Frattura. Nel
-cratere non c'è lava: ci sono **fulmini liquidi, rocce magnetiche e residui dei
-due mondi**. È il punto in cui la differenza di potenziale raggiunge il massimo,
-ed è per questo che ECHO-0 vive nelle sue profondità: quella sovratensione è
-ciò che lo tiene in vita.
+**Cos'è.** Un immenso vulcano energetico al centro di Eclissia. Nel cratere non
+c'è lava: ci sono **fulmini liquidi, rocce magnetiche e residui dei due mondi**.
+È il punto in cui la differenza di potenziale fra i mondi tocca il massimo — e
+quindi l'unico posto dove la corrente, se versata, diventa flusso invece che
+scarica.
 
-Versare la Corrente Verde nella Caldera chiude il circuito: l'energia non
-esplode verso l'esterno, **scorre lungo i due bordi della Frattura** e li ricuce
-come una ferita luminosa.
+Versarcela dentro chiude il circuito: l'energia non esplode verso l'esterno,
+**scorre lungo i due bordi della Frattura** e li ricuce come una ferita
+luminosa.
 
----
+**Come si gioca.** Settori 57-65: la scalata. Il gioco gira di novanta gradi —
+non si corre più in avanti, si guadagna quota.
 
+**Come si disegna.** Un cono nero e magnetico che si vede da tutta Eclissia, con
+scariche che salgono lungo i fianchi invece di scendere. Dentro il cratere, luce
+bianca e blu. Nessun fuoco arancione: non è un vulcano di lava, è un vulcano di
+corrente.
 ## 3. Le persone
 
 ### VOLT non è un nome **[GIOCO]**
@@ -155,104 +247,187 @@ gioco è già così: i messaggi che arrivano durante i settori («Segnale di Lyr
 rilevato», «Un frammento: è passato di qui») sono la sua voce, non un
 promemoria del gioco.
 
-### AMPERE **[GIOCO]** *(l'origine è [SCRITTO])*
-Una piccola lanterna verde, quasi viva, costruita dagli antichi Custodi per
-stabilizzare la Frattura. Dentro conserva la **Corrente Verde**.
+### AMPERE **[GIOCO]** *(la storia è [SCRITTO])*
+**Cos'è.** Una piccola lanterna verde, quasi viva, costruita dagli antichi
+Custodi. Non è un oggetto magico e non è un'arma: **è un contenitore**. Raccoglie
+la Corrente Verde, la ordina e la rende utilizzabile.
 
-Non è un oggetto da raccogliere: **è un contenitore**. Raccoglie le cariche
-sparse, le ordina e le rende utilizzabili. Nel gioco galleggia dietro le spalle
-del Custode, si accende man mano che si carica, **si allarma quando arriva un
-mostro** (si scosta, trema, diventa arancione), e al buio è lei la vera fonte di
-luce. Quando è piena, la corrente scorre da sola: un filo verde salta da un
-mostro all'altro.
+Non era una leggenda perduta: **stava nella centrale di Lumina**, ed è la ragione
+per cui Lumina ha luce. Il Nucleo dà la spinta, Ampere fa scorrere.
+
+**Come si gioca.** Galleggia dietro le spalle del Custode. Si accende man mano
+che si carica, **si allarma quando arriva un mostro** (si scosta, trema, diventa
+arancione) e **al buio è lei la vera fonte di luce**, con un raggio che cresce
+con la carica. Quando è piena la corrente scorre da sola: un filo verde parte
+dalla lanterna e salta da un mostro all'altro, fino a cinque.
 
 Ampere non parla. Ampere **reagisce**: si muove verso quello che conta. È lei a
-insegnare al giocatore cosa fare, senza scritte.
+insegnare al giocatore cosa fare, senza scritte in mezzo allo schermo.
 
-A carica piena può richiudere la Frattura — ma solo versandola nella Caldera.
+**Come si disegna.** Lanterna da minatore, non lampada di Aladino: cappello e
+base in metallo blu scuro (`#3b4a7a`), vetro tondo, manico ad archetto. Dentro,
+la corrente sale come un liquido: più è carica, più il vetro è pieno. Nucleo
+chiaro che pulsa al centro. Verde `#5effa8`. Quando ha paura vira all'arancione.
+Non ha occhi e non ha bocca: **è viva nel modo in cui si muove**, non nella
+faccia.
 
-**L'arco di Ampere nel secondo atto**, e va rispettato: prima è **perduta**
-(ce l'ha ECHO-0, e per questo lui scappa), poi è **riconquistata** (spenta,
-vuota), poi va **riempita**, e alla fine si **versa**. Non è un accessorio che
-il giocatore riceve all'inizio: è la cosa che manca, poi la cosa che si è
-ripresa, poi la cosa da proteggere. Se la lanterna è lì dal primo momento e si
-carica da sola, tutto l'atto II perde il motivo per cui esiste.
+#### L'arco di Ampere, e va rispettato
+1. **Rubata** — ECHO-0 se la porta via dalla centrale di Lumina. È il motivo per
+   cui Lumina si sta spegnendo.
+2. **Riconquistata** — settore 30: gliela strappi di mano.
+3. **Persa di nuovo** — settore 35: te la strappa ECHO-1, un istante prima che tu
+   vinca.
+4. **Riavuta** — settore 56, dal petto di ECHO-1.
+5. **Riempita** — con tutta la corrente che ti sei portato addosso per venti
+   settori.
+6. **Versata** — al settore 65, nel cratere.
 
----
+Se la lanterna è lì dal primo momento e si carica da sola, tutto l'atto II perde
+il motivo per cui esiste.
 
+#### Ampere rovesciata **[SCRITTO]**
+**Cos'è.** Alla cima, Ampere si gira al contrario: smette di versare e comincia
+ad **aspirare**. Un contenitore funziona nei due sensi — è la stessa idea, letta
+al rovescio.
+
+**Come si gioca.** È l'arma dell'ultimo scontro (vedi **OHM**): non si spara, si
+aspira. Pezzo per pezzo.
+
+**Come si disegna.** Il vetro si apre come un diaframma e il flusso entra invece
+di uscire. La luce va dal nemico verso la lanterna, non viceversa. È
+l'immagine-chiave del finale e vale un poster da sola.
+
+> **[APERTO] — Ampere si versa, non si getta.** Deciso: la lanterna resta.
+> Alla fine è vuota e spenta, in mano a chi l'ha portata fin lassù, e si
+> riaccende piano soltanto quando la Frattura è chiusa.
 ## 4. I nemici
 
 ### Il Divoratore **[GIOCO]**
 L'antagonista del primo atto. Un'ombra corazzata viola e nera, con **frammenti
-gialli incastonati nel petto**. Apre la Frattura, rapisce uno dei due Custodi e
-lo tiene dietro sbarre di energia viola. Viene abbattuto al ventesimo settore.
+gialli incastonati nel petto**. Apre la strada dalla Frattura, rapisce il Custode
+non scelto e lo tiene dietro sbarre di energia viola. Viene abbattuto al
+ventesimo settore.
 
 **Non è la mente dell'universo.** È la prima cosa uscita dalla Frattura, non
-l'ultima.
+l'ultima. E non è lui ad aver rubato Ampere.
 
 ### La famiglia ECHO
 Creature nate dentro la Frattura. Ognuna ha una funzione diversa: non sono
 mostri più grossi, sono **problemi diversi**.
 
+E hanno un nome che nessuno aveva mai spiegato. **Sono le eco di OHM.** Lo si
+scopre alla cima, e in una riga sola si capisce tutta la famiglia.
+
 #### ECHO-0 — Il Copiatore **[SCRITTO]**
-L'antagonista del secondo atto, e il personaggio più importante che abbiamo
-dopo i due Custodi.
+L'antagonista del secondo atto, e il personaggio più importante che abbiamo dopo
+i due Custodi.
 
-**Nasce per sbaglio dall'energia corrotta di Ampere, e cresce con le scelte del
-giocatore.** Le due cose non si escludono: la scintilla è Ampere, il cibo sono i
-potenziamenti raccolti nella prima campagna. Più il giocatore è diventato
-potente, più forte è diventato lui — e questo va detto esplicitamente al momento
-della rivelazione, perché è la cosa che fa male.
+**Cos'è.** **Nasce per sbaglio dall'energia corrotta di Ampere, e cresce con le
+scelte del giocatore.** Le due cose non si escludono: la scintilla è Ampere, il
+cibo sono i potenziamenti raccolti nella prima campagna. Più il giocatore è
+diventato potente, più forte è diventato lui — e va detto esplicitamente al
+momento della rivelazione, perché è la cosa che fa male.
 
-Pensa, parla e capisce cosa sta succedendo. Osserva la partita del giocatore,
-**copia i suoi potenziamenti** e li usa contro di lui, cambiando aspetto in base
-al potere rubato. Non aspetta fermo alla fine del settore: compare sullo sfondo,
-attraversa il percorso, distrugge piattaforme, corre ai frammenti prima di te e
-sparisce dentro portali instabili. Combatte poco e poi fugge, portandosi via
-Ampere.
+Pensa, parla e capisce cosa sta succedendo.
 
-**Non vuole conquistare Lumina. Sta cercando di non scomparire.** Se la Corrente
-Verde viene versata nella Caldera, la sovratensione si scarica e lui perde il
-corpo. Ogni volta che scappa, sta scappando dalla propria fine.
+**Perché ruba Ampere.** *Dice* di volerlo per spegnere Lumina, e per un po' ci
+credono tutti. **La verità è che se Ampere torna a funzionare, la Frattura si
+chiude e lui smette di esistere.** Mente sul proprio movente: non è un tiranno,
+è uno che sta scappando dalla propria fine.
+
+**Come si gioca.** Non aspetta fermo alla fine del settore: compare sullo
+sfondo, attraversa il percorso, distrugge piattaforme, corre ai frammenti prima
+di te. Ogni tre-quattro settori si ferma e ti affronta davvero — **e appena la
+sua barra sta per finire, fugge dentro un portale**. Osserva la tua build, copia
+un potenziamento e te lo rimanda addosso. Non si vince due volte con la stessa
+strategia.
+
+**Come si disegna.** Corpo nero cristallino fatto di schegge fluttuanti, nastri
+viola che si muovono da soli, **occhio sinistro azzurro e occhio destro rosso**,
+fulmine giallo sul petto. **Braccia diverse fra loro**: cannone ciano a sinistra,
+guanto rosso a destra — imitano il blaster di Aren e il guanto di Lyra.
+L'asimmetria non è un vezzo: **è lì che si vede quale potere ha rubato**. Il
+guanto prende il colore del potenziamento copiato.
 
 > «HO OSSERVATO OGNI TUA SCELTA. ORA I TUOI POTERI APPARTENGONO A ME.»
 > «VOI VOLETE SALVARE IL VOSTRO MONDO. IO STO SOLTANTO CERCANDO DI NON SCOMPARIRE.»
 
-Aspetto: corpo nero cristallino, nastri viola che si muovono da soli, **occhio
-sinistro azzurro e occhio destro rosso**, fulmine giallo sul petto, **braccia
-diverse fra loro** — cannone ciano a sinistra, guanto rosso a destra.
-L'asimmetria non è un vezzo: **è lì che si vede quale potere ha rubato.**
+**La resa (settore 35).** Sta per cadere, e proprio allora arriva ECHO-1 e gli
+porta via Ampere. Si arrende — non perché l'hai battuto: perché l'hanno derubato
+anche a lui. Si rialza e **vi mostra il passaggio per Eclissia**.
+
+Sa perfettamente dove porta quella strada. Sa che se Ampere torna a funzionare
+lui muore. **Ve la indica lo stesso.** Da quel momento non è più il nemico: è
+uno che si è già arreso a morire per voi, e alla fine sarete voi a non
+lasciarlo andare.
 
 #### ECHO-1 — Il Condensatore **[SCRITTO]**
-Enorme, pesante, senza volto. Creato dalla Frattura per **assorbire la Corrente
-Verde prima che arrivi ad Ampere**. Tre cristalli gialli sul petto.
+**Cos'è.** Un colosso oscuro e pesante, apparentemente senza volto. Non è un
+servo di ECHO-0: **è una funzione**. Un condensatore accumula e non restituisce
+— e prende la batteria più piena che trova, senza chiedere il permesso a
+nessuno, nemmeno a chi l'ha creato.
 
-Assorbe i colpi energetici e li accumula: **sparargli addosso lo rende più
-forte**. Colpisce il terreno creando onde d'urto, attira a sé piattaforme e
-frammenti, può bloccare temporaneamente il cambio fra Aren e Lyra, e a pieno
+**Come si gioca (settore 56).** Assorbe l'energia: **sparargli addosso lo
+carica**. Colpisce il terreno creando onde d'urto, attira a sé piattaforme e
+frammenti, e può **bloccare temporaneamente il cambio fra Aren e Lyra**. A pieno
 carico libera un'esplosione circolare.
 
-Si batte così: espone un cristallo → **Aren** lo sovraccarica sparandogli → il
-cristallo cambia colore e diventa instabile → si passa a **Lyra** → il guanto
-ne estrae la carica → la carica va ad Ampere. Tre volte, un cristallo alla
-volta.
+Si combatte in due: **uno lo comandi tu, l'altro combatte al tuo fianco.**
+Aren sovraccarica il cristallo esposto finché non diventa instabile, poi si passa
+a Lyra che ne estrae la corrente col guanto. Tre volte, un cristallo alla volta.
+Non gli si fa male: **gli si allenta la presa**.
 
-Compare al **settore 30**, e non è un servo di ECHO-0: **ha strappato Ampere
-proprio a lui** e se l'è messa nel petto insieme ai tre cristalli. Un
-condensatore non lascia uscire la corrente, nemmeno per chi l'ha creato.
+**Come si disegna.** Al centro del petto, incastonata come un reattore, c'è
+**Ampere**: si vede il vetro verde pulsare dentro il corpo nero. **Tre cristalli
+gialli** le stanno intorno come tre morse. Quando un cristallo salta, una morsa
+si apre. Quando salta il terzo, la lanterna esce.
 
-> «SE VOLETE LA CORRENTE… DOVRETE RIPRENDERSELA.»
+> «SE VOLETE LA CORRENTE… DOVRETE RIPRENDERVELA.»
 
-Battendolo, i tre cristalli liberano la prima grande quantità di Corrente Verde
-e i due Custodi **riprendono Ampere: spenta, vuota, ma loro**. Da quel momento
-ECHO-0 capisce che possono davvero chiudere la Frattura, smette di giocare con
-loro e comincia a dare la caccia alla lanterna.
+#### OHM — La Resistenza **[SCRITTO]**
+L'ultimo nemico del gioco, e il più importante da capire bene: **non è un
+mostro. È il problema.**
 
-#### ECHO-2 — Il Gemello **[APERTO]**
-Idea: duplica Aren e Lyra e li costringe a combattere contro sé stessi.
+**Cos'è.** VOLT è la tensione, AMPERE è la corrente, **OHM è la resistenza**:
+ciò che impedisce alla corrente di scorrere. È la sovratensione che ha aperto la
+Frattura, quella che per tutto questo tempo non ha avuto dove scaricarsi, e che
+a forza di accumularsi ha preso una forma.
 
-#### ECHO-3 — Il Guardiano della Caldera **[APERTO]**
-Idea: controlla la gravità e le piattaforme.
+Non pensa, non parla, non odia. **Preme, e basta.** Non ha un piano perché non
+ha una mente: è un ostacolo, il più grande che esista.
+
+E gli ECHO sono le sue **eco**: nati dalla stessa scarica, più piccoli, più
+tardi. È per questo che si chiamano così.
+
+> **VOLT spinge. AMPERE scorre. OHM resiste.**
+
+> «NON È UN SOVRACCARICO. È OHM.
+> E NOI SIAMO SOLTANTO LE SUE ECO.» — ECHO-0, alla cima
+
+**Il nome sbagliato.** Da Lumina lo chiamano **il Sovraccarico**, perché è quello
+che sembra. È il nome che si usa in tutto l'atto II, nei dialoghi e nei post: il
+nome vero arriva solo alla fine, detto da ECHO-0. Tenere i due nomi separati è
+importante — il primo è quello che credono, il secondo è quello che è.
+
+**Come si gioca (settore 65, in soggettiva).** **Non si spara: sparargli lo
+nutre.** Ogni colpo di energia che gli mandi lo rende più grande. Si vince con
+**Ampere rovesciata**: la lanterna aspira, e pezzo per pezzo lo si tira dentro il
+vetro. Ogni scarica che gli strappi è un pezzo di lui che diventa tuo.
+
+E quando è tutto dentro, **quello che versi nel cratere è lui.** L'energia che
+teneva aperta la ferita è quella che la ricuce. Il nemico finale non viene
+distrutto: viene **fatto scorrere**.
+
+**Come si disegna.** Una massa di fulmini sospesa sopra il cratere, senza corpo
+solido e senza faccia: un groviglio di scariche bianche e blu che si riavvolgono
+su sé stesse, grande quanto una casa. Porta un segno, ed è il suo simbolo:
+**Ω**, la lettera dell'ohm, che è già la forma di un arco elettrico. Quando
+aspiri, il groviglio si assottiglia e il segno si spegne un pezzo alla volta.
+
+#### ECHO-2 e ECHO-3 **[APERTO]**
+Se serviranno. ECHO-2: duplica Aren e Lyra e li costringe a combattere contro sé
+stessi. ECHO-3: guardiano della Caldera, controlla gravità e piattaforme.
+Nessuno dei due è ancora deciso — e la storia, così com'è, sta in piedi senza.
 
 ### I mostri comuni **[GIOCO]**
 Non hanno nome proprio, sono la fauna della Frattura: **strisciante, volante,
@@ -260,9 +435,6 @@ sputatore, caricatore, bombardiere**. Dal sesto settore alcuni arrivano
 temprati — gli **élite**: *scattante* (velocissimo, fragile), *corazzato* (la
 piastra ferma i colpi frontali, va preso alle spalle), *disturbatore* (la sua
 scarica ti spegne l'arma).
-
----
-
 ## 5. La storia
 
 ### ATTO I — «Ritrova chi ami» · settori 1-20 **[GIOCO]**
@@ -281,110 +453,182 @@ di ripresa.
 > scontro è il Divoratore, che è un'altra cosa. Nomi e storie dei tre sono
 > ancora **[APERTO]**.
 
-**Finale (filmato).** La cella si spegne, il Custode liberato cade in avanti e
-viene preso al volo dall'altro. Si abbracciano. Dietro di loro la frattura si
-richiude e la luce torna su Lumina.
+**Chi viene rapito non sta a guardare.** Resiste, osserva, manda segnali
+frammentari e prepara dall'interno le condizioni della propria liberazione. Nel
+gioco è già così: i messaggi che arrivano durante i settori («Segnale di Lyra
+rilevato», «Un frammento: è passato di qui») sono la sua voce.
 
-> Il primo atto è **finito e giocabile**. Quello che succede dopo non lo
-> contraddice: la Frattura sembra chiudersi, ma non si chiude.
+#### La semina — settori 15-20 **[SCRITTO]**
+Il secondo atto comincia qui, e nessuno deve accorgersene subito. Quando al
+settore 21 si dirà che Ampere è stata rubata, il giocatore deve poter pensare:
+*l'avevo visto*.
 
-### ATTO II — «Trova Ampere» · settori 21-40 **[SCRITTO]**
+**Settore 15, il terzo Comandante.** Non arriva a mani vuote: porta sulla schiena
+una **lanterna verde accesa**. Non si spiega, non se ne parla, non c'è una
+scritta. Quando lo abbatti quella luce non cade a terra: **se la porta via
+qualcos'altro**, veloce, dentro la Frattura, e sparisce.
 
-I due si abbracciano, ma la Frattura **non** si chiude. Dall'altra parte compare
-ECHO-0, che ha guardato tutto e ha imparato tutto — e che ha in mano **Ampere**.
-Aren e Lyra attraversano la Frattura **insieme**, ed entrano in Eclissia.
+**Settori 16-20: Lumina comincia a cedere.**
+- **Cali di tensione**: il mondo si spegne per mezzo secondo e torna.
+- Le luci del fondale che sfarfallano.
+- Il cielo che perde colore a scatti.
 
-Il primo atto era: *scegli un Custode e salva l'altro.*
-Il secondo è: **controlla tutti e due, riprenditi Ampere, riempila.**
+Sempre più spesso man mano che ci si avvicina al 20.
 
-Il secondo atto ha **tre fasi**, e sono tre condizioni diverse per il giocatore.
-Questa è la spina dorsale dell'atto: se una scena non sta in una di queste tre
-fasi, è fuori posto.
+**Come si gioca.** Il blackout è un lampo di buio di mezzo secondo, che non
+toglie vite e non blocca i comandi: spaventa e basta. Nei settori 16-17 capita
+una volta ogni tanto, al 19-20 più spesso.
+
+**Come si disegna.** Nei post e nei disegni di questa fase: Lumina vista da
+lontano con una fascia di case al buio, lampioni che si riaccendono a fatica,
+gente che alza la testa verso il cielo.
+
+#### Finale dell'atto I **[GIOCO]**
+Al settore 20 il Divoratore cade, la cella si spezza, il Custode liberato viene
+preso al volo dall'altro. **Si abbracciano.**
+
+E mentre si abbracciano, alle loro spalle, **il mondo si sta spegnendo**.
+
+> La prima vittoria salva la persona amata. Non salva ancora il mondo.
+
+---
+
+### ATTO II — «Riprenditi la luce» · settori 21-65 **[SCRITTO]**
+
+#### L'antefatto dell'atto II
+Ampere non era una leggenda perduta: **stava nella centrale di Lumina**, ed è la
+ragione per cui Lumina ha luce. **ECHO-0 l'ha rubata** e se l'è portata oltre la
+Frattura. Ecco perché il mondo si sta spegnendo.
+
+E qui cade la prima certezza: **nessuno, fino a quel momento, sapeva che la
+Frattura fosse una porta.** La si credeva una ferita e basta, una cosa da cui
+escono i mostri. Invece dall'altra parte c'è un mondo intero, e ha un nome:
+**Eclissia**.
+
+Aren e Lyra attraversano insieme. Non per salvarsi: **per riprendersi la luce.**
 
 > **Vincolo.** Il cambio fra Aren e Lyra parte dal settore 21 ed è conseguenza
 > del **ricongiungimento**, non di Ampere. Sono di nuovo insieme: per questo
 > possono combattere come una cosa sola.
 
+**Come si gioca il cambio.** Si passa dall'uno all'altra quando vuoi, con una
+ricarica di pochi secondi. Chi esce non sparisce: torna corrente. E in certi
+scontri **è il gioco a costringerti a cambiare** — un sigillo che solo Aren
+spezza, una serratura energetica che solo il guanto di Lyra apre, un nemico che
+blocca uno dei due.
+
 #### Fase 1 · L'INSEGUIMENTO — settori 21-30
-**Ampere non è con voi. Ce l'ha ECHO-0, e per questo scappa.**
-Non scappa per paura di perdere uno scontro: scappa perché se i Custodi
-riprendono la lanterna, lui finisce.
+**Dove si è:** dentro la Frattura, non ancora in Eclissia.
 
-In questa fase **non c'è lanterna, non c'è luce, non si raccoglie Corrente
-Verde**. Eclissia è buia e ostile e bisogna attraversarla al buio. Si impara a
-combattere in due, si insegue, e ogni volta che lo si raggiunge lui combatte
-poco e sparisce in un portale.
+ECHO-0 non aspetta alla fine del livello: corre. Ogni tre o quattro settori si
+ferma, ti affronta davvero — e appena la sua barra sta per finire **scappa**
+dentro un portale, e lo ritrovi più avanti.
 
 | Settore | Cosa succede |
 |---|---|
-| 21-24 | Aren e Lyra imparano a combattere insieme. Eclissia è buia |
-| **25** | Primo scontro con ECHO-0. Quando sta per cadere, fugge con Ampere |
-| 26-29 | L'inseguimento attraverso Eclissia, il mondo si ribalta |
-| **30** | **ECHO-1**. Ha strappato Ampere a ECHO-0 e se l'è messa nel petto insieme ai tre cristalli: un condensatore non lascia scappare la corrente, nemmeno al suo padrone. Battendolo, i due riprendono la lanterna — **spenta, vuota** |
+| 21-23 | Si impara a combattere in due. La Frattura è ostile e non si vede lontano |
+| **24** | Primo scontro. Ti studia, copia un potere, fugge |
+| 25-26 | L'inseguimento |
+| **27** | Secondo scontro. Adesso usa contro di te la tua stessa build |
+| 28-29 | L'inseguimento |
+| **30** | Terzo scontro. Lo metti alle strette: **Ampere torna nelle vostre mani** |
 
-#### Fase 2 · LA CORRENTE — settori 31-37
-**Ampere è vostra, ma è al minimo.**
-Da qui in poi galleggia dietro le spalle, **illumina Eclissia** e va riempita:
-ogni settore è Corrente Verde da recuperare. Più si carica, più luce fa — e più
-lontano si vede.
+> **Regola di ritmo:** questi dieci settori **non si superano in fretta**.
+> Settori più lunghi, più resistenza, il portale che si apre solo a obiettivo
+> davvero compiuto. Anche un giocatore bravo ci deve mettere parecchio: sta
+> inseguendo qualcuno che scappa da dieci settori, e la fatica è il punto.
 
-ECHO-0 non fugge più: adesso torna, ruba i poteri del giocatore, li usa contro
-di lui e tenta di **riprendersi la lanterna**. Non è più lui a scappare: siete
-voi a dover proteggere qualcosa.
+#### Fase 2 · LA CACCIA AL CONTRARIO — settori 31-35
+Adesso la lanterna è tua. Galleggia dietro le spalle, si accende, illumina — e
+va riempita di Corrente Verde.
 
-| Settore | Cosa succede |
-|---|---|
-| 31-34 | Labirinti che si passano solo alternando i due Custodi, mentre si raccoglie corrente |
-| **35** | ECHO-0 crea due copie con abilità diverse |
-| 36-37 | Ultime cariche. La Frattura comincia a collassare |
-
-#### Fase 3 · LA SALITA — settori 38-40
-**Ampere è piena. Sotto di voi c'è la Caldera Voltaica.**
-Non si insegue più nessuno: si **sale**. Tre settori in verticale lungo il
-fianco del vulcano, con la roccia magnetica che tira, le piattaforme che
-precipitano e ECHO-0 che vi aspetta più in alto, perché sa benissimo dove state
-andando e cosa succede quando arrivate.
+Ma il gioco si è capovolto: **non insegui più tu, sei tu a essere inseguito.**
+ECHO-0 torna per riprendersela, e ogni settore diventa una cosa da proteggere.
 
 | Settore | Cosa succede |
 |---|---|
-| 38-39 | La scalata. Verticale, non più orizzontale |
-| **40** | La cima. Lo scontro, la verità, la scelta |
+| 31-34 | Ti dà la caccia. Si raccoglie corrente e si sopravvive |
+| **35** | Lo scontro vero. Sta per cadere — e proprio allora, dal buio, arriva **ECHO-1**: prende Ampere e sparisce |
 
-**La battaglia finale** avviene sul bordo del cratere: Aren rompe i quattro
-sigilli, Lyra protegge Ampere e ne tiene stabile la carica, il giocatore alterna
-i due mentre ECHO-0 copia i loro poteri, la gravità cambia e le piattaforme
-precipitano dentro.
+**La resa.** ECHO-0 si arrende. Non perché l'hai battuto: perché l'hanno derubato
+anche a lui. Si rialza e **vi mostra il passaggio nascosto per Eclissia**,
+sapendo benissimo dove porta.
 
-> **Regola di progettazione, non narrativa:** al massimo **due richieste per
-> volta** al giocatore. Sei cose insieme su due pollici non sono difficili, sono
-> illeggibili. Lo scontro si divide in fasi.
+#### Fase 3 · ECLISSIA — settori 36-55
+Venti settori nel mondo che nessuno aveva mai visto. Qui le leggi non sono un
+effetto speciale: **sono il clima del posto**. Ogni tre settori il mondo cambia
+regola — bassa gravità, buio, piattaforme instabili, giganti, eco, tempesta,
+pioggia di fuoco.
 
-**Il finale.** Lyra apre il condotto centrale col guanto, Aren spezza i sigilli,
-e la Corrente Verde di Ampere viene versata nella Caldera. Il vulcano entra in
-risonanza: una colonna verde sale, si divide in migliaia di filamenti e **cuce
-il cielo viola** lungo i due bordi della Frattura.
+**E non si va a caso.** ECHO-1 è un condensatore troppo pieno, **e perde**.
+Dietro di lui resta una scia di Corrente Verde nel buio: è la mappa e il bottino
+insieme. La segui, la raccogli, e ogni goccia è un pezzo di luce che torna a
+Lumina.
 
-Ma i due non versano tutto: **ne tengono da parte un poco per salvare la
-coscienza di ECHO-0.** Il corpo mostruoso si disgrega e dal nucleo nasce una
-piccola creatura energetica con **due occhi, uno ciano e uno rosa**. Se la
-portano a Lumina.
+Ampere non ce l'hai. La corrente **te la tieni addosso** (vedi capitolo 2), con
+la barra verde in alto che si riempie e ogni tanto scarica da sola.
 
-Ampere resta spenta, vuota, in mano a chi l'ha portata fin lassù. Si riaccende
-piano, con un filo di luce, solo quando la Frattura è chiusa.
+#### Fase 4 · IL CONDENSATORE — settore 56
+Lo raggiungi. È enorme, ha tre cristalli gialli nel petto e **al centro, come un
+reattore, c'è Ampere**.
 
-> **[APERTO] — Ampere si versa o si getta?** Qui è scritta la versione in cui
-> **si versa e la lanterna resta**: la si è portata su, svuotata, e alla fine
-> torna ad accendersi. L'alternativa è gettarla nel cratere, e allora Ampere
-> muore per chiudere la Frattura. È più straziante, ma il finale ha già un atto
-> di pietà — quello per ECHO-0 — e due sacrifici nella stessa scena si tolgono
-> forza a vicenda. Decisione del Capo.
+Non si vince sparandogli: ogni colpo lo carica. **Si combatte in due — uno lo
+comandi tu, l'altro combatte al tuo fianco.** Aren sovraccarica il cristallo
+esposto, Lyra ne estrae la corrente col guanto. Tre volte, un cristallo alla
+volta: tre morse che si aprono.
+
+Quando cade, **la lanterna torna a voi** — e tutta la corrente che ti sei
+portato addosso per venti settori le entra dentro in un colpo solo.
+
+#### Fase 5 · LA SALITA — settori 57-65
+Al centro di Eclissia c'è la **Caldera Voltaica**. Si sale.
+
+Nove settori **in verticale**: non si corre più in avanti, si guadagna quota, con
+il cratere che si allarga sotto e le piattaforme che ci cadono dentro. La roccia
+magnetica tira, le scariche salgono lungo i fianchi.
+
+> **Nota di realizzazione:** la salita resta in **2,5D** — stesso motore, asse
+> girato. La **prima persona** è riservata al solo settore 65, la cima.
+
+#### 65 · LA CIMA — in soggettiva
+L'ultimo quadro si gioca **in prima persona**, ed è l'unico del gioco.
+
+Sopra il cratere fluttua **OHM**: una massa di fulmini, senza corpo e senza
+faccia, con il segno **Ω** che gli attraversa il groviglio.
+
+**Non si spara: sparargli lo nutre.** Si usa **Ampere rovesciata**: la lanterna
+si apre e comincia ad aspirare. Pezzo per pezzo lo si tira dentro il vetro, e
+ogni scarica strappata è un pezzo di lui che diventa tuo.
+
+Poi Lyra apre il condotto centrale col guanto, Aren spezza i quattro sigilli, e
+**quello che si versa nel cratere è lui**.
+
+> **Regola di progettazione:** al massimo **due richieste per volta** al
+> giocatore. Sei cose insieme su due pollici non sono difficili, sono
+> illeggibili. La cima si divide in fasi: prima aspirare, poi aprire, poi
+> versare.
+
+#### Il finale
+Il vulcano non esplode: **erutta una colonna verde che si divide in migliaia di
+filamenti e cuce il cielo** lungo i due bordi della Frattura. L'energia che
+teneva aperta la ferita è quella che la ricuce.
+
+ECHO-0 è lì. Sta svanendo insieme al mondo che lo ha fatto nascere, e non fugge:
+aveva già scelto trenta settori prima, quando ha indicato la strada.
+
+Aren e Lyra **non versano tutto**. Deviano un filo di corrente nel suo nucleo.
+Il corpo di schegge si disfa, e dal centro resta una piccola creatura di luce con
+**un occhio ciano e uno rosa**. La portano a Lumina con loro.
+
+**Ampere resta.** Vuota e spenta, in mano a chi l'ha portata fin lassù — e si
+riaccende piano, con un filo di luce, solo quando la Frattura è chiusa.
 
 > VOLT HA APERTO LA FRATTURA.
 > AMPERE HA PERMESSO ALL'ENERGIA DI SCORRERE.
 > INSIEME HANNO RIPORTATO L'EQUILIBRIO.
 
 Nel primo atto salviamo chi amiamo. Nel secondo scopriamo se siamo capaci di
-salvare anche il nostro nemico.
+salvare anche il nostro nemico — che si era già arreso a morire per noi.
 
 ### L'arco emotivo, in cinque righe **[SCRITTO]**
 
@@ -395,16 +639,14 @@ non sposta nessuna di queste cinque cose, probabilmente non serve.
 |---|---|---|
 | Inizio | Separazione | Uno diventa eroe, l'altro viene portato via |
 | Settore 20 | Ricongiungimento | L'amore chiude la missione personale, non la crisi |
-| Oltre la Frattura | Parità | Non più uno che salva l'altro: due che combattono insieme |
+| Dentro la Frattura | Parità | Non più uno che salva l'altro: due che combattono insieme |
+| Eclissia | Fatica | Portarsi addosso una cosa che non si può contenere |
 | La Caldera | Compassione | Estendono al nemico la salvezza che cercavano per sé |
-| Epilogo | Equilibrio | Tensione e corrente, individuo e coppia, due mondi |
 
 ### ATTO III **[APERTO]**
-ECHO-0, diventato piccolo e innocuo, potrebbe essere giocabile, conservando la
-capacità di copiare temporaneamente i poteri. Niente di più è deciso.
-
----
-
+La creaturina con un occhio ciano e uno rosa vive a Lumina. Potrebbe diventare
+giocabile, conservando la capacità di copiare temporaneamente i poteri. Niente
+di più è deciso.
 ## 6. Le regole del racconto
 
 Cose che in questo universo **non si fanno mai**:
@@ -424,7 +666,12 @@ Cose che in questo universo **non si fanno mai**:
 6. **Le due strade sono pari.** Qualunque cosa si scriva vale identica per chi
    gioca Aren e per chi gioca Lyra: cambiano il nome, il genere e il modo di
    combattere, mai l'importanza. Nessuno dei due è il vero protagonista.
-7. **Niente si aggiunge per riempire.** Se un elemento nuovo non nasce da
+7. **OHM non è un cattivo.** Non pensa, non parla, non vuole. È un ostacolo, e
+   si risolve facendolo scorrere, non uccidendolo. Chi lo scrive come «il mostro
+   finale che vuole distruggere tutto» ha capito male il gioco.
+8. **A OHM non si spara.** Nemmeno per sbaglio, nemmeno in un post: sparargli lo
+   nutre. L'unica arma è Ampere rovesciata.
+9. **Niente si aggiunge per riempire.** Se un elemento nuovo non nasce da
    tensione, corrente o legame, non entra.
 
 ---
@@ -441,6 +688,13 @@ Cose che in questo universo **non si fanno mai**:
 | **la Caldera Voltaica**, la Caldera | il vulcano |
 | **il Nucleo di Lumina**, il Nucleo | il cuore, il core |
 | **Eclissia** (l'altro mondo) | Obscuria, il mondo oscuro, il mondo dei mostri |
+| **OHM** (il nome vero dell'ultimo nemico) | Ohm, l'Ohm, Om |
+| **il Sovraccarico** (come lo chiamano a Lumina, prima di sapere) | il sovraccarico |
+| **Ω** — il segno di OHM | omega, la lettera |
+| **la Corrente Verde** addosso ai Custodi | la barra, l'energia |
+| **la Caldera Voltaica**, la Caldera | il vulcano di lava |
+| **ECHO-1**, il Condensatore | Echo Uno, il colosso |
+| **la centrale di Lumina** (dove stava Ampere) | il generatore, la fabbrica |
 | **ECHO-0**, **ECHO-1** (trattino, cifra) | Echo Zero, ECHO 0 |
 | **il Divoratore** | il divoratore |
 | **i Custodi** (maiuscolo quando è il ruolo) | i custodi |
@@ -462,6 +716,9 @@ pixel art e non il neon anni '80: quella strada è stata provata e scartata.
 - Corrente Verde: `#5effa8`, nucleo chiaro `#eafff2`
 - Energia della Frattura: viola `#b06bff` / `#7a3fd6`
 - VOLT Rush: `#75ffe0`
+- Metallo di Ampere: `#3b4a7a`
+- Eclissia: indaco, prugna, verde marcio — profondi, mai neri
+- OHM: bianco e azzurro elettrico su fondo nero; nessun rosso, nessun arancione
 
 **Per chi genera immagini:** partire sempre dalla stessa immagine di
 riferimento del personaggio, altrimenti la faccia cambia da un'immagine
@@ -515,26 +772,28 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
 - **Il cambio fra Aren e Lyra** esiste, oltre la Frattura, con sei secondi di
   ricarica.
 
-**Manca tutto l'atto II:** ECHO-0, ECHO-1, la Caldera, i settori 21-40, il furto
-dei poteri, i filmati nuovi.
+**Manca tutto l'atto II**, cioè i settori **21-65**: la semina nei settori 15-20,
+la Frattura come luogo, ECHO-0 e i suoi tre scontri, il furto dei poteri, la
+barra della corrente addosso, Eclissia, ECHO-1 e il suo reattore, la salita in
+2,5D, la cima in soggettiva, OHM, Ampere rovesciata e i filmati nuovi.
 
-### Una contraddizione da sciogliere **[APERTO]**
+Quello che c'è già e che l'atto II riuserà: il cambio fra i due Custodi, Ampere
+con la sua corrente, le sette leggi del mondo, gli élite, il buio (che serve per
+i blackout di Lumina), la tempesta, i boss.
+
+### Il nome della modalità infinita **[APERTO]**
 Nel gioco di oggi la modalità infinita si chiama **Oltre la Frattura**, e lì
-Ampere è con te **dal primo settore**. Nel racconto, invece, all'inizio
-dell'atto II Ampere ce l'ha ECHO-0. Le due cose non possono stare insieme sotto
-lo stesso nome.
+Ampere è con te dal primo settore. Ma «oltre la Frattura» adesso è un posto
+preciso della storia — Eclissia — e nel racconto Ampere all'inizio non ce l'hai.
+Due cose diverse sotto lo stesso nome.
 
-La soluzione proposta: **il nome «Oltre la Frattura» torna al racconto**
-(l'atto II, i settori 21-40, dove la lanterna si perde e si riconquista), e la
-modalità infinita — che è un arcade a punteggio, non una storia — prende un nome
-suo. Il migliore che abbiamo trovato è **CIRCUITO APERTO**: un circuito che non
-si chiude mai è esattamente un posto dove la corrente non arriva da nessuna
-parte, e infatti non finisce. Lì le leggi del mondo cambiano ogni tre settori e
-Ampere c'è: è una partita, non un capitolo.
+Proposta: la modalità infinita — che è un arcade a punteggio, non un capitolo —
+prende un nome suo. Il migliore che abbiamo trovato è **CIRCUITO APERTO**: un
+circuito che non si chiude mai è esattamente un posto dove la corrente non
+arriva da nessuna parte, e infatti non finisce.
 
 **Regola che ne discende:** la modalità infinita **sta fuori dal canone**. Quello
 che succede lì non è mai successo alla storia.
-
 ### Leggi proposte ma non programmate **[APERTO]**
 Girano nei documenti tre leggi che **non esistono nel gioco** e che sono le più
 care da costruire: **gravità invertita** (ribaltare il mondo vuol dire rifare
@@ -547,31 +806,23 @@ dà la stessa sensazione a una frazione del costo.
 
 ## 11. Le domande ancora aperte **[APERTO]**
 
-### Le due che bloccano il resto
-1. **Ampere si riprende al settore 25 o al 30?** Al 25 la si trova dietro
-   ECHO-1 e restano quindici settori per riempirla. Al 30 l'inseguimento al buio
-   dura di più e la lanterna arriva a metà atto, quando pesa di più.
-2. **Alla fine Ampere si versa o si getta?** Se si versa, la lanterna resta,
-   svuotata, e si riaccende quando la Frattura è chiusa. Se si getta, muore per
-   chiudere la ferita: più straziante, ma il finale ha già un atto di pietà —
-   quello per ECHO-0 — e due sacrifici nella stessa scena si tolgono forza a
-   vicenda.
+Le decisioni prese si trovano dove competono, non qui. Restano da sciogliere:
 
-### Le altre
-3. **Come si chiama la modalità infinita?** Proposta: *Circuito Aperto*, così
-   «Oltre la Frattura» torna a essere il nome dell'atto II (vedi capitolo 10).
-4. **Chi erano gli antichi Custodi** che costruirono Ampere? Servono davvero, o
+1. **Come si chiama la modalità infinita?** Proposta: *Circuito Aperto*, così
+   «Oltre la Frattura» resta un posto della storia (vedi capitolo 10).
+2. **Chi erano gli antichi Custodi** che costruirono Ampere? Servono davvero, o
    restano un'eco?
-5. **Perché proprio Aren e Lyra** vegliavano sul Nucleo? Sono stati scelti,
+3. **Perché proprio Aren e Lyra** vegliavano sul Nucleo? Sono stati scelti,
    nati così, o si sono trovati lì?
-6. **Nomi e storie dei tre Comandanti** della prima campagna.
-7. **ECHO-2 ed ECHO-3** esistono o bastano ECHO-0 e ECHO-1?
-8. **Che forma e che carattere ha** la creaturina che resta di ECHO-0?
-9. **Il capitolo zero su Instagram**: cosa si racconta prima dell'inizio del
+4. **Nomi e storie dei tre Comandanti** della prima campagna.
+5. **ECHO-2 ed ECHO-3** esistono o bastano ECHO-0, ECHO-1 e OHM?
+6. **Che forma e che carattere ha** la creaturina che resta di ECHO-0?
+7. **Il capitolo zero su Instagram**: cosa si racconta prima dell'inizio del
    gioco?
 
----
-
+**Decise di recente, per memoria:** l'altro mondo si chiama Eclissia; Ampere
+torna in mano ai Custodi al settore 30; alla fine si versa e la lanterna resta;
+l'ultimo nemico è OHM; la cima si gioca in soggettiva; la salita è in 2,5D.
 ## 12. Come si aggiorna questa Bibbia
 
 ### I due file
@@ -611,42 +862,64 @@ gioco, si cambiano i file nello stesso momento.
 
 ## 13. Sinossi lunga
 
-Da usare quando serve raccontare tutto in una volta: una presentazione, un
-post lungo, una descrizione del gioco.
+Da usare quando serve raccontare tutto in una volta: una presentazione, un post
+lungo, la descrizione del gioco.
 
 Lumina vive di energia, ma la sua luce nasconde una tensione che cresce. Quando
 il Nucleo non riesce più a contenerla il cielo si spezza, e una Frattura collega
-il mondo a **Eclissia**, l'altro capo del circuito. Dalla ferita emerge il
-Divoratore. Aren e Lyra, i due Custodi, cercano di fermarlo — ma il Nucleo può
-legarsi a uno solo di loro. Il giocatore sceglie chi diventerà **VOLT**;
-l'altro viene rapito e rinchiuso oltre la Frattura.
+il mondo a **Eclissia**, l'altro capo del circuito — anche se nessuno, a Lumina,
+sa ancora che dall'altra parte ci sia un mondo. Dalla ferita emerge il
+Divoratore. Aren e Lyra, i due Custodi, cercano di fermarlo, ma il Nucleo può
+legarsi a uno solo di loro. Il giocatore sceglie chi diventerà **VOLT**; l'altro
+viene rapito e rinchiuso oltre la Frattura.
 
 Il Custode scelto attraversa venti settori, abbatte tre Comandanti, impara il
 Rush e la navicella e costruisce una combinazione di poteri tutta sua. Dalla
 cella, la persona amata non sta a guardare: manda segnali, lascia frammenti,
-prepara la propria liberazione. Al ventesimo settore il Divoratore cade, la
-cella si spezza, i due si riabbracciano. **Ma la Frattura resta aperta.**
+prepara la propria liberazione. E intanto, senza che nessuno se ne accorga,
+qualcosa porta via dalla centrale la lanterna che tiene accesa Lumina: nei
+settori finali il mondo comincia a spegnersi a intermittenza. Al ventesimo il
+Divoratore cade, la cella si spezza, i due si riabbracciano — **mentre alle loro
+spalle la luce se ne va**.
 
-Dal portale esce **ECHO-0**: una coscienza nata per sbaglio dall'energia
-corrotta di Ampere e cresciuta con ogni potere che il giocatore ha scelto.
-Conosce i loro movimenti perché li ha guardati per venti settori, copia le loro
-armi, e ha in mano **Ampere**. Non vuole conquistare niente: sa che se quella
-lanterna torna a funzionare, lui smette di esistere. Aren e Lyra attraversano la
-Frattura **insieme**, e da quel momento il giocatore li alterna: la forza di
-Aren e la velocità di Lyra diventano due parti dello stesso circuito.
+A rubare **Ampere** è stato **ECHO-0**: una coscienza nata per sbaglio
+dall'energia corrotta della lanterna e cresciuta con ogni potere che il
+giocatore ha scelto. Dice di volerla per spegnere Lumina. La verità è un'altra:
+se Ampere torna a funzionare, la Frattura si chiude e lui smette di esistere.
 
-In Eclissia le leggi del mondo cambiano di continuo. I due inseguono ECHO-0 al
-buio, incontrano **ECHO-1** — il Condensatore, che la corrente la trattiene per
-sé — e riprendono Ampere: spenta, vuota. Da lì la lanterna torna ad accendersi
-un frammento alla volta, e più si carica più lontano si vede. Ma adesso è
-ECHO-0 a dare la caccia a loro.
+Aren e Lyra attraversano insieme, e da quel momento il giocatore li alterna: la
+forza di Aren e la velocità di Lyra diventano due parti dello stesso circuito.
+Per quindici settori non sono in un altro mondo, ma **dentro** la ferita, fra
+pezzi di Lumina strappati e sospesi nel viola. Inseguono ECHO-0, che si ferma a
+combattere e scappa appena rischia di perdere, finché al trentesimo non gli
+strappano la lanterna di mano. Per cinque settori la proteggono mentre lui prova
+a riprendersela — e quando finalmente sta per cadere, dal buio arriva **ECHO-1**,
+il Condensatore, che porta via Ampere a tutti e due.
 
-Alla fine c'è la **Caldera Voltaica**, il vulcano dove la differenza di
-potenziale fra i mondi tocca il massimo. Lyra apre il condotto, Aren spezza i
-sigilli, la Corrente Verde si riversa nel cratere e l'eruzione non esplode: si
-divide in migliaia di filamenti che **cuciono il cielo** lungo i bordi della
-Frattura. ECHO-0 sta per sparire insieme al mondo che lo ha creato — e i due
-Custodi scelgono di non lasciarlo andare.
+ECHO-0 si arrende. Non perché è stato battuto: perché hanno derubato anche lui.
+Si rialza e mostra ai due il passaggio nascosto per **Eclissia**, sapendo
+benissimo che quella strada porta alla propria fine.
+
+In Eclissia le leggi del mondo cambiano ogni tre settori. Senza contenitore, la
+corrente i Custodi se la tengono addosso — scomoda, instabile, pericolosa — e
+seguono la scia verde che ECHO-1 perde mentre fugge. Lo raggiungono al
+cinquantaseiesimo: Ampere è incastonata nel suo petto come un reattore, stretta
+da tre cristalli. Si combatte in due, si allentano le morse una alla volta, e la
+lanterna torna a casa piena di tutto quello che i due si erano portati addosso.
+
+Poi c'è da salire. Al centro di Eclissia si alza la **Caldera Voltaica**, un
+vulcano di fulmini liquidi dove la differenza di potenziale fra i mondi tocca il
+massimo. Nove settori in verticale, e in cima aspetta **OHM**: non un mostro, ma
+la resistenza stessa — la tensione che non ha mai avuto dove scaricarsi, e che a
+forza di accumularsi ha preso una forma. Sparargli lo nutre. L'unico modo è
+**Ampere rovesciata**: la lanterna smette di versare e comincia ad aspirare,
+finché quello che si riversa nel cratere non è più corrente raccolta, ma lui.
+
+Il vulcano non esplode: erutta una colonna verde che si divide in migliaia di
+filamenti e cuce il cielo lungo i bordi della Frattura. ECHO-0 sta per sparire
+insieme al mondo che lo ha creato — e i due Custodi deviano un filo di quella
+corrente nel suo nucleo. Il corpo di schegge si disfa; resta una creaturina di
+luce con un occhio ciano e uno rosa, che tornerà a Lumina con loro.
 
 La Frattura non si chiude con la distruzione. Si chiude con l'equilibrio: la
 tensione ha finalmente trovato qualcosa in cui scorrere.
