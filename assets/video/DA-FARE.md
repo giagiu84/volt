@@ -3,7 +3,7 @@
 Da consegnare a chi li produce. Ogni scheda è autosufficiente: dentro c'è chi
 compare, com'è fatto, cosa succede e cosa deve restare in mente allo spettatore.
 
-**Da fare: dieci** (sei essenziali).
+**Da fare: undici** (sette essenziali).
 **Già fatti: sei** — `introduzione`, `rapimento_lyra`, `rapimento_aren`,
 `liberazione_lyra`, `liberazione_aren`, `la_luce_se_ne_va`.
 
@@ -71,8 +71,9 @@ blu, mai fuoco arancione.
 Sono elencate come si incontrano giocando, dal settore 21 al 65. Accanto a
 ognuna c'è se è **essenziale** (senza, la storia ha un buco) o desiderabile.
 
-**I sei essenziali** sono `il_tradimento`, `il_passaggio`, `il_reattore`,
-`la_scelta_di_echo`, `la_cima` e `il_finale`. Vanno prodotti **a coppie**,
+**I sette essenziali** sono `il_tradimento`, `il_passaggio`, `il_reattore`,
+`la_scelta_di_echo`, `la_cima`, `il_finale` e `il_bacio`. Vanno prodotti **a
+coppie**,
 perché sono tre scene divise in due ciascuna:
 `il_tradimento`+`il_passaggio` · `il_reattore`+`la_scelta_di_echo` ·
 `la_cima`+`il_finale`.
@@ -218,9 +219,11 @@ OHM.» poi «E NOI SIAMO SOLTANTO LE SUE ECO.»
    corpo di schegge si disgrega e cade.
    *Questa è la battuta più importante del filmato: senza, non si capisce che
    Eclio è lui.*
-5. Un attimo di silenzio. Poi **dal vetro della lanterna esce ECLIO**: gira una
-   volta intorno ai due e li segue. Ultima immagine: i tre di spalle, il cielo
-   tornato sereno su Lumina.
+5. Un attimo di silenzio. Poi **dal vetro della lanterna esce ECLIO** e gira una
+   volta intorno ai due. Ultima immagine: il cielo tornato sereno su Lumina.
+
+**Nota:** finisce qui, con Eclio che vola e i due ancora immobili. Da lì riparte
+`il_bacio`, che è l'ultima scena del gioco: vanno prodotti insieme.
 
 **Chi è Eclio, perché sia chiaro a chi produce:** è **ECHO-0 salvato**. Non una
 creatura nuova che arriva dal nulla, ma quello che resta di lui quando gli
@@ -231,3 +234,41 @@ dolcezza, non in trionfo.
 **Frasi a schermo (in sequenza, alla fine):**
 «VOLT HA APERTO LA FRATTURA.» / «AMPERE HA PERMESSO ALL'ENERGIA DI SCORRERE.» /
 «INSIEME HANNO RIPORTATO L'EQUILIBRIO.»
+
+---
+
+## 11 · `il_bacio` — settore 65, dopo il finale · **ESSENZIALE**
+**Dove:** l'ultima scena del gioco, subito dopo `il_finale`, senza stacco.
+**Durata:** 8-10 secondi.
+
+**Cosa deve mostrare, in cinque battute:**
+1. Il cielo di Lumina è sereno. **Eclio** vola intorno ai due lasciando una scia
+   bianco-verde. Aren e Lyra si guardano, esausti.
+2. **Aren sblocca il casco, lentamente.** Il gesto va tenuto: è l'unica volta
+   che succede in tutto il gioco.
+3. **La faccia.** Per la prima volta si vede chi c'era sotto: un ragazzo
+   normale, giovane, stanco, spettinato dal casco. Sorride a Lyra.
+4. **Lascia cadere il casco a terra.** Lei gli corre incontro. Si abbracciano e
+   **si baciano** — controluce, breve, senza indugio: è un gioco per famiglie.
+5. Ultima inquadratura: **i due abbracciati, il casco per terra, e Lumina
+   ricomposta dietro di loro.**
+
+**Perché conta:** per sessantacinque settori Aren è stato una visiera. Il claim
+del gioco è *non si nasce VOLT, lo si diventa*, e questa è l'unica prova che
+sotto l'armatura non c'era una macchina.
+
+**Una versione sola, non due.** Tutte le altre scene sono speculari, questa no:
+il casco ce l'ha Aren. Chi ha giocato Lyra la vede lo stesso, e anzi la vede
+meglio — è lui a scoprirsi davanti a chi lo è andato a riprendere.
+
+**Frase a schermo:** nessuna. Alla fine, se serve, il claim: «NON SI NASCE VOLT.
+LO SI DIVENTA.»
+
+> ⚠️ **Prima di girarla serve la tavola canonica del volto di Aren**, e da lì
+> non si cambia più. Indicazioni: bello, giovane e credibile, coerente con Lyra,
+> **non il principe perfetto** ma il tecnico umano che abbiamo seguito per tutto
+> il viaggio.
+>
+> ⚠️ **E la faccia di Aren non deve comparire da nessun'altra parte prima di
+> questa scena.** Non nel capitolo zero, non nell'introduzione, non nei
+> rapimenti, non in un post. Se esce prima, questa scena non vale più niente.

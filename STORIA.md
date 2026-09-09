@@ -297,12 +297,15 @@ secondo quanto era importante.
 | Settori 1-20 | Uno insegue l'altro attraverso venti settori. Non lo dice mai, ma lo sanno tutti |
 | Settore 20, l'abbraccio | Il primo momento in cui è evidente anche a loro |
 | Atto II | Combattono come una cosa sola. Il legame diventa **meccanica**: nessuno dei due basta da solo |
-| Il finale | Trionfa. Apertamente, davanti al cielo che si ricuce |
+| Il finale | Trionfa. Aren si toglie il casco, e per la prima volta si vede chi c'era sotto |
 
 **Come si scrive.** Non si scrivono dichiarazioni d'amore e non si scrivono
 baci: si scrive quello che fanno l'uno per l'altra. Un abbraccio vale dieci
 frasi, e il gioco lo guardano anche i bambini. Le cose dette a metà funzionano
-meglio — fino al finale, dove invece si può smettere di dirle a metà.
+meglio.
+
+**L'unica eccezione è l'ultima scena**, quando Aren si toglie il casco: lì si
+smette di dirlo a metà, e proprio per questo lì funziona.
 
 **Chi viene rapito non è una damigella.** Resiste, osserva, manda segnali
 frammentari e prepara dall'interno le condizioni della propria liberazione. Nel
@@ -897,6 +900,40 @@ Si chiama **ECLIO**. Lo portano a Lumina con loro.
 **Ampere resta.** Vuota e spenta, in mano a chi l'ha portata fin lassù — e si
 riaccende piano, con un filo di luce, solo quando la Frattura è chiusa.
 
+#### E poi Aren si toglie il casco **[SCRITTO]**
+È l'ultima scena del gioco, e arriva dopo la nascita di Eclio.
+
+Il cielo di Lumina è tornato sereno. Eclio vola intorno ai due. Aren e Lyra si
+guardano, esausti. E allora **Aren sblocca il casco, lentamente**.
+
+Per la prima volta — dopo sessantacinque settori — **si vede la sua faccia**. Un
+ragazzo normale, giovane, stanco. Sorride a Lyra e **lascia cadere il casco a
+terra**. Lei gli corre incontro. Si abbracciano e **si baciano**.
+
+Eclio gira intorno alla coppia lasciando una scia bianco-verde. Ultima
+inquadratura: **loro due abbracciati, il casco per terra, e Lumina ricomposta
+dietro**.
+
+**Perché è la fine giusta.** Per tutto il gioco Aren è stato una visiera. Il
+claim dice *non si nasce VOLT, lo si diventa*: questa scena è l'unica prova che
+sotto quell'armatura non c'era una macchina, ma qualcuno che lo è diventato.
+
+**Una versione sola, non due.** Tutte le altre scene esistono in doppia
+versione, questa no: il casco ce l'ha Aren, e la faccia da scoprire è la sua.
+Chi ha giocato Lyra la vede lo stesso — anzi, la vede meglio: è lui a togliersi
+il casco davanti a chi lo è andato a riprendere.
+
+**Il bacio si può scrivere.** La regola del capitolo 6 — *non si scrivono
+baci* — vale per tutto il viaggio, e serve a tenere il sentimento in sospeso.
+Qui cade: è il punto in cui si smette di dirlo a metà. Va girato come lo si
+girerebbe per una famiglia: controluce, breve, niente indugio.
+
+> **VINCOLO — la faccia di Aren non si vede mai prima di qui.**
+> Non nel capitolo zero, non nell'introduzione, non nei rapimenti, non in un
+> post, non in un disegno di scorta. Se la faccia esce prima, questa scena non
+> vale più niente. *(Verificato: nei sei filmati già fatti il casco è sempre
+> allacciato.)*
+
 > VOLT HA APERTO LA FRATTURA.
 > AMPERE HA PERMESSO ALL'ENERGIA DI SCORRERE.
 > INSIEME HANNO RIPORTATO L'EQUILIBRIO.
@@ -1104,9 +1141,24 @@ dà la stessa sensazione a una frazione del costo.
 
 ## 11. Le domande ancora aperte
 
-**Nessuna.** Per la prima volta da quando esiste questo file, ogni decisione di
-racconto è presa: il mondo, i personaggi, i nemici, i due atti, il finale, i
-nomi.
+**Una, e va disegnata prima di girare l'ultima scena.**
+
+### Il volto di Aren **[APERTO]**
+Serve la tavola canonica della sua faccia senza casco. Da quel momento non si
+cambia più, e sarà l'unica faccia che potrà comparire in quella scena e in
+qualunque immagine successiva.
+
+Le indicazioni: **bello, giovane e credibile**, coerente con Lyra — **non il
+principe perfetto**, ma il tecnico umano che abbiamo seguito per tutto il
+viaggio. Stanco, spettinato dal casco, con la faccia di uno che ha appena
+finito qualcosa di enorme.
+
+Finché quella tavola non esiste, **`il_bacio` non si gira**.
+
+---
+
+Per il resto ogni decisione di racconto è presa: il mondo, i personaggi, i
+nemici, i due atti, il finale, i nomi.
 
 Restano marcate [APERTO] solo due cose, e non sono domande:
 - **l'atto III**, che non è una decisione da prendere ma un dopo da vedere;
@@ -1292,7 +1344,7 @@ gioca**.
 | `liberazione_aren` | dopo il settore 20 | Lyra apre la cella col guanto, si abbracciano |
 | `la_luce_se_ne_va` | premendo CONTINUA, dopo il 20 | I due davanti alla Frattura: isole di Lumina sospese nel viola, saette, e la luce di casa che se ne va |
 
-**Da fare: dieci**, qui in ordine di settore. I sei segnati **essenziale** sono
+**Da fare: undici**, qui in ordine di settore. I sette segnati **essenziale** sono
 quelli senza cui la storia non si capisce; gli altri fanno bella figura.
 
 | # | File | Settore | Cosa deve mostrare | Priorità |
@@ -1307,10 +1359,14 @@ quelli senza cui la storia non si capisce; gli altri fanno bella figura.
 | 8 | `la_scelta_di_echo` | 56 | ECHO-0 allunga la mano verso la lanterna e la ritira | **essenziale** |
 | 9 | `la_cima` | 65 | OHM si condensa sopra il cratere; il segno Ω si accende | **essenziale** |
 | 10 | `il_finale` | 65 | L'eruzione, il cielo che si cuce, la scintilla che entra in Ampere, Eclio | **essenziale** |
+| 11 | `il_bacio` | 65 | Aren si toglie il casco, lo lascia cadere, abbraccia e bacia Lyra | **essenziale** |
 
-I sei essenziali vanno prodotti **a coppie**, perché sono tre scene divise in
-due ciascuna: `il_tradimento`+`il_passaggio`, `il_reattore`+`la_scelta_di_echo`,
-`la_cima`+`il_finale`. La commessa completa, scheda per scheda, sta in
+I sette essenziali vanno prodotti **a coppie**, perché sono scene divise in
+due: `il_tradimento`+`il_passaggio`, `il_reattore`+`la_scelta_di_echo`, e
+`la_cima`+`il_finale`+`il_bacio`, che sono una sequenza sola.
+
+**`il_bacio` non si gira** finché non esiste la tavola canonica del volto di
+Aren (capitolo 11). La commessa completa, scheda per scheda, sta in
 `assets/video/DA-FARE.md`.
 
 **Dove si semina Ampere.** Nei due rapimenti la lanterna **non si vede**: sono i

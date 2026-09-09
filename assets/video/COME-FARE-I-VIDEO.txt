@@ -14,8 +14,8 @@ GIA' FATTI (sei)
   liberazione_aren.mp4    Lyra libera Aren      (chi gioca LYRA, dopo il settore 20)
   la_luce_se_ne_va.mp4    premendo CONTINUA, dopo il settore 20
 
-DA FARE (dieci, in ordine di settore). Quelli segnati [E] sono essenziali:
-sono sei, e vanno prodotti a coppie perche' sono tre scene divise in due.
+DA FARE (undici, in ordine di settore). Quelli segnati [E] sono essenziali:
+sono sette, e vanno prodotti a coppie perche' sono scene divise in due.
   dentro_la_frattura.mp4  settore 21
   primo_incontro.mp4      settore 24: ECHO-0 parla per la prima volta
   ampere_torna.mp4        settore 30
@@ -25,9 +25,15 @@ sono sei, e vanno prodotti a coppie perche' sono tre scene divise in due.
   il_reattore.mp4    [E]  settore 56: ECHO-1 cade e Ampere esce        --.
   la_scelta_di_echo.mp4 [E] settore 56: ECHO-0 allunga la mano e la ritira '- coppia
   la_cima.mp4        [E]  settore 65: appare OHM                       --.
-  il_finale.mp4      [E]  settore 65: l'eruzione, la scintilla, Eclio     '- coppia
+  il_finale.mp4      [E]  settore 65: l'eruzione, la scintilla, Eclio     '- terzina
+  il_bacio.mp4       [E]  settore 65: Aren si toglie il casco            --'
 
 Se se ne dovesse fare uno solo: la_scelta_di_echo.mp4.
+
+ATTENZIONE su il_bacio.mp4: non si gira finche' non esiste la tavola canonica
+del volto di Aren senza casco. E la sua faccia non deve comparire da nessun'altra
+parte prima di quella scena: ne' nel capitolo zero, ne' nell'introduzione, ne'
+nei rapimenti, ne' in un post. Se esce prima, la scena non vale piu' niente.
 
 I nomi vanno rispettati alla lettera: il gioco cerca esattamente questi.
 Se un file manca il gioco tira dritto, quindi si possono consegnare uno alla volta.
