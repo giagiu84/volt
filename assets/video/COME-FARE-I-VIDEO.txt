@@ -1,57 +1,42 @@
-I QUATTRO FILMATI DI VOLT
-=========================
+I FILMATI DI VOLT
+=================
 
-Servono quattro file .mp4 in questa cartella, con questi nomi esatti:
+L'elenco completo, con quello che ogni filmato deve mostrare, sta nella Bibbia:
+STORIA.md, capitolo 14.3 (oppure VOLT_Bibbia.docx, stesso capitolo).
+Qui restano solo i nomi dei file e le regole tecniche.
 
-  rapimento_lyra.mp4     Lyra viene rapita   (lo vede chi gioca AREN, all'inizio)
-  rapimento_aren.mp4     Aren viene rapito   (lo vede chi gioca LYRA, all'inizio)
-  liberazione_lyra.mp4   Aren libera Lyra    (lo vede chi gioca AREN, alla fine)
-  liberazione_aren.mp4   Lyra libera Aren    (lo vede chi gioca LYRA, alla fine)
+GIA' FATTI (atto I)
+  rapimento_lyra.mp4      Lyra viene rapita     (lo vede chi gioca AREN, all'inizio)
+  rapimento_aren.mp4      Aren viene rapito     (lo vede chi gioca LYRA, all'inizio)
+  liberazione_lyra.mp4    Aren libera Lyra      (chi gioca AREN, dopo il settore 20)
+  liberazione_aren.mp4    Lyra libera Aren      (chi gioca LYRA, dopo il settore 20)
 
-Il gioco li usa da solo appena ci sono. Se un file manca, o se il browser si
-rifiuta di riprodurlo, si tira dritto senza bloccare la partita: quindi puoi
-aggiungerne anche uno solo per volta.
+DA FARE (atto II) - i primi quattro sono essenziali
+  la_luce_se_ne_va.mp4    dopo la liberazione, prima del settore 21
+  il_tradimento.mp4       settore 35: ECHO-1 ruba Ampere a ECHO-0
+  il_passaggio.mp4        settore 35: ECHO-0 apre la strada per Eclissia
+  il_finale.mp4           settore 65: l'eruzione verde e la creatura che resta
+  dentro_la_frattura.mp4  settore 21
+  primo_incontro.mp4      settore 24: ECHO-0 parla per la prima volta
+  ampere_torna.mp4        settore 30
+  eclissia.mp4            settore 36: il mondo nuovo
+  il_reattore.mp4         settore 56: ECHO-1 cade e Ampere esce
+  la_cima.mp4             settore 65: appare OHM
 
-SPECIFICHE TECNICHE (importanti)
-- Formato: MP4, codec H.264, audio AAC. E' l'unico che va su tutti i telefoni.
-- Durata: 6-10 secondi. Oltre, la gente salta.
-- Dimensione: 1280x720 (orizzontale). Su telefono in verticale appare come una
-  fascia centrale su fondo nero, ed e' giusto cosi.
-- Peso: MASSIMO 3 MB l'uno. Il gioco intero pesa 1 MB: quattro video da 10 MB
-  lo renderebbero lentissimo da aprire in mobilita'.
-  Se il file esce piu' pesante, si comprime (posso farlo io).
-- L'audio parte solo se il telefono lo consente; se e' bloccato il video va
-  muto. Quindi la scena deve funzionare anche senza sonoro: niente dialoghi
-  parlati, semmai una scritta.
+I nomi vanno rispettati alla lettera: il gioco cerca esattamente questi.
+Se un file manca il gioco tira dritto, quindi si possono consegnare uno alla volta.
 
-COSA DEVE SUCCEDERE
+REGOLE TECNICHE (non sono consigli)
+- MP4, video H.264, audio AAC: e' l'unico formato che va su tutti i telefoni.
+- 1280x720, orizzontale.
+- Durata 6-10 secondi. Oltre, la gente salta.
+- Peso MASSIMO 3 MB l'uno. Se esce piu' pesante si comprime.
+- Deve funzionare MUTO: l'audio sul telefono puo' essere bloccato. Niente
+  dialoghi parlati indispensabili; le frasi importanti si scrivono a schermo,
+  in maiuscolo, poche parole.
+- Camera leggibile, pochi tagli: in otto secondi si racconta una cosa sola.
 
-1) rapimento_lyra / rapimento_aren  (l'inizio della storia)
-   L'officina di Lumina. I due custodi sono insieme accanto al Nucleo.
-   Il cielo si spacca: dalla frattura esce il Divoratore, un'ombra corazzata
-   viola e nera con i frammenti gialli incastonati nel petto.
-   Una mano di energia afferra il custode e lo trascina dentro la frattura.
-   Ultima immagine: il custode rapito dietro sbarre di energia viola, e in
-   mano all'altro resta un frammento giallo che si accende.
-
-2) liberazione_lyra / liberazione_aren  (il finale, dopo il Divoratore)
-   La cella di energia si spegne. Il custode liberato cade in avanti e viene
-   preso al volo dall'altro. Si abbracciano.
-   Dietro di loro la frattura si richiude e la luce torna su Lumina.
-   Ultima immagine: i due insieme, il Nucleo che si riaccende.
-
-DA CHIEDERE AL GENERATORE (Kling, Runway, Hailuo, Sora)
-Parti dall'immagine del personaggio, cosi resta lo stesso di tutto il resto:
-
-  "cinematic 3D animated short, colorful stylized game cinematic, [scena],
-   character consistent with reference image, dynamic camera, dramatic
-   lighting, purple energy rift, 8 seconds, 16:9"
-
-ATTENZIONE ALLA COERENZA
-E' lo stesso problema dei disegni: se generi i quattro video separatamente, i
-personaggi cambiano faccia da un video all'altro. Conviene:
-- partire sempre dalla stessa immagine di riferimento del personaggio;
-- generare prima i due rapimenti (stessa scena, personaggio diverso) e poi le
-  due liberazioni;
-- guardare i quattro video di fila prima di tenerli: se un personaggio cambia
-  aspetto, si nota subito.
+COERENZA DEI PERSONAGGI
+Si parte sempre dalla stessa immagine di riferimento, si generano tutti i video
+di un personaggio prima di passare al successivo, e prima di tenerli si guardano
+di fila: se una faccia cambia, si nota subito.

@@ -17,8 +17,9 @@ Ogni voce porta un'etichetta:
 | **[APERTO]** | non è ancora deciso. Chi lo decide lo scrive qui |
 
 Ultimo aggiornamento: 9 settembre 2026 — gioco alla versione 30.
-Atto II completo, dal settore 21 al 65. Fusa con la Bibbia narrativa v1.1
-scritta con l'altra IA.
+Atto II completo dal settore 21 al 65, con le istruzioni operative per chi
+produce immagini, post e filmati (capitolo 14). Fusa con la Bibbia narrativa
+v1.1 scritta con l'altra IA.
 
 ---
 
@@ -112,6 +113,28 @@ sono di Eclissia. Qui il pericolo è il vuoto e chi ci abita.
 di paesaggio riconoscibile che ruotano piano, con i bordi strappati e le radici
 che pendono. Lampi lontani. Nessuna architettura nuova: solo cose di Lumina
 finite dove non dovevano.
+
+### La prima Frattura **[SCRITTO]**
+Non è la prima volta che succede. Tanto tempo fa la differenza di potenziale
+crebbe già una volta, e il cielo si aprì.
+
+**Gli antichi Custodi la chiusero nel modo sbagliato: la tapparono.** Invece di
+darle una strada, la sigillarono a forza. Ha retto secoli — abbastanza perché
+tutti dimenticassero — poi la tensione, che nel frattempo non aveva smesso di
+crescere, ha riaperto la ferita nello stesso punto.
+
+**Da quell'errore nasce Ampere:** la costruirono dopo, quando capirono che
+sigillare non basta e che serve un contenitore capace di far scorrere. Ma non
+fecero in tempo a usarla per chiudere niente: la misero nella centrale, dove
+serviva a tenere accesa Lumina, e la storia della prima Frattura diventò una
+cosa che non si raccontava più.
+
+> **Perché la conoscenza si era persa:** quando una cosa sembra risolta, si
+> smette di parlarne. È così che si dimenticano le cose importanti.
+
+**Come si racconta.** Non serve una civiltà, non servono nomi, non servono
+rovine da disegnare. Serve **l'errore**: hanno tappato invece di far scorrere. È
+la stessa lezione del gioco, detta una volta prima e sbagliata.
 
 ### Il passaggio nascosto **[SCRITTO]**
 Eclissia non l'aveva mai vista nessuno, perché **nessuno sapeva che ci fosse un
@@ -235,18 +258,40 @@ ciano, coda.
 Colori esatti: corpo `#fff0f6`, dettagli `#ff5d8f`, capelli `#7a3fd6`, ciocca `#ffd166`, gambe `#4a2f7a`.
 
 ### Il legame fra i due **[SCRITTO]**
-Si vogliono bene. Non serve dirlo mai a parole: si vede da cosa fanno l'uno per
-l'altra. Nel primo atto uno attraversa venti settori per riprendersi l'altro;
-nel secondo combattono insieme. **Non si scrivono dichiarazioni d'amore, non si
-scrivono baci.** Si abbracciano, e basta: il gioco lo guardano anche i bambini,
-e le cose dette a metà funzionano meglio.
+
+**All'inizio non sono una coppia. Sono due colleghi.**
+
+Aren e Lyra non erano i Custodi designati e non erano prescelti: **erano i due
+tecnici di turno quella notte.** Lyra è l'ingegnera energetica della centrale,
+Aren è quello che si mette davanti quando qualcosa esplode. Diventano Custodi
+mentre il cielo si spacca, non prima. Se fossero nati eroi, il claim del gioco
+crollerebbe: *non si nasce VOLT, lo si diventa.*
+
+**E fra loro c'era del tenero.** Niente di detto, niente di dichiarato: due che
+lavorano insieme da tanto, si conoscono i silenzi, si passano gli attrezzi senza
+guardarsi. Quella notte uno dei due viene portato via, e l'altro scopre in un
+secondo quanto era importante.
+
+**L'arco del sentimento, e va rispettato in ogni media:**
+
+| Momento | A che punto sono |
+|---|---|
+| Capitolo zero (prima del gioco) | Colleghi. Una battuta di troppo, uno sguardo che dura un attimo in più |
+| Settori 1-20 | Uno insegue l'altro attraverso venti settori. Non lo dice mai, ma lo sanno tutti |
+| Settore 20, l'abbraccio | Il primo momento in cui è evidente anche a loro |
+| Atto II | Combattono come una cosa sola. Il legame diventa **meccanica**: nessuno dei due basta da solo |
+| Il finale | Trionfa. Apertamente, davanti al cielo che si ricuce |
+
+**Come si scrive.** Non si scrivono dichiarazioni d'amore e non si scrivono
+baci: si scrive quello che fanno l'uno per l'altra. Un abbraccio vale dieci
+frasi, e il gioco lo guardano anche i bambini. Le cose dette a metà funzionano
+meglio — fino al finale, dove invece si può smettere di dirle a metà.
 
 **Chi viene rapito non è una damigella.** Resiste, osserva, manda segnali
 frammentari e prepara dall'interno le condizioni della propria liberazione. Nel
 gioco è già così: i messaggi che arrivano durante i settori («Segnale di Lyra
 rilevato», «Un frammento: è passato di qui») sono la sua voce, non un
 promemoria del gioco.
-
 ### AMPERE **[GIOCO]** *(la storia è [SCRITTO])*
 **Cos'è.** Una piccola lanterna verde, quasi viva, costruita dagli antichi
 Custodi. Non è un oggetto magico e non è un'arma: **è un contenitore**. Raccoglie
@@ -424,10 +469,26 @@ su sé stesse, grande quanto una casa. Porta un segno, ed è il suo simbolo:
 **Ω**, la lettera dell'ohm, che è già la forma di un arco elettrico. Quando
 aspiri, il groviglio si assottiglia e il segno si spegne un pezzo alla volta.
 
-#### ECHO-2 e ECHO-3 **[APERTO]**
-Se serviranno. ECHO-2: duplica Aren e Lyra e li costringe a combattere contro sé
-stessi. ECHO-3: guardiano della Caldera, controlla gravità e piattaforme.
-Nessuno dei due è ancora deciso — e la storia, così com'è, sta in piedi senza.
+#### La creatura che resta **[APERTO]**
+Quello che nasce dal nucleo di ECHO-0 alla fine del gioco.
+
+**Quello che è già deciso:** è piccola, fluttua, ha **un occhio ciano e uno
+rosa**, e continua a fare l'unica cosa che ha sempre saputo fare — **copia**. Ma
+adesso copia i gesti, per gioco: ti imita quando cammini. E i due smettono di
+chiamarla con un numero.
+
+**Quello che non è deciso: la forma e il nome.** Li fa l'altra IA — prima il
+disegno, e **dal disegno viene il nome**. Finché non c'è, nei testi si scrive
+«la creatura che resta».
+
+#### ECHO-2 e ECHO-3 — non esistono **[DECISO]**
+**Non si fanno.** Con ECHO-0, ECHO-1 e OHM la storia è completa e ogni creatura
+ha un mestiere diverso; aggiungerne altre due le trasformerebbe in una serie di
+boss. Gli ECHO sono pochi **perché sono le eco di una cosa sola**, ed è quello
+che li rende speciali.
+
+Se in Eclissia serviranno altri scontri, saranno **creature di Eclissia** — non
+ECHO. Il nome ECHO è riservato a chi è nato dalla scarica di OHM.
 
 ### I mostri comuni **[GIOCO]**
 Non hanno nome proprio, sono la fauna della Frattura: **strisciante, volante,
@@ -437,9 +498,33 @@ piastra ferma i colpi frontali, va preso alle spalle), *disturbatore* (la sua
 scarica ti spegne l'arma).
 ## 5. La storia
 
+### CAPITOLO ZERO — la notte prima **[SCRITTO]**
+Non è un livello: è quello che si racconta **fuori dal gioco**, su Instagram,
+prima che il gioco esca. Serve a far affezionare la gente ad Aren e Lyra
+**prima** di vederli separare.
+
+**Cosa succede.** Niente. È il punto.
+
+Lumina normale, una notte come le altre. I due sono in turno alla centrale.
+Lyra controlla gli strumenti, Aren fa il giro delle luci. Si prendono in giro.
+Uno dei due dice una battuta di troppo e l'altro se ne accorge.
+
+E intanto, in fondo a un quadrante che nessuno guarda mai, **un numero sale**.
+Una luce tremola e torna. Un ronzio che prima non c'era. Nessuno dei due lo
+legge come un allarme, perché non lo è ancora: **le cose importanti, all'inizio,
+sembrano sempre piccole**.
+
+Finisce esattamente dove comincia il gioco: il cielo che si spacca.
+
+**Perché funziona per Instagram.** È tutto atmosfera e personaggi, non serve
+animare battaglie, e ogni post può essere una singola immagine con due righe di
+dialogo. Ed è l'unico posto della storia dove i due sono **felici e tranquilli**:
+serve, perché tutto quello che viene dopo è la perdita di quella sera.
+
 ### ATTO I — «Ritrova chi ami» · settori 1-20 **[GIOCO]**
 
-**Apertura (filmato).** L'officina di Lumina, i due Custodi accanto al Nucleo.
+**Apertura (filmato).** La centrale di Lumina, i due tecnici di turno accanto al
+Nucleo — non sono ancora Custodi di niente.
 Il cielo si spacca, dalla Frattura esce il Divoratore, una mano di energia
 afferra uno dei due e lo trascina dentro. Ultima immagine: il Custode rapito
 dietro sbarre viola, e in mano all'altro un frammento giallo che si accende.
@@ -449,9 +534,19 @@ il Custode rapito lascia come traccia. **Tre Comandanti** — ai settori 5, 10 e
 15 — e il Divoratore al ventesimo. Dopo ogni Comandante il gioco salva un punto
 di ripresa.
 
+**I tre Comandanti non hanno nomi propri: sono Comandanti d'area.** Ognuno tiene
+un pezzo di Lumina, e prende il nome dal posto che presidia — che è già quello
+che il gioco mostra, perché il paesaggio cambia ogni cinque settori.
+
+| Settore | Chi | Dove | Segno particolare |
+|---|---|---|---|
+| 5 | **il Comandante della Prateria** | Prateria Cromo | Il primo. Serve a far capire cos'è un Comandante |
+| 10 | **il Comandante del Deserto** | Deserto Solare | Arriva con più scorta di quanta ne serva |
+| 15 | **il Comandante della Laguna** | Laguna Profonda | **Porta sulla schiena una lanterna verde accesa** |
+| 20 | **il Divoratore** | Giardino Viola | Non è un Comandante: è un'altra cosa |
+
 > **Attenzione al numero:** i Comandanti sono **tre**, non quattro. Il quarto
-> scontro è il Divoratore, che è un'altra cosa. Nomi e storie dei tre sono
-> ancora **[APERTO]**.
+> scontro è il Divoratore.
 
 **Chi viene rapito non sta a guardare.** Resiste, osserva, manda segnali
 frammentari e prepara dall'interno le condizioni della propria liberazione. Nel
@@ -493,7 +588,14 @@ E mentre si abbracciano, alle loro spalle, **il mondo si sta spegnendo**.
 
 ---
 
-### ATTO II — «Riprenditi la luce» · settori 21-65 **[SCRITTO]**
+### ATTO II — «OLTRE LA FRATTURA» · settori 21-65 **[SCRITTO]**
+
+> *Riprenditi la luce.*
+
+**«Oltre la Frattura» è il nome di questo atto**, non di una modalità di gioco.
+Il gioco finisce al settore 65, col versamento di Ampere. La modalità infinita —
+il passatempo per chi ogni tanto vuole solo giocare — si sblocca **dopo**, a
+gioco finito, e sta fuori dalla storia.
 
 #### L'antefatto dell'atto II
 Ampere non era una leggenda perduta: **stava nella centrale di Lumina**, ed è la
@@ -806,23 +908,28 @@ dà la stessa sensazione a una frazione del costo.
 
 ## 11. Le domande ancora aperte **[APERTO]**
 
-Le decisioni prese si trovano dove competono, non qui. Restano da sciogliere:
+Ne restano due. Tutto il resto è stato deciso e sta nel capitolo che gli
+compete.
 
-1. **Come si chiama la modalità infinita?** Proposta: *Circuito Aperto*, così
-   «Oltre la Frattura» resta un posto della storia (vedi capitolo 10).
-2. **Chi erano gli antichi Custodi** che costruirono Ampere? Servono davvero, o
-   restano un'eco?
-3. **Perché proprio Aren e Lyra** vegliavano sul Nucleo? Sono stati scelti,
-   nati così, o si sono trovati lì?
-4. **Nomi e storie dei tre Comandanti** della prima campagna.
-5. **ECHO-2 ed ECHO-3** esistono o bastano ECHO-0, ECHO-1 e OHM?
-6. **Che forma e che carattere ha** la creaturina che resta di ECHO-0?
-7. **Il capitolo zero su Instagram**: cosa si racconta prima dell'inizio del
-   gioco?
+1. **Come si chiama la modalità infinita?** Non è più «Oltre la Frattura»:
+   quello è il nome dell'atto II. È il passatempo che si sblocca a gioco finito,
+   dopo il settore 65, e sta fuori dalla storia. Proposta: **CIRCUITO APERTO** —
+   un circuito che non si chiude mai è esattamente un posto dove la corrente non
+   arriva da nessuna parte, e infatti non finisce.
+2. **Che forma e che nome ha la creatura che resta di ECHO-0?** La disegna
+   l'altra IA, e dal disegno viene il nome. Fino ad allora, nei testi, si scrive
+   «la creatura che resta».
 
-**Decise di recente, per memoria:** l'altro mondo si chiama Eclissia; Ampere
-torna in mano ai Custodi al settore 30; alla fine si versa e la lanterna resta;
-l'ultimo nemico è OHM; la cima si gioca in soggettiva; la salita è in 2,5D.
+### Decise, per memoria
+Eclissia è il nome dell'altro mondo · Ampere torna in mano ai Custodi al settore
+30 · alla fine si versa e la lanterna resta · l'ultimo nemico è OHM · la cima si
+gioca in soggettiva, la salita in 2,5D · la Frattura si era già aperta una volta
+e fu chiusa nel modo sbagliato · Aren e Lyra erano due tecnici di turno, non due
+prescelti · i Comandanti sono d'area e non hanno nomi propri · ECHO-2 ed ECHO-3
+non si fanno · il capitolo zero racconta la notte prima.
+
+---
+
 ## 12. Come si aggiorna questa Bibbia
 
 ### I due file
@@ -923,3 +1030,118 @@ luce con un occhio ciano e uno rosa, che tornerà a Lumina con loro.
 
 La Frattura non si chiude con la distruzione. Si chiude con l'equilibrio: la
 tensione ha finalmente trovato qualcosa in cui scorrere.
+
+---
+
+## 14. Istruzioni per chi produce immagini, post e filmati
+
+Questo capitolo è scritto per chi disegna e per chi scrive i post — l'altra
+intelligenza artificiale compresa. È la parte operativa: cosa si fa, in che
+ordine, e con quali vincoli.
+
+### 14.1 L'ordine di produzione
+Non si comincia dal finale. Si costruisce nell'ordine in cui il pubblico
+incontrerà le cose, perché ogni pezzo deve poter essere pubblicato appena è
+pronto.
+
+| # | Cosa | Perché adesso |
+|---|---|---|
+| 1 | **Aren e Lyra** — figure intere, fronte, profilo, schiena, espressioni | Esistono già come riferimento nel gioco: da lì non ci si allontana più |
+| 2 | **La centrale di Lumina** | È il posto del capitolo zero: serve subito per i primi post |
+| 3 | **AMPERE** — la lanterna, in cinque stati di carica | È il personaggio-oggetto del gioco. Va disegnata prima di ECHO-1, che la porta nel petto |
+| 4 | **Il Divoratore** | Chiude l'atto I |
+| 5 | **La Frattura come luogo** — pezzi di Lumina sospesi nel viola | Ambientazione dei settori 21-35 |
+| 6 | **ECHO-0** | Esiste già un rendering: va solo declinato nei poteri rubati |
+| 7 | **Eclissia** — panorami | Ambientazione dei settori 36-55, e materiale enorme per i post |
+| 8 | **ECHO-1** | Il rendering esiste: serve la versione **con Ampere incastonata nel petto** |
+| 9 | **La Caldera Voltaica** | Il posto finale |
+| 10 | **OHM** | L'ultimo nemico. Nessuno lo deve vedere prima del momento giusto |
+| 11 | **La creatura che resta** | Ultima. Dal disegno verrà anche il suo nome |
+
+### 14.2 La coerenza dei personaggi
+È il problema numero uno, e si risolve in un modo solo:
+
+- **si parte sempre dalla stessa immagine di riferimento** del personaggio;
+- si generano **tutte** le immagini di un personaggio prima di passare al
+  successivo;
+- prima di tenerle, si guardano di fila: se una faccia cambia, si nota subito;
+- i colori sono quelli scritti nel capitolo 8, non «un blu simile».
+
+### 14.3 I filmati del gioco
+Il gioco mostra brevi filmati fra una fase e l'altra, come faceva *Prince of
+Persia*: non sono premi, sono **il modo in cui la storia va avanti mentre si
+gioca**.
+
+**Fatti** (già dentro il gioco, quattro):
+
+| File | Quando | Cosa mostra |
+|---|---|---|
+| `rapimento_lyra` | inizio, se giochi Aren | Lyra viene separata, trascinata oltre il portale, rinchiusa |
+| `rapimento_aren` | inizio, se giochi Lyra | Aren protegge il Nucleo, viene sopraffatto, imprigionato |
+| `liberazione_lyra` | dopo il settore 20 | Aren spezza la cella, si abbracciano |
+| `liberazione_aren` | dopo il settore 20 | Lyra apre la cella col guanto, si abbracciano |
+
+**Da fare**, in ordine di importanza. I primi quattro sono **essenziali**: senza
+di loro la storia non si capisce. Gli altri fanno bella figura.
+
+| # | File | Quando | Cosa deve mostrare | Priorità |
+|---|---|---|---|---|
+| 1 | `la_luce_se_ne_va` | subito dopo la liberazione, prima del 21 | I due si abbracciano; dietro di loro Lumina si spegne a fasce. Una sagoma attraversa la Frattura con una luce verde in mano | **essenziale** |
+| 2 | `il_tradimento` | settore 35 | ECHO-0 sta per cadere; dal buio arriva ECHO-1, gli strappa Ampere e sparisce. ECHO-0 resta in ginocchio | **essenziale** |
+| 3 | `il_passaggio` | subito dopo | ECHO-0 si rialza e apre una fenditura nel fondo del viola: si intravede Eclissia | **essenziale** |
+| 4 | `il_finale` | settore 65 | L'eruzione verde che si divide in filamenti e cuce il cielo; un filo di corrente devia nel nucleo di ECHO-0; la creatura che resta; il ritorno a Lumina | **essenziale** |
+| 5 | `dentro_la_frattura` | settore 21 | I due entrano insieme; il mondo è fatto di pezzi di casa loro | desiderabile |
+| 6 | `primo_incontro` | settore 24 | ECHO-0 appare e parla per la prima volta | desiderabile |
+| 7 | `ampere_torna` | settore 30 | Gliela strappano di mano; la lanterna si accende fra i due | desiderabile |
+| 8 | `eclissia` | settore 36 | La prima immagine del mondo nuovo, con il vulcano all'orizzonte | desiderabile |
+| 9 | `il_reattore` | settore 56 | ECHO-1 cade, le tre morse si aprono, Ampere esce e si riempie di colpo | desiderabile |
+| 10 | `la_cima` | settore 65, prima dello scontro | OHM appare sopra il cratere; il segno Ω si accende | desiderabile |
+
+**Le trasmissioni brevi.** Oltre ai filmati servono clip di **tre o quattro
+secondi**, che il gioco mostra in un angolo mentre si gioca: ECHO-0 che compare
+e dice una riga, il Custode prigioniero che manda un segnale, Ampere che si
+agita. Costano pochissimo e tengono viva la storia fra un filmato e l'altro.
+
+### 14.4 Le regole tecniche dei filmati
+Non sono consigli: se non si rispettano, il filmato non entra nel gioco.
+
+- **Formato:** MP4, video H.264, audio AAC. È l'unico che va su tutti i telefoni.
+- **Dimensione:** 1280×720, orizzontale. Su un telefono in verticale appare come
+  una fascia centrale su fondo nero, ed è giusto così.
+- **Durata:** 6-10 secondi. Oltre, la gente salta.
+- **Peso:** **massimo 3 MB l'uno.** Il gioco intero pesa poco più di un mega:
+  quattro video da dieci lo renderebbero lentissimo da aprire in mobilità.
+- **Deve funzionare muto.** L'audio sul telefono può essere bloccato dal
+  browser. Quindi **niente dialoghi parlati indispensabili**: se una frase è
+  necessaria, si scrive a schermo, in maiuscolo, poche parole.
+- **Camera leggibile:** pochi tagli, niente montaggio nervoso. In otto secondi
+  si racconta una cosa sola.
+
+### 14.5 Instagram: l'ordine dei capitoli
+Il pubblico non sono spettatori: sono gli **Operatori di Lumina**, e ricevono
+trasmissioni numerate.
+
+1. **Capitolo zero — la notte prima.** Prima che il gioco esca. Atmosfera, i due
+   in turno, i piccoli segnali che nessuno legge. Serve ad affezionare.
+2. **La scelta.** «Due Custodi. Un solo Nucleo. Chi diventerà VOLT?» — ed è la
+   stessa domanda che il gioco fa all'avvio. Qui il pubblico risponde.
+3. **Il rapimento.** Nelle due versioni: chi sceglie Aren vede rapire Lyra, e
+   viceversa. Due racconti paralleli, non uno.
+4. **Il viaggio.** I settori, i Comandanti d'area, i segnali dal prigioniero.
+5. **Il ricongiungimento.** L'abbraccio. Ed è il momento in cui il pubblico
+   crede che sia finita.
+6. **La luce che se ne va.** Il colpo di scena: Lumina si spegne, Ampere non c'è
+   più. Da qui comincia il secondo racconto.
+7. **Oltre la Frattura.** ECHO-0, Eclissia, ECHO-1, la salita, OHM.
+
+> **Regola:** su Instagram si racconta **solo quello che è [GIOCO] o [SCRITTO]**
+> in questa Bibbia. Non si annuncia mai una cosa marcata [APERTO], e non si
+> mostra mai OHM prima del suo momento.
+
+### 14.6 Dove finiscono i file
+- Illustrazioni dei personaggi: `assets/heroes/`
+- Filmati: `assets/video/`, con **esattamente** i nomi della tabella 14.3 e
+  l'estensione `.mp4`
+
+Il gioco li prende da solo appena ci sono. Se un file manca, tira dritto senza
+bloccare la partita: si può quindi consegnarne anche uno alla volta.
