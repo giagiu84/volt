@@ -1,11 +1,13 @@
 I FILMATI DI VOLT
 =================
 
-L'elenco completo, con quello che ogni filmato deve mostrare, sta nella Bibbia:
-STORIA.md, capitolo 14.3 (oppure VOLT_Bibbia.docx, stesso capitolo).
+La commessa completa, scheda per scheda, sta in DA-FARE.md (in questa stessa
+cartella): e' il file da dare a chi produce i filmati, si legge da solo.
+L'elenco riassunto sta anche nella Bibbia, capitolo 14.3.
 Qui restano solo i nomi dei file e le regole tecniche.
 
-GIA' FATTI (atto I)
+GIA' FATTI
+  introduzione.mp4        all'apertura del gioco, prima della scelta
   rapimento_lyra.mp4      Lyra viene rapita     (lo vede chi gioca AREN, all'inizio)
   rapimento_aren.mp4      Aren viene rapito     (lo vede chi gioca LYRA, all'inizio)
   liberazione_lyra.mp4    Aren libera Lyra      (chi gioca AREN, dopo il settore 20)
