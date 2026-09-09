@@ -46,7 +46,7 @@ const MISSIONS = {
 };
 
 /* ---------- le leggi della Frattura ----------
-   Oltre la Frattura il mondo non e' piu' stabile: ogni tre settori una regola
+   Nel Circuito Aperto il mondo non e' piu' stabile: ogni tre settori una regola
    cambia. Non sono contenuti nuovi da disegnare, sono le stesse cose viste
    sotto un'altra luce, ed e' quello che tiene in piedi una modalita' infinita
    senza farla diventare la stessa partita all'infinito. */

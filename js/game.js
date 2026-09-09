@@ -10,6 +10,10 @@ const LIFE_GROW = 1.25;
 const FIRST_LIFE_AT = 2500;   /* la prima arriva presto: serve nei settori d'apertura */
 const CAMPAIGN_END = 20;      /* la campagna finisce col Divoratore */
 const CHECKPOINTS = [5, 10, 15];
+/* La semina del secondo atto: dal settore 15 la luce di Lumina comincia ad
+   andarsene, e lo si vede prima che qualcuno lo dica. */
+const SEMINA_DA = 15, SEMINA_A = 20;
+const BLACK_TIME = 0.95;      /* quanto dura un calo di tensione */
 
 /* la voce di Lyra fra un settore e l'altro: ricorda perché si corre */
 const LYRA_LINES = [
@@ -75,6 +79,7 @@ const Game = {
   mode: 'campaign', progress: Store.get('volt_progress', { cleared: false, cp: null }),
   law: null, lawDef: null, platsOff: false, platT: 0, meteorT: 0, stormOn: false,
   ampere: null, cariche: [],
+  furto: null, blackT: 0, blackNext: 0,
   canSwap: false, swapCd: 0,
   hero: Store.get('volt_hero', 'aren'),
   stormX: -9999,
@@ -311,8 +316,8 @@ const Game = {
     const eb = document.getElementById('endlessBtn');
     eb.classList.toggle('locked', !this.progress.cleared);
     eb.textContent = this.progress.cleared
-      ? 'OLTRE LA FRATTURA — ogni 3 settori cambia una legge'
-      : 'Oltre la Frattura — si sblocca finendo la campagna';
+      ? 'CIRCUITO APERTO — ogni 3 settori cambia una legge'
+      : 'Circuito Aperto — si sblocca finendo la campagna';
   },
 
   saveProgress() { Store.set('volt_progress', this.progress); },
@@ -424,6 +429,15 @@ const Game = {
        davvero, non si scappa soltanto */
     this.stormOn = this.mission.type === 'escape' || this.law === 'storm';
     if (this.law === 'storm' && this.mission.type !== 'escape') this.stormX = lv.startX - 620;
+    /* la lanterna sulla schiena del Comandante della Laguna */
+    if (this.mode === 'campaign' && n === SEMINA_DA)
+      for (const e of this.enemies) if (e.type === 'boss') e.lanterna = true;
+
+    /* i cali di tensione: dal 16 in poi, sempre piu' fitti */
+    this.furto = null; this.blackT = 0;
+    this.blackNext = (this.mode === 'campaign' && n > SEMINA_DA && n <= SEMINA_A)
+      ? 3 + Math.random() * 4 : 0;
+
     this.sectorTime = 0; this.sectorNoHit = true;
     this.transition = 0;
     this.camX = clamp(p.cx - this.viewW / 2, 0, Math.max(0, lv.pxW - this.viewW));
@@ -450,7 +464,7 @@ const Game = {
 
     const md = MISSIONS[this.mission.type] || MISSIONS.hunt;
     const finale = this.mode === 'campaign' && n >= CAMPAIGN_END;
-    this.banner(lv.boss ? (finale ? 'IL DIVORATORE' : 'COMANDANTE') : missionName(this.mission.type));
+    this.banner(lv.boss ? this.bossName() : missionName(this.mission.type));
     if (!lv.boss && n > 1 && n % 2 === 0) setTimeout(() => {
       if (this.state === 'play' && this.level === n && this.player)
         Floaters.add(this.player.cx, this.player.y - 40,
@@ -642,6 +656,11 @@ const Game = {
       }
     }
     if (e.type === 'boss') {
+      /* la luce verde non cade a terra: se la porta via qualcosa */
+      if (e.lanterna) {
+        this.furto = { t: 0, x: e.cx, y: e.cy - 10 };
+        Sfx.tone(520, 0.2, 'triangle', 0.05, 900);
+      }
       this.shake(30, 0.7); this.flashT = 0.4;
       if (CHECKPOINTS.indexOf(this.level) >= 0) this.saveCheckpoint();
     }
@@ -885,6 +904,27 @@ const Game = {
       else this.platT = Math.max(0, this.platT - dt);
       this.platsOff = this.platT <= 0;
     } else this.platsOff = false;
+
+    /* Lumina si sta spegnendo: un lampo di buio, e torna. Non toglie vite e
+       non blocca i comandi — spaventa, e basta. Piu' ci si avvicina al
+       ventesimo settore, piu' capita spesso. */
+    if (this.blackT > 0) this.blackT = Math.max(0, this.blackT - dt);
+    if (this.blackNext > 0) {
+      this.blackNext -= dt;
+      if (this.blackNext <= 0) {
+        this.blackT = BLACK_TIME;
+        const passo = Math.max(4.5, 15 - (this.level - SEMINA_DA) * 1.7);
+        this.blackNext = passo * (0.55 + Math.random() * 0.45);
+        Sfx.tone(90, 0.3, 'sine', 0.05, 40);
+        Sfx.noise(0.12, 0.05, 400, 120);
+      }
+    }
+
+    /* il furto della lanterna, dopo il Comandante della Laguna */
+    if (this.furto) {
+      this.furto.t += dt;
+      if (this.furto.t > 3.4) this.furto = null;
+    }
 
     /* combo */
     if (this.comboT > 0) { this.comboT -= dt; if (this.comboT <= 0) this.combo = 0; }
@@ -1358,7 +1398,7 @@ const Game = {
     const md = MISSIONS[(this.mission || {}).type] || MISSIONS.hunt;
     const tot = this.mode === 'campaign' ? '/' + CAMPAIGN_END : '';
     const lvName = this.lv.boss
-      ? (this.mode === 'campaign' && this.level >= CAMPAIGN_END ? 'IL DIVORATORE' : 'COMANDANTE ' + this.level + tot)
+      ? (this.mode === 'campaign' && this.level >= CAMPAIGN_END ? 'IL DIVORATORE' : this.bossName() + ' ' + this.level + tot)
       : 'SETTORE ' + this.level + tot + ' · ' + (this.lawDef ? this.lawDef.name : missionName((this.mission || {}).type));
     if (c.lvName !== lvName) { c.lvName = lvName; document.getElementById('levelName').textContent = lvName; }
 
@@ -1432,6 +1472,8 @@ const Game = {
       this.drawBossBar(ctx);
       this.drawOffscreenHints(ctx, camX, camY, lv);
     }
+    if (this.furto) this.drawFurto(ctx, camX, camY);
+    if (this.blackT > 0) this.drawBlackout(ctx);
     this.drawVignette(ctx);
     this.drawOrb(ctx, dt);
 
@@ -1703,6 +1745,18 @@ const Game = {
     ctx.restore();
   },
 
+  /* Ogni Comandante prende il nome dall'area che presidia: e' quello che il
+     gioco mostra gia', visto che il paesaggio cambia ogni cinque settori. */
+  bossName() {
+    if (this.mode === 'campaign') {
+      if (this.level >= CAMPAIGN_END) return 'IL DIVORATORE';
+      const nomi = { 5: 'COMANDANTE DELLA PRATERIA', 10: 'COMANDANTE DEL DESERTO',
+                     15: 'COMANDANTE DELLA LAGUNA' };
+      if (nomi[this.level]) return nomi[this.level];
+    }
+    return 'COMANDANTE';
+  },
+
   drawBossBar(ctx) {
     const boss = this.enemies.find(e => e.type === 'boss' && !e.dead && e.awake);
     if (!boss) return;
@@ -1718,7 +1772,7 @@ const Game = {
     if (w * frac > 10) Gfx.gloss(ctx, x + 3, y + 1.5, w * frac - 6, 3, 0.45);
     ctx.fillStyle = 'rgba(255,255,255,.92)';
     ctx.font = '800 11px Nunito, system-ui, sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText('IL DIVORATORE', this.viewW / 2, y - 10);
+    ctx.fillText(this.bossName(), this.viewW / 2, y - 10);
     ctx.restore();
   },
 
@@ -1873,6 +1927,71 @@ const Game = {
     if (this.portalOn) buco(this.lv.portalX - camX, this.lv.portalY - camY, 120, 0.9);
     d.globalAlpha = 1;
     ctx.drawImage(c, 0, 0, this.viewW, this.viewH);
+  },
+
+  /* Il furto della lanterna. Nessuna scritta, nessuna spiegazione: la luce
+     verde sale dal Comandante caduto, una sagoma la attraversa e non c'e' piu'.
+     Chi lo vede se lo ricorda; chi non lo vede lo capira' al settore 21. */
+  drawFurto(ctx, camX, camY) {
+    const f = this.furto, t = f.t;
+    const x = f.x - camX;
+    /* 0 - 1.4s: la luce sale piano */
+    const salita = Math.min(1, t / 1.4);
+    const y = f.y - camY - salita * 120;
+    if (t < 1.9) {
+      const a = t < 0.3 ? t / 0.3 : 1;
+      Gfx.light(ctx, x, y, 78 + Math.sin(t * 6) * 10, '#5effa8', 0.95 * a);
+      Rings.list.length < 20 && t < 0.06 && Rings.add(f.x, f.y, '#5effa8', 120, 0.5, 5);
+      ctx.save();
+      ctx.globalAlpha = a;
+      ctx.translate(x, y);
+      ctx.scale(1.7, 1.7);
+      ctx.lineWidth = 2.5; ctx.strokeStyle = OUTLINE;
+      ctx.fillStyle = '#3b4a7a';
+      roundRect(ctx, -8, -12, 16, 5, 2.5); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = 'rgba(120,255,190,.35)';
+      roundRect(ctx, -7, -8, 14, 15, 5); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#eafff2';
+      ctx.beginPath(); ctx.arc(0, 0, 3.4 + Math.sin(t * 9) * 0.6, 0, TAU); ctx.fill();
+      ctx.restore();
+    }
+    /* 1.5 - 2.1s: qualcosa attraversa lo schermo e se la porta via */
+    if (t > 1.5 && t < 2.2) {
+      const k = (t - 1.5) / 0.7;
+      const sx = -140 + k * (this.viewW + 300);
+      ctx.save();
+      ctx.globalAlpha = 0.9;
+      ctx.fillStyle = '#1a1030';
+      ctx.beginPath();
+      ctx.ellipse(sx, y + 6, 54, 22, -0.15, 0, TAU);
+      ctx.fill();
+      ctx.globalAlpha = 0.5;
+      ctx.beginPath();
+      ctx.ellipse(sx - 70, y + 6, 60, 12, -0.1, 0, TAU);
+      ctx.fill();
+      ctx.restore();
+      if (k > 0.45 && !f.presa) {
+        f.presa = true;
+        Particles.burst(x, y, 14, '#5effa8', 200, 4, 0);
+        Sfx.noise(0.22, 0.09, 900, 90);
+      }
+    }
+  },
+
+  /* Il calo di tensione: due sbattute di buio e poi il mondo che torna piano.
+     Non e' una legge della Frattura, e' Lumina che sta finendo la corrente. */
+  drawBlackout(ctx) {
+    const k = 1 - this.blackT / BLACK_TIME;
+    let a;
+    if (k < 0.07) a = 0.9;
+    else if (k < 0.13) a = 0.12;
+    else if (k < 0.23) a = 0.95;
+    else a = 0.95 * Math.max(0, 1 - (k - 0.23) / 0.6);
+    if (a <= 0.01) return;
+    ctx.save();
+    ctx.fillStyle = 'rgba(6,4,20,' + a.toFixed(3) + ')';
+    ctx.fillRect(0, 0, this.viewW, this.viewH);
+    ctx.restore();
   },
 
   drawStorm(ctx, camX) {

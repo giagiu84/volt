@@ -84,7 +84,7 @@ Il Word **non si modifica a mano**: si scrive nell'`.md` e si rilancia
 
 **Entrando in ogni portale si sceglie un potenziamento** fra tre pescati a caso; restano per tutta la partita e si sommano. Dopo un Comandante la scelta comprende un potenziamento leggendario (droncino alleato, vampiro elettrico, scudo d'emergenza, brace, arsenale).
 
-**Oltre la Frattura**: finita la campagna si sblocca la modalità infinita, dove i settori non finiscono e conta solo il punteggio. **Ogni tre settori cambia una legge del mondo**, e il mondo diventa un altro:
+**Circuito Aperto**: finita la campagna si sblocca la modalità infinita, dove i settori non finiscono e conta solo il punteggio. **Ogni tre settori cambia una legge del mondo**, e il mondo diventa un altro:
 
 | Legge | Cosa cambia |
 |---|---|
@@ -96,9 +96,9 @@ Il Word **non si modifica a mano**: si scrive nell'`.md` e si rilancia
 | TEMPESTA | il muro viola avanza anche dove non c'è la fuga: non ci si ferma a combattere |
 | PIOGGIA DI FUOCO | cade roba dal cielo, sempre vicino a te |
 
-**I due custodi insieme.** Oltre la Frattura, Aren e Lyra non sono più alternativi: col tasto CAMBIA (su PC `F`) si passa dall'uno all'altra, con sei secondi di ricarica. Il corpo è lo stesso — posizione, cuori, arma, potenziamenti restano — cambia chi lo abita: **Aren** pesta più forte e regge di più, **Lyra** corre, salta e spara più in fretta. Chi esce torna corrente, ed è per questo che il passaggio si vede. Il cambio non dà invulnerabilità: serve a combattere meglio, non a schivare.
+**I due custodi insieme.** In Circuito Aperto, Aren e Lyra non sono più alternativi: col tasto CAMBIA (su PC `F`) si passa dall'uno all'altra, con sei secondi di ricarica. Il corpo è lo stesso — posizione, cuori, arma, potenziamenti restano — cambia chi lo abita: **Aren** pesta più forte e regge di più, **Lyra** corre, salta e spara più in fretta. Chi esce torna corrente, ed è per questo che il passaggio si vede. Il cambio non dà invulnerabilità: serve a combattere meglio, non a schivare.
 
-**AMPERE.** Oltre la Frattura, dietro le spalle del custode galleggia la lanterna dei vecchi Custodi. Non è un oggetto da raccogliere: è un contenitore. Nei settori è sparsa la **Corrente Verde** — cariche sospese, che i mostri lasciano cadere morendo e che si trovano in giro per il settore — e Ampere le raccoglie da sola quando ci passa vicino. Più si carica, più la lanterna si accende (e al BUIO diventa la vera fonte di luce). Quando è piena la corrente scorre da sola: un filo verde parte dalla lanterna e **salta da un mostro all'altro**, fino a cinque, poi la lanterna si spegne e ricomincia. Si allarma quando arriva un mostro: si scosta, trema e diventa arancione.
+**AMPERE.** In Circuito Aperto, dietro le spalle del custode galleggia la lanterna dei vecchi Custodi. Non è un oggetto da raccogliere: è un contenitore. Nei settori è sparsa la **Corrente Verde** — cariche sospese, che i mostri lasciano cadere morendo e che si trovano in giro per il settore — e Ampere le raccoglie da sola quando ci passa vicino. Più si carica, più la lanterna si accende (e al BUIO diventa la vera fonte di luce). Quando è piena la corrente scorre da sola: un filo verde parte dalla lanterna e **salta da un mostro all'altro**, fino a cinque, poi la lanterna si spegne e ricomincia. Si allarma quando arriva un mostro: si scosta, trema e diventa arancione.
 
 VOLT è la tensione accumulata, Ampere è il flusso che la libera: la carica resta fra un settore e l'altro, e nella campagna dei primi 20 la lanterna non c'è.
 

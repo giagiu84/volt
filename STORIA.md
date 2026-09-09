@@ -585,7 +585,7 @@ frammentari e prepara dall'interno le condizioni della propria liberazione. Nel
 gioco è già così: i messaggi che arrivano durante i settori («Segnale di Lyra
 rilevato», «Un frammento: è passato di qui») sono la sua voce.
 
-#### La semina — settori 15-20 **[SCRITTO]**
+#### La semina — settori 15-20 **[GIOCO]** *(dalla versione 31)*
 Il secondo atto comincia qui, e nessuno deve accorgersene subito. Quando al
 settore 21 si dirà che Ampere è stata rubata, il giocatore deve poter pensare:
 *l'avevo visto*.
@@ -603,8 +603,14 @@ qualcos'altro**, veloce, dentro la Frattura, e sparisce.
 Sempre più spesso man mano che ci si avvicina al 20.
 
 **Come si gioca.** Il blackout è un lampo di buio di mezzo secondo, che non
-toglie vite e non blocca i comandi: spaventa e basta. Nei settori 16-17 capita
-una volta ogni tanto, al 19-20 più spesso.
+toglie vite e non blocca i comandi: spaventa e basta. Al settore 16 capita ogni
+otto-quattordici secondi, al 20 ogni quattro-sette. Il mondo sbatte nel buio due
+volte e poi torna piano, con un ronzio basso che cala.
+
+La lanterna sulla schiena del Comandante della Laguna è accesa e si vede da
+lontano. Quando lui cade, la luce verde **sale** dal corpo, e a metà salita una
+sagoma scura attraversa lo schermo e non c'è più. Nessuna scritta, nessun
+filmato: chi guarda lo vede, chi non guarda lo capirà al settore 21.
 
 **Come si disegna.** Nei post e nei disegni di questa fase: Lumina vista da
 lontano con una fascia di case al buio, lampioni che si riaccendono a fatica,
@@ -625,7 +631,7 @@ E mentre si abbracciano, alle loro spalle, **il mondo si sta spegnendo**.
 > *Riprenditi la luce.*
 
 **«Oltre la Frattura» è il nome di questo atto**, non di una modalità di gioco.
-Il gioco finisce al settore 65, col versamento di Ampere. La modalità infinita —
+Il gioco finisce al settore 65, col versamento di Ampere. **CIRCUITO APERTO** —
 il passatempo per chi ogni tanto vuole solo giocare — si sblocca **dopo**, a
 gioco finito, e sta fuori dalla storia.
 
@@ -834,6 +840,8 @@ Cose che in questo universo **non si fanno mai**:
 | **la Caldera Voltaica**, la Caldera | il vulcano di lava |
 | **ECHO-1**, il Condensatore | Echo Uno, il colosso |
 | **la centrale di Lumina** (dove stava Ampere) | il generatore, la fabbrica |
+| **CIRCUITO APERTO** (la modalità infinita, fuori dal canone) | Oltre la Frattura, modalità infinita |
+| **il Comandante della Prateria / del Deserto / della Laguna** | il boss, il primo boss |
 | **ECHO-0**, **ECHO-1** (trattino, cifra) | Echo Zero, ECHO 0 |
 | **il Divoratore** | il divoratore |
 | **i Custodi** (maiuscolo quando è il ruolo) | i custodi |
@@ -908,8 +916,16 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
   settori cambia una **legge del mondo** (bassa gravità, buio, piattaforme
   instabili, giganti, eco, tempesta, pioggia di fuoco).
 - **AMPERE** e la **Corrente Verde** esistono e funzionano, oltre la Frattura.
-- **Il cambio fra Aren e Lyra** esiste, oltre la Frattura, con sei secondi di
+- **Il cambio fra Aren e Lyra** esiste, in Circuito Aperto, con sei secondi di
   ricarica.
+- **La semina dei settori 15-20**: il Comandante della Laguna porta la lanterna
+  verde sulla schiena, quando cade la luce sale e qualcosa se la porta via, e
+  dal 16 al 20 Lumina va in blackout sempre più spesso.
+- **I tre Comandanti hanno il nome della loro area** — Prateria, Deserto,
+  Laguna — nel banner, nella barra e nell'insegna del settore.
+- La modalità infinita si chiama **CIRCUITO APERTO**. Oggi si sblocca finendo i
+  20 settori, perché è dove finisce quello che esiste: quando l'atto II sarà
+  pronto si sposterà alla fine del 65.
 
 **Manca tutto l'atto II**, cioè i settori **21-65**: la semina nei settori 15-20,
 la Frattura come luogo, ECHO-0 e i suoi tre scontri, il furto dei poteri, la
@@ -945,18 +961,14 @@ dà la stessa sensazione a una frazione del costo.
 
 ## 11. Le domande ancora aperte **[APERTO]**
 
-Ne restano due. Tutto il resto è stato deciso e sta nel capitolo che gli
-compete.
+Ne resta una. Tutto il resto è stato deciso e sta nel capitolo che gli compete.
 
-1. **Come si chiama la modalità infinita?** Non è più «Oltre la Frattura»:
-   quello è il nome dell'atto II. È il passatempo che si sblocca a gioco finito,
-   dopo il settore 65, e sta fuori dalla storia. Proposta: **CIRCUITO APERTO** —
-   un circuito che non si chiude mai è esattamente un posto dove la corrente non
-   arriva da nessuna parte, e infatti non finisce.
-2. **Come si chiama la creatura che resta?** La forma è decisa (una piccola
+1. **Come si chiama la creatura che resta?** La forma è decisa (una piccola
    eclissi che nasce dal vetro di Ampere, capitolo 4): manca il nome, e viene
    dal rendering dell'altra IA. Fino ad allora, nei testi, si scrive «la
    creatura che resta».
+
+È l'ultima cosa che manca alla Bibbia.
 
 ### Decise, per memoria
 Eclissia è il nome dell'altro mondo · Ampere torna in mano ai Custodi al settore
@@ -965,7 +977,8 @@ gioca in soggettiva, la salita in 2,5D · la Frattura si era già aperta una vol
 e fu chiusa nel modo sbagliato · Aren e Lyra erano due tecnici di turno, non due
 prescelti · i Comandanti sono d'area e non hanno nomi propri · ECHO-2 ed ECHO-3
 non si fanno · il capitolo zero racconta la notte prima · la creatura che resta è
-una piccola eclissi e nasce dal vetro di Ampere.
+una piccola eclissi e nasce dal vetro di Ampere · la modalità infinita si chiama
+Circuito Aperto e sta fuori dal canone.
 
 ---
 

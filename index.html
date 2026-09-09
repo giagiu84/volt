@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=30">
+<link rel="stylesheet" href="css/style.css?v=31">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>%E2%9A%A1</text></svg>">
 </head>
 <body>
@@ -89,7 +89,7 @@
       </div>
       <button id="playBtn" class="big-btn"><span>GIOCA ORA</span><small id="playSub">CAMPAGNA · SETTORE 1</small></button>
       <button id="resumeRunBtn" class="mini-btn hidden">Riprendi dal settore <b id="cpLevel">6</b></button>
-      <button id="endlessBtn" class="mini-btn locked">Oltre la Frattura — si sblocca finendo la campagna</button>
+      <button id="endlessBtn" class="mini-btn locked">Circuito Aperto — si sblocca finendo la campagna</button>
       <div class="best">Record <b id="bestScore">0</b></div>
       <div class="help">
         <div class="help-pc">
@@ -152,8 +152,8 @@
         <div class="stat"><span id="winKills">0</span><small>mostri</small></div>
         <div class="stat"><span id="winRank">A</span><small>grado</small></div>
       </div>
-      <div class="unlock">SBLOCCATA — <b>OLTRE LA FRATTURA</b><br><small>i settori non finiscono più e ogni tre il mondo cambia legge: buio, bassa gravità, giganti, tempesta…</small></div>
-      <button id="winEndlessBtn" class="big-btn">OLTRE LA FRATTURA</button>
+      <div class="unlock">SBLOCCATO — <b>CIRCUITO APERTO</b><br><small>un circuito che non si chiude mai: i settori non finiscono e ogni tre il mondo cambia legge — buio, bassa gravità, giganti, tempesta…</small></div>
+      <button id="winEndlessBtn" class="big-btn">CIRCUITO APERTO</button>
       <button id="winMenuBtn" class="mini-btn">Menu</button>
     </div>
   </div>
@@ -170,7 +170,7 @@
 /* Se il telefono ha in cache una versione vecchia della pagina, se ne accorge
    da solo e si ricarica: senza questo si continuerebbero a vedere i comandi
    di ieri per una decina di minuti. */
-window.VOLT_VERSION = 30;
+window.VOLT_VERSION = 31;
 fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   .then(function (r) { return r.json(); })
   .then(function (d) {
@@ -184,12 +184,12 @@ fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   })
   .catch(function () { /* offline: pazienza, si gioca con quello che c'è */ });
 </script>
-<script src="js/util.js?v=30"></script>
-<script src="js/gfx.js?v=30"></script>
-<script src="js/audio.js?v=30"></script>
-<script src="js/input.js?v=30"></script>
-<script src="js/level.js?v=30"></script>
-<script src="js/entities.js?v=30"></script>
-<script src="js/game.js?v=30"></script>
+<script src="js/util.js?v=31"></script>
+<script src="js/gfx.js?v=31"></script>
+<script src="js/audio.js?v=31"></script>
+<script src="js/input.js?v=31"></script>
+<script src="js/level.js?v=31"></script>
+<script src="js/entities.js?v=31"></script>
+<script src="js/game.js?v=31"></script>
 </body>
 </html>

@@ -1236,6 +1236,29 @@ class Enemy {
       Gfx.eye(ctx, 6, -3, 5.5, px, py);
 
     } else if (this.type === 'boss') {
+      /* Il Comandante della Laguna porta via la lanterna di Lumina: si vede
+         sulla schiena, accesa, e nessuno la nomina. */
+      if (this.lanterna) {
+        const ly = -8 + Math.sin(this.t * 2) * 2.5;
+        Gfx.light(ctx, -54, ly, 62 + Math.sin(this.t * 3) * 6, '#5effa8', 0.95);
+        ctx.save();
+        ctx.translate(-54, ly);
+        ctx.rotate(Math.sin(this.t * 1.6) * 0.12);
+        ctx.scale(1.7, 1.7);
+        ctx.lineWidth = 2.5; ctx.strokeStyle = OUTLINE;
+        ctx.beginPath(); ctx.arc(0, -13, 5, Math.PI, 0); ctx.stroke();
+        ctx.fillStyle = '#3b4a7a';
+        roundRect(ctx, -8, -11, 16, 5, 2.5); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = 'rgba(120,255,190,.35)';
+        roundRect(ctx, -7, -7, 14, 15, 5); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = '#5effa8';
+        roundRect(ctx, -5, -1, 10, 8, 3); ctx.fill();
+        ctx.fillStyle = '#eafff2';
+        ctx.beginPath(); ctx.arc(0, 1, 3, 0, TAU); ctx.fill();
+        ctx.fillStyle = '#3b4a7a';
+        roundRect(ctx, -8, 7, 16, 4, 2); ctx.fill(); ctx.stroke();
+        ctx.restore();
+      }
       const pulse = 1 + Math.sin(this.t * 4) * 0.035;
       ctx.save(); ctx.scale(pulse, 2 - pulse);
       ctx.fillStyle = dark;
