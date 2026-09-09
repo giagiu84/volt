@@ -62,10 +62,48 @@ blu, mai fuoco arancione.
 
 ---
 
-# I TRE ESSENZIALI
-Senza questi la storia dell'atto II ha dei buchi.
+# LE NOVE SCHEDE, IN ORDINE DI STORIA
 
-## 1 · `il_tradimento`
+Sono elencate come si incontrano giocando, dal settore 21 al 65. Accanto a
+ognuna c'è se è **essenziale** (senza, la storia ha un buco) o desiderabile.
+
+Se si deve cominciare da qualcosa, i quattro essenziali sono `il_tradimento`,
+`il_passaggio`, `la_cima` e `il_finale` — e conviene farli a coppie, perché
+`il_tradimento`+`il_passaggio` sono una scena sola divisa in due, e così
+`la_cima`+`il_finale`.
+
+---
+
+## 1 · `dentro_la_frattura` — settore 21 · desiderabile
+**Dove:** settore 21, all'ingresso nell'atto II.
+**Cosa:** Aren e Lyra attraversano insieme la Frattura e si fermano.
+Attorno a loro **pezzi di Lumina strappati e sospesi nel viola**: un tratto di
+prateria, il tetto di una casa, una strada che finisce nel vuoto. Riconoscono
+casa loro, a brandelli.
+**Frase a schermo:** nessuna. Bastano le facce.
+
+---
+
+## 2 · `primo_incontro` — settore 24 · desiderabile
+**Dove:** settore 24, prima del primo scontro con ECHO-0.
+**Cosa:** una sagoma nera si compone a mezz'aria dalle schegge. **ECHO-0**
+apre gli occhi — uno azzurro e uno rosso — e guarda i due. Le sue braccia
+imitano le loro armi.
+**Frase a schermo (obbligatoria):** «HO OSSERVATO OGNI TUA SCELTA.» poi «ORA I
+TUOI POTERI APPARTENGONO A ME.»
+
+---
+
+## 3 · `ampere_torna` — settore 30 · desiderabile
+**Dove:** settore 30, quando i Custodi gli strappano la lanterna.
+**Cosa:** una lotta breve e ravvicinata; la lanterna passa di mano e **si
+accende fra Aren e Lyra**, illuminandoli in verde per la prima volta. ECHO-0
+indietreggia e fugge.
+**Frase a schermo:** nessuna.
+
+---
+
+## 4 · `il_tradimento` — settore 35 · **ESSENZIALE**
 **Dove:** settore 35, alla fine del terzo scontro con ECHO-0.
 **Cosa deve mostrare, in tre battute:**
 1. ECHO-0 è in ginocchio, sconfitto, e stringe **Ampere** al petto: l'ha difesa
@@ -79,7 +117,9 @@ Senza questi la storia dell'atto II ha dei buchi.
 spettatore deve provare pena per lui.
 **Frase a schermo:** nessuna.
 
-## 2 · `il_passaggio`
+---
+
+## 5 · `il_passaggio` — settore 35 · **ESSENZIALE**
 **Dove:** settore 35, subito dopo `il_tradimento`.
 **Cosa deve mostrare:**
 1. ECHO-0 si rialza, lentamente. Aren e Lyra sono pronti a colpirlo.
@@ -90,7 +130,39 @@ spettatore deve provare pena per lui.
 **Perché conta:** ECHO-0 indica la strada che porta alla propria fine, e lo sa.
 **Frase a schermo (obbligatoria):** «È DI LÀ.»
 
-## 3 · `il_finale`
+---
+
+## 6 · `eclissia` — settore 36 · desiderabile
+**Dove:** settore 36, appena attraversato il passaggio.
+**Cosa:** la prima inquadratura del mondo nuovo. Un panorama largo: terra vera,
+cielo vero, ma illuminati al contrario, luce radente e colori profondi. In
+lontananza, **la Caldera Voltaica** con le scariche che salgono lungo i fianchi.
+I due sono piccoli in basso nell'inquadratura.
+**Frase a schermo:** «ECLISSIA.»
+
+---
+
+## 7 · `il_reattore` — settore 56 · desiderabile
+**Dove:** settore 56, alla caduta di ECHO-1.
+**Cosa:** i **tre cristalli gialli** si spengono uno dopo l'altro; le morse si
+aprono; **Ampere esce** dal petto del colosso che si accascia. La lanterna
+fluttua verso i due e **si riempie di colpo** di tutta la corrente che si erano
+portati addosso: si accende come non l'abbiamo mai vista.
+**Frase a schermo:** nessuna.
+
+---
+
+## 8 · `la_cima` — settore 65 · **ESSENZIALE**
+**Dove:** settore 65, arrivati in cima, prima dello scontro.
+**Cosa:** il bordo del cratere. Sopra di esso si condensa **OHM**: una massa di
+fulmini bianchi e azzurri senza faccia, enorme. Il segno **Ω** si accende dentro
+il groviglio. I due sembrano minuscoli.
+**Frase a schermo (obbligatoria), detta da ECHO-0:** «NON È UN SOVRACCARICO. È
+OHM.» poi «E NOI SIAMO SOLTANTO LE SUE ECO.»
+
+---
+
+## 9 · `il_finale` — settore 65 · **ESSENZIALE**
 **Dove:** settore 65, in cima alla Caldera, dopo la sconfitta di OHM.
 **Cosa deve mostrare, in cinque battute (questo può arrivare a 14-16 secondi:
 è il finale del gioco, qui la durata si può sforare):**
@@ -121,71 +193,3 @@ dolcezza, non in trionfo.
 **Frasi a schermo (in sequenza, alla fine):**
 «VOLT HA APERTO LA FRATTURA.» / «AMPERE HA PERMESSO ALL'ENERGIA DI SCORRERE.» /
 «INSIEME HANNO RIPORTATO L'EQUILIBRIO.»
-
----
-
-# I SEI DESIDERABILI
-Fanno bella figura, ma il gioco regge anche senza.
-
-## 4 · `dentro_la_frattura`
-**Dove:** settore 21, all'ingresso nell'atto II.
-**Cosa:** Aren e Lyra attraversano insieme la Frattura e si fermano.
-Attorno a loro **pezzi di Lumina strappati e sospesi nel viola**: un tratto di
-prateria, il tetto di una casa, una strada che finisce nel vuoto. Riconoscono
-casa loro, a brandelli.
-**Frase a schermo:** nessuna. Bastano le facce.
-
-## 5 · `primo_incontro`
-**Dove:** settore 24, prima del primo scontro con ECHO-0.
-**Cosa:** una sagoma nera si compone a mezz'aria dalle schegge. **ECHO-0**
-apre gli occhi — uno azzurro e uno rosso — e guarda i due. Le sue braccia
-imitano le loro armi.
-**Frase a schermo (obbligatoria):** «HO OSSERVATO OGNI TUA SCELTA.» poi «ORA I
-TUOI POTERI APPARTENGONO A ME.»
-
-## 6 · `ampere_torna`
-**Dove:** settore 30, quando i Custodi gli strappano la lanterna.
-**Cosa:** una lotta breve e ravvicinata; la lanterna passa di mano e **si
-accende fra Aren e Lyra**, illuminandoli in verde per la prima volta. ECHO-0
-indietreggia e fugge.
-**Frase a schermo:** nessuna.
-
-## 7 · `eclissia`
-**Dove:** settore 36, appena attraversato il passaggio.
-**Cosa:** la prima inquadratura del mondo nuovo. Un panorama largo: terra vera,
-cielo vero, ma illuminati al contrario, luce radente e colori profondi. In
-lontananza, **la Caldera Voltaica** con le scariche che salgono lungo i fianchi.
-I due sono piccoli in basso nell'inquadratura.
-**Frase a schermo:** «ECLISSIA.»
-
-## 8 · `il_reattore`
-**Dove:** settore 56, alla caduta di ECHO-1.
-**Cosa:** i **tre cristalli gialli** si spengono uno dopo l'altro; le morse si
-aprono; **Ampere esce** dal petto del colosso che si accascia. La lanterna
-fluttua verso i due e **si riempie di colpo** di tutta la corrente che si erano
-portati addosso: si accende come non l'abbiamo mai vista.
-**Frase a schermo:** nessuna.
-
-## 9 · `la_cima`
-**Dove:** settore 65, arrivati in cima, prima dello scontro.
-**Cosa:** il bordo del cratere. Sopra di esso si condensa **OHM**: una massa di
-fulmini bianchi e azzurri senza faccia, enorme. Il segno **Ω** si accende dentro
-il groviglio. I due sembrano minuscoli.
-**Frase a schermo (obbligatoria), detta da ECHO-0:** «NON È UN SOVRACCARICO. È
-OHM.» poi «E NOI SIAMO SOLTANTO LE SUE ECO.»
-
----
-
-## Ordine di consegna consigliato
-1. `il_tradimento` + `il_passaggio` (sono una scena sola divisa in due)
-2. `primo_incontro` (serve prima nel gioco: settore 24)
-3. `dentro_la_frattura`
-4. `ampere_torna`
-5. `eclissia`
-6. `il_reattore`
-7. `la_cima` + `il_finale` (anche questi due sono una scena sola)
-
-I filmati si possono consegnare uno alla volta: il gioco li prende appena ci
-sono, e se manca un file tira dritto senza bloccarsi.
-
-attenzione a calcolare esattamente i crediti rimanenti su runwayml, chiedere sempre al Capo progetto (l'umano) e soprattutto lasciarsi qualche credito di riserva.
