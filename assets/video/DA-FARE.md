@@ -3,7 +3,8 @@
 Da consegnare a chi li produce. Ogni scheda è autosufficiente: dentro c'è chi
 compare, com'è fatto, cosa succede e cosa deve restare in mente allo spettatore.
 
-**Da fare: dieci.** **Fatti finora (6):** `introduzione`, `rapimento_lyra`, `rapimento_aren`,
+**Da fare: dieci** (sei essenziali).
+**Già fatti: sei** — `introduzione`, `rapimento_lyra`, `rapimento_aren`,
 `liberazione_lyra`, `liberazione_aren`, `la_luce_se_ne_va`.
 
 ---
@@ -62,7 +63,7 @@ blu, mai fuoco arancione.
 
 ---
 
-# LE NOVE SCHEDE, IN ORDINE DI STORIA
+# LE DIECI SCHEDE, IN ORDINE DI STORIA
 
 Sono elencate come si incontrano giocando, dal settore 21 al 65. Accanto a
 ognuna c'è se è **essenziale** (senza, la storia ha un buco) o desiderabile.

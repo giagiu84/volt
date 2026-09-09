@@ -1279,8 +1279,8 @@ gioca**.
 | `liberazione_aren` | dopo il settore 20 | Lyra apre la cella col guanto, si abbracciano |
 | `la_luce_se_ne_va` | premendo CONTINUA, dopo il 20 | I due davanti alla Frattura: isole di Lumina sospese nel viola, saette, e la luce di casa che se ne va |
 
-**Da fare**, in ordine di importanza. I primi quattro sono **essenziali**: senza
-di loro la storia non si capisce. Gli altri fanno bella figura.
+**Da fare: dieci**, qui in ordine di settore. I sei segnati **essenziale** sono
+quelli senza cui la storia non si capisce; gli altri fanno bella figura.
 
 | # | File | Settore | Cosa deve mostrare | Priorità |
 |---|---|---|---|---|
@@ -1319,8 +1319,11 @@ Non sono consigli: se non si rispettano, il filmato non entra nel gioco.
 - **Dimensione:** 1280×720, orizzontale. Su un telefono in verticale appare come
   una fascia centrale su fondo nero, ed è giusto così.
 - **Durata:** 6-10 secondi. Oltre, la gente salta.
-- **Peso:** **massimo 3 MB l'uno.** Il gioco intero pesa poco più di un mega:
-  quattro video da dieci lo renderebbero lentissimo da aprire in mobilità.
+- **Peso:** **massimo 3 MB l'uno** (l'introduzione è l'unica eccezione, 4,5 MB,
+  perché si scarica mentre il giocatore guarda una schermata ferma). La pagina
+  del gioco pesa poco più di un mega e i filmati si caricano solo quando
+  servono: se pesassero dieci mega l'uno, ognuno sarebbe un'attesa nera nel
+  momento peggiore. **Mandali pure pesanti: li ricomprimo io.**
 - **Deve funzionare muto.** L'audio sul telefono può essere bloccato dal
   browser. Quindi **niente dialoghi parlati indispensabili**: se una frase è
   necessaria, si scrive a schermo, in maiuscolo, poche parole.
