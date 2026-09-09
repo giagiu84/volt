@@ -219,19 +219,25 @@ const Game = {
     Input.placeOrb(w, h);
   },
 
+  /* Schermo intero e telefono coricato. Va chiesto DENTRO il tocco del
+     giocatore, altrimenti il browser dice di no: per questo sta in una
+     funzione a parte, chiamata da ogni pulsante che apre qualcosa a schermo
+     pieno — il GIOCA e il TOCCA PER COMINCIARE dell'introduzione. */
+  schermoIntero() {
+    if (!(Input.touchMode || matchMedia('(pointer:coarse)').matches)) return;
+    try {
+      const el = document.documentElement;
+      const rq = el.requestFullscreen || el.webkitRequestFullscreen;
+      if (rq && !document.fullscreenElement) { const r = rq.call(el); if (r && r.catch) r.catch(() => {}); }
+      if (screen.orientation && screen.orientation.lock) {
+        const r2 = screen.orientation.lock('landscape');
+        if (r2 && r2.catch) r2.catch(() => {});
+      }
+    } catch (e) { /* niente schermo intero: pazienza */ }
+  },
+
   start(fromClick, mode, fromCheckpoint) {
-    /* su telefono a schermo intero si gioca molto meglio: va chiesto dentro il gesto */
-    if (fromClick && (Input.touchMode || matchMedia('(pointer:coarse)').matches)) {
-      try {
-        const el = document.documentElement;
-        const rq = el.requestFullscreen || el.webkitRequestFullscreen;
-        if (rq && !document.fullscreenElement) { const r = rq.call(el); if (r && r.catch) r.catch(() => {}); }
-        if (screen.orientation && screen.orientation.lock) {
-          const r2 = screen.orientation.lock('landscape');
-          if (r2 && r2.catch) r2.catch(() => {});
-        }
-      } catch (e) { /* niente schermo intero: pazienza */ }
-    }
+    if (fromClick) this.schermoIntero();
     Sfx.init(); Sfx.resume(); Sfx.startMusic();
     this.mode = mode || this.mode || 'campaign';
     this.level = 1; this.score = 0; this.kills = 0; this.eliteSeen = {};
@@ -352,6 +358,7 @@ const Game = {
   /* L'introduzione: la centrale di Lumina, i due di turno, e il cielo che si
      spacca. Finisce esattamente dove comincia il rapimento. */
   guardaIntro() {
+    this.schermoIntero();
     Sfx.init(); Sfx.resume();
     document.getElementById('titolo').classList.add('hidden');
     document.getElementById('menu').classList.add('hidden');
