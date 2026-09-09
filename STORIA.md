@@ -18,8 +18,8 @@ Ogni voce porta un'etichetta:
 
 Ultimo aggiornamento: 9 settembre 2026 — gioco alla versione 30.
 Atto II completo dal settore 21 al 65, con le istruzioni operative per chi
-produce immagini, post e filmati (capitolo 14). Fusa con la Bibbia narrativa
-v1.1 scritta con l'altra IA.
+produce immagini, post e filmati (capitolo 14). **Nessuna domanda aperta.**
+Fusa con la Bibbia narrativa v1.1 scritta con l'altra IA.
 
 ---
 
@@ -342,7 +342,7 @@ aspira. Pezzo per pezzo.
 di uscire. La luce va dal nemico verso la lanterna, non viceversa. È
 l'immagine-chiave del finale e vale un poster da sola.
 
-> **[APERTO] — Ampere si versa, non si getta.** Deciso: la lanterna resta.
+> **[DECISO] — Ampere si versa, non si getta.** La lanterna resta.
 > Alla fine è vuota e spenta, in mano a chi l'ha portata fin lassù, e si
 > riaccende piano soltanto quando la Frattura è chiusa.
 ## 4. I nemici
@@ -469,50 +469,71 @@ su sé stesse, grande quanto una casa. Porta un segno, ed è il suo simbolo:
 **Ω**, la lettera dell'ohm, che è già la forma di un arco elettrico. Quando
 aspiri, il groviglio si assottiglia e il segno si spegne un pezzo alla volta.
 
-#### La creatura che resta — una piccola eclissi **[SCRITTO]** *(il nome è [APERTO])*
+#### ECLIO **[SCRITTO]**
 
-Quello che nasce dal nucleo di ECHO-0 alla fine del gioco. **Non è un ECHO
-rimpicciolito**: è una cosa nuova, la prima nata dopo il riequilibrio.
+> **ECLIO** — l'ultima scintilla cosciente di ECHO-0.
+> Nato dalla Corrente Verde dentro Ampere, porta in sé **la luce di Lumina e
+> l'ombra di Eclissia**.
 
-**Cos'è.** Una piccola sfera fluttuante, **metà illuminata e metà in ombra**,
-come un'eclissi vista da vicino. Non ha braccia, non ha gambe, non ha faccia.
-È fatta dei due mondi finalmente in fase: **è la prova vivente del finale**, e
-si porta il nome di Eclissia addosso senza doverlo spiegare.
+**Cos'è.** Quello che nasce dal nucleo di ECHO-0 alla fine del gioco. **Non è un
+ECHO rimpicciolito**: è una cosa nuova, la prima nata dopo il riequilibrio.
+
+Una piccola sfera fluttuante, **metà illuminata e metà in ombra**, come
+un'eclissi vista da vicino. Non ha braccia, non ha gambe, non ha faccia. È fatto
+dei due mondi finalmente in fase: **è la prova vivente del finale**, e si porta
+il nome di Eclissia addosso senza doverlo spiegare.
 
 Gli occhi diversi di ECHO-0 non ci sono più, ed è voluto: erano il segno che era
 fatto di pezzi rubati ad Aren e Lyra. Lasciarglieli sarebbe come lasciargli le
 manette.
 
+**Il nome.** Viene da Eclissia, ma suona piccolo, affettuoso e pronunciabile in
+qualunque lingua. Non sembra il nome di un mostro né di un robot: sembra quello
+di una creatura unica. **Si scrive ECLIO in maiuscolo nei titoli, Eclio nei
+testi.**
+
 **Nasce dal vetro di Ampere.** Il filo di corrente che i due deviano non gli
-ricostruisce un corpo: entra nella lanterna, e dalla lanterna **esce lei**. Lì
+ricostruisce un corpo: entra nella lanterna, e dalla lanterna **esce lui**. Lì
 dentro torna a dormire quando vuole. Quello che aveva rubato Ampere finisce per
 abitarci — ed è la vendetta più dolce che potesse capitargli.
 
 **Come si gioca.** Nel finale non si comanda: esce, gira intorno ai due, e li
-segue a Lumina. In un eventuale atto III sarebbe la compagna del giocatore, e
-la sua abilità resta l'unica che ha sempre avuto — **copiare** — ma per gioco,
-non per rubare.
+segue a Lumina. In un eventuale atto III sarebbe la compagna del giocatore, e la
+sua abilità resta l'unica che ha sempre avuto — **copiare** — ma per gioco, non
+per rubare.
 
-**Come si disegna.** Una sfera piccola, liscia, senza spigoli. Una metà di luce
-calda (il bianco-verde di Ampere), l'altra in ombra profonda (l'indaco di
-Eclissia), e fra le due una **linea netta che si sposta come le fasi della
-luna**.
-
-**Quella linea è la sua faccia.** È l'unica espressione che ha, ed è l'unico
-parametro da animare:
+#### Le fasi di Eclio: il suo linguaggio
+La linea che separa la luce dall'ombra **è la sua faccia**. Non ha altre
+espressioni, e non gliene servono: è l'unico parametro da animare, e il
+significato di ogni fase è canonico.
 
 | Fase | Cosa vuol dire |
 |---|---|
-| Quasi tutta luce | contenta, curiosa, si fida |
-| Metà e metà | tranquilla, è il suo riposo |
-| Quasi tutta ombra | ha paura, o si sta nascondendo |
+| **Prevalenza luminosa** | curiosità, fiducia |
+| **Metà luce e metà ombra** | attenzione, equilibrio — è il suo riposo da sveglio |
+| **Prevalenza indaco** | paura, tristezza, o pericolo vicino |
+| **Linea instabile** (che oscilla in fretta) | agitazione |
+| **Eclissi perfetta** (tutto in ombra) | sonno, o rientro nella lanterna |
 
-**Il nome.** Non c'è ancora. Lo disegna l'altra IA e **dal rendering viene il
-nome**. Fino ad allora, in ogni testo, si scrive «la creatura che resta».
+**Come si disegna.** Una sfera piccola, liscia, senza spigoli. Una metà di luce
+calda bianco-verde (il verde di Ampere, con venature più chiare che si muovono
+dentro), l'altra in ombra indaco profondo con un riflesso viola in alto. Fra le
+due, una **linea netta** che si sposta come le fasi della luna. Attorno, un alone
+verde sottile.
 
-**Perché questa e non un'altra:** significa qualcosa (i due mondi in equilibrio),
-si anima con un parametro solo, si riconosce in silhouette, e **si stampa in 3D**
-— insieme alla lanterna sono due oggetti, non uno.
+**La dimensione canonica è di circa 16 centimetri**: sta nel palmo di una mano,
+ed è alto quanto la testa di Aren. Vale per i disegni, per i post e per la
+stampa 3D.
+
+**Riferimenti ufficiali** (in `assets/heroes/`, dall'altra IA):
+- `eclio.webp` — le tre fasi principali
+- `lanterna_esce_eclio.webp` — mentre esce dal vetro di Ampere
+- `aren_eclio_lyra.webp` — fra i due Custodi, per la scala
+
+Da queste immagini non ci si allontana più.
+
+**Nel gioco si disegna in codice**, come tutto il resto: è un cerchio con un
+gradiente e una linea che si sposta — non serve nessun file, e resta leggero.
 #### ECHO-2 e ECHO-3 — non esistono **[DECISO]**
 **Non si fanno.** Con ECHO-0, ECHO-1 e OHM la storia è completa e ogni creatura
 ha un mestiere diverso; aggiungerne altre due le trasformerebbe in una serie di
@@ -763,7 +784,7 @@ Il corpo di schegge si disfa. Poi, dal vetro della lanterna, **esce una piccola
 sfera che fluttua: metà luce e metà ombra, come un'eclissi**. Gira una volta
 intorno ai due, e li segue.
 
-La portano a Lumina con loro.
+Si chiama **ECLIO**. Lo portano a Lumina con loro.
 
 **Ampere resta.** Vuota e spenta, in mano a chi l'ha portata fin lassù — e si
 riaccende piano, con un filo di luce, solo quando la Frattura è chiusa.
@@ -789,7 +810,7 @@ non sposta nessuna di queste cinque cose, probabilmente non serve.
 | La Caldera | Compassione | Estendono al nemico la salvezza che cercavano per sé |
 
 ### ATTO III **[APERTO]**
-La piccola eclissi vive a Lumina, e dorme dentro Ampere. Potrebbe diventare la
+**Eclio** vive a Lumina, e dorme dentro Ampere. Potrebbe diventare la
 compagna del giocatore — o giocabile lei stessa — conservando l'unica cosa che
 ha sempre saputo fare: copiare. Niente di più è deciso.
 ## 6. Le regole del racconto
@@ -841,6 +862,7 @@ Cose che in questo universo **non si fanno mai**:
 | **ECHO-1**, il Condensatore | Echo Uno, il colosso |
 | **la centrale di Lumina** (dove stava Ampere) | il generatore, la fabbrica |
 | **CIRCUITO APERTO** (la modalità infinita, fuori dal canone) | Oltre la Frattura, modalità infinita |
+| **ECLIO** nei titoli, **Eclio** nei testi | Eclio-0, la creaturina, l'eclissi |
 | **il Comandante della Prateria / del Deserto / della Laguna** | il boss, il primo boss |
 | **ECHO-0**, **ECHO-1** (trattino, cifra) | Echo Zero, ECHO 0 |
 | **il Divoratore** | il divoratore |
@@ -936,16 +958,15 @@ Quello che c'è già e che l'atto II riuserà: il cambio fra i due Custodi, Ampe
 con la sua corrente, le sette leggi del mondo, gli élite, il buio (che serve per
 i blackout di Lumina), la tempesta, i boss.
 
-### Il nome della modalità infinita **[APERTO]**
+### Il nome della modalità infinita **[GIOCO]** *(dalla versione 31)*
 Nel gioco di oggi la modalità infinita si chiama **Oltre la Frattura**, e lì
 Ampere è con te dal primo settore. Ma «oltre la Frattura» adesso è un posto
 preciso della storia — Eclissia — e nel racconto Ampere all'inizio non ce l'hai.
 Due cose diverse sotto lo stesso nome.
 
-Proposta: la modalità infinita — che è un arcade a punteggio, non un capitolo —
-prende un nome suo. Il migliore che abbiamo trovato è **CIRCUITO APERTO**: un
-circuito che non si chiude mai è esattamente un posto dove la corrente non
-arriva da nessuna parte, e infatti non finisce.
+Risolto: la modalità infinita — che è un arcade a punteggio, non un capitolo —
+si chiama **CIRCUITO APERTO**. Un circuito che non si chiude mai è esattamente
+un posto dove la corrente non arriva da nessuna parte, e infatti non finisce.
 
 **Regola che ne discende:** la modalità infinita **sta fuori dal canone**. Quello
 che succede lì non è mai successo alla storia.
@@ -959,16 +980,20 @@ dà la stessa sensazione a una frazione del costo.
 
 ---
 
-## 11. Le domande ancora aperte **[APERTO]**
+## 11. Le domande ancora aperte
 
-Ne resta una. Tutto il resto è stato deciso e sta nel capitolo che gli compete.
+**Nessuna.** Per la prima volta da quando esiste questo file, ogni decisione di
+racconto è presa: il mondo, i personaggi, i nemici, i due atti, il finale, i
+nomi.
 
-1. **Come si chiama la creatura che resta?** La forma è decisa (una piccola
-   eclissi che nasce dal vetro di Ampere, capitolo 4): manca il nome, e viene
-   dal rendering dell'altra IA. Fino ad allora, nei testi, si scrive «la
-   creatura che resta».
+Restano marcate [APERTO] solo due cose, e non sono domande:
+- **l'atto III**, che non è una decisione da prendere ma un dopo da vedere;
+- **le tre leggi non programmate** (capitolo 10), che non sono un dubbio ma un
+  costo.
 
-È l'ultima cosa che manca alla Bibbia.
+Quello che resta non è più da decidere: è da **fare**. Il gioco si ferma al
+settore 20 e la Bibbia arriva al 65 — la distanza fra le due cose è tutto il
+lavoro che c'è davanti.
 
 ### Decise, per memoria
 Eclissia è il nome dell'altro mondo · Ampere torna in mano ai Custodi al settore
@@ -976,12 +1001,9 @@ Eclissia è il nome dell'altro mondo · Ampere torna in mano ai Custodi al setto
 gioca in soggettiva, la salita in 2,5D · la Frattura si era già aperta una volta
 e fu chiusa nel modo sbagliato · Aren e Lyra erano due tecnici di turno, non due
 prescelti · i Comandanti sono d'area e non hanno nomi propri · ECHO-2 ed ECHO-3
-non si fanno · il capitolo zero racconta la notte prima · la creatura che resta è
-una piccola eclissi e nasce dal vetro di Ampere · la modalità infinita si chiama
-Circuito Aperto e sta fuori dal canone.
-
----
-
+non si fanno · il capitolo zero racconta la notte prima · la creatura che resta
+è **Eclio**, una piccola eclissi che nasce dal vetro di Ampere · la modalità
+infinita si chiama Circuito Aperto e sta fuori dal canone.
 ## 12. Come si aggiorna questa Bibbia
 
 ### I due file
@@ -1079,7 +1101,7 @@ filamenti e cuce il cielo lungo i bordi della Frattura. ECHO-0 sta per sparire
 insieme al mondo che lo ha creato — e i due Custodi deviano un filo di quella
 corrente nel suo nucleo — e quel filo entra dentro Ampere. Il corpo di schegge si
 disfa, e dal vetro della lanterna esce una piccola sfera fluttuante, metà luce e
-metà ombra come un'eclissi, che tornerà a Lumina con loro.
+metà ombra come un'eclissi: si chiama **Eclio**, e tornerà a Lumina con loro.
 
 La Frattura non si chiude con la distruzione. Si chiude con l'equilibrio: la
 tensione ha finalmente trovato qualcosa in cui scorrere.
@@ -1109,25 +1131,20 @@ pronto.
 | 8 | **ECHO-1** | Il rendering esiste: serve la versione **con Ampere incastonata nel petto** |
 | 9 | **La Caldera Voltaica** | Il posto finale |
 | 10 | **OHM** | L'ultimo nemico. Nessuno lo deve vedere prima del momento giusto |
-| 11 | **La creatura che resta** | Ultima. La forma è decisa, dal disegno verrà il **nome** |
+| 11 | **ECLIO** | ✔ Fatto: tre rendering ufficiali in `assets/heroes/` |
 
-### 14.1-bis La commessa per la creatura che resta
-Il brief, già pronto da passare a chi genera le immagini:
+### 14.1-bis ECLIO — fatto
+Le tre immagini di riferimento ci sono, in `assets/heroes/`: `eclio.webp` (le
+tre fasi), `lanterna_esce_eclio.webp` (mentre esce dalla lanterna) e
+`aren_eclio_lyra.webp` (fra i due Custodi, per la scala).
 
-> *Una piccola sfera fluttuante, liscia e senza arti, metà illuminata di luce
-> calda bianco-verde e metà in ombra indaco profondo, come un'eclissi vista da
-> vicino. La linea netta che separa le due metà si sposta come le fasi della
-> luna ed è la sua unica espressione. Nasce dal vetro di una lanterna verde e
-> può rientrarci. Stile coerente con il gioco: forme morbide, contorno scuro,
-> colori vivi.*
+Da qui in poi Eclio si disegna **sempre** partendo da quelle: sfera liscia, metà
+luce bianco-verde con venature che si muovono, metà indaco profondo con un
+riflesso viola in alto, linea netta fra le due, alone verde sottile. Circa
+sedici centimetri, alto quanto la testa di Aren.
 
-Servono tre cose: **la creatura da sola** (tre fasi: quasi tutta luce, metà e
-metà, quasi tutta ombra), **mentre esce dalla lanterna**, e **accanto ad Aren e
-Lyra** per capire quanto è piccola.
-
-**Poi si guarda il rendering e le si dà il nome.** È l'ultima cosa che manca
-alla Bibbia.
-
+Le fasi hanno un significato canonico (capitolo 4): non si disegna Eclio in
+prevalenza indaco in una scena allegra.
 ### 14.2 La coerenza dei personaggi
 È il problema numero uno, e si risolve in un modo solo:
 
