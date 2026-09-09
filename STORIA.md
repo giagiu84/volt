@@ -1191,10 +1191,11 @@ Il gioco mostra brevi filmati fra una fase e l'altra, come faceva *Prince of
 Persia*: non sono premi, sono **il modo in cui la storia va avanti mentre si
 gioca**.
 
-**Fatti** (già dentro il gioco, cinque):
+**Fatti** (già dentro il gioco, sei):
 
 | File | Quando | Cosa mostra |
 |---|---|---|
+| `introduzione` | all'apertura del gioco, prima della scelta | Lumina dall'alto, la centrale, i due di turno, e il cielo che si spacca. La lanterna si intravede in penombra dietro un oblò, e nessuno la indica |
 | `rapimento_lyra` | inizio, se giochi Aren | Lyra viene strappata via dai viticci viola; le due mani si cercano e non si toccano; resta Aren solo, con la mano ancora tesa |
 | `rapimento_aren` | inizio, se giochi Lyra | La stessa scena rovesciata: è Aren a essere preso |
 | `liberazione_lyra` | dopo il settore 20 | Aren spezza la cella, si abbracciano |
@@ -1215,6 +1216,13 @@ di loro la storia non si capisce. Gli altri fanno bella figura.
 | 7 | `eclissia` | settore 36 | La prima immagine del mondo nuovo, con il vulcano all'orizzonte | desiderabile |
 | 8 | `il_reattore` | settore 56 | ECHO-1 cade, le tre morse si aprono, Ampere esce e si riempie di colpo | desiderabile |
 | 9 | `la_cima` | settore 65, prima dello scontro | OHM appare sopra il cratere; il segno Ω si accende | desiderabile |
+
+**Dove si semina Ampere.** Nei due rapimenti la lanterna **non si vede**: sono i
+primi secondi del gioco e non devono spiegare niente. **Nell'introduzione invece
+c'è, ma in penombra**, dietro l'oblò della centrale, mentre l'attenzione è
+altrove. Chi la nota non capisce cos'è — e al settore 15, quando il Comandante
+della Laguna se la porta via, sente un click senza sapere perché. È il modo
+giusto di seminare: presente, mai indicata.
 
 **Le trasmissioni brevi.** Oltre ai filmati servono clip di **tre o quattro
 secondi**, che il gioco mostra in un angolo mentre si gioca: ECHO-0 che compare
