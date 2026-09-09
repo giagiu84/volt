@@ -222,8 +222,11 @@ body.is-touch .help .help-row{margin-bottom:8px;line-height:1.65}
 .hero-btn small{font-size:10px;font-weight:800;color:var(--ink-soft);letter-spacing:.3px}
 .hero-btn.on{background:#fff;box-shadow:0 4px 0 rgba(36,26,77,.14),0 8px 18px rgba(10,6,36,.12),
   inset 0 0 0 2px var(--blue)}
-.hero-canvas{width:142px;height:168px;display:block}
-.hero-btn{flex:0 1 166px}
+.hero-canvas{width:168px;height:198px;display:block}
+.hero-btn{flex:0 1 194px}
+/* i due pulsanti in fondo al menu stanno in riga, non uno sotto l'altro */
+.menu-fine{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.menu-fine .mini-btn{margin:0;flex:0 1 auto}
 
 /* ---------- Campagna e vittoria ---------- */
 .big-btn small{display:block;font-size:11px;letter-spacing:2px;opacity:.75;margin-top:2px;font-weight:600}
@@ -283,4 +286,40 @@ body.is-touch .help .help-row{margin-bottom:8px;line-height:1.65}
 @media (max-height:520px){
   .power-hud{bottom:8px;width:190px}.power-head{font-size:9px}.panel{padding-top:20px}.logo{font-size:50px}
   .help{margin-top:13px;padding-top:10px}.feature-row{margin-bottom:13px}
+}
+
+/* ---------- telefono coricato ----------
+   In orizzontale l'altezza e' poca e la larghezza avanza: il menu si apre su
+   due colonne — a sinistra il titolo e i pulsanti, a destra i due custodi —
+   cosi non si deve piu' scorrere col dito per arrivare a GIOCA. */
+@media (orientation:landscape) and (max-height:560px){
+  #menu .panel{
+    width:min(900px,96vw);max-height:96vh;padding:16px 22px 14px;
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
+    column-gap:22px;row-gap:0;align-content:center;
+  }
+  #menu .panel > *{grid-column:1}
+  #menu .logo-wrap{margin:0}
+  #menu .logo{font-size:44px}
+  #menu .bolt{font-size:20px;top:-2px}
+  #menu .tag{font-size:11px;margin:2px 0 8px;line-height:1.45}
+  #menu .feature-row{display:none}
+  #menu .who{margin:0 0 6px;font-size:11px}
+  #menu .who b{font-size:15px}
+  #menu .heroes{grid-column:2;grid-row:1/12;align-self:center;margin:0;gap:12px}
+  #menu .hero-canvas{width:150px;height:180px}
+  #menu .hero-btn{flex:0 1 172px;padding:8px 6px 10px}
+  #menu .big-btn{margin-top:6px;padding:13px 16px}
+  #menu .mini-btn{margin-top:6px;padding:8px 12px;font-size:11px}
+  #menu .best{margin-top:6px;font-size:11px}
+  #menu .menu-fine{margin-top:6px}
+  #menu .mini-btn{margin-top:5px}
+  #comandi .panel{max-height:94vh;padding:16px 22px 14px}
+  #comandi .ptitle{margin-bottom:8px}
+  /* la legenda su due colonne: in orizzontale la larghezza avanza */
+  #comandi .help{margin-top:0;padding-top:0;border-top:0;font-size:11px;line-height:1.6;
+    column-count:2;column-gap:24px;text-align:left}
+  #comandi .help .help-row{margin-bottom:6px;break-inside:avoid}
+  #comandi .help-touch,#comandi .help-pc{break-inside:auto}
+  #comandi .big-btn{margin-top:10px}
 }

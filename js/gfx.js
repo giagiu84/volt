@@ -152,6 +152,9 @@ const Rings = {
    Una striscia di fotogrammi (uno ogni pochi gradi) ricavata dal foglio di
    rotazione: qui non si inventa nulla, si mostra il fotogramma giusto. */
 const HERO_FRAME_W = 150, HERO_FRAME_H = 210;
+/* Anche i disegni vogliono il numero di versione: senza, un telefono che ha in
+   cache il foglio vecchio continua a girare con quello. */
+function verAsset(url) { return url + '?v=' + (window.VOLT_VERSION || 0); }
 
 const HeroSpin = {
   data: {}, tried: false,
@@ -163,7 +166,7 @@ const HeroSpin = {
       const rec = { img: im, frames: 0 };
       im.onload = () => { rec.frames = Math.round(im.naturalWidth / HERO_FRAME_W); };
       im.onerror = () => { rec.frames = 0; };
-      im.src = 'assets/heroes/' + who + '_spin.webp';
+      im.src = verAsset('assets/heroes/' + who + '_spin.webp');
       this.data[who] = rec;
     }
   },
@@ -208,10 +211,10 @@ const HeroArt = {
         const im = new Image();
         /* prima il webp (pesa un quinto), e se manca si ripiega sul png */
         im.onerror = () => {
-          if (!im._png) { im._png = true; im.src = 'assets/heroes/' + key + '.png'; }
+          if (!im._png) { im._png = true; im.src = verAsset('assets/heroes/' + key + '.png'); }
           else im._failed = true;
         };
-        im.src = 'assets/heroes/' + key + '.webp';
+        im.src = verAsset('assets/heroes/' + key + '.webp');
         this.imgs[key] = im;
       }
     }

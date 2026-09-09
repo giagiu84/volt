@@ -126,6 +126,12 @@ js/util.js  gfx.js  audio.js  input.js  level.js  entities.js  game.js
 
 L'unica risorsa esterna sono i font Google (Fredoka e Nunito): se il sito deve funzionare offline o senza chiamate esterne, togli il `<link>` dei font in `index.html` — il gioco continua a funzionare con i font di sistema.
 
+### Il menu col telefono coricato
+
+Dopo l'introduzione il telefono resta bloccato in orizzontale, e lì l'altezza è poca. Il menu si apre allora su **due colonne** — a sinistra titolo e pulsanti, a destra i due custodi, più grandi — così GIOCA ORA si vede senza scorrere col dito.
+
+La spiegazione dei comandi non sta più nel menu: compare **dopo la scelta**, una volta sola, con il pulsante VIA!. Si rivede dal pulsante *Comandi*.
+
 ### L'introduzione
 
 Alla prima apertura il gioco mostra una schermata col titolo e **TOCCA PER COMINCIARE**: quel tocco serve al racconto ma serve anche al browser, perché senza un gesto del giocatore l'audio resta muto. Poi parte l'introduzione (15 secondi, saltabile) e si arriva alla scelta del custode. Dalla seconda volta in poi si va dritti al menu; l'introduzione si rivede col pulsante in fondo al menu.

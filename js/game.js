@@ -157,7 +157,16 @@ const Game = {
       mute.textContent = 'AUDIO: ' + (Sfx.enabled ? 'ON' : 'OFF');
     };
 
-    document.getElementById('playBtn').onclick = () => this.start(true, 'campaign', false);
+    /* La prima volta, fra la scelta e la partita, si spiega come si gioca:
+       nel menu quello spazio non c'e', e in orizzontale meno che mai. */
+    document.getElementById('playBtn').onclick = () => this.primaIComandi(() => this.start(true, 'campaign', false));
+    document.getElementById('comandiBtn').onclick = () => this.mostraComandi(null);
+    document.getElementById('viaBtn').onclick = () => {
+      document.getElementById('comandi').classList.add('hidden');
+      try { Store.set('volt_comandi', 1); } catch (e) {}
+      const poi = this._dopoComandi; this._dopoComandi = null;
+      if (poi) poi(); else document.getElementById('menu').classList.remove('hidden');
+    };
     document.getElementById('resumeRunBtn').onclick = () => this.start(true, 'campaign', true);
     document.getElementById('endlessBtn').onclick = () => {
       if (!this.progress.cleared) { this.banner('PRIMA RITROVA LYRA'); return; }
@@ -359,6 +368,19 @@ const Game = {
     });
   },
 
+  /* La legenda dei comandi: si vede una volta sola prima della prima partita,
+     e poi quando la si chiede dal menu. */
+  mostraComandi(poi) {
+    this._dopoComandi = poi;
+    document.getElementById('menu').classList.add('hidden');
+    document.getElementById('comandi').classList.remove('hidden');
+  },
+  primaIComandi(poi) {
+    this.schermoIntero();
+    if (Store.get('volt_comandi', 0) || this.prova) { poi(); return; }
+    this.mostraComandi(poi);
+  },
+
   /* L'introduzione: la centrale di Lumina, i due di turno, e il cielo che si
      spacca. Finisce esattamente dove comincia il rapimento. */
   guardaIntro() {
@@ -487,6 +509,8 @@ const Game = {
 
   toMenu() {
     this.state = 'menu';
+    document.getElementById('comandi').classList.add('hidden');
+    this._dopoComandi = null;
     this.rubato = null;
     /* al menu torna il custode scelto dal giocatore, non quello con cui è finita */
     if (this.canSwap && this.heroStart) this.hero = this.heroStart;
