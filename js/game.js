@@ -136,7 +136,11 @@ const Game = {
        sarebbe uno spreco. */
     document.getElementById('introBtn').onclick = () => this.guardaIntro();
     document.getElementById('introRiBtn').onclick = () => this.guardaIntro();
-    if (!Store.get('volt_intro', 0) && !this.prova) {
+    /* ?intro=1 la rimette come la vede chi apre il gioco per la prima volta:
+       serve per provarla e per farla vedere a qualcuno */
+    let primaVolta = !Store.get('volt_intro', 0);
+    try { if (new URLSearchParams(location.search).get('intro') === '1') primaVolta = true; } catch (e) {}
+    if (primaVolta && !this.prova) {
       document.getElementById('titolo').classList.remove('hidden');
       document.getElementById('menu').classList.add('hidden');
       /* intanto se lo scarica, cosi al tocco parte subito */
