@@ -126,6 +126,10 @@ js/util.js  gfx.js  audio.js  input.js  level.js  entities.js  game.js
 
 L'unica risorsa esterna sono i font Google (Fredoka e Nunito): se il sito deve funzionare offline o senza chiamate esterne, togli il `<link>` dei font in `index.html` — il gioco continua a funzionare con i font di sistema.
 
+### L'introduzione
+
+Alla prima apertura il gioco mostra una schermata col titolo e **TOCCA PER COMINCIARE**: quel tocco serve al racconto ma serve anche al browser, perché senza un gesto del giocatore l'audio resta muto. Poi parte l'introduzione (15 secondi, saltabile) e si arriva alla scelta del custode. Dalla seconda volta in poi si va dritti al menu; l'introduzione si rivede col pulsante in fondo al menu.
+
 ### Scorciatoie per provare
 
 Non si vedono se non le si scrive nell'indirizzo, non toccano il salvataggio e servono solo a controllare un pezzo senza rigiocare tutto:

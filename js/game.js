@@ -130,6 +130,19 @@ const Game = {
       if (q.get('vinci') === '1') this.prova = { settore: ATTO1_FINE, vinci: true };
     } catch (e) { /* niente parametri: si gioca normale */ }
 
+    /* L'introduzione la si vede una volta sola, la prima. Prima di lei c'e'
+       una schermata col titolo: serve al racconto, ma serve anche al browser —
+       senza un tocco del giocatore l'audio resta muto, e un filmato muto qui
+       sarebbe uno spreco. */
+    document.getElementById('introBtn').onclick = () => this.guardaIntro();
+    document.getElementById('introRiBtn').onclick = () => this.guardaIntro();
+    if (!Store.get('volt_intro', 0) && !this.prova) {
+      document.getElementById('titolo').classList.remove('hidden');
+      document.getElementById('menu').classList.add('hidden');
+      /* intanto se lo scarica, cosi al tocco parte subito */
+      fetch('assets/video/introduzione.mp4?v=' + (window.VOLT_VERSION || 0)).catch(() => {});
+    }
+
     document.getElementById('bestScore').textContent = this.best;
     const mute = document.getElementById('muteBtn');
     mute.textContent = 'AUDIO: ' + (Sfx.enabled ? 'ON' : 'OFF');
@@ -333,6 +346,19 @@ const Game = {
       vid.muted = true;
       const p2 = vid.play();
       if (p2 && p2.catch) p2.catch(chiudi);
+    });
+  },
+
+  /* L'introduzione: la centrale di Lumina, i due di turno, e il cielo che si
+     spacca. Finisce esattamente dove comincia il rapimento. */
+  guardaIntro() {
+    Sfx.init(); Sfx.resume();
+    document.getElementById('titolo').classList.add('hidden');
+    document.getElementById('menu').classList.add('hidden');
+    this.state = 'cinema';
+    this.playCinema('introduzione', () => {
+      try { Store.set('volt_intro', 1); } catch (e) { /* storage bloccato: pazienza */ }
+      this.toMenu();
     });
   },
 
