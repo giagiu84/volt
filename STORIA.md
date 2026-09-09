@@ -808,12 +808,19 @@ teneva aperta la ferita è quella che la ricuce.
 ECHO-0 è lì. Sta svanendo insieme al mondo che lo ha fatto nascere, e non fugge:
 aveva già scelto trenta settori prima, quando ha indicato la strada.
 
-Aren e Lyra **non versano tutto**. Deviano un filo di corrente nel suo nucleo —
-e quel filo non gli ricostruisce un corpo: **entra dentro Ampere**.
+Aren e Lyra **non versano tutto**. Deviano un filo di corrente verso di lui —
+non per ricostruirgli un corpo, ma per **raccoglierne la scintilla**.
 
-Il corpo di schegge si disfa. Poi, dal vetro della lanterna, **esce una piccola
-sfera che fluttua: metà luce e metà ombra, come un'eclissi**. Gira una volta
-intorno ai due, e li segue.
+Il tragitto si vede: un punto di luce lascia il petto di ECHO-0, attraversa
+l'aria ed **entra nel vetro di Ampere**. Solo allora il corpo di schegge si
+disfa e cade.
+
+Poi, dalla lanterna, **esce una piccola sfera che fluttua: metà luce e metà
+ombra, come un'eclissi**. Gira una volta intorno ai due, e li segue.
+
+> **Il passaggio della scintilla non è un dettaglio: è quello che dice allo
+> spettatore che Eclio è ECHO-0.** In qualunque media si racconti questa scena,
+> quel tragitto va mostrato.
 
 Si chiama **ECLIO**. Lo portano a Lumina con loro.
 

@@ -92,16 +92,29 @@ spettatore deve provare pena per lui.
 
 ## 3 · `il_finale`
 **Dove:** settore 65, in cima alla Caldera, dopo la sconfitta di OHM.
-**Cosa deve mostrare, in quattro battute (questo può arrivare a 12-14 secondi):**
+**Cosa deve mostrare, in cinque battute (questo può arrivare a 14-16 secondi:
+è il finale del gioco, qui la durata si può sforare):**
 1. La **Corrente Verde** viene versata nel cratere. Il vulcano non esplode:
    **erutta una colonna verde** che sale dritta al cielo.
 2. La colonna si divide in **migliaia di filamenti** che si allargano e
    **cuciono il cielo viola** lungo i due bordi della Frattura, come una ferita
    che si richiude.
-3. ECHO-0 si sta disfacendo. Aren e Lyra **deviano un filo di quella corrente**
-   verso il suo nucleo. Il corpo di schegge si disgrega.
-4. Dal vetro della lanterna esce **ECLIO**: gira una volta intorno ai due e li
-   segue. Ultima immagine: i tre di spalle, il cielo tornato sereno su Lumina.
+3. ECHO-0 si sta disfacendo insieme al mondo che lo ha creato. Aren e Lyra
+   **non versano tutta la corrente**: ne deviano un filo verso di lui — **non
+   per ricostruirgli un corpo, ma per raccogliere la sua scintilla**.
+4. **La scintilla lascia il corpo di ECHO-0 e viene portata dentro Ampere.**
+   Si deve vedere il tragitto: un puntino di luce che esce dal petto del
+   mostro, attraversa l'aria e **entra nel vetro della lanterna**. Solo dopo il
+   corpo di schegge si disgrega e cade.
+   *Questa è la battuta più importante del filmato: senza, non si capisce che
+   Eclio è lui.*
+5. Un attimo di silenzio. Poi **dal vetro della lanterna esce ECLIO**: gira una
+   volta intorno ai due e li segue. Ultima immagine: i tre di spalle, il cielo
+   tornato sereno su Lumina.
+
+**Chi è Eclio, perché sia chiaro a chi produce:** è **ECHO-0 salvato**. Non una
+creatura nuova che arriva dal nulla, ma quello che resta di lui quando gli
+tolgono l'energia corrotta. Per questo il tragitto della scintilla va mostrato.
 
 **Perché conta:** è il finale del gioco. Deve far venire i brividi e finire in
 dolcezza, non in trionfo.
@@ -174,3 +187,5 @@ OHM.» poi «E NOI SIAMO SOLTANTO LE SUE ECO.»
 
 I filmati si possono consegnare uno alla volta: il gioco li prende appena ci
 sono, e se manca un file tira dritto senza bloccarsi.
+
+attenzione a calcolare esattamente i crediti rimanenti su runwayml, chiedere sempre al Capo progetto (l'umano) e soprattutto lasciarsi qualche credito di riserva.
