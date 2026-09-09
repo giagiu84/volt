@@ -16,7 +16,7 @@ Ogni voce porta un'etichetta:
 | **[SCRITTO]** | è deciso e definitivo, ma non ancora programmato |
 | **[APERTO]** | non è ancora deciso. Chi lo decide lo scrive qui |
 
-Ultimo aggiornamento: 8 settembre 2026 — gioco alla versione 29.
+Ultimo aggiornamento: 9 settembre 2026 — gioco alla versione 30.
 
 ---
 
@@ -51,10 +51,19 @@ abitabile, e nel gioco lo si vede attraverso i suoi cinque paesaggi — **Prater
 Cromo, Deserto Solare, Laguna Profonda, Giardino Viola, Ghiacciaio** — che si
 alternano ogni cinque settori.
 
-### L'altro mondo **[SCRITTO]**
-Non ha ancora un nome. Ha un livello energetico **opposto** a quello di Lumina.
-Non è il mondo dei cattivi: è semplicemente l'altro polo.
-→ vedi **[APERTO]** in fondo.
+### ECLISSIA **[SCRITTO]**
+L'altro mondo. Ha un livello energetico **opposto** a quello di Lumina: è il
+polo basso, quello che aspetta di essere riempito. **Non è il mondo dei
+cattivi**, è semplicemente l'altro capo del circuito — e senza di lui la
+corrente non avrebbe dove andare.
+
+Si chiama così perché da Lumina si vede come un'ombra che copre la luce senza
+spegnerla. E un'eclissi, per definizione, **è una cosa che passa**: due corpi
+disallineati, non due nemici. È il motivo per cui la storia può finire con un
+riequilibrio e non con una distruzione.
+
+Il nome viene dal greco *ékleipsis*, «sparizione, venir meno» — la stessa
+paura che tiene in vita ECHO-0.
 
 ### La Frattura **[GIOCO]** *(l'origine è [SCRITTO])*
 La differenza di potenziale fra i due mondi è cresciuta finché non ha lacerato
@@ -324,6 +333,7 @@ Cose che in questo universo **non si fanno mai**:
 | **la Corrente Verde** | la corrente verde, l'energia verde |
 | **la Caldera Voltaica**, la Caldera | il vulcano |
 | **il Nucleo di Lumina**, il Nucleo | il cuore, il core |
+| **Eclissia** (l'altro mondo) | Obscuria, il mondo oscuro, il mondo dei mostri |
 | **ECHO-0**, **ECHO-1** (trattino, cifra) | Echo Zero, ECHO 0 |
 | **il Divoratore** | il divoratore |
 | **i Custodi** (maiuscolo quando è il ruolo) | i custodi |
@@ -402,14 +412,12 @@ dei poteri, i filmati nuovi.
 
 ## 11. Le domande ancora aperte **[APERTO]**
 
-1. **Come si chiama l'altro mondo?** Serve un nome, o si decide che non ne ha —
-   e allora si dice sempre e solo «oltre la Frattura».
-2. **Chi erano gli antichi Custodi** che costruirono Ampere? Servono davvero, o
+1. **Chi erano gli antichi Custodi** che costruirono Ampere? Servono davvero, o
    restano un'eco?
-3. **Perché proprio Aren e Lyra** vegliavano sul Nucleo? Sono stati scelti,
+2. **Perché proprio Aren e Lyra** vegliavano sul Nucleo? Sono stati scelti,
    nati così, o si sono trovati lì?
-4. **ECHO-2 ed ECHO-3** esistono o bastano ECHO-0 e ECHO-1?
-5. **Il capitolo zero su Instagram**: cosa si racconta prima dell'inizio del
+3. **ECHO-2 ed ECHO-3** esistono o bastano ECHO-0 e ECHO-1?
+4. **Il capitolo zero su Instagram**: cosa si racconta prima dell'inizio del
    gioco?
 
 ---
