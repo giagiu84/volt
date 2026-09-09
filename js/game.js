@@ -116,6 +116,16 @@ const Game = {
     addEventListener('blur', () => this.setPause(true));
     addEventListener('orientationchange', () => setTimeout(() => this.resize(), 250));
 
+    /* Scorciatoie per provare: ?settore=N parte da quel settore con una
+       dotazione plausibile, ?vinci=1 porta dritti alla fine del primo atto.
+       Non toccano il salvataggio e non si vedono se non le si scrive. */
+    try {
+      const q = new URLSearchParams(location.search);
+      const n = parseInt(q.get('settore') || '', 10);
+      if (n >= 1 && n <= SETTORI_PRONTI) this.prova = { settore: n };
+      if (q.get('vinci') === '1') this.prova = { settore: ATTO1_FINE, vinci: true };
+    } catch (e) { /* niente parametri: si gioca normale */ }
+
     document.getElementById('bestScore').textContent = this.best;
     const mute = document.getElementById('muteBtn');
     mute.textContent = 'AUDIO: ' + (Sfx.enabled ? 'ON' : 'OFF');
@@ -223,6 +233,22 @@ const Game = {
     this.onShipChange();
     this.loadLevel(1, true);
 
+    /* prova: si salta dove serve, con una dotazione da fine campagna */
+    if (this.prova && this.mode === 'campaign' && !fromCheckpoint) {
+      const scelti = ['power', 'rapidfire', 'hull', 'bounce', 'jump3', 'heart',
+                      'magnet', 'luck', 'boom', 'shieldgen'];
+      for (const k of scelti) this.perks[k] = 2;
+      this.level = this.prova.settore;
+      this.loadLevel(this.level, true);
+      this.player.maxHp = 6; this.player.hp = 6;
+      this.score = 42000;
+      this.canSwap = this.mode === 'endless' || this.level >= FRATTURA_DA;
+      if (this.prova.vinci) {
+        /* la fine del primo atto, subito: filmato, vittoria, CONTINUA */
+        setTimeout(() => { if (this.state === 'play') this.winCampaign(); }, 300);
+      }
+    }
+
     /* ripresa dopo un comandante: si torna con i poteri conquistati */
     const cp = this.progress.cp;
     if (fromCheckpoint && cp && this.mode === 'campaign') {
@@ -242,7 +268,7 @@ const Game = {
     this.state = 'play';
 
     /* la notte in cui Lumina si spense: solo all'inizio di una campagna nuova */
-    if (this.mode === 'campaign' && !fromCheckpoint) {
+    if (this.mode === 'campaign' && !fromCheckpoint && !this.prova) {
       const rapito = HEROES[this.hero].other.toLowerCase();
       this.state = 'cinema';
       document.getElementById('hud').classList.add('hidden');
@@ -358,7 +384,9 @@ const Game = {
     const rb = document.getElementById('resumeRunBtn');
     rb.classList.toggle('hidden', !cp);
     if (cp) document.getElementById('cpLevel').textContent = cp.level;
-    document.getElementById('playSub').textContent = 'CAMPAGNA · ATTO I: ' + ATTO1_FINE + ' SETTORI';
+    document.getElementById('playSub').textContent = this.prova
+      ? (this.prova.vinci ? 'PROVA · FINE DEL PRIMO ATTO' : 'PROVA · SETTORE ' + this.prova.settore)
+      : 'CAMPAGNA · ATTO I: ' + ATTO1_FINE + ' SETTORI';
     const eb = document.getElementById('endlessBtn');
     eb.classList.toggle('locked', !this.progress.cleared);
     eb.textContent = this.progress.cleared
@@ -366,7 +394,11 @@ const Game = {
       : 'Circuito Aperto — si sblocca finendo la campagna';
   },
 
-  saveProgress() { Store.set('volt_progress', this.progress); },
+  saveProgress() {
+    /* durante una prova il salvataggio vero non si tocca */
+    if (this.prova) return;
+    Store.set('volt_progress', this.progress);
+  },
 
   toMenu() {
     this.state = 'menu';
@@ -739,7 +771,21 @@ const Game = {
     else { Particles.update(dt * 0.35); Rings.update(dt * 0.35); }
 
     Sfx.update(dt);
-    this.render(dt);
+    /* Durante un filmato il mondo non si disegna: la tela resta nera sotto al
+       video. Cosi il filmato non ha niente dietro che traspare, e il telefono
+       non manda avanti il gioco a sessanta fotogrammi mentre guardi un video. */
+    if (this.state === 'cinema') {
+      if (!this._telaNera) {
+        this._telaNera = true;
+        const c = this.ctx;
+        c.setTransform(1, 0, 0, 1, 0, 0);
+        c.fillStyle = '#07040f';
+        c.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      }
+    } else {
+      this._telaNera = false;
+      this.render(dt);
+    }
     this.updateHud();
     Input.endFrame();
 

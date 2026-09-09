@@ -126,6 +126,15 @@ js/util.js  gfx.js  audio.js  input.js  level.js  entities.js  game.js
 
 L'unica risorsa esterna sono i font Google (Fredoka e Nunito): se il sito deve funzionare offline o senza chiamate esterne, togli il `<link>` dei font in `index.html` — il gioco continua a funzionare con i font di sistema.
 
+### Scorciatoie per provare
+
+Non si vedono se non le si scrive nell'indirizzo, non toccano il salvataggio e servono solo a controllare un pezzo senza rigiocare tutto:
+
+- `?vinci=1` — parte dalla fine del primo atto: filmato della liberazione, schermata di vittoria, **CONTINUA**, filmato del ponte, settore 21 dentro la Frattura.
+- `?settore=N` — comincia dal settore N (fino a quello costruito) con una dotazione da fine campagna.
+
+Esempio: `https://giagiu84.github.io/volt/?vinci=1`
+
 ### Quando modifichi il gioco
 
 Alza di uno il numero in `version.json` **e** il `?v=` nei tag di `index.html`: la pagina si accorge da sola di essere vecchia e si ricarica, altrimenti telefoni e browser continuano a servire i file di prima per una decina di minuti.
