@@ -1,41 +1,36 @@
-COSA SERVE PER LA GIOSTRA DEI CUSTODI
-=====================================
+LE IMMAGINI DI VOLT
+===================
 
-Sei immagini con SFONDO TRASPARENTE in questa cartella (.webp oppure .png):
+ATTENZIONE: in questa cartella ci sono due cose diverse.
 
-  aren_front    Aren visto di fronte
-  aren_side     Aren visto di profilo, rivolto a DESTRA
-  aren_back     Aren visto di schiena
-  lyra_front    Lyra vista di fronte
-  lyra_side     Lyra vista di profilo, rivolta a DESTRA
-  lyra_back     Lyra vista di schiena
+1) I FILE CHE IL GIOCO CARICA DAVVERO. Non si toccano e non si spostano:
+     aren_spin.webp    lyra_spin.webp      (la rotazione nella schermata di scelta)
+     aren_front.webp   aren_side.webp   aren_back.webp
+     lyra_front.webp   lyra_side.webp   lyra_back.webp
+   Se spariscono, la scelta del custode smette di funzionare.
 
-Il gioco cerca prima il .webp e poi il .png. Genera pure in PNG: qui vengono
-poi convertiti in webp, che pesa un quinto (1,4 MB diventano 200 KB).
+2) GLI ORIGINALI DELLE TAVOLE DI RIFERIMENTO, in .png a piena risoluzione.
+   Pesano una quarantina di mega e restano fuori dal repo. Le stesse tavole,
+   leggere e versionate, stanno in assets/riferimenti/ insieme all'INDICE.md
+   che dice cosa fissa ciascuna.
 
-Il gioco le usa da solo appena ci sono. Se ne manca anche una sola per un
-personaggio, quel personaggio resta disegnato dal codice (nessun errore).
+DA DOVE SI PARTE PER UNA NUOVA IMMAGINE
+Sempre da assets/riferimenti/. Quelle dieci tavole sono state approvate una per
+una: forma, colori e proporzioni non si cambiano piu'. Se un'immagine nuova le
+contraddice, e' l'immagine nuova a essere sbagliata.
 
-REGOLE PERCHE' LA ROTAZIONE FUNZIONI
-- Stessa inquadratura in tutte e tre le viste: figura intera, in piedi,
-  braccia lungo i fianchi, stessa altezza e stesso centro.
-- Personaggio centrato in orizzontale, piedi appoggiati sul bordo basso.
-- Dimensione consigliata: 512 x 768 px, sfondo trasparente (non bianco).
-- Nessuna ombra a terra disegnata dentro il PNG: la mette il gioco.
-- Niente scritte, cornici o effetti attorno alla figura.
+LE TRE REGOLE CHE VALGONO SEMPRE
+- Il verso di ECHO-0 si dice GUARDANDOLO DI FRONTE: occhio rosso alla nostra
+  sinistra e ciano alla nostra destra, guanto a sinistra e cannone a destra.
+- Lyra non porta il casco. Faccia scoperta, capelli viola corti, ciocca gialla.
+- Dietro il fulmine di ECHO-0 c'e' sempre la scintilla bianco-verde e indaco,
+  in secondo piano. Nessuno la nomina.
 
-COME CHIEDERLE AL GENERATORE
-Chiedi un "character turnaround sheet" in un'unica immagine, poi ritaglia le
-tre viste. E' l'unico modo per avere lo stesso personaggio in tutte e tre:
-generandole separatamente cambiano faccia e colori.
+COERENZA
+Si parte sempre dalla stessa immagine di riferimento del personaggio, si
+generano tutte le immagini di un personaggio prima di passare al successivo, e
+prima di tenerle si guardano di fila: se una faccia cambia, si nota subito.
 
-  "character turnaround sheet, same character in three views: front view,
-   side view facing right, back view, full body, standing, arms relaxed,
-   consistent proportions, flat white background, [descrizione del
-   personaggio], colorful mobile game art style, clean vector shading"
-
-AREN: casco bianco e ciano con visiera scura, tuta bianca e blu notte,
-sciarpa fucsia, blaster giallo alla cintura, saette azzurre sul petto.
-
-LYRA: tuta rosa corallo e bianca, capelli viola corti con una ciocca gialla,
-guanto energetico con anello luminoso giallo sulla mano destra, dettagli ciano.
+IL PROSSIMO PASSO
+Le immagini di scena, una per ogni filmato. La commessa completa sta in
+assets/video/DA-FARE.md. Si comincia da dentro_la_frattura (settore 21).
