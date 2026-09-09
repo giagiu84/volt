@@ -419,11 +419,24 @@ Colpi Pesanti, Raffica Rapida, Dash Esplosivo, Triplo Salto. Se non hai nessuno
 di quelli, te lo dice: «NON HAI NIENTE CHE MI SERVA».
 
 **Come si disegna.** Corpo nero cristallino fatto di schegge fluttuanti, nastri
-viola che si muovono da soli, **occhio sinistro azzurro e occhio destro rosso**,
-fulmine giallo sul petto. **Braccia diverse fra loro**: cannone ciano a sinistra,
-guanto rosso a destra — imitano il blaster di Aren e il guanto di Lyra.
+viola che si muovono da soli, fulmine giallo sul petto e **braccia diverse fra
+loro** — imitano il blaster di Aren e il guanto di Lyra.
+
+> **Il verso, e non è ambiguo.** Tutto si dice **guardandolo di fronte**, dal
+> punto di vista di chi guarda, mai dal suo:
+> - **occhio ROSSO alla nostra sinistra**, occhio **CIANO alla nostra destra**;
+> - **guanto alla nostra sinistra**, **cannone ciano alla nostra destra**.
+>
+> È il verso della tavola ufficiale, e il gioco è stato allineato a lei.
+
 L'asimmetria non è un vezzo: **è lì che si vede quale potere ha rubato**. Il
 guanto prende il colore del potenziamento copiato.
+
+**La scintilla nel petto.** Dietro il fulmine giallo si intravede una piccola
+sfera bianco-verde e indaco: alla prima apparizione sembra solo il suo nucleo
+energetico, e nessuno la nomina. È **quella** che al settore 65 lascerà il suo
+petto ed entrerà in Ampere. Va disegnata fin dalla prima immagine, sempre in
+secondo piano.
 
 > «HO OSSERVATO OGNI TUA SCELTA. ORA I TUOI POTERI APPARTENGONO A ME.»
 > «VOI VOLETE SALVARE IL VOSTRO MONDO. IO STO SOLTANTO CERCANDO DI NON SCOMPARIRE.»

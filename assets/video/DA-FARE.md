@@ -36,9 +36,12 @@ corallo e bianca, innesti ciano, guanto energetico alla mano destra. Se ha il
 casco è sbagliata.
 
 **ECHO-0** — corpo nero cristallino fatto di schegge fluttuanti, nastri viola
-che si muovono da soli, **occhio sinistro azzurro e occhio destro rosso**,
-fulmine giallo sul petto, **braccia diverse fra loro**: cannone ciano a
-sinistra, guanto rosso a destra.
+che si muovono da soli, fulmine giallo sul petto e **braccia diverse fra loro**.
+**Il verso si dice sempre guardandolo di fronte:** occhio **rosso alla nostra
+sinistra** e **ciano alla nostra destra**, **guanto alla nostra sinistra** e
+**cannone ciano alla nostra destra**. Dietro il fulmine si intravede una piccola
+scintilla bianco-verde e indaco: è quella che nel finale diventerà Eclio, e va
+disegnata fin dalla prima immagine, sempre in secondo piano.
 
 **ECHO-1** — colosso oscuro e pesante, senza volto, **tre cristalli gialli sul
 petto** e al centro, incastonata come un reattore, la lanterna verde.

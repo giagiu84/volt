@@ -1473,18 +1473,20 @@ class Enemy {
          il bordo nero sparisce. Cosi invece si stacca sempre. */
       ctx.lineWidth = 3; ctx.strokeStyle = '#a06bff';
 
-      /* braccia: a sinistra il cannone, a destra il guanto del potere rubato */
-      ctx.fillStyle = '#e8f6ff';
-      roundRect(ctx, -34, -6, 18, 13, 6); ctx.fill(); ctx.stroke();
-      Gfx.light(ctx, -36, 0, 22, '#38e8ff', 0.8);
-      ctx.fillStyle = '#38e8ff';
-      ctx.beginPath(); ctx.arc(-34, 0.5, 4.5, 0, TAU); ctx.fill();
-
+      /* Braccia diverse fra loro, e il verso e' quello della tavola ufficiale:
+         guardandolo di fronte, il GUANTO sta alla nostra sinistra e il CANNONE
+         alla nostra destra. Il guanto prende il colore del potere rubato. */
       ctx.fillStyle = '#f3e8ff';
-      roundRect(ctx, 17, -8, 17, 17, 7); ctx.fill(); ctx.stroke();
-      Gfx.light(ctx, 27, 0, 24, rub, 0.85);
+      roundRect(ctx, -34, -8, 17, 17, 7); ctx.fill(); ctx.stroke();
+      Gfx.light(ctx, -27, 0, 24, rub, 0.85);
       ctx.fillStyle = rub;
-      ctx.beginPath(); ctx.arc(27, 0.5, 5.2, 0, TAU); ctx.fill();
+      ctx.beginPath(); ctx.arc(-27, 0.5, 5.2, 0, TAU); ctx.fill();
+
+      ctx.fillStyle = '#e8f6ff';
+      roundRect(ctx, 16, -6, 18, 13, 6); ctx.fill(); ctx.stroke();
+      Gfx.light(ctx, 36, 0, 22, '#38e8ff', 0.8);
+      ctx.fillStyle = '#38e8ff';
+      ctx.beginPath(); ctx.arc(34, 0.5, 4.5, 0, TAU); ctx.fill();
 
       /* corpo */
       ctx.fillStyle = this.flash > 0 ? '#ffffff' : '#241348';
@@ -1492,6 +1494,21 @@ class Enemy {
       ctx.moveTo(0, -26); ctx.lineTo(17, -6); ctx.lineTo(13, 24);
       ctx.lineTo(0, 30); ctx.lineTo(-13, 24); ctx.lineTo(-17, -6);
       ctx.closePath(); ctx.fill(); ctx.stroke();
+
+      /* La scintilla, dietro al fulmine. Nessuno la nomina e sembra solo il suo
+         nucleo: e' lei che al settore 65 lascera' il petto ed entrera' dentro
+         Ampere per diventare Eclio. Va disegnata da subito. */
+      ctx.save();
+      Gfx.light(ctx, 0, 1, 24, '#5effa8', 0.45 + Math.sin(this.t * 2.2) * 0.1);
+      ctx.beginPath(); ctx.arc(0, 1, 9.5, 0, TAU);
+      ctx.fillStyle = '#1a1038'; ctx.fill();
+      ctx.save();
+      ctx.clip();
+      ctx.fillStyle = '#b9ffd8';
+      ctx.fillRect(-11, -10, 11, 22);
+      ctx.restore();
+      ctx.strokeStyle = '#4a3580'; ctx.lineWidth = 1.6; ctx.stroke();
+      ctx.restore();
 
       /* il fulmine giallo sul petto */
       ctx.fillStyle = '#ffd166';
@@ -1518,13 +1535,14 @@ class Enemy {
       ctx.beginPath();
       ctx.moveTo(6, -42); ctx.lineTo(10, -52); ctx.lineTo(2, -44); ctx.closePath(); ctx.fill();
 
-      /* gli occhi: uno ciano e uno rosso, e non cambiano mai */
+      /* Gli occhi non cambiano mai: guardandolo di fronte, il ROSSO e' alla
+         nostra sinistra e il CIANO alla nostra destra. */
       const guarda = clamp(px / 240, -1, 1);
-      Gfx.light(ctx, -6.5, -28, 13, '#38e8ff', 0.9);
-      Gfx.light(ctx, 6.5, -28, 13, '#ff3b5c', 0.9);
-      ctx.fillStyle = '#38e8ff';
-      ctx.beginPath(); ctx.ellipse(-6.5 + guarda * 1.5, -28, 3.4, 4.4, 0, 0, TAU); ctx.fill();
+      Gfx.light(ctx, -6.5, -28, 13, '#ff3b5c', 0.9);
+      Gfx.light(ctx, 6.5, -28, 13, '#38e8ff', 0.9);
       ctx.fillStyle = '#ff3b5c';
+      ctx.beginPath(); ctx.ellipse(-6.5 + guarda * 1.5, -28, 3.4, 4.4, 0, 0, TAU); ctx.fill();
+      ctx.fillStyle = '#38e8ff';
       ctx.beginPath(); ctx.ellipse(6.5 + guarda * 1.5, -28, 3.4, 4.4, 0, 0, TAU); ctx.fill();
 
       ctx.restore();
