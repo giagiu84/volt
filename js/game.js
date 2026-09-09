@@ -324,7 +324,9 @@ const Game = {
     document.getElementById('banner').classList.add('hidden');
     this.bannerT = 0;
     Sfx.stopMusic();
-    vid.src = 'assets/video/' + nome + '.mp4';
+    /* anche i filmati vogliono il numero di versione: senza, un telefono che
+       ha in cache quello vecchio continua a mostrarlo */
+    vid.src = 'assets/video/' + nome + '.mp4?v=' + (window.VOLT_VERSION || 0);
     const p = vid.play();
     if (p && p.catch) p.catch(() => {
       /* se l'audio è bloccato, riprovo muto: meglio muto che niente */

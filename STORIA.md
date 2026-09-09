@@ -1195,8 +1195,8 @@ gioca**.
 
 | File | Quando | Cosa mostra |
 |---|---|---|
-| `rapimento_lyra` | inizio, se giochi Aren | Lyra viene separata, trascinata oltre il portale, rinchiusa |
-| `rapimento_aren` | inizio, se giochi Lyra | Aren protegge il Nucleo, viene sopraffatto, imprigionato |
+| `rapimento_lyra` | inizio, se giochi Aren | Lyra viene strappata via dai viticci viola; le due mani si cercano e non si toccano; resta Aren solo, con la mano ancora tesa |
+| `rapimento_aren` | inizio, se giochi Lyra | La stessa scena rovesciata: è Aren a essere preso |
 | `liberazione_lyra` | dopo il settore 20 | Aren spezza la cella, si abbracciano |
 | `liberazione_aren` | dopo il settore 20 | Lyra apre la cella col guanto, si abbracciano |
 | `la_luce_se_ne_va` | premendo CONTINUA, dopo il 20 | I due davanti alla Frattura: isole di Lumina sospese nel viola, saette, e la luce di casa che se ne va |
