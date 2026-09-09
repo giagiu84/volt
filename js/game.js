@@ -13,7 +13,10 @@ const CAMPAIGN_END = 65;      /* la fine vera del gioco: la Caldera */
 /* Fin dove arriva quello che e' costruito davvero. Si alza mano a mano che
    l'atto II viene programmato: oltre questo settore il gioco si ferma e lo
    dice, invece di far finta. */
-const SETTORI_PRONTI = 23;
+const SETTORI_PRONTI = 24;
+/* I poteri che ECHO-0 sa copiare: sono quelli che si vedono addosso a lui e
+   sui suoi colpi. Rubarne uno che non si nota non servirebbe a niente. */
+const RUBABILI = ['bounce', 'power', 'rapidfire', 'boom', 'jump3'];
 const CHECKPOINTS = [5, 10, 15];
 /* La semina del secondo atto: dal settore 15 la luce di Lumina comincia ad
    andarsene, e lo si vede prima che qualcuno lo dica. */
@@ -86,6 +89,7 @@ const Game = {
   ampere: null, cariche: [],
   furto: null, blackT: 0, blackNext: 0,
   canSwap: false, swapCd: 0,
+  rubato: null, echiVia: false,
   hero: Store.get('volt_hero', 'aren'),
   stormX: -9999,
   camX: 0, camY: 0, shakeAmt: 0, shakeT: 0,
@@ -330,6 +334,48 @@ const Game = {
     });
   },
 
+  /* ECHO-0 comincia lo scontro: ti guarda, e ti porta via qualcosa. */
+  echoEntra(e) {
+    this.rubato = this.rubaPotere();
+    e.state = 0; e.stateT = 1.9; e.awake = true;
+    this.banner('ECHO-0');
+    Sfx.boss();
+    const p = this.player;
+    setTimeout(() => {
+      if (this.state !== 'play' || !this.player) return;
+      Floaters.add(this.player.cx, this.player.y - 46,
+        this.rubato ? 'HO OSSERVATO OGNI TUA SCELTA' : 'NON HAI NIENTE CHE MI SERVA', '#c9a6ff', 14);
+    }, 900);
+    if (this.rubato) setTimeout(() => {
+      if (this.state !== 'play' || !this.player) return;
+      Floaters.add(this.player.cx, this.player.y - 26, '−' + this.nomeRubato(), this.coloreRubato(), 17);
+      Sfx.tone(180, 0.3, 'sawtooth', 0.06, 900);
+    }, 1900);
+  },
+
+  /* Sotto un quarto di vita smette di combattere: non lo hai ucciso, lo hai
+     stancato. E si porta via l'unica cosa che gli importa. */
+  echoInFuga(e) {
+    this.banner('CI VEDIAMO PIÙ AVANTI');
+    Rings.add(e.cx + 60, e.cy, '#b06bff', 200, 0.8, 8);
+    Sfx.tone(140, 0.5, 'sawtooth', 0.07, 1200);
+  },
+
+  echoVia(e) {
+    e.dead = true;
+    this.echiVia = true;
+    this.addScore(e.score);
+    Particles.burst(e.cx, e.cy, 46, '#b06bff', 340, 6, 0);
+    Rings.add(e.cx, e.cy, '#ffffff', 150, 0.5, 7);
+    if (this.rubato) {
+      const nome = this.nomeRubato(), col = this.coloreRubato();
+      this.rubato = null;
+      if (this.player) Floaters.add(this.player.cx, this.player.y - 26, '+' + nome, col, 17);
+      this.banner('TI HA RESTITUITO ' + nome);
+    }
+    Sfx.kill();
+  },
+
   /* Il ponte fra i due atti: si e' vinto, ma la luce se ne sta andando.
      Il filmato lo dice senza parole; se manca, si tira dritto. */
   continuaAttoII() {
@@ -402,6 +448,7 @@ const Game = {
 
   toMenu() {
     this.state = 'menu';
+    this.rubato = null;
     /* al menu torna il custode scelto dal giocatore, non quello con cui è finita */
     if (this.canSwap && this.heroStart) this.hero = this.heroStart;
     this.canSwap = false; this.swapCd = 0;
@@ -499,6 +546,11 @@ const Game = {
         e.baseSpeed *= 0.82; e.speed = e.baseSpeed;
       }
     }
+
+    /* ECHO-0: appena il settore comincia, il furto e' gia' deciso */
+    this.rubato = null; this.echiVia = false;
+    const echo = this.enemies.find(e => e.type === 'echo');
+    if (echo) this.echoEntra(echo);
 
     this.enemiesLeft = this.enemies.length;
     this.portalOn = false; this.portalT = 0;
@@ -712,7 +764,7 @@ const Game = {
     this.addScore(pts);
     if (this.rushT > 0) this.rushT = Math.min(8, this.rushT + 0.24);
     else this.addVolt(((e.type === 'boss' ? 36 : 11) + Math.min(8, this.combo)) * (this.hasPerk('vampire') ? 2.2 : 1));
-    this.hitStop = e.type === 'boss' ? 0.08 : 0.025;
+    this.hitStop = (e.type === 'boss' || e.type === 'echo') ? 0.08 : 0.025;
     Floaters.add(e.cx, e.cy - 10, '+' + pts, this.combo > 2 ? '#7dff8d' : '#ffe98a', this.combo > 4 ? 19 : 15);
 
     /* all'ultima vita il gioco allunga la mano: più oggetti, più cuori */
@@ -1208,8 +1260,25 @@ const Game = {
   },
 
   /* ---- potenziamenti ---- */
-  perkLevel(id) { return this.perks[id] || 0; },
-  hasPerk(id) { return (this.perks[id] || 0) > 0; },
+  /* Mentre ECHO-0 e' in campo, il potere che ti ha copiato non ce l'hai piu':
+     non e' una scritta, e' proprio sparito dalle tue mani. */
+  perkLevel(id) { return id === this.rubato ? 0 : (this.perks[id] || 0); },
+  hasPerk(id) { return this.perkLevel(id) > 0; },
+
+  /* Sceglie cosa portarti via: solo fra quelli che hai davvero. */
+  rubaPotere() {
+    const suoi = RUBABILI.filter(k => (this.perks[k] || 0) > 0);
+    return suoi.length ? suoi[Math.floor(Math.random() * suoi.length)] : null;
+  },
+  coloreRubato() {
+    if (!this.rubato) return '#ff3b5c';
+    const pk = PERKS.find(q => q.id === this.rubato);
+    return pk ? pk.col : '#ff3b5c';
+  },
+  nomeRubato() {
+    const pk = PERKS.find(q => q.id === this.rubato);
+    return pk ? pk.name : '';
+  },
 
   openChoice() {
     /* dopo un Comandante il premio è di un altro livello */
@@ -1368,6 +1437,10 @@ const Game = {
     }
 
     switch (m.type) {
+      case 'echo':
+        /* si apre quando se n'e' andato: non c'e' modo di ucciderlo */
+        if (this.echiVia) done = true;
+        break;
       case 'survive':
         this.missionT = Math.max(0, this.missionT - dt);
         /* mostri che arrivano di continuo: il settore non si "svuota" */
@@ -1520,6 +1593,7 @@ const Game = {
       else if (m.type === 'cores') tg = 'FRAMMENTI ' + (m.need - this.cores.length) + '/' + m.need;
       else if (m.type === 'targets') tg = 'GENERATORI ' + (m.need - this.gens.length) + '/' + m.need;
       else if (m.type === 'assault') tg = 'ONDATA ' + Math.max(1, this.wave) + '/' + (m.waves || 3);
+      else if (m.type === 'echo') tg = this.rubato ? 'TI HA RUBATO ' + this.nomeRubato() : 'ECHO-0';
       else tg = 'MOSTRI ' + this.enemiesLeft;
     }
     if (c.tg !== tg) { c.tg = tg; document.getElementById('targets').textContent = tg; }
@@ -1859,6 +1933,7 @@ const Game = {
   /* Ogni Comandante prende il nome dall'area che presidia: e' quello che il
      gioco mostra gia', visto che il paesaggio cambia ogni cinque settori. */
   bossName() {
+    if (this.mission && this.mission.type === 'echo') return 'ECHO-0';
     if (this.mode === 'campaign') {
       if (this.level === ATTO1_FINE) return 'IL DIVORATORE';
       const nomi = { 5: 'COMANDANTE DELLA PRATERIA', 10: 'COMANDANTE DEL DESERTO',
@@ -1869,7 +1944,7 @@ const Game = {
   },
 
   drawBossBar(ctx) {
-    const boss = this.enemies.find(e => e.type === 'boss' && !e.dead && e.awake);
+    const boss = this.enemies.find(e => (e.type === 'boss' || e.type === 'echo') && !e.dead && e.awake);
     if (!boss) return;
     const w = Math.min(this.viewW * 0.66, 400), x = (this.viewW - w) / 2, y = 92;
     const frac = clamp(boss.hp / boss.maxHp, 0, 1);
@@ -1877,7 +1952,8 @@ const Game = {
     ctx.fillStyle = 'rgba(24,18,50,.5)';
     roundRect(ctx, x - 5, y - 5, w + 10, 20, 10); ctx.fill();
     const g = ctx.createLinearGradient(x, 0, x + w, 0);
-    g.addColorStop(0, '#ff8a5c'); g.addColorStop(1, '#ff4d7d');
+    if (boss.type === 'echo') { g.addColorStop(0, '#8a4fd8'); g.addColorStop(1, '#38e8ff'); }
+    else { g.addColorStop(0, '#ff8a5c'); g.addColorStop(1, '#ff4d7d'); }
     ctx.fillStyle = g;
     roundRect(ctx, x, y, w * frac, 10, 5); ctx.fill();
     if (w * frac > 10) Gfx.gloss(ctx, x + 3, y + 1.5, w * frac - 6, 3, 0.45);

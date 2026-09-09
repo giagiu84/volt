@@ -34,6 +34,9 @@ const THEMES = [
    Non e' un mondo nuovo, e' il proprio fatto a pezzi — isole di Lumina
    strappate e sospese nel viola, con il vuoto sotto invece della terra. */
 const FRATTURA_DA = 21, FRATTURA_A = 35;
+/* I tre appuntamenti con ECHO-0: si ferma, combatte, e appena rischia di
+   perdere scappa. Al terzo gli si strappa Ampere di mano. */
+const ECHO_SETTORI = [24, 27, 30];
 
 const THEME_FRATTURA = {
   name: 'LA FRATTURA', frattura: true,
@@ -57,7 +60,8 @@ const MISSIONS = {
   targets: { name: 'BERSAGLI',     hint: 'Distruggi i generatori' },
   assault: { name: 'ASSALTO',      hint: 'Respingi le ondate' },
   escape:  { name: 'FUGA',         hint: 'Corri al portale, la tempesta avanza' },
-  boss:    { name: 'BOSS',         hint: 'Abbatti il boss' }
+  boss:    { name: 'BOSS',         hint: 'Abbatti il boss' },
+  echo:    { name: 'ECHO-0',       hint: 'Non lo puoi uccidere: puoi solo stancarlo' }
 };
 
 /* ---------- le leggi della Frattura ----------
@@ -118,8 +122,10 @@ function generateLevel(n) {
   const rng = makeRng(0x9e37 + n * 2654435761);
   const boss = (n % 5 === 0);
   const dentroLaFrattura = n >= FRATTURA_DA && n <= FRATTURA_A;
+  const scontroEcho = ECHO_SETTORI.indexOf(n) >= 0;
   const theme = dentroLaFrattura ? THEME_FRATTURA : THEMES[Math.floor((n - 1) / 5) % THEMES.length];
-  const w = boss ? 58 : Math.min(64 + n * 5, 190);
+  /* l'arena di ECHO-0 e' corta: lui si sposta in fretta, non serve spazio */
+  const w = boss ? 58 : (scontroEcho ? 76 : Math.min(64 + n * 5, 190));
   const h = LEVEL_H;
   const tiles = new Uint8Array(w * h);
   const at = (x, y) => (y * w + x);
@@ -218,7 +224,8 @@ function generateLevel(n) {
 
   /* --- missione del settore --- */
   let mission;
-  if (boss) mission = { type: 'boss' };
+  if (scontroEcho) mission = { type: 'echo' };
+  else if (boss) mission = { type: 'boss' };
   else if (n <= 2) mission = { type: 'hunt' };
   else {
     const pool = ['hunt', 'survive', 'cores', 'targets', 'assault'];
@@ -286,7 +293,18 @@ function generateLevel(n) {
   if (n >= 6) types.push('charger');
   if (n >= 8) types.push('bomber');
 
-  if (boss) {
+  if (scontroEcho) {
+    /* lui sta in fondo, e la sua scorta e' poca: e' uno scontro, non un assedio */
+    const ex = w - 18;
+    spawns.push({ type: 'echo', x: ex * TILE, y: (Math.max(6, (groundY[ex] > 0 ? groundY[ex] : 16) - 7)) * TILE,
+                  tier: ECHO_SETTORI.indexOf(n) + 1 });
+    for (let i = 0; i < 4; i++) {
+      const sx = rndInt(rng, 16, w - 24);
+      const gy2 = groundY[sx];
+      if (gy2 < 0) continue;
+      spawns.push({ type: pick(rng, ['crawler', 'flyer', 'spitter']), x: sx * TILE, y: (gy2 - 2) * TILE });
+    }
+  } else if (boss) {
     spawns.push({ type: 'boss', x: (w - 16) * TILE, y: (groundY[w - 16] - 6) * TILE, tier: Math.ceil(n / 5) });
     const guards = (n >= 20 ? 4 : 2) + Math.floor(n / 5);   /* il Divoratore arriva con la scorta */
     for (let i = 0; i < guards; i++) {

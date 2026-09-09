@@ -905,7 +905,9 @@ const ENEMY_DEF = {
   spitter: { w: 28, h: 30, hp: 4,  speed: 55,  score: 160, col: '#a06bff', dark: '#6d3fc4', touch: 1 },
   charger: { w: 32, h: 28, hp: 6,  speed: 80,  score: 220, col: '#ff8a3d', dark: '#c85a15', touch: 2 },
   bomber:  { w: 30, h: 24, hp: 2,  speed: 110, score: 220, col: '#5ee08a', dark: '#2c9d5a', touch: 1 },
-  boss:    { w: 76, h: 76, hp: 60, speed: 105, score: 2500, col: '#ff4d7d', dark: '#b41f52', touch: 2 }
+  boss:    { w: 76, h: 76, hp: 60, speed: 105, score: 2500, col: '#ff4d7d', dark: '#b41f52', touch: 2 },
+  /* ECHO-0 non e' un mostro: e' uno che pensa. Vola, studia, copia e scappa. */
+  echo:    { w: 52, h: 70, hp: 130, speed: 250, score: 4000, col: '#1c1038', dark: '#0e0722', touch: 2 }
 };
 
 /* ---------- gli élite ----------
@@ -944,10 +946,13 @@ class Enemy {
     /* dopo il quinto settore la curva si impenna: fino a li' resta com'era */
     const oltre = Math.max(0, level - 5);
     const scale = 1 + (level - 1) * 0.065 + oltre * 0.045;
+    const capo = type === 'boss' || type === 'echo';
     this.maxHp = Math.max(1, Math.round(
-      d.hp * (type === 'boss' ? (1 + (tier - 1) * 0.85) : scale) * (E ? E.hp : 1)));
+      d.hp * (capo ? (1 + (tier - 1) * 0.85) : scale) * (E ? E.hp : 1)));
     this.hp = this.maxHp;
-    this.speed = d.speed * (1 + Math.min(0.75, (level - 1) * 0.035 + oltre * 0.015)) * (E ? E.speed : 1);
+    this.speed = capo && type === 'echo'
+      ? d.speed * (1 + (tier - 1) * 0.12)
+      : d.speed * (1 + Math.min(0.75, (level - 1) * 0.035 + oltre * 0.015)) * (E ? E.speed : 1);
     this.score = Math.round(d.score * (E ? E.score : 1));
     this.touch = d.touch;         /* i giganti fanno piu' male: qui si puo' alzare */
     this.pulse = 2 + Math.random();
@@ -1026,6 +1031,7 @@ class Enemy {
       case 'flyer':   this.updateFlyer(dt, lv, player, dx, dy); break;
       case 'bomber':  this.updateBomber(dt, lv, player, bullets, dx, dy); break;
       case 'boss':    this.updateBoss(dt, lv, player, bullets, dx, dy); break;
+      case 'echo':    this.updateEcho(dt, lv, player, bullets, dx, dy); break;
     }
   }
 
@@ -1191,6 +1197,97 @@ class Enemy {
     }
   }
 
+  /* ---------------- ECHO-0 ----------------
+     Tre momenti: entra e ti guarda, combatte tenendoti a distanza, e appena la
+     vita scende sotto un quarto smette e scappa. Non si puo' uccidere: si puo'
+     solo stancare. Il potere che ti ha rubato lo usa qui, sui suoi colpi. */
+  updateEcho(dt, lv, player, bullets, dx, dy) {
+    const R = Game.rubato;
+    this.stateT -= dt;
+
+    /* --- fuga: sotto un quarto di vita non combatte piu' --- */
+    if (this.state !== 9 && this.hp <= this.maxHp * 0.25) {
+      this.state = 9; this.stateT = 1.6;
+      this.vx = 0; this.vy = 0;
+      Game.echoInFuga(this);
+    }
+    if (this.state === 9) {
+      /* si ritira verso lo squarcio che si sta aprendo dietro di lui */
+      this.vx = approach(this.vx, 60, 400 * dt);
+      this.vy = approach(this.vy, -30, 400 * dt);
+      this.x += this.vx * dt; this.y += this.vy * dt;
+      if (Math.random() < 0.6)
+        Particles.spawn(this.cx + (Math.random() - 0.5) * 40, this.cy + (Math.random() - 0.5) * 50,
+          0, -40, 0.4, 4, '#b06bff', 0, 1);
+      if (this.stateT <= 0) Game.echoVia(this);
+      return;
+    }
+
+    /* --- entrata: un paio di secondi in cui si fa guardare --- */
+    if (this.state === 0) {
+      this.vy = approach(this.vy, Math.sin(this.t * 2) * 40, 300 * dt);
+      this.vx = approach(this.vx, 0, 300 * dt);
+      this.x += this.vx * dt; this.y += this.vy * dt;
+      if (this.stateT <= 0) { this.state = 1; this.stateT = 2.2 + Math.random(); }
+      return;
+    }
+
+    /* --- combattimento: ti tiene a distanza e martella --- */
+    const dist = Math.hypot(dx, dy) || 1;
+    const voluta = 200;          /* la distanza che gli piace tenere */
+    const spinta = (dist - voluta) / voluta;
+    let tx = (dx / dist) * this.speed * clamp(spinta, -1, 1);
+    let ty = (dy / dist) * this.speed * 0.55 * clamp((Math.abs(dy) - 90) / 90, -1, 1);
+    /* fluttua sempre: non tocca terra */
+    ty += Math.sin(this.t * 2.6) * 60;
+    if (R === 'jump3') ty -= 40;              /* col triplo salto sta piu' in alto */
+    this.vx = approach(this.vx, tx, 900 * dt);
+    this.vy = approach(this.vy, ty, 900 * dt);
+
+    if (this.state === 2) {
+      /* scatto attraverso lo schermo */
+      this.vx = this.dir * this.speed * 3.4;
+      this.vy *= 0.4;
+      Particles.spawn(this.cx, this.cy, 0, 0, 0.28, 9, '#b06bff', 0, 1);
+      if (R === 'boom') {
+        Particles.spawn(this.cx, this.cy, (Math.random() - .5) * 90, 0, 0.3, 6, '#ff8a3d', 0, 1);
+        if (Math.abs(player.cx - this.cx) < 44 && Math.abs(player.cy - this.cy) < 52 && player.hurt(1)) {
+          Rings.add(this.cx, this.cy, '#ff8a3d', 90, 0.3, 6);
+        }
+      }
+      if (this.stateT <= 0) { this.state = 1; this.stateT = 1.8 + Math.random(); }
+    }
+
+    this.x += this.vx * dt; this.y += this.vy * dt;
+    /* non entra nel terreno e non esce dal mondo */
+    if (lv.solidAt(this.cx, this.y + this.h)) { this.y -= this.vy * dt; this.vy = -120; }
+    if (lv.solidAt(this.cx, this.y)) { this.y -= this.vy * dt; this.vy = 120; }
+    this.x = clamp(this.x, 20, lv.pxW - this.w - 20);
+    this.y = clamp(this.y, 40, lv.pxH - 120);
+    this.dir = sign(dx) || this.dir;
+
+    if (this.state === 1) {
+      if (this.stateT <= 0 && Math.random() < 0.5) { this.state = 2; this.stateT = 0.55; }
+      else if (this.stateT <= 0) this.stateT = 1.6 + Math.random();
+      /* raffica: il potere rubato la cambia */
+      if (this.cool <= 0) {
+        this.cool = R === 'rapidfire' ? 0.42 : 0.9;
+        const quanti = R === 'rapidfire' ? 2 : 3;
+        const base = Math.atan2(player.cy - this.cy, player.cx - this.cx);
+        const col = Game.coloreRubato();
+        for (let i = 0; i < quanti; i++) {
+          const a = base + (i - (quanti - 1) / 2) * 0.17;
+          bullets.push(new Bullet(this.cx + Math.cos(a) * 26, this.cy + Math.sin(a) * 26,
+            Math.cos(a) * 430, Math.sin(a) * 430,
+            { foe: true, col: col, r: 6.5, life: 2.6,
+              dmg: R === 'power' ? 2 : 1,
+              bounces: R === 'bounce' ? 2 : 0 }));
+        }
+        Sfx.tone(300, 0.1, 'square', 0.05, 120);
+      }
+    }
+  }
+
   /* ---------------- disegno ---------------- */
   draw(ctx, cx, cy) {
     if (this.dead) return;
@@ -1234,6 +1331,113 @@ class Enemy {
       ctx.restore();
       Gfx.eye(ctx, -5, -3, 5.5, px, py);
       Gfx.eye(ctx, 6, -3, 5.5, px, py);
+
+    } else if (this.type === 'echo') {
+      /* Corpo nero cristallino, schegge che gli girano attorno, nastri viola
+         che si muovono da soli. Le braccia sono diverse fra loro: cannone
+         ciano a sinistra, guanto a destra — e il guanto prende il colore del
+         potere che ti ha rubato. E' li' che si vede cosa ti ha portato via. */
+      const rub = Game.coloreRubato();
+      const respiro = 1 + Math.sin(this.t * 2.4) * 0.03;
+      ctx.save();
+      ctx.scale(1.2, 1.2);          /* e' l'antagonista: si vede che e' lui */
+
+      /* nastri: due, dietro a tutto */
+      ctx.save();
+      ctx.strokeStyle = '#8a4fd8'; ctx.lineWidth = 7; ctx.lineCap = 'round';
+      for (const lato of [-1, 1]) {
+        ctx.beginPath();
+        for (let i = 0; i <= 8; i++) {
+          const f = i / 8;
+          const nx = lato * (14 + f * 46) - this.vx * 0.02 * f;
+          const ny = -8 + Math.sin(this.t * 3 + f * 4 + lato) * 16 * f + f * 10;
+          if (i === 0) ctx.moveTo(nx, ny); else ctx.lineTo(nx, ny);
+        }
+        ctx.globalAlpha = 0.75; ctx.stroke();
+      }
+      ctx.restore();
+
+      /* schegge in orbita */
+      ctx.save();
+      ctx.fillStyle = '#241348'; ctx.strokeStyle = '#c98fff'; ctx.lineWidth = 2.2;
+      for (let i = 0; i < 7; i++) {
+        const a = this.t * (0.7 + i * 0.11) + i * 0.9;
+        const r = 34 + Math.sin(this.t * 1.6 + i) * 8;
+        const sx2 = Math.cos(a) * r, sy2 = Math.sin(a) * r * 0.75;
+        const g2 = 4 + (i % 3) * 2.2;
+        ctx.save();
+        ctx.translate(sx2, sy2); ctx.rotate(a * 1.7);
+        ctx.beginPath();
+        ctx.moveTo(0, -g2); ctx.lineTo(g2 * 0.6, 0); ctx.lineTo(0, g2); ctx.lineTo(-g2 * 0.6, 0);
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+        ctx.restore();
+      }
+      ctx.restore();
+
+      Gfx.light(ctx, 0, 0, 52, '#8a4fd8', 0.4 + Math.sin(this.t * 3) * 0.08);
+
+      ctx.save();
+      ctx.scale(respiro, 2 - respiro);
+      /* Il contorno e' chiaro, non scuro: su un cielo viola un corpo nero con
+         il bordo nero sparisce. Cosi invece si stacca sempre. */
+      ctx.lineWidth = 3; ctx.strokeStyle = '#a06bff';
+
+      /* braccia: a sinistra il cannone, a destra il guanto del potere rubato */
+      ctx.fillStyle = '#e8f6ff';
+      roundRect(ctx, -34, -6, 18, 13, 6); ctx.fill(); ctx.stroke();
+      Gfx.light(ctx, -36, 0, 22, '#38e8ff', 0.8);
+      ctx.fillStyle = '#38e8ff';
+      ctx.beginPath(); ctx.arc(-34, 0.5, 4.5, 0, TAU); ctx.fill();
+
+      ctx.fillStyle = '#f3e8ff';
+      roundRect(ctx, 17, -8, 17, 17, 7); ctx.fill(); ctx.stroke();
+      Gfx.light(ctx, 27, 0, 24, rub, 0.85);
+      ctx.fillStyle = rub;
+      ctx.beginPath(); ctx.arc(27, 0.5, 5.2, 0, TAU); ctx.fill();
+
+      /* corpo */
+      ctx.fillStyle = this.flash > 0 ? '#ffffff' : '#241348';
+      ctx.beginPath();
+      ctx.moveTo(0, -26); ctx.lineTo(17, -6); ctx.lineTo(13, 24);
+      ctx.lineTo(0, 30); ctx.lineTo(-13, 24); ctx.lineTo(-17, -6);
+      ctx.closePath(); ctx.fill(); ctx.stroke();
+
+      /* il fulmine giallo sul petto */
+      ctx.fillStyle = '#ffd166';
+      ctx.beginPath();
+      ctx.moveTo(2, -12); ctx.lineTo(-5, 2); ctx.lineTo(0, 2);
+      ctx.lineTo(-2, 14); ctx.lineTo(6, -1); ctx.lineTo(1, -1);
+      ctx.closePath(); ctx.fill();
+
+      /* testa: casco spigoloso */
+      ctx.fillStyle = this.flash > 0 ? '#ffffff' : '#331c66';
+      ctx.beginPath();
+      ctx.moveTo(0, -42); ctx.lineTo(14, -30); ctx.lineTo(11, -18);
+      ctx.lineTo(-11, -18); ctx.lineTo(-14, -30);
+      ctx.closePath(); ctx.fill(); ctx.stroke();
+      /* una luce interna, cosi il nero non e' mai piatto */
+      ctx.save();
+      ctx.globalAlpha = 0.5;
+      Gfx.gloss(ctx, -9, -37, 10, 4, 0.6);
+      ctx.restore();
+      /* le due punte */
+      ctx.fillStyle = this.flash > 0 ? '#ffffff' : '#2a1552';
+      ctx.beginPath();
+      ctx.moveTo(-6, -42); ctx.lineTo(-10, -52); ctx.lineTo(-2, -44); ctx.closePath(); ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(6, -42); ctx.lineTo(10, -52); ctx.lineTo(2, -44); ctx.closePath(); ctx.fill();
+
+      /* gli occhi: uno ciano e uno rosso, e non cambiano mai */
+      const guarda = clamp(px / 240, -1, 1);
+      Gfx.light(ctx, -6.5, -28, 13, '#38e8ff', 0.9);
+      Gfx.light(ctx, 6.5, -28, 13, '#ff3b5c', 0.9);
+      ctx.fillStyle = '#38e8ff';
+      ctx.beginPath(); ctx.ellipse(-6.5 + guarda * 1.5, -28, 3.4, 4.4, 0, 0, TAU); ctx.fill();
+      ctx.fillStyle = '#ff3b5c';
+      ctx.beginPath(); ctx.ellipse(6.5 + guarda * 1.5, -28, 3.4, 4.4, 0, 0, TAU); ctx.fill();
+
+      ctx.restore();
+      ctx.restore();
 
     } else if (this.type === 'boss') {
       /* Il Comandante della Laguna porta via la lanterna di Lumina: si vede
@@ -1353,7 +1557,7 @@ class Enemy {
     }
 
     /* barra vita sopra la testa */
-    if (this.type !== 'boss' && this.hp < this.maxHp) {
+    if (this.type !== 'boss' && this.type !== 'echo' && this.hp < this.maxHp) {
       const bw = this.w + 8, bx = x - bw / 2, by = this.y - cy - 12;
       ctx.save();
       ctx.fillStyle = 'rgba(26,18,52,.45)';

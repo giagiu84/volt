@@ -368,7 +368,7 @@ mostri più grossi, sono **problemi diversi**.
 E hanno un nome che nessuno aveva mai spiegato. **Sono le eco di OHM.** Lo si
 scopre alla cima, e in una riga sola si capisce tutta la famiglia.
 
-#### ECHO-0 — Il Copiatore **[SCRITTO]**
+#### ECHO-0 — Il Copiatore **[SCRITTO]** *(primo scontro giocabile dalla v34)*
 L'antagonista del secondo atto, e il personaggio più importante che abbiamo dopo
 i due Custodi.
 
@@ -388,9 +388,23 @@ chiude e lui smette di esistere.** Mente sul proprio movente: non è un tiranno,
 **Come si gioca.** Non aspetta fermo alla fine del settore: compare sullo
 sfondo, attraversa il percorso, distrugge piattaforme, corre ai frammenti prima
 di te. Ogni tre-quattro settori si ferma e ti affronta davvero — **e appena la
-sua barra sta per finire, fugge dentro un portale**. Osserva la tua build, copia
-un potenziamento e te lo rimanda addosso. Non si vince due volte con la stessa
-strategia.
+sua barra scende sotto un quarto, fugge dentro un portale**. Osserva la tua
+build, copia un potenziamento e te lo rimanda addosso. Non si vince due volte
+con la stessa strategia.
+
+**Com'è venuto nel gioco (settore 24):** vola e non tocca mai terra, ti tiene a
+duecento pixel, spara raffiche e ogni tanto attraversa lo schermo con uno
+scatto. **Il potere rubato non è una scritta: sparisce davvero dalle tue mani**
+finché lui è in campo, e glielo vedi addosso — il guanto destro prende il colore
+di quello che ti ha portato via, e i suoi colpi si comportano di conseguenza
+(rimbalzano col Rimbalzo, sono più fitti con la Raffica, fanno più male coi Colpi
+Pesanti, esplodono col Dash Esplosivo, e col Triplo Salto lui sta più in alto).
+Quando fugge te lo restituisce. **Non lo si può uccidere: si può solo
+stancarlo.**
+
+I poteri che sa copiare sono cinque, scelti perché **si vedono**: Rimbalzo,
+Colpi Pesanti, Raffica Rapida, Dash Esplosivo, Triplo Salto. Se non hai nessuno
+di quelli, te lo dice: «NON HAI NIENTE CHE MI SERVA».
 
 **Come si disegna.** Corpo nero cristallino fatto di schegge fluttuanti, nastri
 viola che si muovono da soli, **occhio sinistro azzurro e occhio destro rosso**,
@@ -960,7 +974,11 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
   Lumina sospese nel viola, il vuoto sotto, e il cambio fra Aren e Lyra attivo
   come dice il canone. Niente Ampere (ce l'ha ECHO-0) e niente leggi del mondo
   (quelle sono di Eclissia).
-- Oltre il 23 il gioco **si ferma e lo dice**, invece di far finta: schermata
+- **Settore 24: il primo scontro con ECHO-0.** Vola, ti studia, ti ruba un
+  potere davvero, e quando sta per cadere scappa. Barra della vita viola e
+  ciano col suo nome. Provato col bot: fugge in mezzo minuto scarso, il portale
+  si apre e il potere torna.
+- Oltre il 24 il gioco **si ferma e lo dice**, invece di far finta: schermata
   «fine di questo tratto». Il confine si sposta man mano che costruiamo.
 
 **Manca tutto l'atto II**, cioè i settori **21-65**: la semina nei settori 15-20,
