@@ -469,18 +469,50 @@ su sé stesse, grande quanto una casa. Porta un segno, ed è il suo simbolo:
 **Ω**, la lettera dell'ohm, che è già la forma di un arco elettrico. Quando
 aspiri, il groviglio si assottiglia e il segno si spegne un pezzo alla volta.
 
-#### La creatura che resta **[APERTO]**
-Quello che nasce dal nucleo di ECHO-0 alla fine del gioco.
+#### La creatura che resta — una piccola eclissi **[SCRITTO]** *(il nome è [APERTO])*
 
-**Quello che è già deciso:** è piccola, fluttua, ha **un occhio ciano e uno
-rosa**, e continua a fare l'unica cosa che ha sempre saputo fare — **copia**. Ma
-adesso copia i gesti, per gioco: ti imita quando cammini. E i due smettono di
-chiamarla con un numero.
+Quello che nasce dal nucleo di ECHO-0 alla fine del gioco. **Non è un ECHO
+rimpicciolito**: è una cosa nuova, la prima nata dopo il riequilibrio.
 
-**Quello che non è deciso: la forma e il nome.** Li fa l'altra IA — prima il
-disegno, e **dal disegno viene il nome**. Finché non c'è, nei testi si scrive
-«la creatura che resta».
+**Cos'è.** Una piccola sfera fluttuante, **metà illuminata e metà in ombra**,
+come un'eclissi vista da vicino. Non ha braccia, non ha gambe, non ha faccia.
+È fatta dei due mondi finalmente in fase: **è la prova vivente del finale**, e
+si porta il nome di Eclissia addosso senza doverlo spiegare.
 
+Gli occhi diversi di ECHO-0 non ci sono più, ed è voluto: erano il segno che era
+fatto di pezzi rubati ad Aren e Lyra. Lasciarglieli sarebbe come lasciargli le
+manette.
+
+**Nasce dal vetro di Ampere.** Il filo di corrente che i due deviano non gli
+ricostruisce un corpo: entra nella lanterna, e dalla lanterna **esce lei**. Lì
+dentro torna a dormire quando vuole. Quello che aveva rubato Ampere finisce per
+abitarci — ed è la vendetta più dolce che potesse capitargli.
+
+**Come si gioca.** Nel finale non si comanda: esce, gira intorno ai due, e li
+segue a Lumina. In un eventuale atto III sarebbe la compagna del giocatore, e
+la sua abilità resta l'unica che ha sempre avuto — **copiare** — ma per gioco,
+non per rubare.
+
+**Come si disegna.** Una sfera piccola, liscia, senza spigoli. Una metà di luce
+calda (il bianco-verde di Ampere), l'altra in ombra profonda (l'indaco di
+Eclissia), e fra le due una **linea netta che si sposta come le fasi della
+luna**.
+
+**Quella linea è la sua faccia.** È l'unica espressione che ha, ed è l'unico
+parametro da animare:
+
+| Fase | Cosa vuol dire |
+|---|---|
+| Quasi tutta luce | contenta, curiosa, si fida |
+| Metà e metà | tranquilla, è il suo riposo |
+| Quasi tutta ombra | ha paura, o si sta nascondendo |
+
+**Il nome.** Non c'è ancora. Lo disegna l'altra IA e **dal rendering viene il
+nome**. Fino ad allora, in ogni testo, si scrive «la creatura che resta».
+
+**Perché questa e non un'altra:** significa qualcosa (i due mondi in equilibrio),
+si anima con un parametro solo, si riconosce in silhouette, e **si stampa in 3D**
+— insieme alla lanterna sono due oggetti, non uno.
 #### ECHO-2 e ECHO-3 — non esistono **[DECISO]**
 **Non si fanno.** Con ECHO-0, ECHO-1 e OHM la storia è completa e ogni creatura
 ha un mestiere diverso; aggiungerne altre due le trasformerebbe in una serie di
@@ -718,9 +750,14 @@ teneva aperta la ferita è quella che la ricuce.
 ECHO-0 è lì. Sta svanendo insieme al mondo che lo ha fatto nascere, e non fugge:
 aveva già scelto trenta settori prima, quando ha indicato la strada.
 
-Aren e Lyra **non versano tutto**. Deviano un filo di corrente nel suo nucleo.
-Il corpo di schegge si disfa, e dal centro resta una piccola creatura di luce con
-**un occhio ciano e uno rosa**. La portano a Lumina con loro.
+Aren e Lyra **non versano tutto**. Deviano un filo di corrente nel suo nucleo —
+e quel filo non gli ricostruisce un corpo: **entra dentro Ampere**.
+
+Il corpo di schegge si disfa. Poi, dal vetro della lanterna, **esce una piccola
+sfera che fluttua: metà luce e metà ombra, come un'eclissi**. Gira una volta
+intorno ai due, e li segue.
+
+La portano a Lumina con loro.
 
 **Ampere resta.** Vuota e spenta, in mano a chi l'ha portata fin lassù — e si
 riaccende piano, con un filo di luce, solo quando la Frattura è chiusa.
@@ -746,9 +783,9 @@ non sposta nessuna di queste cinque cose, probabilmente non serve.
 | La Caldera | Compassione | Estendono al nemico la salvezza che cercavano per sé |
 
 ### ATTO III **[APERTO]**
-La creaturina con un occhio ciano e uno rosa vive a Lumina. Potrebbe diventare
-giocabile, conservando la capacità di copiare temporaneamente i poteri. Niente
-di più è deciso.
+La piccola eclissi vive a Lumina, e dorme dentro Ampere. Potrebbe diventare la
+compagna del giocatore — o giocabile lei stessa — conservando l'unica cosa che
+ha sempre saputo fare: copiare. Niente di più è deciso.
 ## 6. Le regole del racconto
 
 Cose che in questo universo **non si fanno mai**:
@@ -916,9 +953,10 @@ compete.
    dopo il settore 65, e sta fuori dalla storia. Proposta: **CIRCUITO APERTO** —
    un circuito che non si chiude mai è esattamente un posto dove la corrente non
    arriva da nessuna parte, e infatti non finisce.
-2. **Che forma e che nome ha la creatura che resta di ECHO-0?** La disegna
-   l'altra IA, e dal disegno viene il nome. Fino ad allora, nei testi, si scrive
-   «la creatura che resta».
+2. **Come si chiama la creatura che resta?** La forma è decisa (una piccola
+   eclissi che nasce dal vetro di Ampere, capitolo 4): manca il nome, e viene
+   dal rendering dell'altra IA. Fino ad allora, nei testi, si scrive «la
+   creatura che resta».
 
 ### Decise, per memoria
 Eclissia è il nome dell'altro mondo · Ampere torna in mano ai Custodi al settore
@@ -926,7 +964,8 @@ Eclissia è il nome dell'altro mondo · Ampere torna in mano ai Custodi al setto
 gioca in soggettiva, la salita in 2,5D · la Frattura si era già aperta una volta
 e fu chiusa nel modo sbagliato · Aren e Lyra erano due tecnici di turno, non due
 prescelti · i Comandanti sono d'area e non hanno nomi propri · ECHO-2 ed ECHO-3
-non si fanno · il capitolo zero racconta la notte prima.
+non si fanno · il capitolo zero racconta la notte prima · la creatura che resta è
+una piccola eclissi e nasce dal vetro di Ampere.
 
 ---
 
@@ -1025,8 +1064,9 @@ finché quello che si riversa nel cratere non è più corrente raccolta, ma lui.
 Il vulcano non esplode: erutta una colonna verde che si divide in migliaia di
 filamenti e cuce il cielo lungo i bordi della Frattura. ECHO-0 sta per sparire
 insieme al mondo che lo ha creato — e i due Custodi deviano un filo di quella
-corrente nel suo nucleo. Il corpo di schegge si disfa; resta una creaturina di
-luce con un occhio ciano e uno rosa, che tornerà a Lumina con loro.
+corrente nel suo nucleo — e quel filo entra dentro Ampere. Il corpo di schegge si
+disfa, e dal vetro della lanterna esce una piccola sfera fluttuante, metà luce e
+metà ombra come un'eclissi, che tornerà a Lumina con loro.
 
 La Frattura non si chiude con la distruzione. Si chiude con l'equilibrio: la
 tensione ha finalmente trovato qualcosa in cui scorrere.
@@ -1056,7 +1096,24 @@ pronto.
 | 8 | **ECHO-1** | Il rendering esiste: serve la versione **con Ampere incastonata nel petto** |
 | 9 | **La Caldera Voltaica** | Il posto finale |
 | 10 | **OHM** | L'ultimo nemico. Nessuno lo deve vedere prima del momento giusto |
-| 11 | **La creatura che resta** | Ultima. Dal disegno verrà anche il suo nome |
+| 11 | **La creatura che resta** | Ultima. La forma è decisa, dal disegno verrà il **nome** |
+
+### 14.1-bis La commessa per la creatura che resta
+Il brief, già pronto da passare a chi genera le immagini:
+
+> *Una piccola sfera fluttuante, liscia e senza arti, metà illuminata di luce
+> calda bianco-verde e metà in ombra indaco profondo, come un'eclissi vista da
+> vicino. La linea netta che separa le due metà si sposta come le fasi della
+> luna ed è la sua unica espressione. Nasce dal vetro di una lanterna verde e
+> può rientrarci. Stile coerente con il gioco: forme morbide, contorno scuro,
+> colori vivi.*
+
+Servono tre cose: **la creatura da sola** (tre fasi: quasi tutta luce, metà e
+metà, quasi tutta ombra), **mentre esce dalla lanterna**, e **accanto ad Aren e
+Lyra** per capire quanto è piccola.
+
+**Poi si guarda il rendering e le si dà il nome.** È l'ultima cosa che manca
+alla Bibbia.
 
 ### 14.2 La coerenza dei personaggi
 È il problema numero uno, e si risolve in un modo solo:
