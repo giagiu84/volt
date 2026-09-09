@@ -29,6 +29,21 @@ const THEMES = [
     plat: '#ffa06e', spike: '#ff6b9d', accent: '#ffffff', fog: '#e4f5ff' }
 ];
 
+/* ---------- dentro la Frattura ----------
+   Dal settore 21 al 35 non si e' ancora in Eclissia: si e' DENTRO la ferita.
+   Non e' un mondo nuovo, e' il proprio fatto a pezzi — isole di Lumina
+   strappate e sospese nel viola, con il vuoto sotto invece della terra. */
+const FRATTURA_DA = 21, FRATTURA_A = 35;
+
+const THEME_FRATTURA = {
+  name: 'LA FRATTURA', frattura: true,
+  sky: ['#5b2c9e', '#0d0620'],
+  hills: ['#40276f', '#2c1a53', '#1a0f38'],
+  /* la crosta resta l'erba di Lumina: sono pezzi di casa, non roccia aliena */
+  body: '#2b1b52', body2: '#150c2c', crust: '#5fd68a', crust2: '#a6f7bd',
+  plat: '#ffc247', spike: '#ff6b6b', accent: '#d9a6ff', fog: '#6a3fae'
+};
+
 /* Il mondo è più alto di quanto serva al terreno: il margine sotto permette
    alla camera di tenere il giocatore alto sullo schermo, sopra i comandi touch. */
 const LEVEL_H = 32;
@@ -102,7 +117,8 @@ function missionName(type) {
 function generateLevel(n) {
   const rng = makeRng(0x9e37 + n * 2654435761);
   const boss = (n % 5 === 0);
-  const theme = THEMES[Math.floor((n - 1) / 5) % THEMES.length];
+  const dentroLaFrattura = n >= FRATTURA_DA && n <= FRATTURA_A;
+  const theme = dentroLaFrattura ? THEME_FRATTURA : THEMES[Math.floor((n - 1) / 5) % THEMES.length];
   const w = boss ? 58 : Math.min(64 + n * 5, 190);
   const h = LEVEL_H;
   const tiles = new Uint8Array(w * h);
@@ -123,6 +139,33 @@ function generateLevel(n) {
     for (let y = top; y < h; y++) set(cx, y, T_SOLID);
     groundY[cx] = top;
   };
+  /* nella Frattura il terreno non arriva in fondo: e' un frammento, e sotto
+     c'e' il vuoto. Lo spessore si assottiglia ai bordi, cosi l'isola sembra
+     strappata e non tagliata. */
+  const fillFrammento = (cx, top, spessore) => {
+    for (let y = top; y < Math.min(h, top + spessore); y++) set(cx, y, T_SOLID);
+    groundY[cx] = top;
+  };
+
+  if (dentroLaFrattura) {
+    gy = 16;
+    for (; x < 9; x++) fillFrammento(x, gy, x < 2 ? 3 : 5);
+    while (x < w - 12) {
+      const seg = rndInt(rng, 6, 14);
+      const sp = rndInt(rng, 4, 7);
+      for (let i = 0; i < seg && x < w - 12; i++, x++) {
+        const bordo = (i < 1 || i > seg - 2);
+        fillFrammento(x, gy, bordo ? Math.max(2, sp - 3) : sp);
+      }
+      /* il vuoto fra un frammento e l'altro: mai piu' di cinque tile, cioe'
+         sempre un salto solo — con il doppio salto resta comodo */
+      const vuoto = rndInt(rng, 3, 5);
+      for (let i = 0; i < vuoto && x < w - 12; i++, x++) groundY[x] = -1;
+      gy = clamp(gy + rndInt(rng, -3, 3), 10, 21);
+    }
+    gy = clamp(gy, 10, 21);
+    for (; x < w; x++) fillFrammento(x, gy, 6);
+  } else {
 
   /* zona di partenza sempre piatta e sicura */
   for (; x < 9; x++) fillColumn(x, gy);
@@ -158,9 +201,10 @@ function generateLevel(n) {
   /* zona finale piatta col portale */
   gy = clamp(gy, minY + 3, maxY);
   for (; x < w; x++) fillColumn(x, gy);
+  }
 
   /* trampolini VOLT: scorciatoie verticali che spezzano la sola corsa orizzontale */
-  if (!boss) {
+  if (!boss && !dentroLaFrattura) {
     const padCount = 1 + Math.floor(Math.min(2, n / 6));
     let made = 0, tries = 0;
     while (made < padCount && tries++ < 40) {
@@ -218,7 +262,7 @@ function generateLevel(n) {
   }
 
   /* --- piattaforme sospese --- */
-  const platCount = boss ? 5 : Math.floor(w / 9);
+  const platCount = boss ? 5 : Math.floor(w / (dentroLaFrattura ? 6 : 9));
   for (let i = 0; i < platCount; i++) {
     const px = rndInt(rng, 10, w - 12);
     const base = groundY[px] > 0 ? groundY[px] : h - 6;

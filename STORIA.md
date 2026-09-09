@@ -94,7 +94,7 @@ creduto che fosse un attacco — e quel malinteso è il vero antefatto della
 storia: due mondi che si sono accusati a vicenda di una cosa che è capitata e
 basta.
 
-### La Frattura — il luogo **[SCRITTO]**
+### La Frattura — il luogo **[GIOCO]** *(dalla versione 32, settori 21-23)*
 Fino al settore 20 la Frattura è una ferita nel cielo da cui escono i mostri.
 Dal 21 diventa un **posto in cui si entra**, e ci si resta per quindici settori.
 
@@ -113,6 +113,11 @@ sono di Eclissia. Qui il pericolo è il vuoto e chi ci abita.
 di paesaggio riconoscibile che ruotano piano, con i bordi strappati e le radici
 che pendono. Lampi lontani. Nessuna architettura nuova: solo cose di Lumina
 finite dove non dovevano.
+
+**Com'è venuto nel gioco:** le isole hanno la crosta d'erba di Lumina sopra e la
+roccia strappata sotto, sospese sul viola; i vuoti fra un frammento e l'altro
+non superano mai i cinque tile, cioè un salto solo; il sole non c'è, e al posto
+delle nuvole passano masse scure lontane.
 
 ### La prima Frattura **[SCRITTO]**
 Non è la prima volta che succede. Tanto tempo fa la differenza di potenziale
@@ -678,7 +683,7 @@ scontri **è il gioco a costringerti a cambiare** — un sigillo che solo Aren
 spezza, una serratura energetica che solo il guanto di Lyra apre, un nemico che
 blocca uno dei due.
 
-#### Fase 1 · L'INSEGUIMENTO — settori 21-30
+#### Fase 1 · L'INSEGUIMENTO — settori 21-30 *(21-23 giocabili dalla v32)*
 **Dove si è:** dentro la Frattura, non ancora in Eclissia.
 
 ECHO-0 non aspetta alla fine del livello: corre. Ogni tre o quattro settori si
@@ -945,9 +950,18 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
   dal 16 al 20 Lumina va in blackout sempre più spesso.
 - **I tre Comandanti hanno il nome della loro area** — Prateria, Deserto,
   Laguna — nel banner, nella barra e nell'insegna del settore.
-- La modalità infinita si chiama **CIRCUITO APERTO**. Oggi si sblocca finendo i
-  20 settori, perché è dove finisce quello che esiste: quando l'atto II sarà
-  pronto si sposterà alla fine del 65.
+- La modalità infinita si chiama **CIRCUITO APERTO** e si sblocca finendo il
+  primo atto.
+- **L'atto I non è più la fine.** Al settore 20 arriva la schermata di vittoria
+  con sotto **CONTINUA**: si passa il filmato del ponte e si entra nella
+  Frattura, tenendo tutto quello che si è conquistato. Il punto di ripresa si
+  sposta al settore 21.
+- **I settori 21, 22 e 23 esistono e si giocano**, dentro la Frattura: isole di
+  Lumina sospese nel viola, il vuoto sotto, e il cambio fra Aren e Lyra attivo
+  come dice il canone. Niente Ampere (ce l'ha ECHO-0) e niente leggi del mondo
+  (quelle sono di Eclissia).
+- Oltre il 23 il gioco **si ferma e lo dice**, invece di far finta: schermata
+  «fine di questo tratto». Il confine si sposta man mano che costruiamo.
 
 **Manca tutto l'atto II**, cioè i settori **21-65**: la semina nei settori 15-20,
 la Frattura come luogo, ECHO-0 e i suoi tre scontri, il furto dei poteri, la

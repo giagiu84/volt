@@ -8,7 +8,12 @@ const LIFE_EVERY = 8000;      /* punti fra la prima vita e la seconda */
    secondi: si finiva la campagna senza mai rischiare davvero. */
 const LIFE_GROW = 1.25;
 const FIRST_LIFE_AT = 2500;   /* la prima arriva presto: serve nei settori d'apertura */
-const CAMPAIGN_END = 20;      /* la campagna finisce col Divoratore */
+const ATTO1_FINE = 20;        /* il primo atto finisce col Divoratore */
+const CAMPAIGN_END = 65;      /* la fine vera del gioco: la Caldera */
+/* Fin dove arriva quello che e' costruito davvero. Si alza mano a mano che
+   l'atto II viene programmato: oltre questo settore il gioco si ferma e lo
+   dice, invece di far finta. */
+const SETTORI_PRONTI = 23;
 const CHECKPOINTS = [5, 10, 15];
 /* La semina del secondo atto: dal settore 15 la luce di Lumina comincia ad
    andarsene, e lo si vede prima che qualcuno lo dica. */
@@ -127,6 +132,7 @@ const Game = {
       if (!this.progress.cleared) { this.banner('PRIMA RITROVA LYRA'); return; }
       this.start(true, 'endless', false);
     };
+    document.getElementById('winContinueBtn').onclick = () => this.continuaAttoII();
     document.getElementById('winEndlessBtn').onclick = () => this.start(true, 'endless', false);
     document.getElementById('winMenuBtn').onclick = () => this.toMenu();
     document.getElementById('ovResumeBtn').onclick = () => this.start(true, 'campaign', true);
@@ -205,9 +211,8 @@ const Game = {
     /* Ampere esiste solo oltre la Frattura: la Corrente Verde e' sparsa di la' */
     this.ampere = null; this.cariche.length = 0;
     /* oltre la Frattura i due custodi sono insieme e ci si passa da uno all'altra */
-    this.canSwap = this.mode === 'endless';
     this.swapCd = 0;
-    if (this.canSwap) this.heroStart = this.hero;
+    this.heroStart = this.hero;
     this.combo = 0; this.comboT = 0; this.maxCombo = 0;
     this.volt = 0; this.rushT = 0; this.hitStop = 0;
     this.hasShip = false;
@@ -299,6 +304,47 @@ const Game = {
     });
   },
 
+  /* Il ponte fra i due atti: si e' vinto, ma la luce se ne sta andando.
+     Il filmato lo dice senza parole; se manca, si tira dritto. */
+  continuaAttoII() {
+    document.getElementById('win').classList.add('hidden');
+    document.getElementById('hud').classList.add('hidden');
+    this.state = 'cinema';
+    this.playCinema('la_luce_se_ne_va', () => {
+      this._winCinema = false;
+      this.level = FRATTURA_DA;
+      this.loadLevel(FRATTURA_DA);
+      document.getElementById('hud').classList.remove('hidden');
+      this.state = 'play';
+      this.refreshActionButtons();
+      this.banner('OLTRE LA FRATTURA');
+    });
+  },
+
+  /* Il confine di quello che e' costruito. Meglio dirlo che far finta: si
+     chiude il tratto, si sblocca il Circuito Aperto e si torna quando ci sara'
+     il resto. */
+  fineAnteprima() {
+    this.state = 'win';
+    Sfx.stopMusic();
+    this.progress.cleared = true;
+    this.progress.cp = null;
+    this.saveProgress();
+    document.getElementById('winTitle').textContent = 'FINE DI QUESTO TRATTO';
+    document.getElementById('winText').textContent =
+      'Hai attraversato la Frattura fino al settore ' + SETTORI_PRONTI + '. ' +
+      'La caccia a ECHO-0 continua nei settori che stiamo costruendo: torna a vedere.';
+    document.getElementById('winScore').textContent = this.score;
+    document.getElementById('winKills').textContent = this.kills;
+    document.getElementById('winRank').textContent =
+      this.score >= 90000 ? 'S' : this.score >= 60000 ? 'A' : this.score >= 35000 ? 'B' : 'C';
+    document.getElementById('winContinueBtn').classList.add('hidden');
+    document.querySelector('#win .unlock').classList.add('hidden');
+    document.getElementById('win').classList.remove('hidden');
+    document.getElementById('hud').classList.add('hidden');
+    Sfx.levelUp();
+  },
+
   /* il menu racconta a che punto sei */
   refreshMenu() {
     /* il claim e la scelta raccontano chi stai cercando */
@@ -312,7 +358,7 @@ const Game = {
     const rb = document.getElementById('resumeRunBtn');
     rb.classList.toggle('hidden', !cp);
     if (cp) document.getElementById('cpLevel').textContent = cp.level;
-    document.getElementById('playSub').textContent = 'CAMPAGNA · ' + CAMPAIGN_END + ' SETTORI';
+    document.getElementById('playSub').textContent = 'CAMPAGNA · ATTO I: ' + ATTO1_FINE + ' SETTORI';
     const eb = document.getElementById('endlessBtn');
     eb.classList.toggle('locked', !this.progress.cleared);
     eb.textContent = this.progress.cleared
@@ -392,6 +438,11 @@ const Game = {
     GRAV = GRAV0 * ((this.lawDef && this.lawDef.grav) || 1);
     this.platsOff = false; this.platT = 0.45; this.meteorT = 2.2;
 
+    /* i due custodi combattono insieme dal ventunesimo settore: e' conseguenza
+       del ricongiungimento, non di Ampere */
+    this.canSwap = this.mode === 'endless' || (this.mode === 'campaign' && n >= FRATTURA_DA);
+    this.swapCd = 0;
+
     this.mission = lv.mission || { type: 'hunt' };
     this.missionDone = false;
     this.missionT = this.mission.time || 0;
@@ -463,7 +514,7 @@ const Game = {
     }
 
     const md = MISSIONS[this.mission.type] || MISSIONS.hunt;
-    const finale = this.mode === 'campaign' && n >= CAMPAIGN_END;
+    const finale = this.mode === 'campaign' && n === ATTO1_FINE;
     this.banner(lv.boss ? this.bossName() : missionName(this.mission.type));
     if (!lv.boss && n > 1 && n % 2 === 0) setTimeout(() => {
       if (this.state === 'play' && this.level === n && this.player)
@@ -833,7 +884,10 @@ const Game = {
     if (this.transition > 0) {
       this.transition -= dt;
       if (this.transition <= 0) {
-        if (this.mode === 'campaign' && this.level >= CAMPAIGN_END) { this.winCampaign(); return; }
+        if (this.mode === 'campaign') {
+          if (this.level === ATTO1_FINE) { this.winCampaign(); return; }
+          if (this.level >= SETTORI_PRONTI) { this.fineAnteprima(); return; }
+        }
         this.pendingLevel = this.level + 1;
         this.openChoice();
       }
@@ -1197,8 +1251,17 @@ const Game = {
     this.state = 'win';
     Sfx.stopMusic();
     this.progress.cleared = true;
-    this.progress.cp = null;
+    /* da qui in poi si puo' riprendere dal ventunesimo, con quello che si e'
+       conquistato: ECHO-0 si e' nutrito proprio di questi poteri */
+    this.progress.cp = {
+      level: FRATTURA_DA,
+      perks: Object.assign({}, this.perks),
+      maxHp: this.player ? this.player.maxHp : 3,
+      score: this.score
+    };
     this.saveProgress();
+    document.getElementById('winContinueBtn').classList.remove('hidden');
+    document.querySelector('#win .unlock').classList.remove('hidden');
     const rank = this.score >= 60000 ? 'S' : this.score >= 40000 ? 'A' : this.score >= 25000 ? 'B' : 'C';
     const H = HEROES[this.hero] || HEROES.aren;
     document.getElementById('winTitle').textContent = H.otherFree;
@@ -1396,9 +1459,9 @@ const Game = {
     if (c.score !== this.score) { c.score = this.score; document.getElementById('score').textContent = this.score; }
 
     const md = MISSIONS[(this.mission || {}).type] || MISSIONS.hunt;
-    const tot = this.mode === 'campaign' ? '/' + CAMPAIGN_END : '';
+    const tot = (this.mode === 'campaign' && this.level <= ATTO1_FINE) ? '/' + ATTO1_FINE : '';
     const lvName = this.lv.boss
-      ? (this.mode === 'campaign' && this.level >= CAMPAIGN_END ? 'IL DIVORATORE' : this.bossName() + ' ' + this.level + tot)
+      ? (this.mode === 'campaign' && this.level === ATTO1_FINE ? 'IL DIVORATORE' : this.bossName() + ' ' + this.level + tot)
       : 'SETTORE ' + this.level + tot + ' · ' + (this.lawDef ? this.lawDef.name : missionName((this.mission || {}).type));
     if (c.lvName !== lvName) { c.lvName = lvName; document.getElementById('levelName').textContent = lvName; }
 
@@ -1496,24 +1559,26 @@ const Game = {
     g.addColorStop(0, th.sky[0]); g.addColorStop(1, th.sky[1]);
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
 
-    /* sole morbido */
-    const sunX = W * 0.78, sunY = Math.max(60, horizon * 0.2);
-    Gfx.light(ctx, sunX, sunY, 150, th.accent, 0.5);
-    ctx.save();
-    ctx.globalAlpha = 0.85; ctx.fillStyle = '#ffffff';
-    ctx.beginPath(); ctx.arc(sunX, sunY, 26, 0, TAU); ctx.fill();
-    ctx.restore();
+    /* sole morbido — dentro la Frattura non c'e' nessun sole */
+    if (!th.frattura) {
+      const sunX = W * 0.78, sunY = Math.max(60, horizon * 0.2);
+      Gfx.light(ctx, sunX, sunY, 150, th.accent, 0.5);
+      ctx.save();
+      ctx.globalAlpha = 0.85; ctx.fillStyle = '#ffffff';
+      ctx.beginPath(); ctx.arc(sunX, sunY, 26, 0, TAU); ctx.fill();
+      ctx.restore();
+    }
 
-    /* nuvole */
+    /* nuvole — o, nella Frattura, i massi che galleggiano lontano */
     ctx.save();
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = th.frattura ? '#25123f' : '#ffffff';
     for (const c of lv.clouds) {
       let cx = (c.x * W * 2.4 - camX * 0.06 - this.portalT * c.spd) % (W + 320);
       const x = cx < -160 ? cx + W + 320 : cx;
       const y = horizon * c.y + 20, s = c.s;
-      ctx.globalAlpha = 0.5;
+      ctx.globalAlpha = th.frattura ? 0.8 : 0.5;
       ctx.beginPath();
-      ctx.ellipse(x, y, 62 * s, 24 * s, 0, 0, TAU);
+      ctx.ellipse(x, y, 62 * s, th.frattura ? 34 * s : 24 * s, th.frattura ? 0.12 : 0, 0, TAU);
       ctx.ellipse(x - 42 * s, y + 7 * s, 34 * s, 16 * s, 0, 0, TAU);
       ctx.ellipse(x + 44 * s, y + 9 * s, 30 * s, 14 * s, 0, 0, TAU);
       ctx.fill();
@@ -1749,7 +1814,7 @@ const Game = {
      gioco mostra gia', visto che il paesaggio cambia ogni cinque settori. */
   bossName() {
     if (this.mode === 'campaign') {
-      if (this.level >= CAMPAIGN_END) return 'IL DIVORATORE';
+      if (this.level === ATTO1_FINE) return 'IL DIVORATORE';
       const nomi = { 5: 'COMANDANTE DELLA PRATERIA', 10: 'COMANDANTE DEL DESERTO',
                      15: 'COMANDANTE DELLA LAGUNA' };
       if (nomi[this.level]) return nomi[this.level];

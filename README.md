@@ -84,7 +84,9 @@ Il Word **non si modifica a mano**: si scrive nell'`.md` e si rilancia
 
 **Entrando in ogni portale si sceglie un potenziamento** fra tre pescati a caso; restano per tutta la partita e si sommano. Dopo un Comandante la scelta comprende un potenziamento leggendario (droncino alleato, vampiro elettrico, scudo d'emergenza, brace, arsenale).
 
-**Circuito Aperto**: finita la campagna si sblocca la modalità infinita, dove i settori non finiscono e conta solo il punteggio. **Ogni tre settori cambia una legge del mondo**, e il mondo diventa un altro:
+**Oltre la Frattura** (atto II, in costruzione): al settore 20 la vittoria non è la fine. Sotto la schermata compare **CONTINUA**: si entra **dentro la Frattura** — isole di Lumina strappate e sospese nel viola, il vuoto al posto della terra — tenendo cuori e potenziamenti conquistati. Da lì Aren e Lyra combattono insieme col tasto CAMBIA. Oggi sono giocabili i settori **21-23**; oltre, il gioco si ferma e lo dice.
+
+**Circuito Aperto**: finito il primo atto si sblocca la modalità infinita, dove i settori non finiscono e conta solo il punteggio. **Ogni tre settori cambia una legge del mondo**, e il mondo diventa un altro:
 
 | Legge | Cosa cambia |
 |---|---|
