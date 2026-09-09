@@ -250,7 +250,13 @@ lento. Nel gioco: 5 cuori, corsa 282, danno per secondo 8,7.
 
 Aspetto: tuta bianca e blu notte, visore azzurro, **sciarpa fucsia**, fulmine
 giallo sul petto.
-Colori esatti: corpo `#f2f7ff`, dettagli `#22c8f5`, sciarpa `#ff5d8f`, gambe `#3a4a86`.
+Colori esatti: corpo `#f2f7ff`, dettagli `#22c8f5`, sciarpa `#ff5d8f`, tuta
+interna `#232a52`, gambe `#2b3566`.
+
+**Nel gioco** (disegnato in codice): casco bianco con la **visiera scura a
+fascia**, cresta ciano e disco tondo sull'orecchio; spalline chiare, cintura
+ciano, **fulmine giallo sul petto**, stivali chiari con l'anello ciano alla
+caviglia. La sciarpa fucsia lo segue.
 
 ### LYRA **[GIOCO]**
 Custode. Combatte col **guanto energetico**, non col blaster. Veloce, salto più
@@ -260,7 +266,13 @@ diverso di arrivarci).
 
 Aspetto: tuta rosa e bianca, capelli viola con la **ciocca gialla**, dettagli
 ciano, coda.
-Colori esatti: corpo `#fff0f6`, dettagli `#ff5d8f`, capelli `#7a3fd6`, ciocca `#ffd166`, gambe `#4a2f7a`.
+Colori esatti: corpo `#fff0f6`, dettagli `#ff5d8f`, capelli `#9457e8`, ciocca
+`#ffd166`, tuta corallo `#c2405f`, incarnato `#e0a074`, gambe `#3a2a5e`.
+
+**Nel gioco** (disegnato in codice): **Lyra non porta il casco**, e questa è la
+differenza che si vede da lontano. Faccia scoperta con occhi e sorriso, capelli
+viola corti con la **ciocca gialla**, tuta bianca e corallo, innesto ciano sul
+petto, spalline e stivali. Se in una scena Lyra ha il casco, è sbagliata.
 
 ### Il legame fra i due **[SCRITTO]**
 

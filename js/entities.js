@@ -244,7 +244,10 @@ class Pickup {
    Stessi poteri, stessi danni, stessa difficoltà: cambia solo come si spara. */
 const HEROES = {
   aren: { name: 'AREN', other: 'LYRA', otherLabel: 'Lyra', otherFree: 'LYRA È LIBERA',
-          body: '#f2f7ff', trim: '#22c8f5', trail: '#ff5d8f', legs: '#3a4a86',
+          body: '#f2f7ff', trim: '#22c8f5', trail: '#ff5d8f', legs: '#2b3566',
+          /* i tagli della tuta, come sulla tavola: bianco e blu notte, ciano
+             negli innesti, il fulmine giallo sul petto */
+          suit: '#232a52', boot: '#f2f7ff', crest: '#22c8f5', casco: true, bolt: true,
           ponytail: false, glove: false,
           /* Due stili, stessa possibilità di arrivare in fondo: Aren picchia
              duro e incassa, Lyra corre e martella. Il tempo per abbattere un
@@ -255,7 +258,11 @@ const HEROES = {
      ciocca gialla. Lyra non usa il blaster ma il guanto energetico. */
   lyra: { name: 'LYRA', other: 'AREN', otherLabel: 'Aren', otherFree: 'AREN È LIBERO',
           body: '#fff0f6', trim: '#ff5d8f', trail: '#7a3fd6', hair2: '#ffd166',
-          legs: '#4a2f7a', ponytail: true, glove: true,
+          /* Lyra non porta il casco: si vede la faccia, i capelli viola corti
+             e la ciocca gialla. La tuta e' corallo e bianca. */
+          suit: '#c2405f', boot: '#fff0f6', hair: '#9457e8', skin: '#e0a074',
+          casco: false, bolt: false,
+          legs: '#3a2a5e', ponytail: true, glove: true,
           speed: 1.12, dmg: 0, rate: 0.78, hp: 4, dash: 0.75, jump: 1.04, invuln: 1,
           tratto: 'veloce · raffica rapida' }
 };
@@ -815,42 +822,126 @@ class Player {
     const bodyCol = this.flash > 0 ? '#ffffff' : H.body;
     const trim = this.shield > 0 ? '#48d7ff' : H.trim;
 
-    /* gambe */
-    const legY = air ? 6 : 8;
-    Gfx.capsule(ctx, -8, legY, 7, air ? 10 : 11 + legPhase * 3, H.legs, OUTLINE, 3);
-    Gfx.capsule(ctx, 1, legY, 7, air ? 10 : 11 - legPhase * 3, H.legs, OUTLINE, 3);
+    ctx.lineWidth = 3; ctx.strokeStyle = OUTLINE; ctx.lineJoin = 'round';
+    const vx = clamp(this.aimX, -1, 1) * 2.4;
 
-    /* corpo */
+    /* --- gambe e stivali --- */
+    const legY = air ? 6 : 8;
+    for (const lato of [-1, 1]) {
+      const lx = lato < 0 ? -8 : 1;
+      const lh = air ? 10 : 11 + legPhase * 3 * lato;
+      Gfx.capsule(ctx, lx, legY, 7, lh, H.legs, OUTLINE, 3);
+      /* lo stivale: punta chiara e anello colorato alla caviglia */
+      ctx.fillStyle = this.flash > 0 ? '#ffffff' : (H.boot || '#f2f7ff');
+      roundRect(ctx, lx - 1.5, legY + lh - 6.5, 10, 7, 3.5); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = trim;
+      ctx.beginPath(); ctx.arc(lx + 3.5, legY + lh - 3, 1.8, 0, TAU); ctx.fill();
+    }
+
+    /* --- corpo: la tuta ha due tagli, non e' una pillola sola --- */
     Gfx.capsule(ctx, -11, -13, 22, 24, bodyCol, OUTLINE, 3);
     ctx.save();
     roundRect(ctx, -11, -13, 22, 24, 9); ctx.clip();
+    /* il pettorale scuro */
+    ctx.fillStyle = this.flash > 0 ? '#dddddd' : H.suit;
+    ctx.beginPath();
+    ctx.moveTo(-11, 3); ctx.lineTo(0, -1); ctx.lineTo(11, 3);
+    ctx.lineTo(11, 12); ctx.lineTo(-11, 12); ctx.closePath(); ctx.fill();
+    /* la cintura */
     ctx.fillStyle = trim;
-    roundRect(ctx, -11, -1, 22, 12, 5); ctx.fill();
+    roundRect(ctx, -11, 5.5, 22, 3.5, 1.8); ctx.fill();
     ctx.restore();
-    Gfx.gloss(ctx, -7, -10, 9, 4, 0.75);
 
-    /* casco + visiera che guarda dove si mira */
+    /* spalline: due piastre chiare che staccano le braccia dal busto */
+    ctx.fillStyle = bodyCol;
+    roundRect(ctx, -15, -13, 9, 10, 4.5); ctx.fill(); ctx.stroke();
+    roundRect(ctx, 6, -13, 9, 10, 4.5); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = trim;
+    ctx.beginPath(); ctx.arc(-10.5, -8, 1.9, 0, TAU); ctx.fill();
+    ctx.beginPath(); ctx.arc(10.5, -8, 1.9, 0, TAU); ctx.fill();
+
+    /* il segno sul petto */
+    if (H.bolt) {
+      /* il fulmine giallo di Aren */
+      ctx.fillStyle = '#ffd166';
+      ctx.beginPath();
+      ctx.moveTo(2.5, -10); ctx.lineTo(-3.5, -2); ctx.lineTo(0, -2);
+      ctx.lineTo(-2, 4); ctx.lineTo(4, -4); ctx.lineTo(0.5, -4);
+      ctx.closePath(); ctx.fill();
+    } else {
+      /* l'innesto ciano di Lyra */
+      ctx.fillStyle = '#5ed6ff';
+      ctx.beginPath();
+      ctx.moveTo(0, -9); ctx.lineTo(4.5, -5); ctx.lineTo(0, 1); ctx.lineTo(-4.5, -5);
+      ctx.closePath(); ctx.fill();
+    }
+    Gfx.gloss(ctx, -7.5, -11, 9, 3.5, 0.6);
+
+    /* --- testa --- */
     ctx.save();
     ctx.translate(0, -16);
-    if (H.ponytail) {
-      /* ciuffo che sbuca dal visore */
-      ctx.fillStyle = H.trail;
+    if (H.casco) {
+      /* AREN: casco bianco, visiera scura, cresta e auricolare ciano */
+      Gfx.capsule(ctx, -10, -10, 20, 19, bodyCol, OUTLINE, 3);
+      /* la cresta sopra */
+      ctx.fillStyle = trim;
       ctx.beginPath();
-      ctx.moveTo(-2, -9); ctx.quadraticCurveTo(-15, -17, -13, -3);
-      ctx.quadraticCurveTo(-8, -8, -2, -6); ctx.closePath();
-      ctx.fill(); ctx.lineWidth = 2.5; ctx.strokeStyle = OUTLINE; ctx.stroke();
-      /* la ciocca gialla della tavola */
-      ctx.fillStyle = H.hair2 || '#ffd166';
+      ctx.moveTo(-1, -11); ctx.quadraticCurveTo(4, -19, 8, -12);
+      ctx.quadraticCurveTo(4, -10, -1, -9); ctx.closePath();
+      ctx.fill(); ctx.stroke();
+      /* la visiera */
+      /* la visiera e' una fascia, non tutta la faccia: il casco resta bianco */
+      ctx.fillStyle = '#141a33';
       ctx.beginPath();
-      ctx.moveTo(-3, -9); ctx.quadraticCurveTo(-9, -14, -8, -7);
-      ctx.quadraticCurveTo(-6, -8, -3, -7); ctx.closePath(); ctx.fill();
+      ctx.moveTo(-6 + vx, -4); ctx.lineTo(8 + vx, -5.5);
+      ctx.quadraticCurveTo(9 + vx, -0.5, 5 + vx, 1.5);
+      ctx.lineTo(-5 + vx, 1.5); ctx.quadraticCurveTo(-7 + vx, 0, -6 + vx, -4);
+      ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = 'rgba(255,255,255,.7)';
+      roundRect(ctx, -3.5 + vx, -3, 4.5, 2, 1); ctx.fill();
+      /* l'auricolare tondo di lato */
+      ctx.fillStyle = '#1b2340';
+      ctx.beginPath(); ctx.arc(-8.2, -1, 3.6, 0, TAU); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = trim;
+      ctx.beginPath(); ctx.arc(-8.2, -1, 1.9, 0, TAU); ctx.fill();
+    } else {
+      /* LYRA: niente casco. Faccia, capelli viola corti, ciocca gialla. */
+      /* i capelli dietro */
+      ctx.fillStyle = H.hair;
+      ctx.beginPath();
+      ctx.moveTo(-10, -5); ctx.quadraticCurveTo(-11.5, -15, 0, -15);
+      ctx.quadraticCurveTo(11.5, -15, 10, -5);
+      ctx.quadraticCurveTo(8.5, 0, 6, -0.5); ctx.lineTo(-6, -0.5);
+      ctx.quadraticCurveTo(-8.5, 0, -10, -5);
+      ctx.closePath(); ctx.fill(); ctx.stroke();
+      /* la faccia */
+      ctx.fillStyle = this.flash > 0 ? '#ffffff' : H.skin;
+      Gfx.capsule(ctx, -8, -9, 16, 16, this.flash > 0 ? '#ffffff' : H.skin, OUTLINE, 3);
+      /* la frangia sopra la fronte */
+      ctx.fillStyle = H.hair;
+      ctx.beginPath();
+      ctx.moveTo(-9, -6); ctx.quadraticCurveTo(-10, -14, 0, -14);
+      ctx.quadraticCurveTo(10, -14, 9, -6);
+      ctx.quadraticCurveTo(4, -9, 1, -6);
+      ctx.quadraticCurveTo(-3, -10, -9, -6);
+      ctx.closePath(); ctx.fill(); ctx.stroke();
+      /* la ciocca gialla */
+      ctx.fillStyle = H.hair2;
+      ctx.beginPath();
+      ctx.moveTo(1, -13.4); ctx.quadraticCurveTo(6, -13, 7.6, -8.4);
+      ctx.quadraticCurveTo(4.5, -10.5, 1, -10.6);
+      ctx.closePath(); ctx.fill();
+      /* occhi e sorriso */
+      ctx.fillStyle = '#241a3f';
+      ctx.beginPath(); ctx.ellipse(-3.6 + vx * 0.7, -3, 1.7, 2.3, 0, 0, TAU); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(3.4 + vx * 0.7, -3, 1.7, 2.3, 0, 0, TAU); ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,.85)';
+      ctx.beginPath(); ctx.arc(-4.2 + vx * 0.7, -3.8, 0.7, 0, TAU); ctx.fill();
+      ctx.beginPath(); ctx.arc(2.8 + vx * 0.7, -3.8, 0.7, 0, TAU); ctx.fill();
+      ctx.strokeStyle = '#241a3f'; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.arc(0 + vx * 0.7, 0.4, 2.6, 0.25, Math.PI - 0.25); ctx.stroke();
+      ctx.lineWidth = 3; ctx.strokeStyle = OUTLINE;
     }
-    Gfx.capsule(ctx, -10, -9, 20, 18, trim, OUTLINE, 3);
-    ctx.fillStyle = '#1b2340';
-    const vx = clamp(this.aimX, -1, 1) * 2.4;
-    roundRect(ctx, -7 + vx, -5, 14, 8, 4); ctx.fill();
-    ctx.fillStyle = 'rgba(255,255,255,.75)';
-    roundRect(ctx, -4.5 + vx, -3.6, 5, 2.6, 1.3); ctx.fill();
     ctx.restore();
 
     /* braccio + blaster verso la mira */
