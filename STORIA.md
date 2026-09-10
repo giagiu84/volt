@@ -1600,7 +1600,7 @@ Il gioco mostra brevi filmati fra una fase e l'altra, come faceva *Prince of
 Persia*: non sono premi, sono **il modo in cui la storia va avanti mentre si
 gioca**.
 
-**Fatti** (già dentro il gioco, nove):
+**Fatti** (già dentro il gioco, dieci):
 
 | File | Quando | Cosa mostra |
 |---|---|---|
@@ -1613,25 +1613,24 @@ gioca**.
 | `primo_incontro` | entrando nel settore 24 | ECHO-0 si compone dalle schegge e si alza sopra i due: braccia diverse, occhi accesi, fulmine giallo |
 | `ampere_torna` | entrando nel settore 31 | Lo strappo: la lanterna passa di mano, si accende di verde fra Aren e Lyra, ECHO-0 indietreggia e fugge nel varco |
 | `il_tradimento` | fine del settore 35 | ECHO-0 in ginocchio allunga la mano verso la lanterna che è in mano ai Custodi; il pugno di ECHO-1 la strappa **a loro**; restano tutti e tre a terra con la mano tesa nel vuoto |
+| `il_passaggio` | subito dopo, senza stacco | Si rialza e apre la fenditura su Eclissia; **il filo di luce verde gli attraversa il petto e lo sfalda** — è il prezzo; poi indica la strada lo stesso: «È DI LÀ. PERDONATEMI… ERA L'UNICO MODO PER RESTARE VIVO.» |
 
-**Da fare: otto**, qui in ordine di settore. I sei segnati **essenziale** sono
-quelli senza cui la storia non si capisce; gli altri fanno bella figura.
+**Da fare: sette**, qui in ordine di settore. I cinque segnati **essenziale**
+sono quelli senza cui la storia non si capisce; gli altri fanno bella figura.
 
 | # | File | Settore | Cosa deve mostrare | Priorità |
 |---|---|---|---|---|
 | 1 | `dentro_la_frattura` | 21 | I due entrano insieme; il mondo è fatto di pezzi di casa loro | desiderabile |
-| 2 | `il_passaggio` | 35 | Si rialza, apre la fenditura, **vede il prezzo** — la luce verde lo sfalda — e indica lo stesso: «È DI LÀ» | **essenziale** |
-| 3 | `eclissia` | 36 | La prima immagine del mondo nuovo, con la Caldera all'orizzonte | desiderabile |
-| 4 | `il_reattore` | 56 | I tre cristalli si spengono, Ampere esce e si riempie di colpo | **essenziale** |
-| 5 | `la_scelta_di_echo` | 56 | ECHO-0 allunga la mano verso la lanterna e la ritira | **essenziale** |
-| 6 | `la_cima` | 65 | OHM si condensa sopra il cratere; il segno Ω si accende | **essenziale** |
-| 7 | `il_finale` | 65 | L'eruzione, il cielo che si cuce, la scintilla che entra in Ampere, Eclio | **essenziale** |
-| 8 | `il_bacio` | 65 | Aren si toglie il casco, lo lascia cadere, abbraccia e bacia Lyra | **essenziale** |
+| 2 | `eclissia` | 36 | La prima immagine del mondo nuovo, con la Caldera all'orizzonte | desiderabile |
+| 3 | `il_reattore` | 56 | I tre cristalli si spengono, Ampere esce e si riempie di colpo | **essenziale** |
+| 4 | `la_scelta_di_echo` | 56 | ECHO-0 allunga la mano verso la lanterna e la ritira | **essenziale** |
+| 5 | `la_cima` | 65 | OHM si condensa sopra il cratere; il segno Ω si accende | **essenziale** |
+| 6 | `il_finale` | 65 | L'eruzione, il cielo che si cuce, la scintilla che entra in Ampere, Eclio | **essenziale** |
+| 7 | `il_bacio` | 65 | Aren si toglie il casco, lo lascia cadere, abbraccia e bacia Lyra | **essenziale** |
 
-I sei essenziali vanno prodotti **a coppie**, perché sono scene divise in due:
-`il_reattore`+`la_scelta_di_echo`, e `la_cima`+`il_finale`+`il_bacio`, che sono
-una sequenza sola. **`il_passaggio` è il seguito immediato di `il_tradimento`**,
-che è già girato: attacca esattamente dove quello finisce.
+I cinque essenziali vanno prodotti **a coppie**, perché sono scene divise in
+due: `il_reattore`+`la_scelta_di_echo`, e `la_cima`+`il_finale`+`il_bacio`, che
+sono una sequenza sola.
 
 **`il_bacio` non si gira** finché non esiste la tavola canonica del volto di
 Aren (capitolo 11). La commessa completa, scheda per scheda, sta in

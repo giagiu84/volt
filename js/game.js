@@ -31,9 +31,9 @@ const RUBABILI = ['bounce', 'power', 'rapidfire', 'boom', 'jump3'];
 const FILMATI_SETTORE = {
   24: 'primo_incontro',
   31: 'ampere_torna',
-  /* il tradimento e il passaggio sono una scena sola spezzata in due: quando
-     arriva anche `il_passaggio` basta aggiungerlo qui dentro */
-  36: ['il_tradimento']
+  /* il tradimento e il passaggio sono una scena sola spezzata in due: si
+     vedono di fila, senza stacco */
+  36: ['il_tradimento', 'il_passaggio']
 };
 /* I filmati consegnati senza traccia audio. Su questi la musica del gioco NON
    si ferma: senza, sarebbero secondi di silenzio totale e sembrerebbe che il

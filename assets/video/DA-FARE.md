@@ -3,10 +3,10 @@
 Da consegnare a chi li produce. Ogni scheda è autosufficiente: dentro c'è chi
 compare, com'è fatto, cosa succede e cosa deve restare in mente allo spettatore.
 
-**Da fare: otto** (sei essenziali).
-**Già fatti: nove** — `introduzione`, `rapimento_lyra`, `rapimento_aren`,
+**Da fare: sette** (cinque essenziali).
+**Già fatti: dieci** — `introduzione`, `rapimento_lyra`, `rapimento_aren`,
 `liberazione_lyra`, `liberazione_aren`, `la_luce_se_ne_va`, `primo_incontro`,
-`ampere_torna`, `il_tradimento`.
+`ampere_torna`, `il_tradimento`, `il_passaggio`.
 
 ---
 
@@ -14,9 +14,12 @@ compare, com'è fatto, cosa succede e cosa deve restare in mente allo spettatore
 
 - **MP4**, video H.264, audio AAC, **1280×720**, orizzontale.
 - **Durata 6-10 secondi.** Oltre, la gente salta.
-- **Deve funzionare muto.** Sul telefono l'audio può essere bloccato dal
-  browser: niente dialoghi parlati indispensabili. Le frasi necessarie si
-  scrivono **a schermo, in maiuscolo, poche parole**.
+- **Deve funzionare muto, e questo è quello che si dimentica più spesso.**
+  Sul telefono il browser blocca l'audio finché non si tocca lo schermo: un
+  filmato con le battute solo parlate, muto, non dice niente. Le frasi
+  necessarie vanno **scritte a schermo, in maiuscolo, poche parole**.
+  *(In `il_passaggio` mancavano e le ho aggiunte io in post, sincronizzate
+  sulla voce: si può fare, ma è meglio se arrivano già dentro.)*
 - **Pochi tagli.** In otto secondi si racconta una cosa sola.
 - **Peso:** mandali pure pesanti, li ricomprimo io a norma (max 3 MB) e ne
   allineo il volume agli altri.
@@ -116,13 +119,13 @@ del browser e dell'icona sul telefono. È il marchio ufficiale: **da qui in poi
 
 ---
 
-# LE OTTO SCHEDE, IN ORDINE DI STORIA
+# LE SETTE SCHEDE, IN ORDINE DI STORIA
 
 Sono elencate come si incontrano giocando, dal settore 21 al 65. Accanto a
 ognuna c'è se è **essenziale** (senza, la storia ha un buco) o desiderabile.
 
-**I sei essenziali** sono `il_passaggio`, `il_reattore`, `la_scelta_di_echo`,
-`la_cima`, `il_finale` e `il_bacio`. Vanno prodotti **a coppie**,
+**I cinque essenziali** sono `il_reattore`, `la_scelta_di_echo`, `la_cima`,
+`il_finale` e `il_bacio`. Vanno prodotti **a coppie**,
 perché sono tre scene divise in due ciascuna:
 `il_tradimento`+`il_passaggio` · `il_reattore`+`la_scelta_di_echo` ·
 `la_cima`+`il_finale`.
@@ -147,106 +150,7 @@ casa loro, a brandelli.
 
 ---
 
-## 2 · `il_passaggio` — settore 35 · **ESSENZIALE**
-**Dove:** settore 35, subito dopo `il_tradimento`, senza stacco.
-**Quattro battute**, e la terza è quella che regge tutto il resto del gioco.
-
-**1 · Il confronto.** ECHO-0 si rialza dalle macerie, lentamente. Aren e Lyra
-sono in piedi davanti a lui, pronti a colpirlo. Nessuno dei tre ha più Ampere.
-
-**2 · L'apertura.** Lui non attacca: alza la mano e **apre una fenditura** nel
-fondo del viola. Dentro si intravede un mondo vero — terra, cielo, e lontano un
-vulcano nero: **Eclissia**.
-
-**3 · IL PREZZO.** Primo piano su di lui, e non succede quasi niente.
-- Guarda dentro lo squarcio. **In fondo, piccolissima e verde, si vede Ampere**:
-  è nel petto di ECHO-1, che se l'è portata di là. È quello che i Custodi
-  andranno a riprendersi.
-- **Dalla fenditura arriva un filo di quella luce verde** e gli tocca il petto.
-- Dove lo tocca, **alcune schegge del suo corpo diventano trasparenti** e
-  cominciano a sfaldarsi. Poi la luce passa oltre e le schegge tornano solide.
-- **Nel riflesso del suo occhio ciano** resta l'immagine della lanterna accesa.
-- Abbassa la mano dal petto. Guarda Aren e Lyra.
-
-**4 · La scelta.** Si sposta, indica lo squarcio, e li lascia passare. E qui
-parla — tre frasi, in quest'ordine, con le pause fra l'una e l'altra:
-
-| | Cosa fa | Cosa dice |
-|---|---|---|
-| 1 | Indica la fenditura | **«È DI LÀ.»** |
-| 2 | Pausa. Guarda Aren e Lyra | **«PERDONATEMI…»** |
-| 3 | Abbassa lo sguardo | **«ERA L'UNICO MODO PER RESTARE VIVO.»** |
-
-**Come vanno dette.** Voce cupa, profonda, **stanca**. Nessuna enfasi da
-cattivo: **è una confessione**, non una minaccia. Testo a schermo nitido, in
-maiuscolo, una frase per volta — il filmato deve funzionare anche muto.
-
-**Perché la terza non ripete il fotogramma del prezzo.** L'immagine dice *«se
-Ampere torna, io muoio»*. La battuta dice *«l'ho rubata per non morire»*. Sono
-due fatti diversi, e il secondo è una **confessione di colpa** che l'immagine non
-può portare. Vanno tenute tutte e due.
-
-> ### ⛔ E qui ECHO-0 smette di parlare. Niente quarta battuta.
-> Era stata proposta una chiusura del tipo *«ma è giusto che torni vostra»*, ed
-> è stata **scartata**. Ecco perché, ed è una regola che vale per tutto quello
-> che ECHO-0 dirà da qui al settore 56:
->
-> **Dal 36 al 55 la tensione è tutta in una domanda: «quando mi tradisce?»**
-> Aren e Lyra non sanno se fidarsi, e il giocatore nemmeno. È l'unica cosa che
-> tiene in piedi quei venti settori.
->
-> Se qui dichiara da che parte sta, quei venti settori diventano un viaggio con
-> un amico. **ECHO-0 non spiega mai le proprie ragioni fino in fondo**: fa le
-> cose e lascia che si interpretino.
->
-> E poi quel gesto lo sta già facendo: apre la strada e si scosta. *«È giusto
-> che torni vostra»* è quello che **fa**, non serve che lo dica. Lo rifarà al
-> settore 56, con la mano che si ritira, e lì senza una parola vale dieci volte
-> tanto.
-
----
-
-### Le tre regole della terza battuta, e sono strette
-
-**a · Non è una scoperta, è una conferma.** ECHO-0 lo sapeva già. Quel filo di
-luce non gli sta rivelando niente: gli sta **dando ragione**. Quindi la faccia
-non è stupore, è **rassegnazione** — l'espressione di chi vede confermata una
-cosa che sperava di aver capito male. Se sembra che lo scopra adesso, diventa un
-altro personaggio: uno che si sacrifica d'impulso invece di uno che ci ha
-pensato.
-
-**b · La scintilla pulsa una volta sola, e non è lei il soggetto.** Dietro il
-fulmine giallo si intravede sempre la piccola sfera bianco-verde: qui può
-**pulsare una volta, piano**, quando la luce verde lo tocca. Ma la macchina da
-presa non ci si ferma sopra e nessuno la nomina. **Il soggetto della vignetta
-sono le schegge che diventano trasparenti**, non lei. Se la scintilla diventa il
-centro dell'inquadratura, al settore 65 la rivelazione è già bruciata.
-
-**c · Le schegge tornano solide.** La dissolvenza dura un istante e si ferma.
-ECHO-0 non è ferito e non sta morendo: ha visto **cosa succederà**, non cosa sta
-succedendo. Deve accompagnare i due per altri trenta settori con lo stesso
-aspetto di sempre.
-
----
-
-**Perché conta, e conta più di quanto sembri.**
-
-Fino a qui il giocatore ha capito che ECHO-0 indica la strada. Non ha capito
-**quanto gli costa**. Questa battuta lo dice senza una parola:
-
-> *Se Ampere torna viva, il corpo che la sua assenza ha generato non può più
-> esistere.*
-
-E soprattutto: **è qui che si costruisce la scena del settore 56.** Là ECHO-0
-avrà la lanterna a un passo e non la prenderà. Senza questa battuta è un gesto
-gentile. Con questa battuta il giocatore sa che prendersela era **l'unico modo
-che aveva di restare vivo** — e che rinunciandoci sta scegliendo di finire.
-
-È il motivo per cui alla fine i due Custodi non lo lasciano andare.
-
----
-
-## 3 · `eclissia` — settore 36 · desiderabile
+## 2 · `eclissia` — settore 36 · desiderabile
 **Dove:** settore 36, appena attraversato il passaggio.
 **Cosa:** la prima inquadratura del mondo nuovo. Un panorama largo: terra vera,
 cielo vero, ma illuminati al contrario, luce radente e colori profondi. In
@@ -256,7 +160,7 @@ I due sono piccoli in basso nell'inquadratura.
 
 ---
 
-## 4 · `il_reattore` — settore 56 · **ESSENZIALE**
+## 3 · `il_reattore` — settore 56 · **ESSENZIALE**
 **Dove:** settore 56, alla caduta di ECHO-1.
 **Chi c'è:** ECHO-1, Aren, Lyra e **i quattro Silenti**.
 
@@ -285,7 +189,7 @@ nemico: **stavano dalla parte della lanterna**.
 
 ---
 
-## 5 · `la_scelta_di_echo` — settore 56 · **ESSENZIALE**
+## 4 · `la_scelta_di_echo` — settore 56 · **ESSENZIALE**
 **Dove:** subito dopo `il_reattore`, senza stacco.
 **Cosa deve mostrare, in tre battute, e va girata lenta:**
 1. La lanterna è accesa a mezz'aria. **ECHO-0 è lì, a un passo.** Aren e Lyra
@@ -304,7 +208,7 @@ scena, è un debito. **Se si deve produrre un solo filmato, è questo.**
 
 ---
 
-## 6 · `la_cima` — settore 65 · **ESSENZIALE**
+## 5 · `la_cima` — settore 65 · **ESSENZIALE**
 **Dove:** settore 65, arrivati in cima, prima dello scontro.
 **Cosa:** il bordo del cratere. Sopra di esso si condensa **OHM**: una massa di
 fulmini bianchi e azzurri senza faccia, enorme. Il segno **Ω** si accende dentro
@@ -314,7 +218,7 @@ OHM.» poi «E NOI SIAMO SOLTANTO LE SUE ECO.»
 
 ---
 
-## 7 · `il_finale` — settore 65 · **ESSENZIALE**
+## 6 · `il_finale` — settore 65 · **ESSENZIALE**
 **Dove:** settore 65, in cima alla Caldera, dopo la sconfitta di OHM.
 **Cosa deve mostrare, in cinque battute (questo può arrivare a 14-16 secondi:
 è il finale del gioco, qui la durata si può sforare):**
@@ -350,7 +254,7 @@ dolcezza, non in trionfo.
 
 ---
 
-## 8 · `il_bacio` — settore 65, dopo il finale · **ESSENZIALE**
+## 7 · `il_bacio` — settore 65, dopo il finale · **ESSENZIALE**
 **Dove:** l'ultima scena del gioco, subito dopo `il_finale`, senza stacco.
 **Durata:** 8-10 secondi.
 
