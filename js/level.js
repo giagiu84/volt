@@ -42,9 +42,11 @@ const THEMES = [
    Non e' un mondo nuovo, e' il proprio fatto a pezzi — isole di Lumina
    strappate e sospese nel viola, con il vuoto sotto invece della terra. */
 const FRATTURA_DA = 21, FRATTURA_A = 35;
-/* I tre appuntamenti con ECHO-0: si ferma, combatte, e appena rischia di
-   perdere scappa. Al terzo gli si strappa Ampere di mano. */
-const ECHO_SETTORI = [24, 27, 30];
+/* Gli appuntamenti con ECHO-0. Nei primi tre si ferma, combatte, e appena
+   rischia di perdere scappa; al terzo gli si strappa Ampere di mano.
+   Il quarto e' diverso da tutti: al 35 non scappa. Cade. */
+const ECHO_SETTORI = [24, 27, 30, 35];
+const ECHO_FINALE = 35;
 /* Dal 31 al 35 il gioco si rovescia: la lanterna e' tua e lui viene a
    riprendersela. In questi quattro settori ECHO-0 non ti aspetta alla fine —
    arriva mentre stai giocando, e non punta a te: punta ad AMPERE. */
@@ -345,7 +347,7 @@ function generateLevel(n) {
     /* lui sta in fondo, e la sua scorta e' poca: e' uno scontro, non un assedio */
     const ex = w - 18;
     spawns.push({ type: 'echo', x: ex * TILE, y: (Math.max(6, (groundY[ex] > 0 ? groundY[ex] : 16) - 7)) * TILE,
-                  tier: ECHO_SETTORI.indexOf(n) + 1 });
+                  tier: ECHO_SETTORI.indexOf(n) + 1, finale: n === ECHO_FINALE });
     for (let i = 0; i < 4; i++) {
       const sx = rndInt(rng, 16, w - 24);
       const gy2 = groundY[sx];

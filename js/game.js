@@ -13,7 +13,7 @@ const CAMPAIGN_END = 65;      /* la fine vera del gioco: la Caldera */
 /* Fin dove arriva quello che e' costruito davvero. Si alza mano a mano che
    l'atto II viene programmato: oltre questo settore il gioco si ferma e lo
    dice, invece di far finta. */
-const SETTORI_PRONTI = 34;
+const SETTORI_PRONTI = 35;
 /* Dal 31 al 35 Ampere e' dei Custodi: gliel'hanno strappata a ECHO-0 e se la
    portano dietro, e va riempita di Corrente Verde. Al 35 gliela porta via
    ECHO-1, e da li' in poi la corrente si tiene addosso. */
@@ -480,6 +480,26 @@ const Game = {
     }, 1900);
   },
 
+  /* Settore 35. Non l'hai ucciso: l'hai fermato. Da qui in poi non si puo'
+     piu' colpire, il settore e' finito, e quello che succede dopo — la mano
+     che esce dal buio e vi strappa Ampere — lo racconta il filmato. */
+  echoInGinocchio(e) {
+    this.banner('NON SI RIALZA', 'targa');
+    this.hitStop = 0.4;
+    this.shake(26, 0.6);
+    Rings.add(e.cx, e.cy, '#b06bff', 260, 0.9, 9);
+    Particles.burst(e.cx, e.cy, 44, '#b06bff', 300, 6, 60);
+    Sfx.tone(110, 0.7, 'sawtooth', 0.08, 1600);
+    this.addScore(e.score);
+    /* la missione e' compiuta: il portale si apre e ci si va quando si vuole */
+    this.missionDone = true;
+    if (!this.portalOn) this.openPortal();
+    setTimeout(() => {
+      if (this.state !== 'play' || !this.player) return;
+      this.banner('NON HO PIÙ NIENTE DA RUBARVI', 'voce', e);
+    }, 1900);
+  },
+
   /* Ci e' arrivato. Non ti toglie vite: ti toglie la corrente che hai
      raccolto, ed e' peggio — quella l'hai guadagnata tu, un pezzo alla volta. */
   echoRubaCorrente(e, amp) {
@@ -583,9 +603,9 @@ const Game = {
        fermato il gioco: quando SETTORI_PRONTI si sposta, questa frase si
        riscrive insieme a lui. */
     document.getElementById('winText').textContent =
-      'Hai attraversato la Frattura fino al settore ' + SETTORI_PRONTI +
-      ', con Ampere in mano e ECHO-0 alle calcagna. Manca lo scontro del 35, ' +
-      'quello in cui arriva qualcosa di più grande di lui. Lo stiamo costruendo.';
+      'Hai attraversato la Frattura fino in fondo. ECHO-1 vi ha portato via ' +
+      'Ampere, e ECHO-0 vi ha aperto la strada sapendo dove porta. Di là c’è ' +
+      'ECLISSIA: la stiamo costruendo, torna a vedere.';
     document.getElementById('winScore').textContent = this.score;
     document.getElementById('winKills').textContent = this.kills;
     document.getElementById('winRank').textContent =
@@ -671,7 +691,7 @@ const Game = {
     if (!keepPlayer && this.player) { p.x = lv.startX; p.y = lv.startY; p.vx = 0; p.vy = 0; p.invuln = 1.2; }
     this.player = p;
 
-    for (const s of lv.spawns) this.enemies.push(new Enemy(s.type, s.x, s.y, n, s.tier, s.elite));
+    for (const s of lv.spawns) this.enemies.push(new Enemy(s.type, s.x, s.y, n, s.tier, s.elite, s.finale));
     for (const q of lv.pickups) this.pickups.push(new Pickup(q.x, q.y, Pickup.randomKind()));
 
     /* la lanterna e le cariche sparse nel settore */
@@ -1433,7 +1453,7 @@ const Game = {
     /* ECHO-0 quando da' la caccia non conta come mostro: non si puo' uccidere
        e non e' l'obiettivo del settore. Se contasse, una CACCIA non si potrebbe
        chiudere finche' lui non se ne va da solo. */
-    this.enemiesLeft = this.enemies.filter(e => !e.caccia).length;
+    this.enemiesLeft = this.enemies.filter(e => !e.caccia && e.state !== 10).length;
     this.updateMission(dt);
 
     /* proiettili */

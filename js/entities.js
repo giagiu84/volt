@@ -1094,7 +1094,7 @@ function eliteRoll(rnd, n, type) {
 }
 
 class Enemy {
-  constructor(type, x, y, level, tier, elite) {
+  constructor(type, x, y, level, tier, elite, finale) {
     const d = ENEMY_DEF[type];
     this.type = type; this.def = d;
     this.x = x; this.y = y; this.w = d.w; this.h = d.h;
@@ -1118,6 +1118,7 @@ class Enemy {
     this.flash = 0; this.dead = false; this.stun = 0;
     this.cool = 0.8 + Math.random(); this.state = 0; this.stateT = 0;
     this.tier = tier || 1;
+    this.finale = !!finale;
     this.rinculo = 0;
     this.phase = 0;
     this.awake = false; this.hunting = false; this.jumped = false;
@@ -1129,6 +1130,9 @@ class Enemy {
 
   hurt(dmg, fromX, freeze) {
     if (this.dead) return;
+    /* a terra non lo si colpisce piu': lo scontro e' finito, e infierire su
+       uno in ginocchio non e' quello che fanno i Custodi */
+    if (this.state === 10 && this.finale) return;
     /* il corazzato porta la piastra sul davanti: di fronte i colpi scivolano,
        alle spalle entrano il doppio. Non e' invulnerabile, e' scomodo. */
     if (this.elite === 'armor' && fromX !== undefined) {
@@ -1368,8 +1372,58 @@ class Enemy {
        alla lanterna. E' un'altra creatura, e si deve sentire. */
     if (this.caccia) { this.updateEchoCaccia(dt, lv, player); return; }
 
+    /* --- Al settore 35 non scappa: cade. E' l'unica volta.
+       Quello che succede subito dopo — la mano che esce dal buio — lo racconta
+       il filmato, non il gioco: qui basta che resti in ginocchio. --- */
+    if (this.finale) {
+      if (this.state !== 10 && this.hp <= this.maxHp * 0.14) {
+        this.state = 10; this.stateT = 0;
+        this.vx = 0; this.vy = 0;
+        this.hp = Math.max(1, this.hp);
+        Game.echoInGinocchio(this);
+      }
+      if (this.state === 10) {
+        /* si appoggia a terra e resta li'. Non si puo' piu' colpire. */
+        this.vx = approach(this.vx, 0, 500 * dt);
+        this.vy = approach(this.vy, 260, 700 * dt);
+        this.x += this.vx * dt; this.y += this.vy * dt;
+        if (lv.solidAt(this.cx, this.y + this.h)) { this.y -= this.vy * dt; this.vy = 0; }
+        this.stateT += dt;
+        if (Math.random() < 0.25)
+          Particles.spawn(this.cx + (Math.random() - 0.5) * 46, this.cy + (Math.random() - 0.5) * 40,
+            0, -22, 0.6, 3.4, '#b06bff', 0, 1);
+        return;
+      }
+      /* Finche' e' in piedi combatte su due fronti: ti tiene a distanza come
+         sempre, ma ogni tanto molla tutto e si butta sulla lanterna. E' la
+         somma dei due scontri che hai gia' fatto. */
+      this.assaltoT = (this.assaltoT || 0) - dt;
+      if (this.state !== 0 && this.assaltoT <= 0 && Game.ampere) {
+        this.assaltoT = 6 + Math.random() * 4;
+        this.state = 11; this.stateT = 2.6;
+      }
+      if (this.state === 11) {
+        const amp = Game.ampere;
+        if (!amp) { this.state = 1; this.stateT = 1.4; }
+        else {
+          const ax = amp.x - this.cx, ay = amp.y - this.cy;
+          const d = Math.hypot(ax, ay) || 1;
+          this.vx = approach(this.vx, (ax / d) * this.speed * 2.1, 1100 * dt);
+          this.vy = approach(this.vy, (ay / d) * this.speed * 1.5, 1100 * dt);
+          this.x += this.vx * dt; this.y += this.vy * dt;
+          this.x = clamp(this.x, 20, lv.pxW - this.w - 20);
+          this.y = clamp(this.y, 40, lv.pxH - 120);
+          this.dir = sign(ax) || this.dir;
+          Particles.spawn(this.cx, this.cy, 0, 0, 0.24, 7, '#b06bff', 0, 1);
+          if (d < 46) { Game.echoRubaCorrente(this, amp); this.state = 1; this.stateT = 1.6; }
+          else if (this.stateT <= 0) { this.state = 1; this.stateT = 1.6; }
+          return;
+        }
+      }
+    }
+
     /* --- fuga: sotto un quarto di vita non combatte piu' --- */
-    if (this.state !== 9 && this.hp <= this.maxHp * 0.25) {
+    if (!this.finale && this.state !== 9 && this.hp <= this.maxHp * 0.25) {
       this.state = 9; this.stateT = 1.6;
       this.vx = 0; this.vy = 0;
       Game.echoInFuga(this);
@@ -1567,8 +1621,16 @@ class Enemy {
          ciano a sinistra, guanto a destra — e il guanto prende il colore del
          potere che ti ha rubato. E' li' che si vede cosa ti ha portato via. */
       const rub = Game.coloreRubato();
-      const respiro = 1 + Math.sin(this.t * 2.4) * 0.03;
+      /* A terra respira piano, si piega su un fianco e si spegne: e' la posa
+         di chi ha smesso, e si deve leggere in un istante da lontano. */
+      const giu = this.state === 10 && this.finale;
+      const respiro = 1 + Math.sin(this.t * (giu ? 1.1 : 2.4)) * (giu ? 0.015 : 0.03);
       ctx.save();
+      if (giu) {
+        ctx.translate(0, 12);
+        ctx.rotate(-0.34);
+        ctx.globalAlpha = 0.82;
+      }
       ctx.scale(1.2, 1.2);          /* e' l'antagonista: si vede che e' lui */
 
       /* nastri: due, dietro a tutto */

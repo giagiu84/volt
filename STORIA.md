@@ -468,6 +468,7 @@ secondo piano.
 > «VOI VOLETE SALVARE IL VOSTRO MONDO. IO STO SOLTANTO CERCANDO DI NON SCOMPARIRE.»
 > «QUELLA LUCE NON È VOSTRA.» *(quando viene a riprendersi Ampere, settori 31-34)*
 > «TORNERÒ.» *(quando lo respingi)*
+> «NON HO PIÙ NIENTE DA RUBARVI.» *(quando cade, settore 35)*
 > «È DI LÀ. PERDONATEMI… ERA L'UNICO MODO PER RESTARE VIVO.» *(settore 35)*
 
 > **ECHO-0 non spiega mai le proprie ragioni fino in fondo, e non dice mai da
@@ -1258,7 +1259,7 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
 
 ---
 
-## 10. Cos'è vero oggi nel gioco (versione 79)
+## 10. Cos'è vero oggi nel gioco (versione 84)
 
 - Campagna di **20 settori**, Comandanti a 5-10-15, il Divoratore al 20, punti
   di ripresa dopo ogni Comandante.
@@ -1382,11 +1383,27 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
   missione di FUGA**. Con un muro di tempesta alle spalle o lo semini correndo o
   se lo mangia il muro — due inseguitori insieme non fanno il doppio della
   tensione, se la tolgono a vicenda.
-- Oltre il 34 il gioco **si ferma e lo dice**, invece di far finta: schermata
-  «fine di questo tratto». Il confine si sposta man mano che costruiamo.
+- **Settore 35: lo scontro vero, e l'unico in cui ECHO-0 non scappa.**
+  - È il quarto e ultimo appuntamento, ed è **il più duro di tutti**: quasi il
+    quadruplo della vita del primo incontro.
+  - **Combatte su due fronti insieme**, ed è la somma dei tre scontri che hai
+    già fatto: ti tiene a distanza e ti martella come al 24, e ogni sei-dieci
+    secondi **molla tutto e si butta sulla lanterna** come nei settori della
+    caccia. Chi ha giocato dal 21 riconosce tutte e due le cose.
+  - **Non fugge: cade.** Sotto il 14% della vita si piega su un fianco, si
+    appoggia a terra e resta lì — banner **«NON SI RIALZA»**, e un attimo dopo
+    la sua ultima battuta: **«NON HO PIÙ NIENTE DA RUBARVI»**.
+  - **Da lì non si può più colpire.** Infierire su uno in ginocchio non è quello
+    che fanno i Custodi, e il gioco non lo permette. Il portale si apre da solo.
+  - **Quello che succede dopo lo racconta il filmato, non il gioco.** Si entra
+    nel portale e partono `il_tradimento` e `il_passaggio` di fila, senza
+    stacco: la mano di ECHO-1 che strappa Ampere **ai Custodi**, il prezzo, e la
+    strada aperta verso Eclissia.
+- Oltre il 35 il gioco **si ferma e lo dice**, invece di far finta: schermata
+  «fine di questo tratto», dopo aver fatto vedere i due filmati. Il confine si
+  sposta man mano che costruiamo.
 
-**Manca la seconda metà dell'atto II**, cioè i settori **35-65**: lo scontro
-del 35 e
+**Manca la seconda metà dell'atto II**, cioè i settori **36-65**:
 il tradimento di ECHO-1, Eclissia, la barra della corrente addosso, i Silenti,
 il reattore, la salita in 2,5D, la cima in soggettiva, OHM, Ampere rovesciata e
 i filmati che restano.
