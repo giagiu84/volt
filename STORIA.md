@@ -1239,11 +1239,22 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
 - **Il filmato `ampere_torna`** si vede entrando nel settore 31: è lo strappo
   della lanterna, cioè come finisce lo scontro del 30. È arrivato senza traccia
   audio, quindi su questo filmato la musica del gioco non si ferma.
-- Oltre il 27 il gioco **si ferma e lo dice**, invece di far finta: schermata
-  «fine di questo tratto». Il confine si sposta man mano che costruiamo.
+- **Settori 28 e 29: le ultime due tappe dell'inseguimento**, con le stesse
+  apparizioni del 25 e del 26.
+- **Settore 30: il terzo scontro, e la caccia finisce.** ECHO-0 arriva alla
+  terza mano — quasi il triplo della vita del primo incontro — e stavolta la
+  fuga non gli riesce: il banner dice **«STAVOLTA NO»**, il potere non te lo
+  restituisce ma **glielo riprendi**, e al posto del solito lampo viola c'è un
+  lampo verde con la scritta **«AMPERE È TORNATA»**.
+- **E subito dopo parte `ampere_torna`**, il filmato dello strappo. Il tratto
+  giocabile si chiude **dopo** il filmato, non prima: la caccia non si ferma un
+  attimo prima del momento per cui l'hai fatta.
+- Oltre il 30 il gioco **si ferma e lo dice**, invece di far finta: schermata
+  «fine di questo tratto», e la frase dice che adesso la caccia si rovescia. Il
+  confine si sposta man mano che costruiamo.
 
-**Manca la seconda metà dell'atto II**, cioè i settori **28-65**: il terzo
-scontro e lo strappo della lanterna, la caccia al contrario dei settori 31-35,
+**Manca la seconda metà dell'atto II**, cioè i settori **31-65**: la caccia al
+contrario dei settori 31-35,
 il tradimento di ECHO-1, Eclissia, la barra della corrente addosso, i Silenti,
 il reattore, la salita in 2,5D, la cima in soggettiva, OHM, Ampere rovesciata e
 i filmati che restano.

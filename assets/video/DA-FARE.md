@@ -158,20 +158,36 @@ casa loro, a brandelli.
 > Aren e Lyra**, non a ECHO-0.
 
 **Cosa deve mostrare, in tre battute:**
-1. **ECHO-0 è in ginocchio, sconfitto.** Allunga la mano verso la lanterna, che
-   è **dalla parte dei Custodi**, a un passo da lui. Ha quasi finito: gli manca
-   un secondo.
-2. Dal buio alle sue spalle si muove qualcosa di enorme: **ECHO-1**. Una mano
-   gigantesca **strappa la lanterna dalle mani dei Custodi** e sparisce
-   nell'ombra. Nessuno dei tre fa in tempo a reagire.
-3. Restano tutti e tre nella stessa posa: **la mano tesa nel vuoto.** ECHO-0 non
-   guarda i Custodi, i Custodi non guardano lui. Guardano tutti nella stessa
-   direzione, la lanterna che se ne va.
+
+**1 · Il secondo prima.** ECHO-0 è **in ginocchio, sconfitto**, ripreso dal
+basso. **Ampere sta a mezz'aria fra i due lati**: lui allunga la mano da una
+parte, Aren e Lyra la tengono dall'altra. È a un passo. Gli manca un secondo.
+E sopra, dall'alto, **il pugno enorme di ECHO-1 che incombe senza ancora agire**.
+
+**2 · Lo strappo.** Il pugno prende la lanterna **e strappa via anche loro**:
+Aren e Lyra trascinati in avanti, ECHO-0 che allunga la mano nello stesso
+istante. **Tre che perdono la stessa cosa insieme.** Dal corpo di ECHO-0 si
+staccano schegge: si sta spezzando.
+
+**3 · Il vuoto.** ECHO-1 sparisce nell'ombra con Ampere, che si allontana
+piccola e verde in alto. ECHO-0 resta **spezzato a terra, la mano tesa nel
+vuoto**, e guarda solo lei. Accanto a lui, a terra, **Aren e Lyra con la mano
+tesa nella stessa direzione**. Nessuno dei tre guarda gli altri due.
 
 **Perché conta:** è il momento in cui il nemico diventa una vittima — e non
 perché soffre, ma perché **ha appena perso la tua stessa cosa, nello stesso
 istante**. Da qui in poi non è più il tuo nemico: è uno che ha perso quanto te.
+E quello che ECHO-1 ruba non è una lanterna: è **il lavoro del giocatore**,
+cinque settori di Corrente Verde raccolta a mano. È per questo che al settore 56
+lo trovi sovraccarico.
 **Frase a schermo:** nessuna.
+
+> ✅ **Del primo tentativo si tiene tutto tranne la posizione della lanterna.**
+> Funzionavano e vanno rifatti uguali: la ripresa dal basso, **il pugno di
+> pietra che incombe prima di agire**, i **tre diamanti gialli** sospesi in alto
+> che dicono chi è senza mostrarlo, le **schegge che si staccano** dal corpo di
+> ECHO-0 nella seconda battuta, e il verde che si allontana piccolo nella terza.
+> L'unica cosa sbagliata era che Ampere fosse in mano a ECHO-0.
 
 ---
 

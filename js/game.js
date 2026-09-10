@@ -13,7 +13,7 @@ const CAMPAIGN_END = 65;      /* la fine vera del gioco: la Caldera */
 /* Fin dove arriva quello che e' costruito davvero. Si alza mano a mano che
    l'atto II viene programmato: oltre questo settore il gioco si ferma e lo
    dice, invece di far finta. */
-const SETTORI_PRONTI = 27;
+const SETTORI_PRONTI = 30;
 /* I poteri che ECHO-0 sa copiare: sono quelli che si vedono addosso a lui e
    sui suoi colpi. Rubarne uno che non si nota non servirebbe a niente. */
 const RUBABILI = ['bounce', 'power', 'rapidfire', 'boom', 'jump3'];
@@ -429,11 +429,14 @@ const Game = {
   },
 
   /* Sotto un quarto di vita smette di combattere: non lo hai ucciso, lo hai
-     stancato. E si porta via l'unica cosa che gli importa. */
+     stancato. E si porta via l'unica cosa che gli importa.
+     Al terzo appuntamento pero' la fuga non gli riesce: e' li' che gli si
+     strappa Ampere di mano, ed e' la fine della caccia. */
   echoInFuga(e) {
-    this.banner('CI VEDIAMO PIÙ AVANTI');
-    Rings.add(e.cx + 60, e.cy, '#b06bff', 200, 0.8, 8);
-    Sfx.tone(140, 0.5, 'sawtooth', 0.07, 1200);
+    const ultimo = e.tier >= 3;
+    this.banner(ultimo ? 'STAVOLTA NO' : 'CI VEDIAMO PIÙ AVANTI');
+    Rings.add(e.cx + 60, e.cy, ultimo ? '#5effa8' : '#b06bff', 200, 0.8, 8);
+    Sfx.tone(ultimo ? 220 : 140, 0.5, 'sawtooth', 0.07, 1200);
   },
 
   echoVia(e) {
@@ -442,11 +445,25 @@ const Game = {
     this.addScore(e.score);
     Particles.burst(e.cx, e.cy, 46, '#b06bff', 340, 6, 0);
     Rings.add(e.cx, e.cy, '#ffffff', 150, 0.5, 7);
+    const ultimo = e.tier >= 3;
     if (this.rubato) {
       const nome = this.nomeRubato(), col = this.coloreRubato();
       this.rubato = null;
       if (this.player) Floaters.add(this.player.cx, this.player.y - 26, '+' + nome, col, 17);
-      this.banner('TI HA RESTITUITO ' + nome);
+      /* al terzo scontro non te lo restituisce: glielo riprendi */
+      this.banner((ultimo ? 'TI SEI RIPRESO ' : 'TI HA RESTITUITO ') + nome);
+    }
+    /* E con lui torna la lanterna. Nella campagna Ampere non e' ancora un
+       oggetto che si porta in mano, ma il momento va detto: e' il perno di
+       tutto l'atto II, e un attimo dopo lo racconta il filmato. */
+    if (ultimo) {
+      Rings.add(e.cx, e.cy, '#5effa8', 260, 0.9, 9);
+      Particles.burst(e.cx, e.cy, 40, '#5effa8', 300, 6, -40);
+      this.flashT = 0.5;
+      if (this.player) setTimeout(() => {
+        if (this.state !== 'play' || !this.player) return;
+        Floaters.add(this.player.cx, this.player.y - 46, 'AMPERE È TORNATA', '#5effa8', 17);
+      }, 700);
     }
     Sfx.kill();
   },
@@ -478,9 +495,13 @@ const Game = {
     this.progress.cp = null;
     this.saveProgress();
     document.getElementById('winTitle').textContent = 'FINE DI QUESTO TRATTO';
+    /* Il testo racconta dove si e' fermato il racconto, non solo dove si e'
+       fermato il gioco: quando SETTORI_PRONTI si sposta, questa frase si
+       riscrive insieme a lui. */
     document.getElementById('winText').textContent =
-      'Hai attraversato la Frattura fino al settore ' + SETTORI_PRONTI + '. ' +
-      'La caccia a ECHO-0 continua nei settori che stiamo costruendo: torna a vedere.';
+      'Hai attraversato la Frattura fino al settore ' + SETTORI_PRONTI +
+      ', e Ampere è tornata nelle vostre mani. Adesso la caccia si rovescia: ' +
+      'sarà ECHO-0 a inseguire voi. I settori li stiamo costruendo — torna a vedere.';
     document.getElementById('winScore').textContent = this.score;
     document.getElementById('winKills').textContent = this.kills;
     document.getElementById('winRank').textContent =
@@ -1061,7 +1082,19 @@ const Game = {
       if (this.transition <= 0) {
         if (this.mode === 'campaign') {
           if (this.level === ATTO1_FINE) { this.winCampaign(); return; }
-          if (this.level >= SETTORI_PRONTI) { this.fineAnteprima(); return; }
+          if (this.level >= SETTORI_PRONTI) {
+            /* Se il settore successivo ha un filmato, quel filmato racconta
+               come e' finito QUESTO settore: si vede lo stesso, e solo dopo si
+               chiude il tratto. Altrimenti la caccia si fermerebbe un attimo
+               prima del momento per cui l'hai fatta. */
+            const film = FILMATI_SETTORE[this.level + 1];
+            if (film) {
+              document.getElementById('hud').classList.add('hidden');
+              this.state = 'cinema';
+              this.playCinema(film, () => this.fineAnteprima());
+            } else this.fineAnteprima();
+            return;
+          }
         }
         this.pendingLevel = this.level + 1;
         this.openChoice();
