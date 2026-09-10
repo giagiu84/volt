@@ -14,6 +14,10 @@ const CAMPAIGN_END = 65;      /* la fine vera del gioco: la Caldera */
    l'atto II viene programmato: oltre questo settore il gioco si ferma e lo
    dice, invece di far finta. */
 const SETTORI_PRONTI = 30;
+/* Dal 31 al 35 Ampere e' dei Custodi: gliel'hanno strappata a ECHO-0 e se la
+   portano dietro, e va riempita di Corrente Verde. Al 35 gliela porta via
+   ECHO-1, e da li' in poi la corrente si tiene addosso. */
+const AMPERE_DA = 31, AMPERE_A = 35;
 /* I poteri che ECHO-0 sa copiare: sono quelli che si vedono addosso a lui e
    sui suoi colpi. Rubarne uno che non si nota non servirebbe a niente. */
 const RUBABILI = ['bounce', 'power', 'rapidfire', 'boom', 'jump3'];
@@ -99,7 +103,7 @@ const Game = {
   perks: {}, pendingLevel: 0, shieldGenT: 0, drone: null,
   mode: 'campaign', progress: Store.get('volt_progress', { cleared: false, cp: null }),
   law: null, lawDef: null, platsOff: false, platT: 0, meteorT: 0, stormOn: false,
-  ampere: null, cariche: [],
+  ampere: null, cariche: [], cella: null,
   furto: null, blackT: 0, blackNext: 0,
   canSwap: false, swapCd: 0,
   rubato: null, echiVia: false,
@@ -593,7 +597,9 @@ const Game = {
     for (const q of lv.pickups) this.pickups.push(new Pickup(q.x, q.y, Pickup.randomKind()));
 
     /* la lanterna e le cariche sparse nel settore */
-    if (this.mode === 'endless') {
+    const conAmpere = this.mode === 'endless' ||
+      (this.mode === 'campaign' && n >= AMPERE_DA && n <= AMPERE_A);
+    if (conAmpere) {
       if (!this.ampere) this.ampere = new Ampere(lv.startX, lv.startY - 40);
       else { this.ampere.x = lv.startX; this.ampere.y = lv.startY - 40; this.ampere.arc = null; this.ampere.arcT = 0; }
       const quante = 3 + Math.floor(n / 7);
@@ -664,12 +670,15 @@ const Game = {
        davvero, non si scappa soltanto */
     this.stormOn = this.mission.type === 'escape' || this.law === 'storm';
     if (this.law === 'storm' && this.mission.type !== 'escape') this.stormX = lv.startX - 620;
-    /* la lanterna sulla schiena del Comandante della Laguna */
+    /* Il Comandante della Laguna porta due cose che non sono sue: la lanterna
+       di Lumina sulla schiena, e la cella con dentro il custode rapito. E'
+       l'unica volta, prima del ventesimo settore, in cui si vede la persona
+       che si sta cercando. */
     if (this.mode === 'campaign' && n === SEMINA_DA)
-      for (const e of this.enemies) if (e.type === 'boss') e.lanterna = true;
+      for (const e of this.enemies) if (e.type === 'boss') { e.lanterna = true; e.cella = true; }
 
     /* i cali di tensione: dal 16 in poi, sempre piu' fitti */
-    this.furto = null; this.blackT = 0;
+    this.furto = null; this.cella = null; this.blackT = 0;
     this.blackNext = (this.mode === 'campaign' && n > SEMINA_DA && n <= SEMINA_A)
       ? 3 + Math.random() * 4 : 0;
 
@@ -908,6 +917,8 @@ const Game = {
         this.furto = { t: 0, x: e.cx, y: e.cy - 10 };
         Sfx.tone(520, 0.2, 'triangle', 0.05, 900);
       }
+      /* e nemmeno la cella: cade, e per un attimo e' li' a portata di mano */
+      if (e.cella) this.cella = { t: 0, x: e.cx + 40, y: e.cy - 20, vy: 0, presa: false };
       this.shake(30, 0.7); this.flashT = 0.4;
       if (CHECKPOINTS.indexOf(this.level) >= 0) this.saveCheckpoint();
     }
@@ -1200,6 +1211,39 @@ const Game = {
     if (this.furto) {
       this.furto.t += dt;
       if (this.furto.t > 3.4) this.furto = null;
+    }
+    /* La cella che se la portano via, ma DOPO la lanterna: i due furti vanno
+       in fila, non insieme. Prima la luce verde che sale e la sagoma che
+       attraversa lo schermo, poi i viticci che vengono a prendersi la cella.
+       Sovrapposti non si capirebbe ne' l'uno ne' l'altro. */
+    if (this.cella) {
+      const c = this.cella;
+      c.t += dt;
+      /* cade e si appoggia a terra */
+      if (c.t < 2.6 && !c.presa) {
+        c.vy += GRAV * 0.55 * dt;
+        c.y += c.vy * dt;
+        const suolo = lv.groundY[clamp(Math.floor(c.x / TILE), 0, lv.w - 1)];
+        const sy = (suolo > 0 ? suolo : lv.h - 9) * TILE - 26;
+        if (c.y > sy) { c.y = sy; c.vy = -c.vy * 0.28; }
+      }
+      /* i viticci arrivano e la prendono: qui il tempo si ferma un istante */
+      if (c.t > 2.6 && !c.presa) {
+        c.presa = true;
+        this.hitStop = 0.35;
+        this.shake(24, 0.5);
+        Sfx.tone(90, 0.6, 'sawtooth', 0.08, 1600);
+        Particles.burst(c.x, c.y, 26, '#b06bff', 260, 6, 0);
+      }
+      /* E la trascinano nel buio. Piano: se sparisce in mezzo secondo non la
+         vede nessuno, e questo e' l'unico momento dei primi venti settori in
+         cui si vede chi si sta cercando. */
+      if (c.presa) {
+        const k = (c.t - 2.6) / 2.1;
+        c.x += 145 * dt * Math.min(1, k * 3);
+        c.y -= 42 * dt;
+      }
+      if (c.t > 5.2) this.cella = null;
     }
 
     /* combo */
@@ -1831,6 +1875,7 @@ const Game = {
       this.drawOffscreenHints(ctx, camX, camY, lv);
     }
     if (this.furto) this.drawFurto(ctx, camX, camY);
+    if (this.cella) this.drawCella(ctx, camX, camY);
     if (this.blackT > 0) this.drawBlackout(ctx);
     this.drawVignette(ctx);
     this.drawOrb(ctx, dt);
@@ -2406,6 +2451,52 @@ const Game = {
     if (this.portalOn) buco(this.lv.portalX - camX, this.lv.portalY - camY, 120, 0.9);
     d.globalAlpha = 1;
     ctx.drawImage(c, 0, 0, this.viewW, this.viewH);
+  },
+
+  /* La cella con dentro il custode rapito. Cade dal Comandante, resta un
+     attimo a terra — abbastanza per vedere chi c'e' dentro — e poi i viticci
+     viola del Divoratore la afferrano e se la portano via.
+     Nessuna scritta: vale la stessa regola della lanterna. Chi guarda lo vede,
+     e al ventesimo settore capisce a chi l'ha portata. */
+  drawCella(ctx, camX, camY) {
+    const c = this.cella, t = c.t;
+    const x = c.x - camX, y = c.y - camY;
+    const k = c.presa ? (t - 2.6) / 2.1 : 0;
+
+    /* i viticci: arrivano da destra, dal buio */
+    if (t > 2.05) {
+      const avanti = clamp((t - 2.05) / 0.55, 0, 1);
+      ctx.save();
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      for (let i = 0; i < 3; i++) {
+        const off = (i - 1) * 16;
+        ctx.strokeStyle = i === 1 ? '#7a3fd6' : '#4a2c86';
+        ctx.lineWidth = 9 - i * 1.5;
+        ctx.globalAlpha = clamp(0.9 - k * 1.1, 0, 1);
+        ctx.beginPath();
+        const dax = this.viewW + 90;
+        ctx.moveTo(dax, y + off);
+        const passi = 8;
+        for (let j = 1; j <= passi; j++) {
+          const f = j / passi;
+          const px = lerp(dax, x + 14, f * avanti);
+          const py = y + off * (1 - f) + Math.sin(t * 4 + f * 5 + i) * 9 * (1 - f);
+          ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    ctx.save();
+    ctx.globalAlpha = clamp(1 - (k - 0.7) / 0.3, 0, 1);
+    ctx.translate(x, y);
+    ctx.rotate(Math.sin(t * 2.4) * 0.12 + k * 0.5);
+    /* piu' se ne va, piu' e' piccola: sta sparendo nel buio */
+    const sc = 1 - k * 0.45;
+    ctx.scale(sc, sc);
+    drawCellaRapito(ctx, t, c.presa ? 3.4 : 1.6);
+    ctx.restore();
   },
 
   /* Il furto della lanterna. Nessuna scritta, nessuna spiegazione: la luce

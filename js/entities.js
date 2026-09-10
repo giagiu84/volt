@@ -267,6 +267,72 @@ const HEROES = {
           tratto: 'veloce · raffica rapida' }
 };
 function hero() { return HEROES[Game.hero] || HEROES.volt; }
+/* chi e' stato rapito: l'altro custode, quello che non stai giocando */
+function rapito() { return HEROES[Game.hero === 'lyra' ? 'aren' : 'lyra']; }
+
+/* La figurina del rapito dentro la cella. E' alta una ventina di pixel, quindi
+   non serve il personaggio intero: bastano le tre cose che lo fanno
+   riconoscere — il casco bianco con la cresta ciano per Aren, i capelli viola
+   con la ciocca gialla per Lyra, e il colore della tuta. */
+function drawRapito(ctx, R, t) {
+  const respiro = Math.sin(t * 2.2) * 0.8;
+  ctx.save();
+  ctx.translate(0, respiro);
+  ctx.lineWidth = 1.6; ctx.strokeStyle = OUTLINE; ctx.lineJoin = 'round';
+  /* corpo */
+  ctx.fillStyle = R.suit;
+  roundRect(ctx, -5, -2, 10, 13, 4); ctx.fill(); ctx.stroke();
+  /* braccia strette al petto: e' rannicchiato */
+  ctx.fillStyle = R.body;
+  roundRect(ctx, -7.5, 1, 4, 7, 2); ctx.fill(); ctx.stroke();
+  roundRect(ctx, 3.5, 1, 4, 7, 2); ctx.fill(); ctx.stroke();
+  /* testa */
+  if (R.casco) {
+    ctx.fillStyle = R.body;
+    ctx.beginPath(); ctx.arc(0, -7, 6, 0, TAU); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#232a52';
+    roundRect(ctx, -5, -8.5, 10, 4, 2); ctx.fill();
+    ctx.fillStyle = R.crest;
+    roundRect(ctx, -1.4, -13, 2.8, 5, 1.4); ctx.fill();
+  } else {
+    ctx.fillStyle = R.skin;
+    ctx.beginPath(); ctx.arc(0, -7, 5.4, 0, TAU); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = R.hair;
+    ctx.beginPath(); ctx.arc(0, -8.6, 5.6, Math.PI, 0); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = R.hair2;
+    roundRect(ctx, -4.6, -11.4, 3, 3.4, 1.2); ctx.fill();
+  }
+  ctx.restore();
+}
+
+/* La cella del Divoratore: una capsula viola di energia, con le costolature
+   scure e i viticci che la tengono. Non e' del Comandante — lui la porta e
+   basta, e si vede da come e' fatta che appartiene a qualcos'altro. */
+function drawCellaRapito(ctx, t, scossa) {
+  const R = rapito();
+  ctx.save();
+  Gfx.light(ctx, 0, 0, 46, '#b06bff', 0.75);
+  ctx.lineWidth = 2.5; ctx.strokeStyle = OUTLINE; ctx.lineJoin = 'round';
+  /* la gabbia */
+  ctx.fillStyle = 'rgba(150,90,235,0.30)';
+  roundRect(ctx, -15, -21, 30, 42, 13); ctx.fill(); ctx.stroke();
+  /* il rapito dentro, che ogni tanto si scuote */
+  ctx.save();
+  ctx.translate(Math.sin(t * 9) * scossa, 3);
+  ctx.scale(1.15, 1.15);
+  drawRapito(ctx, R, t);
+  ctx.restore();
+  /* le costolature davanti: e' chiuso */
+  ctx.strokeStyle = '#7a3fd6'; ctx.lineWidth = 2.2;
+  for (const yy of [-11, 0, 11]) {
+    ctx.beginPath(); ctx.moveTo(-14, yy); ctx.lineTo(14, yy); ctx.stroke();
+  }
+  ctx.strokeStyle = OUTLINE; ctx.lineWidth = 2.5;
+  ctx.fillStyle = '#4a2c86';
+  roundRect(ctx, -17, -25, 34, 8, 4); ctx.fill(); ctx.stroke();
+  roundRect(ctx, -17, 17, 34, 8, 4); ctx.fill(); ctx.stroke();
+  ctx.restore();
+}
 
 /* ---------- giocatore ---------- */
 class Player {
@@ -1571,6 +1637,17 @@ class Enemy {
         ctx.beginPath(); ctx.arc(0, 1, 3, 0, TAU); ctx.fill();
         ctx.fillStyle = '#3b4a7a';
         roundRect(ctx, -8, 7, 16, 4, 2); ctx.fill(); ctx.stroke();
+        ctx.restore();
+      }
+      /* E dietro l'altra spalla c'e' la cella: e' la prima volta che si vede
+         chi e' stato rapito. Il Comandante non l'ha fatta lui — la sta
+         portando a qualcun altro, e al settore 20 si capisce a chi. */
+      if (this.cella) {
+        ctx.save();
+        ctx.translate(50, -34 + Math.sin(this.t * 1.7) * 3);
+        ctx.rotate(Math.sin(this.t * 1.3) * 0.09);
+        ctx.scale(0.92, 0.92);
+        drawCellaRapito(ctx, this.t, 1.1);
         ctx.restore();
       }
       const pulse = 1 + Math.sin(this.t * 4) * 0.035;

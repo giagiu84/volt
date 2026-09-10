@@ -392,6 +392,12 @@ ventesimo settore.
 **Non è la mente dell'universo.** È la prima cosa uscita dalla Frattura, non
 l'ultima. E non è lui ad aver rubato Ampere.
 
+**La cella è sua, e si vede cinque settori prima di lui.** Al quindicesimo il
+Comandante della Laguna la porta addosso, e quando cade sono **i suoi viticci
+viola** a venirsela a riprendere, davanti agli occhi del giocatore. È il modo in
+cui il Divoratore si presenta: quando finalmente lo incontri al ventesimo, non è
+il boss di turno — è quello che te l'ha portata via.
+
 ### La famiglia ECHO
 Creature nate dentro la Frattura. Ognuna ha una funzione diversa: non sono
 mostri più grossi, sono **problemi diversi**.
@@ -822,10 +828,39 @@ toglie vite e non blocca i comandi: spaventa e basta. Al settore 16 capita ogni
 otto-quattordici secondi, al 20 ogni quattro-sette. Il mondo sbatte nel buio due
 volte e poi torna piano, con un ronzio basso che cala.
 
-La lanterna sulla schiena del Comandante della Laguna è accesa e si vede da
-lontano. Quando lui cade, la luce verde **sale** dal corpo, e a metà salita una
-sagoma scura attraversa lo schermo e non c'è più. Nessuna scritta, nessun
-filmato: chi guarda lo vede, chi non guarda lo capirà al settore 21.
+#### Il Comandante della Laguna porta due cose che non sono sue **[GIOCO]**
+Sulla schiena, **la lanterna di Lumina**: accesa, verde, si vede da lontano.
+E dall'altra parte, appesa, **una cella** — una capsula viola di energia, con le
+costolature scure e i viticci che la tengono.
+
+**Dentro c'è il custode rapito.** Si muove, si scuote, bussa. Chi gioca Aren
+vede Lyra: i capelli viola e la ciocca gialla. Chi gioca Lyra vede Aren: il
+casco bianco con la cresta ciano, e il casco **non si toglie**.
+
+> **È l'unica volta, prima del ventesimo settore, in cui si vede la persona che
+> si sta cercando.** Fino a qui era un nome nel filmato d'apertura. Da qui in
+> poi è qualcuno.
+
+**Quando il Comandante cade succedono due cose, una dopo l'altra.** Mai insieme:
+sovrapposte non si capirebbe nessuna delle due.
+
+1. **La lanterna.** La luce verde **sale** dal corpo, e a metà salita una sagoma
+   scura attraversa lo schermo e non c'è più. *(È ECHO-0, ma nessuno lo sa
+   ancora: si scoprirà al settore 21.)*
+2. **La cella.** Cade a terra, rimbalza e resta lì — abbastanza da vedere bene
+   chi c'è dentro, e da credere per un secondo di potercela fare. Poi dal buio a
+   destra arrivano **tre viticci viola**, la afferrano, e **il tempo si ferma un
+   istante**. La trascinano via piano, mentre rimpicciolisce, fino a sparire.
+
+**Nessuna scritta, nessun filmato.** Vale la regola di tutta la semina: chi
+guarda lo vede.
+
+**Perché conta, e sono due cose.**
+Primo: la caccia smette di essere astratta. Non stai attraversando venti settori
+per un'idea, l'hai appena vista chiusa in una gabbia.
+Secondo: **quei viticci sono del Divoratore**, e sono gli stessi che al settore
+20 tengono la cella. Quando arrivi da lui non è il boss di turno: è quello che
+te l'ha portata via davanti agli occhi.
 
 **Come si disegna.** Nei post e nei disegni di questa fase: Lumina vista da
 lontano con una fascia di case al buio, lampioni che si riaccendono a fatica,
@@ -1199,9 +1234,12 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
   scorre più lento del terreno, si specchia a ogni ripetizione e ha sopra un
   velo che stacca i personaggi. Per i primi venti settori servono le stesse
   panoramiche di Lumina (commessa in `assets/video/DA-FARE.md`).
-- **La semina dei settori 15-20**: il Comandante della Laguna porta la lanterna
-  verde sulla schiena, quando cade la luce sale e qualcosa se la porta via, e
-  dal 16 al 20 Lumina va in blackout sempre più spesso.
+- **La semina dei settori 15-20**: il Comandante della Laguna porta **due cose
+  che non sono sue** — la lanterna verde sulla schiena e **la cella col custode
+  rapito dentro**, l'unica volta prima del 20 in cui si vede la persona che si
+  sta cercando. Quando cade, prima la luce verde sale e una sagoma se la porta
+  via, poi la cella cade a terra e **i viticci del Divoratore** la trascinano
+  nel buio. Dal 16 al 20 Lumina va in blackout sempre più spesso.
 - **I tre Comandanti hanno il nome della loro area** — Prateria, Deserto,
   Laguna — nel banner, nella barra e nell'insegna del settore.
 - La modalità infinita si chiama **CIRCUITO APERTO** e si sblocca finendo il
