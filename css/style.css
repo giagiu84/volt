@@ -136,7 +136,19 @@ body.canswap .tbtn.swap{display:flex}
 .panel.small{padding:26px 24px 22px}
 @keyframes pop{from{transform:scale(.9) translateY(10px);opacity:0}to{transform:none;opacity:1}}
 
-.logo-wrap{position:relative;display:inline-block}
+/* Il marchio: l'emblema tondo e la parola. La parola resta scritta in codice —
+   sul telefono si legge sempre, anche se l'immagine tarda ad arrivare.
+   Nel menu stanno in riga, perche' li' lo spazio serve ai due custodi. */
+.logo-wrap{position:relative;display:flex;align-items:center;justify-content:center;
+  gap:clamp(8px,2.6vw,18px)}
+.logo-img{width:clamp(74px,20vw,116px);height:auto;display:block;
+  filter:drop-shadow(0 6px 16px rgba(58,60,180,.35))}
+
+/* Sulla schermata del titolo invece non c'e' altro: l'emblema si prende la
+   scena e la parola gli sta sotto. E' la prima cosa che si vede del gioco. */
+#titolo .logo-wrap{flex-direction:column;gap:2px}
+#titolo .logo-img{width:clamp(170px,52vw,260px)}
+#titolo .logo{font-size:clamp(40px,11vw,64px)}
 .logo{font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(56px,14vw,88px);line-height:1;
   letter-spacing:1px;
   background:linear-gradient(180deg,#5ce0ff 10%,#3a7bff 55%,#7a4bff 100%);
@@ -284,7 +296,7 @@ body.is-touch .help .help-row{margin-bottom:8px;line-height:1.65}
   .stat span{font-size:22px}
 }
 @media (max-height:520px){
-  .power-hud{bottom:8px;width:190px}.power-head{font-size:9px}.panel{padding-top:20px}.logo{font-size:50px}
+  .power-hud{bottom:8px;width:190px}.power-head{font-size:9px}.panel{padding-top:20px}.logo{font-size:50px}.logo-img{width:60px}
   .help{margin-top:13px;padding-top:10px}.feature-row{margin-bottom:13px}
 }
 
@@ -301,7 +313,7 @@ body.is-touch .help .help-row{margin-bottom:8px;line-height:1.65}
   #menu .panel > *{grid-column:1}
   #menu .logo-wrap{margin:0}
   #menu .logo{font-size:44px}
-  #menu .bolt{font-size:20px;top:-2px}
+  #menu .logo-img{width:52px}
   #menu .tag{font-size:11px;margin:2px 0 8px;line-height:1.45}
   #menu .feature-row{display:none}
   #menu .who{margin:0 0 6px;font-size:11px}

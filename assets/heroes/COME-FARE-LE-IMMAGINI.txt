@@ -15,7 +15,7 @@ ATTENZIONE: in questa cartella ci sono due cose diverse.
    che dice cosa fissa ciascuna.
 
 DA DOVE SI PARTE PER UNA NUOVA IMMAGINE
-Sempre da assets/riferimenti/. Quelle dieci tavole sono state approvate una per
+Sempre da assets/riferimenti/. Quelle undici tavole sono state approvate una per
 una: forma, colori e proporzioni non si cambiano piu'. Se un'immagine nuova le
 contraddice, e' l'immagine nuova a essere sbagliata.
 
@@ -31,6 +31,11 @@ Si parte sempre dalla stessa immagine di riferimento del personaggio, si
 generano tutte le immagini di un personaggio prima di passare al successivo, e
 prima di tenerle si guardano di fila: se una faccia cambia, si nota subito.
 
+LE IMMAGINI DI SCENA
+Ne sono state fatte sei, dal settore 20 al 30, e stanno in
+assets/riferimenti/scene/ con un indice loro. Fissano l'inquadratura di una
+scena: chi sta a destra, chi a sinistra, cosa si vede dietro.
+
 IL PROSSIMO PASSO
-Le immagini di scena, una per ogni filmato. La commessa completa sta in
-assets/video/DA-FARE.md. Si comincia da dentro_la_frattura (settore 21).
+Le immagini di scena dei filmati dal settore 35 in poi. La commessa completa
+sta in assets/video/DA-FARE.md.

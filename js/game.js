@@ -1774,7 +1774,7 @@ const Game = {
         ctx.restore();
       }
       /* un velo: senza, i personaggi disegnati si perdono dentro il dipinto */
-      ctx.fillStyle = 'rgba(24,10,52,0.30)';
+      ctx.fillStyle = th.velo || 'rgba(24,10,52,0.30)';
       ctx.fillRect(0, 0, W, H);
       /* il pulviscolo resta: da' profondita' all'aria */
       ctx.save();

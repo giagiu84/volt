@@ -48,6 +48,15 @@ disegnata fin dalla prima immagine, sempre in secondo piano.
 **ECHO-1** — colosso oscuro e pesante, senza volto, **tre cristalli gialli sul
 petto** e al centro, incastonata come un reattore, la lanterna verde.
 
+**I SILENTI** — le quattro sagome umane scure che si intravedono **dietro al
+rapimento di Aren**, in piedi, che guardano senza fare niente. Sono gli abitanti
+di Eclissia e vanno disegnati **identici a quel filmato**: sagome umane
+allungate — braccia lunghe, spalle strette, testa piccola — **senza volto, senza
+vestiti, senza dettagli**, viola-nere e un po' trasparenti come vetro fumé, col
+contorno che prende luce da quello che hanno dietro. Stanno **fermi e dritti,
+braccia lungo i fianchi**: è quello che fa paura. Non stanno con nessuno:
+**stanno con chi ha Ampere in mano.**
+
 **AMPERE** — lanterna da minatore, metallo blu scuro, vetro tondo, manico ad
 archetto, dentro una corrente verde che sale come un liquido. Non ha faccia:
 è viva nel modo in cui si muove.
@@ -68,35 +77,36 @@ blu, mai fuoco arancione.
 
 ---
 
-# I FONDALI DIPINTI — la commessa più importante per il gioco
+# I FONDALI DIPINTI — **consegnati, e sono nel gioco** ✅
 
-Il gioco ha imparato a usare **i vostri dipinti come fondale**: dal settore 21
-in poi, dietro al gioco c'è la stessa immagine della tavola della Frattura, e la
-differenza è enorme — il gioco finalmente somiglia ai render.
+Le cinque panoramiche di Lumina sono arrivate e dalla versione 46 **sono il
+fondale vero dei primi venti settori**: Prateria Cromo, Deserto Solare, Laguna
+Profonda, Giardino Viola e Ghiacciaio. Insieme alla Frattura fanno sei mondi
+dipinti su sei. Il gioco somiglia ai render, che era il punto.
 
-**Servono le stesse panoramiche per Lumina**, cioè per i primi venti settori,
-che sono quelli che vede chi apre il gioco per la prima volta. Cinque
-paesaggi, uno ogni cinque settori:
+Per memoria, le regole con cui sono state fatte — servono se un giorno se ne
+rifà una:
+- **panoramica larga**, 16:9 o più larga, **nessun personaggio e nessuna
+  scritta**, solo il paesaggio;
+- **niente terreno in primo piano**: il terreno lo disegna il gioco, serve
+  quello che sta **dietro**;
+- i bordi non contano: il gioco specchia l'immagine a ogni ripetizione, la
+  giuntura non si vede mai.
 
-| # | Paesaggio | Settori |
-|---|---|---|
-| 1 | **Prateria Cromo** — prati verdi, colline morbide, cielo azzurro | 1-5 |
-| 2 | **Deserto Solare** — dune calde, rocce arancioni, sole basso | 6-10 |
-| 3 | **Laguna Profonda** — acque turchesi, isole, cascate | 11-15 |
-| 4 | **Giardino Viola** — fiori e alberi viola, luce lilla | 16-20 |
-| 5 | **Ghiacciaio** — ghiaccio, azzurro pallido, cielo terso | (Circuito Aperto) |
+**Cosa manca ancora, e non è urgente:** le panoramiche di **Eclissia**
+(settori 36-55) e della **Caldera** (57-65). Si ricavano dalle tavole
+`eclissia.webp` e `caldera.webp` che avete già fatto, quindi le taglio io
+quando ci arrivo — a meno che non ne facciate versioni larghe apposta, che
+sarebbero meglio.
 
-**Come vanno fatte, ed è importante:**
-- **panoramica larga**, formato 16:9 o più largo;
-- **nessun personaggio**, nessuna scritta, nessun pannello: solo il paesaggio;
-- **niente terreno in primo piano**: il terreno lo disegna il gioco. Serve quello
-  che sta **dietro** — cielo, colline, montagne, alberi lontani, acqua;
-- i bordi destro e sinistro possono essere qualunque cosa: il gioco specchia
-  l'immagine a ogni ripetizione, quindi la giuntura non si vede mai;
-- la stessa aria delle tavole già approvate.
+---
 
-Le stesse tre servono, più avanti, per **Eclissia** e per la **Caldera**: ma
-quelle si ricavano già dalle tavole che avete fatto, quindi non sono urgenti.
+# IL MARCHIO — **arrivato, ed è nel gioco** ✅
+
+L'emblema tondo di VOLT è montato dalla versione 48: grande sulla schermata del
+titolo, in riga accanto alla parola nel menu, ed è anche l'icona della scheda
+del browser e dell'icona sul telefono. È il marchio ufficiale: **da qui in poi
+è quello che va su Instagram, sui post e sulle miniature dei video.**
 
 ---
 
@@ -182,14 +192,27 @@ I due sono piccoli in basso nell'inquadratura.
 
 ## 6 · `il_reattore` — settore 56 · **ESSENZIALE**
 **Dove:** settore 56, alla caduta di ECHO-1.
+**Chi c'è:** ECHO-1, Aren, Lyra e **i quattro Silenti**.
+
 **Cosa deve mostrare:**
-1. I **tre cristalli gialli** si spengono uno dopo l'altro e le morse si aprono.
-2. **Ampere esce** dal petto del colosso che si accascia.
-3. La lanterna fluttua verso i due e **si riempie di colpo** di tutta la
+1. ECHO-1 in piedi, e **intorno a lui i quattro Silenti**, fermi, in piedi,
+   rivolti verso i Custodi. Si devono riconoscere subito come le sagome
+   dell'inizio del gioco: chi ha giocato dal primo settore deve pensare
+   *«questi li ho già visti»*.
+2. I **tre cristalli gialli** si spengono uno dopo l'altro e le morse si aprono.
+   **A ogni cristallo che si spegne, un Silente cade in ginocchio e non si
+   rialza.** Al terzo ne resta uno solo in piedi.
+3. **Ampere esce** dal petto del colosso che si accascia.
+4. La lanterna fluttua verso i due e **si riempie di colpo** di tutta la
    corrente che si erano portati addosso per venti settori: si accende come non
    l'abbiamo mai vista, e per un attimo illumina tutto.
+5. **Un secondo in più, e vale il filmato:** alla luce della lanterna i quattro
+   Silenti si rimettono in piedi tutti insieme — e **si voltano verso i
+   Custodi**. Non attaccano. Guardano la lanterna, come facevano all'inizio.
 
-**Perché conta:** è la fine di una caccia lunga venti settori.
+**Perché conta:** è la fine di una caccia lunga venti settori, ed è il momento
+in cui si capisce che le ombre del primo filmato non stavano dalla parte del
+nemico: **stavano dalla parte della lanterna**.
 **Frase a schermo:** nessuna.
 **Nota:** finisce con la lanterna accesa a mezz'aria. Da lì riparte
 `la_scelta_di_echo`, che è il seguito immediato: vanno prodotti insieme.

@@ -12,3 +12,9 @@ assets/video/*.mp3
 ~$*
 assets/heroes.zip
 assets/*.zip
+
+# I fondali e il marchio: nel repo va solo il .webp che il gioco carica.
+# Gli originali a piena risoluzione pesano due mega l'uno e restano fuori.
+assets/sfondi/*.png
+assets/logo/*.png
+!assets/logo/volt_icona.png

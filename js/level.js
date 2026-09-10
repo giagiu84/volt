@@ -6,26 +6,34 @@ const T_EMPTY = 0, T_SOLID = 1, T_PLAT = 2, T_SPIKE = 3, T_PAD = 4;
 
 const OUTLINE = '#20183f';
 
+/* Ogni mondo ha il suo fondale dipinto (`sfondo`) e il suo velo (`velo`): il
+   velo e' quel poco di foschia che si stende sopra al dipinto perche' i
+   personaggi disegnati in codice non ci si perdano dentro. Sui mondi chiari
+   e' una foschia chiara — allontana il fondale invece di sporcarlo. I colori
+   del terreno sono presi dai dipinti stessi e alzati di un gradino: si deve
+   camminare su qualcosa che appartiene al quadro ma stacca da lui.
+   `sky` e `hills` restano: se il file del fondale non arriva, il gioco
+   ridisegna il cielo di sempre e non se ne accorge nessuno. */
 const THEMES = [
-  { name: 'PRATERIA CROMO',
+  { name: 'PRATERIA CROMO', sfondo: 'prateria', velo: 'rgba(206,238,255,0.26)',
     sky: ['#8fe9ff', '#4f63d8'], hills: ['#7d8ae6', '#5f66cf', '#4243a6'],
-    body: '#3fae72', body2: '#1f6b4c', crust: '#5fd68a', crust2: '#a6f7bd',
+    body: '#3d6a4d', body2: '#22412f', crust: '#7cb356', crust2: '#a8cf72',
     plat: '#ffc247', spike: '#ff6b6b', accent: '#ffe08a', fog: '#a8e6ff' },
-  { name: 'DESERTO SOLARE',
+  { name: 'DESERTO SOLARE', sfondo: 'deserto', velo: 'rgba(255,220,176,0.24)',
     sky: ['#ffd792', '#ff7d5c'], hills: ['#f2916d', '#d96f58', '#a54d47'],
-    body: '#d98f52', body2: '#8c4f28', crust: '#f8c581', crust2: '#ffe6b4',
+    body: '#cf7238', body2: '#8a3d20', crust: '#f9a557', crust2: '#ffd39a',
     plat: '#6fe4f5', spike: '#6a45b8', accent: '#fff3cd', fog: '#ffd9a4' },
-  { name: 'LAGUNA PROFONDA',
+  { name: 'LAGUNA PROFONDA', sfondo: 'laguna', velo: 'rgba(198,244,255,0.26)',
     sky: ['#8ff4e6', '#1f7fdb'], hills: ['#46aecd', '#2f83b2', '#1e5c89'],
-    body: '#1f9a94', body2: '#0a565f', crust: '#5ce0c4', crust2: '#bafbe9',
+    body: '#2478a8', body2: '#0e4a70', crust: '#4fc6e8', crust2: '#b0eefb',
     plat: '#ffd166', spike: '#ff6b9d', accent: '#b6fff2', fog: '#a6f2ff' },
-  { name: 'GIARDINO VIOLA',
+  { name: 'GIARDINO VIOLA', sfondo: 'giardino', velo: 'rgba(226,196,255,0.22)',
     sky: ['#fbb0ec', '#7a4bd8'], hills: ['#ac6fe4', '#8d52cc', '#61319f'],
-    body: '#8f55cd', body2: '#4b2482', crust: '#cb8ff7', crust2: '#f0ccff',
+    body: '#5c3390', body2: '#341a56', crust: '#b06ae0', crust2: '#e2a8ff',
     plat: '#a0ff8f', spike: '#ffd166', accent: '#ffdcff', fog: '#ecc0ff' },
-  { name: 'GHIACCIAIO',
+  { name: 'GHIACCIAIO', sfondo: 'ghiacciaio', velo: 'rgba(232,246,255,0.28)',
     sky: ['#ecf9ff', '#5fb0e6'], hills: ['#a5d4f0', '#7fb8df', '#5e93c2'],
-    body: '#8bc4e6', body2: '#3d6f99', crust: '#e6f7ff', crust2: '#ffffff',
+    body: '#8dbde8', body2: '#4a7cae', crust: '#dceeff', crust2: '#ffffff',
     plat: '#ffa06e', spike: '#ff6b9d', accent: '#ffffff', fog: '#e4f5ff' }
 ];
 
@@ -40,6 +48,7 @@ const ECHO_SETTORI = [24, 27, 30];
 
 const THEME_FRATTURA = {
   name: 'LA FRATTURA', frattura: true, sfondo: 'frattura',
+  velo: 'rgba(24,10,52,0.30)',
   sky: ['#5b2c9e', '#0d0620'],
   hills: ['#40276f', '#2c1a53', '#1a0f38'],
   /* Colori presi dal dipinto di riferimento e alzati di un gradino: il terreno

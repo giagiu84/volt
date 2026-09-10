@@ -68,11 +68,27 @@ Le vecchie prove di Eclio (`ECLIO.png`, `AREN_ECLIO_LYRA.png`,
 
 ---
 
+## Le immagini di scena
+
+Stanno nella cartella `scene/`, con un indice loro. Non fissano un personaggio:
+fissano **come è inquadrata una scena** — chi sta a destra, chi a sinistra, cosa
+si vede dietro. Ne esistono sei, dal settore 20 al 30.
+
+## I fondali del gioco
+
+In `assets/sfondi/` ci sono le sei panoramiche che il gioco **carica davvero**
+come fondale: `prateria`, `deserto`, `laguna`, `giardino`, `ghiacciaio` e
+`frattura`. Sono le stesse dei render, ritagliate e alleggerite. Non si
+sostituiscono senza rifare i colori del terreno di quel mondo.
+
+## Il marchio
+
+In `assets/logo/` c'è l'emblema tondo di VOLT: `volt.webp` è quello che il gioco
+mostra, `volt_icona.png` è l'icona della scheda e del telefono. **È il marchio
+ufficiale** — quello va sui post e sulle miniature dei video.
+
 ## Cosa manca adesso
 
-Le tavole dei personaggi e dei luoghi sono finite. **Il prossimo passo sono le
-immagini di scena**, una per ogni filmato da girare — la commessa completa, con
-cosa deve mostrare ciascuna, sta in `assets/video/DA-FARE.md`.
-
-Si comincia da **`dentro_la_frattura`** (settore 21) e si va in ordine di
-settore.
+Le tavole dei personaggi e dei luoghi sono finite. Restano da fare le immagini
+di scena dei filmati dal settore 35 in poi — la commessa completa, con cosa deve
+mostrare ciascuna, sta in `assets/video/DA-FARE.md`.

@@ -653,6 +653,62 @@ che li rende speciali.
 Se in Eclissia serviranno altri scontri, saranno **creature di Eclissia** — non
 ECHO. Il nome ECHO è riservato a chi è nato dalla scarica di OHM.
 
+### I SILENTI — le ombre che guardano **[SCRITTO]**
+Sono già nel gioco, e nessuno se n'è accorto. Nel filmato del rapimento di Aren,
+**dietro alla scena, in piedi, ci sono quattro sagome umane scure** che non
+fanno niente. Guardano. Poi il cielo si chiude e non si vedono più.
+
+Al settore 56 tornano, e combattono **accanto a ECHO-1**.
+
+**Come si disegnano.** Esattamente come nel filmato, o non serve a niente:
+- **sagome umane**, in piedi, proporzioni da persona ma **allungate** — braccia
+  lunghe, spalle strette, testa piccola;
+- **nessun volto**: niente occhi, niente bocca, niente naso;
+- **nessun vestito e nessun dettaglio**: sono una silhouette piena, viola-nera e
+  un po' trasparente, come vetro fumé;
+- **il contorno prende luce** da quello che hanno dietro: nella Frattura si
+  accendono di viola, in Eclissia di verde;
+- **stanno fermi e dritti**, con le braccia lungo i fianchi. Non minacciano.
+  È quello che fa paura.
+
+**Chi sono.** Gli abitanti di Eclissia. Il loro mondo è illuminato al contrario
+e loro sono quello che resta di chi ci vive: **persone senza luce dentro**.
+Quando la prima Frattura si è aperta ne sono passati alcuni, e sono rimasti
+dalla parte sbagliata.
+
+**Cosa vogliono.** Una cosa sola: **stare vicino ad Ampere.** Non la rubano, non
+la toccano. Le vanno incontro come ci si mette vicino a una stufa. Per questo
+erano lì la notte del rapimento — non guardavano i due Custodi, **guardavano la
+lanterna**.
+
+> **La regola dei Silenti, e vale sempre.**
+> **Non stanno con nessuno: stanno con chi ha Ampere in mano.** Al settore 56
+> Ampere è nel petto di ECHO-1, e loro difendono ECHO-1. Appena la lanterna
+> torna ai Custodi, **smettono di combattere e si voltano verso di loro**.
+
+**Come si combattono (settore 56).** Sono quattro e sono il contorno dello
+scontro, non lo scontro: non sparano, **camminano addosso** e con le braccia
+lunghe cercano di bloccarti — chi resta preso non spara per un secondo. Si
+buttano giù con due colpi. Il problema è che **tornano in piedi** finché ECHO-1
+ha almeno un cristallo acceso, e ne restano fermi tanti quanti sono i cristalli:
+tre cristalli, tre Silenti in piedi; ultimo cristallo, ne resta uno solo.
+**Contarli è il modo di capire quanto manca.**
+
+Quando l'ultimo cristallo si spegne, si fermano tutti e quattro in piedi, e
+restano lì mentre Ampere torna ai Custodi.
+
+**E poi?** Salgono. Da lontano, dietro, senza mai raggiungerli: nei nove settori
+della Caldera si vedono **in fondo alle piattaforme, fermi**, sempre di più.
+Alla cima sono decine. Non attaccano mai. Aspettano la lanterna.
+
+Nel finale, quando Ampere si riaccende, **si accendono anche loro** — e per la
+prima volta hanno un colore. È il modo più semplice di far vedere che
+riaccendere Lumina serviva anche a qualcun altro.
+
+> **Il nome è una proposta.** «Silenti» descrive quello che fanno: guardano e
+> non parlano mai. Se ne salta fuori uno migliore, si cambia qui e in tutti i
+> file — sono l'unica cosa di questo capitolo ancora da approvare.
+
 ### I mostri comuni **[GIOCO]**
 Non hanno nome proprio, sono la fauna della Frattura: **strisciante, volante,
 sputatore, caricatore, bombardiere**. Dal sesto settore alcuni arrivano
@@ -678,6 +734,11 @@ legge come un allarme, perché non lo è ancora: **le cose importanti, all'inizi
 sembrano sempre piccole**.
 
 Finisce esattamente dove comincia il gioco: il cielo che si spacca.
+
+**E in quel momento, dietro, c'è già qualcuno.** Nel filmato del rapimento si
+vedono **quattro sagome umane scure**, in piedi, che non intervengono e non
+scappano: sono i **Silenti**, ed è la prima volta che si vedono. Chi gioca li
+prende per un dettaglio dello sfondo. Torneranno al settore 56.
 
 **Perché funziona per Instagram.** È tutto atmosfera e personaggi, non serve
 animare battaglie, e ogni post può essere una singola immagine con due righe di
@@ -853,8 +914,18 @@ comandi tu, l'altro combatte al tuo fianco.** Aren sovraccarica il cristallo
 esposto, Lyra ne estrae la corrente col guanto. Tre volte, un cristallo alla
 volta: tre morse che si aprono.
 
+**E non è solo.** Intorno a lui ci sono **quattro Silenti** — le stesse sagome
+umane scure che si vedevano dietro al rapimento, all'inizio del gioco. Non
+sparano: camminano addosso e cercano di bloccarti con le braccia. Si buttano giù
+con due colpi, ma **si rialzano finché ECHO-1 ha un cristallo acceso**, e ne
+restano in piedi tanti quanti sono i cristalli. Non difendono ECHO-1: difendono
+**Ampere**, che ce l'ha lui nel petto (vedi *I Silenti*, capitolo 4).
+
 Quando cade, **la lanterna torna a voi** — e tutta la corrente che ti sei
 portato addosso per venti settori le entra dentro in un colpo solo.
+
+**E i quattro Silenti si fermano** e si voltano verso i Custodi. Da quel momento
+li seguono, sempre a distanza, fino alla cima.
 
 **E ECHO-0 è lì, a un passo, e non la prende.** È il momento in cui sceglie:
 tutto quello che succede al settore 65 nasce da qui.
