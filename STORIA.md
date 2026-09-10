@@ -1412,7 +1412,7 @@ Il gioco mostra brevi filmati fra una fase e l'altra, come faceva *Prince of
 Persia*: non sono premi, sono **il modo in cui la storia va avanti mentre si
 gioca**.
 
-**Fatti** (già dentro il gioco, sette):
+**Fatti** (già dentro il gioco, otto):
 
 | File | Quando | Cosa mostra |
 |---|---|---|
@@ -1423,22 +1423,22 @@ gioca**.
 | `liberazione_aren` | dopo il settore 20 | Lyra apre la cella col guanto, si abbracciano |
 | `la_luce_se_ne_va` | premendo CONTINUA, dopo il 20 | I due davanti alla Frattura: isole di Lumina sospese nel viola, saette, e la luce di casa che se ne va |
 | `primo_incontro` | entrando nel settore 24 | ECHO-0 si compone dalle schegge e si alza sopra i due: braccia diverse, occhi accesi, fulmine giallo |
+| `ampere_torna` | entrando nel settore 31 | Lo strappo: la lanterna passa di mano, si accende di verde fra Aren e Lyra, ECHO-0 indietreggia e fugge nel varco. **È muto** |
 
-**Da fare: dieci**, qui in ordine di settore. I sette segnati **essenziale** sono
+**Da fare: nove**, qui in ordine di settore. I sette segnati **essenziale** sono
 quelli senza cui la storia non si capisce; gli altri fanno bella figura.
 
 | # | File | Settore | Cosa deve mostrare | Priorità |
 |---|---|---|---|---|
 | 1 | `dentro_la_frattura` | 21 | I due entrano insieme; il mondo è fatto di pezzi di casa loro | desiderabile |
-| 3 | `ampere_torna` | 30 | Gliela strappano di mano; la lanterna si accende fra i due | desiderabile |
-| 4 | `il_tradimento` | 35 | ECHO-0 è in ginocchio con Ampere al petto; ECHO-1 gliela strappa e sparisce | **essenziale** |
-| 5 | `il_passaggio` | 35 | Si rialza e apre la fenditura su Eclissia: «È DI LÀ» | **essenziale** |
-| 6 | `eclissia` | 36 | La prima immagine del mondo nuovo, con la Caldera all'orizzonte | desiderabile |
-| 7 | `il_reattore` | 56 | I tre cristalli si spengono, Ampere esce e si riempie di colpo | **essenziale** |
-| 8 | `la_scelta_di_echo` | 56 | ECHO-0 allunga la mano verso la lanterna e la ritira | **essenziale** |
-| 9 | `la_cima` | 65 | OHM si condensa sopra il cratere; il segno Ω si accende | **essenziale** |
-| 10 | `il_finale` | 65 | L'eruzione, il cielo che si cuce, la scintilla che entra in Ampere, Eclio | **essenziale** |
-| 11 | `il_bacio` | 65 | Aren si toglie il casco, lo lascia cadere, abbraccia e bacia Lyra | **essenziale** |
+| 2 | `il_tradimento` | 35 | ECHO-0 è in ginocchio con Ampere al petto; ECHO-1 gliela strappa e sparisce | **essenziale** |
+| 3 | `il_passaggio` | 35 | Si rialza e apre la fenditura su Eclissia: «È DI LÀ» | **essenziale** |
+| 4 | `eclissia` | 36 | La prima immagine del mondo nuovo, con la Caldera all'orizzonte | desiderabile |
+| 5 | `il_reattore` | 56 | I tre cristalli si spengono, Ampere esce e si riempie di colpo | **essenziale** |
+| 6 | `la_scelta_di_echo` | 56 | ECHO-0 allunga la mano verso la lanterna e la ritira | **essenziale** |
+| 7 | `la_cima` | 65 | OHM si condensa sopra il cratere; il segno Ω si accende | **essenziale** |
+| 8 | `il_finale` | 65 | L'eruzione, il cielo che si cuce, la scintilla che entra in Ampere, Eclio | **essenziale** |
+| 9 | `il_bacio` | 65 | Aren si toglie il casco, lo lascia cadere, abbraccia e bacia Lyra | **essenziale** |
 
 I sette essenziali vanno prodotti **a coppie**, perché sono scene divise in
 due: `il_tradimento`+`il_passaggio`, `il_reattore`+`la_scelta_di_echo`, e

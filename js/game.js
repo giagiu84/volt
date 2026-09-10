@@ -19,9 +19,17 @@ const SETTORI_PRONTI = 24;
 const RUBABILI = ['bounce', 'power', 'rapidfire', 'boom', 'jump3'];
 /* I filmati che aprono un settore. Si aggiungono man mano che arrivano: se il
    file non c'e' ancora, il lettore tira dritto e il settore comincia lo stesso. */
+/* I filmati si vedono PRIMA che il settore cominci. Quindi un filmato che
+   racconta la fine di uno scontro va messo sul settore DOPO: `ampere_torna`
+   e' quello che succede all'uscita dal 30, e si vede entrando nel 31. */
 const FILMATI_SETTORE = {
-  24: 'primo_incontro'
+  24: 'primo_incontro',
+  31: 'ampere_torna'
 };
+/* I filmati consegnati senza traccia audio. Su questi la musica del gioco NON
+   si ferma: senza, sarebbero otto secondi di silenzio totale e sembrerebbe che
+   il gioco si sia piantato. Appena arriva l'audio vero, il nome si toglie. */
+const FILMATI_MUTI = new Set(['ampere_torna']);
 const CHECKPOINTS = [5, 10, 15];
 /* La semina del secondo atto: dal settore 15 la luce di Lumina comincia ad
    andarsene, e lo si vede prima che qualcuno lo dica. */
@@ -330,6 +338,7 @@ const Game = {
     const vid = document.getElementById('cinemaVideo');
     const skip = document.getElementById('cinemaSkip');
     if (!box || !vid) { poi(); return; }
+    const muto = FILMATI_MUTI.has(nome);
 
     let chiuso = false;
     const chiudi = () => {
@@ -340,7 +349,7 @@ const Game = {
       vid.removeAttribute('src'); vid.load();
       box.classList.add('hidden');
       skip.onclick = null;
-      Sfx.resume(); Sfx.startMusic();
+      Sfx.resume(); if (!muto) Sfx.startMusic();
       poi();
     };
 
@@ -360,7 +369,7 @@ const Game = {
     box.classList.remove('hidden');
     document.getElementById('banner').classList.add('hidden');
     this.bannerT = 0;
-    Sfx.stopMusic();
+    if (!muto) Sfx.stopMusic();
     /* anche i filmati vogliono il numero di versione: senza, un telefono che
        ha in cache quello vecchio continua a mostrarlo */
     vid.src = 'assets/video/' + nome + '.mp4?v=' + (window.VOLT_VERSION || 0);
