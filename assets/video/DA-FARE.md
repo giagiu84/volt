@@ -3,10 +3,10 @@
 Da consegnare a chi li produce. Ogni scheda è autosufficiente: dentro c'è chi
 compare, com'è fatto, cosa succede e cosa deve restare in mente allo spettatore.
 
-**Da fare: nove** (sette essenziali).
-**Già fatti: otto** — `introduzione`, `rapimento_lyra`, `rapimento_aren`,
+**Da fare: otto** (sei essenziali).
+**Già fatti: nove** — `introduzione`, `rapimento_lyra`, `rapimento_aren`,
 `liberazione_lyra`, `liberazione_aren`, `la_luce_se_ne_va`, `primo_incontro`,
-`ampere_torna`.
+`ampere_torna`, `il_tradimento`.
 
 ---
 
@@ -116,14 +116,13 @@ del browser e dell'icona sul telefono. È il marchio ufficiale: **da qui in poi
 
 ---
 
-# LE NOVE SCHEDE, IN ORDINE DI STORIA
+# LE OTTO SCHEDE, IN ORDINE DI STORIA
 
 Sono elencate come si incontrano giocando, dal settore 21 al 65. Accanto a
 ognuna c'è se è **essenziale** (senza, la storia ha un buco) o desiderabile.
 
-**I sette essenziali** sono `il_tradimento`, `il_passaggio`, `il_reattore`,
-`la_scelta_di_echo`, `la_cima`, `il_finale` e `il_bacio`. Vanno prodotti **a
-coppie**,
+**I sei essenziali** sono `il_passaggio`, `il_reattore`, `la_scelta_di_echo`,
+`la_cima`, `il_finale` e `il_bacio`. Vanno prodotti **a coppie**,
 perché sono tre scene divise in due ciascuna:
 `il_tradimento`+`il_passaggio` · `il_reattore`+`la_scelta_di_echo` ·
 `la_cima`+`il_finale`.
@@ -148,50 +147,7 @@ casa loro, a brandelli.
 
 ---
 
-## 2 · `il_tradimento` — settore 35 · **ESSENZIALE**
-**Dove:** settore 35, alla fine dello scontro con ECHO-0.
-
-> ⚠️ **Attenzione a chi ha la lanterna in mano, perché è tutto qui.**
-> Dal settore 31 al 35 **Ampere ce l'hanno i Custodi**: gliel'hanno strappata a
-> ECHO-0 al settore 30 e se la sono portata dietro per cinque settori. ECHO-0 li
-> insegue per riprendersela. Quindi in questa scena **la lanterna è in mano ad
-> Aren e Lyra**, non a ECHO-0.
-
-**Cosa deve mostrare, in tre battute:**
-
-**1 · Il secondo prima.** ECHO-0 è **in ginocchio, sconfitto**, ripreso dal
-basso. **Ampere sta a mezz'aria fra i due lati**: lui allunga la mano da una
-parte, Aren e Lyra la tengono dall'altra. È a un passo. Gli manca un secondo.
-E sopra, dall'alto, **il pugno enorme di ECHO-1 che incombe senza ancora agire**.
-
-**2 · Lo strappo.** Il pugno prende la lanterna **e strappa via anche loro**:
-Aren e Lyra trascinati in avanti, ECHO-0 che allunga la mano nello stesso
-istante. **Tre che perdono la stessa cosa insieme.** Dal corpo di ECHO-0 si
-staccano schegge: si sta spezzando.
-
-**3 · Il vuoto.** ECHO-1 sparisce nell'ombra con Ampere, che si allontana
-piccola e verde in alto. ECHO-0 resta **spezzato a terra, la mano tesa nel
-vuoto**, e guarda solo lei. Accanto a lui, a terra, **Aren e Lyra con la mano
-tesa nella stessa direzione**. Nessuno dei tre guarda gli altri due.
-
-**Perché conta:** è il momento in cui il nemico diventa una vittima — e non
-perché soffre, ma perché **ha appena perso la tua stessa cosa, nello stesso
-istante**. Da qui in poi non è più il tuo nemico: è uno che ha perso quanto te.
-E quello che ECHO-1 ruba non è una lanterna: è **il lavoro del giocatore**,
-cinque settori di Corrente Verde raccolta a mano. È per questo che al settore 56
-lo trovi sovraccarico.
-**Frase a schermo:** nessuna.
-
-> ✅ **Del primo tentativo si tiene tutto tranne la posizione della lanterna.**
-> Funzionavano e vanno rifatti uguali: la ripresa dal basso, **il pugno di
-> pietra che incombe prima di agire**, i **tre diamanti gialli** sospesi in alto
-> che dicono chi è senza mostrarlo, le **schegge che si staccano** dal corpo di
-> ECHO-0 nella seconda battuta, e il verde che si allontana piccolo nella terza.
-> L'unica cosa sbagliata era che Ampere fosse in mano a ECHO-0.
-
----
-
-## 3 · `il_passaggio` — settore 35 · **ESSENZIALE**
+## 2 · `il_passaggio` — settore 35 · **ESSENZIALE**
 **Dove:** settore 35, subito dopo `il_tradimento`.
 **Cosa deve mostrare:**
 1. ECHO-0 si rialza, lentamente. Aren e Lyra sono pronti a colpirlo.
@@ -204,7 +160,7 @@ lo trovi sovraccarico.
 
 ---
 
-## 4 · `eclissia` — settore 36 · desiderabile
+## 3 · `eclissia` — settore 36 · desiderabile
 **Dove:** settore 36, appena attraversato il passaggio.
 **Cosa:** la prima inquadratura del mondo nuovo. Un panorama largo: terra vera,
 cielo vero, ma illuminati al contrario, luce radente e colori profondi. In
@@ -214,7 +170,7 @@ I due sono piccoli in basso nell'inquadratura.
 
 ---
 
-## 5 · `il_reattore` — settore 56 · **ESSENZIALE**
+## 4 · `il_reattore` — settore 56 · **ESSENZIALE**
 **Dove:** settore 56, alla caduta di ECHO-1.
 **Chi c'è:** ECHO-1, Aren, Lyra e **i quattro Silenti**.
 
@@ -243,7 +199,7 @@ nemico: **stavano dalla parte della lanterna**.
 
 ---
 
-## 6 · `la_scelta_di_echo` — settore 56 · **ESSENZIALE**
+## 5 · `la_scelta_di_echo` — settore 56 · **ESSENZIALE**
 **Dove:** subito dopo `il_reattore`, senza stacco.
 **Cosa deve mostrare, in tre battute, e va girata lenta:**
 1. La lanterna è accesa a mezz'aria. **ECHO-0 è lì, a un passo.** Aren e Lyra
@@ -262,7 +218,7 @@ scena, è un debito. **Se si deve produrre un solo filmato, è questo.**
 
 ---
 
-## 7 · `la_cima` — settore 65 · **ESSENZIALE**
+## 6 · `la_cima` — settore 65 · **ESSENZIALE**
 **Dove:** settore 65, arrivati in cima, prima dello scontro.
 **Cosa:** il bordo del cratere. Sopra di esso si condensa **OHM**: una massa di
 fulmini bianchi e azzurri senza faccia, enorme. Il segno **Ω** si accende dentro
@@ -272,7 +228,7 @@ OHM.» poi «E NOI SIAMO SOLTANTO LE SUE ECO.»
 
 ---
 
-## 8 · `il_finale` — settore 65 · **ESSENZIALE**
+## 7 · `il_finale` — settore 65 · **ESSENZIALE**
 **Dove:** settore 65, in cima alla Caldera, dopo la sconfitta di OHM.
 **Cosa deve mostrare, in cinque battute (questo può arrivare a 14-16 secondi:
 è il finale del gioco, qui la durata si può sforare):**
@@ -308,7 +264,7 @@ dolcezza, non in trionfo.
 
 ---
 
-## 9 · `il_bacio` — settore 65, dopo il finale · **ESSENZIALE**
+## 8 · `il_bacio` — settore 65, dopo il finale · **ESSENZIALE**
 **Dove:** l'ultima scena del gioco, subito dopo `il_finale`, senza stacco.
 **Durata:** 8-10 secondi.
 

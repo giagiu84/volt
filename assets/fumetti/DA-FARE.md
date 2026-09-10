@@ -65,8 +65,8 @@ giocatore ha scelto AREN**, perché allora la rapita è Lyra.
 - Le mani premute contro la parete della cella.
 - Dietro: il **viola** della cella, con le costolature scure e una raggiera.
 
-**Attenzione:** nell'immagine non va scritto niente. La nuvoletta con **«AREN!»**
-la disegna il gioco, bianca, sopra il riquadro.
+**Attenzione:** nell'immagine non va scritto niente. La nuvoletta con
+**«AIUTO AREN!»** la disegna il gioco, bianca, sopra il riquadro.
 
 ---
 
@@ -87,7 +87,7 @@ perché allora il rapito è Aren.
 > Si vede una volta sola in tutto il gioco, nell'ultima scena. Se esce qui,
 > quella scena non vale più niente.
 
-**La nuvoletta con «LYRA!»** la disegna il gioco.
+**La nuvoletta con «AIUTO LYRA!»** la disegna il gioco.
 
 ---
 

@@ -26,9 +26,14 @@ const RUBABILI = ['bounce', 'power', 'rapidfire', 'boom', 'jump3'];
 /* I filmati si vedono PRIMA che il settore cominci. Quindi un filmato che
    racconta la fine di uno scontro va messo sul settore DOPO: `ampere_torna`
    e' quello che succede all'uscita dal 30, e si vede entrando nel 31. */
+/* Un settore puo' averne anche piu' d'uno: certe scene sono divise in due e
+   vanno viste di fila, senza stacco. In quel caso si scrive una lista. */
 const FILMATI_SETTORE = {
   24: 'primo_incontro',
-  31: 'ampere_torna'
+  31: 'ampere_torna',
+  /* il tradimento e il passaggio sono una scena sola spezzata in due: quando
+     arriva anche `il_passaggio` basta aggiungerlo qui dentro */
+  36: ['il_tradimento']
 };
 /* I filmati consegnati senza traccia audio. Su questi la musica del gioco NON
    si ferma: senza, sarebbero otto secondi di silenzio totale e sembrerebbe che
@@ -337,6 +342,17 @@ const Game = {
      Si riproducono se il file c'è; se manca, o se il browser non ne vuole
      sapere, si prosegue subito: il gioco non deve mai restare fermo ad
      aspettare un video. */
+  /* Una lista di filmati, uno dopo l'altro, e alla fine di tutti si prosegue.
+     Serve per le scene spezzate in due, che vanno viste senza stacco. */
+  playCinemaSerie(nomi, poi) {
+    const lista = Array.isArray(nomi) ? nomi.slice() : [nomi];
+    const avanti = () => {
+      if (!lista.length) { poi(); return; }
+      this.playCinema(lista.shift(), avanti);
+    };
+    avanti();
+  },
+
   playCinema(nome, poi) {
     const box = document.getElementById('cinema');
     const vid = document.getElementById('cinemaVideo');
@@ -1134,7 +1150,7 @@ const Game = {
             if (film) {
               document.getElementById('hud').classList.add('hidden');
               this.state = 'cinema';
-              this.playCinema(film, () => this.fineAnteprima());
+              this.playCinemaSerie(film, () => this.fineAnteprima());
             } else this.fineAnteprima();
             return;
           }
@@ -1260,7 +1276,8 @@ const Game = {
         /* e qui si apre la seconda: il rapito che chiama per nome chi lo sta
            cercando. Le due vignette restano in fila un momento, come due
            riquadri della stessa pagina. */
-        this.apriRiquadro('rapito', 1, (HEROES[this.hero] || HEROES.aren).name + '!');
+        this.apriRiquadro('rapito', 1,
+          'AIUTO ' + (HEROES[this.hero] || HEROES.aren).name + '!');
         this.hitStop = 0.35;
         this.shake(24, 0.5);
         Sfx.tone(90, 0.6, 'sawtooth', 0.08, 1600);
@@ -1642,7 +1659,7 @@ const Game = {
     if (film) {
       document.getElementById('hud').classList.add('hidden');
       this.state = 'cinema';
-      this.playCinema(film, via);
+      this.playCinemaSerie(film, via);
     } else via();
   },
 
