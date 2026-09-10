@@ -480,6 +480,28 @@ Eclissia**.
 Sa perfettamente dove porta quella strada. Sa che se Ampere torna a funzionare
 lui muore. **Ve la indica lo stesso.**
 
+#### Il prezzo (settore 35) **[SCRITTO]**
+E il giocatore lo vede, in una battuta sola del filmato `il_passaggio`.
+
+Appena la fenditura si apre, **dalla parte di là arriva un filo di luce verde** —
+è Ampere, lontanissima, nel petto di ECHO-1. Quando quel filo gli tocca il
+petto, **alcune schegge del suo corpo diventano trasparenti e cominciano a
+sfaldarsi**. Poi la luce passa oltre e tornano solide.
+
+Non serve altro. La regola del mondo si capisce da sola:
+
+> **ECHO-0 è nato dall'assenza di Ampere. Se Ampere torna viva, lui non può più
+> esistere.**
+
+**Non è una scoperta: è una conferma.** Lo sospettava, e adesso l'ha visto. Per
+questo la faccia non è stupore ma **rassegnazione**. Abbassa la mano dal petto,
+guarda i due Custodi, e **indica lo squarcio lo stesso**.
+
+**Ed è qui che nasce la scena del settore 56.** Là avrà Ampere a un passo e non
+la prenderà. Senza questa battuta è un gesto gentile; con questa battuta il
+giocatore sa che prendersela era **l'unico modo che aveva di restare vivo**. È
+per questo che alla fine i due Custodi non lo lasciano andare.
+
 #### Il compagno scomodo (settori 36-55) **[SCRITTO]**
 Da lì in poi **non sparisce: viene con voi.** Ma a una distanza inquietante, e
 va tenuta:
@@ -1556,7 +1578,7 @@ quelli senza cui la storia non si capisce; gli altri fanno bella figura.
 | # | File | Settore | Cosa deve mostrare | Priorità |
 |---|---|---|---|---|
 | 1 | `dentro_la_frattura` | 21 | I due entrano insieme; il mondo è fatto di pezzi di casa loro | desiderabile |
-| 2 | `il_passaggio` | 35 | Si rialza e apre la fenditura su Eclissia: «È DI LÀ» | **essenziale** |
+| 2 | `il_passaggio` | 35 | Si rialza, apre la fenditura, **vede il prezzo** — la luce verde lo sfalda — e indica lo stesso: «È DI LÀ» | **essenziale** |
 | 3 | `eclissia` | 36 | La prima immagine del mondo nuovo, con la Caldera all'orizzonte | desiderabile |
 | 4 | `il_reattore` | 56 | I tre cristalli si spengono, Ampere esce e si riempie di colpo | **essenziale** |
 | 5 | `la_scelta_di_echo` | 56 | ECHO-0 allunga la mano verso la lanterna e la ritira | **essenziale** |

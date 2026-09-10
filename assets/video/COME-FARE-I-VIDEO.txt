@@ -20,8 +20,9 @@ GIA' FATTI (nove)
 DA FARE (otto, in ordine di settore). Quelli segnati [E] sono essenziali:
 sono sei, e vanno prodotti a coppie perche' sono scene divise in due.
   dentro_la_frattura.mp4  settore 21
-  il_passaggio.mp4   [E]  settore 35: ECHO-0 apre la strada per Eclissia
-                          (seguito di il_tradimento, gia' girato)
+  il_passaggio.mp4   [E]  settore 35: ECHO-0 apre la strada per Eclissia in
+                          QUATTRO battute - confronto, apertura, IL PREZZO,
+                          la scelta. (seguito di il_tradimento, gia' girato)
   eclissia.mp4            settore 36: il mondo nuovo
   il_reattore.mp4    [E]  settore 56: ECHO-1 cade e Ampere esce        --.
   la_scelta_di_echo.mp4 [E] settore 56: ECHO-0 allunga la mano e la ritira '- coppia

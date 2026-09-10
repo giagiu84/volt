@@ -148,15 +148,68 @@ casa loro, a brandelli.
 ---
 
 ## 2 · `il_passaggio` — settore 35 · **ESSENZIALE**
-**Dove:** settore 35, subito dopo `il_tradimento`.
-**Cosa deve mostrare:**
-1. ECHO-0 si rialza, lentamente. Aren e Lyra sono pronti a colpirlo.
-2. Lui non attacca: alza la mano e **apre una fenditura** nel fondo del viola.
-   Dentro si intravede un mondo — terra, cielo, un vulcano lontano: **Eclissia**.
-3. Un istante in cui i tre si guardano. Poi lui si scosta e fa passare.
+**Dove:** settore 35, subito dopo `il_tradimento`, senza stacco.
+**Quattro battute**, e la terza è quella che regge tutto il resto del gioco.
 
-**Perché conta:** ECHO-0 indica la strada che porta alla propria fine, e lo sa.
+**1 · Il confronto.** ECHO-0 si rialza dalle macerie, lentamente. Aren e Lyra
+sono in piedi davanti a lui, pronti a colpirlo. Nessuno dei tre ha più Ampere.
+
+**2 · L'apertura.** Lui non attacca: alza la mano e **apre una fenditura** nel
+fondo del viola. Dentro si intravede un mondo vero — terra, cielo, e lontano un
+vulcano nero: **Eclissia**.
+
+**3 · IL PREZZO.** Primo piano su di lui, e non succede quasi niente.
+- Guarda dentro lo squarcio. **In fondo, piccolissima e verde, si vede Ampere**:
+  è nel petto di ECHO-1, che se l'è portata di là. È quello che i Custodi
+  andranno a riprendersi.
+- **Dalla fenditura arriva un filo di quella luce verde** e gli tocca il petto.
+- Dove lo tocca, **alcune schegge del suo corpo diventano trasparenti** e
+  cominciano a sfaldarsi. Poi la luce passa oltre e le schegge tornano solide.
+- **Nel riflesso del suo occhio ciano** resta l'immagine della lanterna accesa.
+- Abbassa la mano dal petto. Guarda Aren e Lyra.
+
+**4 · La scelta.** Si sposta, indica lo squarcio, e li lascia passare.
 **Frase a schermo (obbligatoria):** «È DI LÀ.»
+
+---
+
+### Le tre regole della terza battuta, e sono strette
+
+**a · Non è una scoperta, è una conferma.** ECHO-0 lo sapeva già. Quel filo di
+luce non gli sta rivelando niente: gli sta **dando ragione**. Quindi la faccia
+non è stupore, è **rassegnazione** — l'espressione di chi vede confermata una
+cosa che sperava di aver capito male. Se sembra che lo scopra adesso, diventa un
+altro personaggio: uno che si sacrifica d'impulso invece di uno che ci ha
+pensato.
+
+**b · La scintilla pulsa una volta sola, e non è lei il soggetto.** Dietro il
+fulmine giallo si intravede sempre la piccola sfera bianco-verde: qui può
+**pulsare una volta, piano**, quando la luce verde lo tocca. Ma la macchina da
+presa non ci si ferma sopra e nessuno la nomina. **Il soggetto della vignetta
+sono le schegge che diventano trasparenti**, non lei. Se la scintilla diventa il
+centro dell'inquadratura, al settore 65 la rivelazione è già bruciata.
+
+**c · Le schegge tornano solide.** La dissolvenza dura un istante e si ferma.
+ECHO-0 non è ferito e non sta morendo: ha visto **cosa succederà**, non cosa sta
+succedendo. Deve accompagnare i due per altri trenta settori con lo stesso
+aspetto di sempre.
+
+---
+
+**Perché conta, e conta più di quanto sembri.**
+
+Fino a qui il giocatore ha capito che ECHO-0 indica la strada. Non ha capito
+**quanto gli costa**. Questa battuta lo dice senza una parola:
+
+> *Se Ampere torna viva, il corpo che la sua assenza ha generato non può più
+> esistere.*
+
+E soprattutto: **è qui che si costruisce la scena del settore 56.** Là ECHO-0
+avrà la lanterna a un passo e non la prenderà. Senza questa battuta è un gesto
+gentile. Con questa battuta il giocatore sa che prendersela era **l'unico modo
+che aveva di restare vivo** — e che rinunciandoci sta scegliendo di finire.
+
+È il motivo per cui alla fine i due Custodi non lo lasciano andare.
 
 ---
 
