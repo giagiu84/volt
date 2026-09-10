@@ -9,9 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=100">
-<link rel="icon" href="assets/logo/volt_icona.png?v=100">
-<link rel="apple-touch-icon" href="assets/logo/volt_icona.png?v=100">
+<link rel="stylesheet" href="css/style.css?v=101">
+<link rel="icon" href="assets/logo/volt_icona.png?v=101">
+<link rel="apple-touch-icon" href="assets/logo/volt_icona.png?v=101">
 </head>
 <body>
 <div id="app">
@@ -77,7 +77,7 @@
   <div id="titolo" class="overlay hidden">
     <div class="panel small">
       <div class="logo-wrap">
-        <img class="logo-img" src="assets/logo/volt.webp?v=100" alt="" width="360" height="360">
+        <img class="logo-img" src="assets/logo/volt.webp?v=101" alt="" width="360" height="360">
         <h1 class="logo">VOLT</h1>
       </div>
       <p class="tag">Non si nasce VOLT. Lo si diventa.</p>
@@ -88,7 +88,7 @@
   <div id="menu" class="overlay">
     <div class="panel">
       <div class="logo-wrap">
-        <img class="logo-img" src="assets/logo/volt.webp?v=100" alt="" width="360" height="360">
+        <img class="logo-img" src="assets/logo/volt.webp?v=101" alt="" width="360" height="360">
         <h1 class="logo">VOLT</h1>
       </div>
       <p class="tag" id="claim">Diventi VOLT. Lyra è oltre la frattura.</p>
@@ -200,29 +200,44 @@
 /* Se il telefono ha in cache una versione vecchia della pagina, se ne accorge
    da solo e si ricarica: senza questo si continuerebbero a vedere i comandi
    di ieri per una decina di minuti. */
-window.VOLT_VERSION = 100;
+window.VOLT_VERSION = 101;
 fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   .then(function (r) { return r.json(); })
   .then(function (d) {
     if (!d || d.v === window.VOLT_VERSION) return;
-    try {
-      var k = 'volt_upd_' + d.v;
-      if (sessionStorage.getItem(k)) return;      /* una volta sola, mai in ciclo */
-      sessionStorage.setItem(k, '1');
-    } catch (e) { /* storage bloccato: ricarico comunque una volta */ }
-    /* si ricarica tenendo i parametri che c'erano (le prove usano ?settore e ?vinci) */
-    var q = new URLSearchParams(location.search);
-    q.set('v', d.v);
-    location.replace(location.pathname + '?' + q.toString());
+    var k = 'volt_upd_' + d.v;
+    var giaProvato = false;
+    try { giaProvato = !!sessionStorage.getItem(k); sessionStorage.setItem(k, '1'); } catch (e) {}
+    if (!giaProvato) {
+      /* Si ricarica tenendo i parametri che c'erano (le prove usano ?settore),
+         e con un pezzetto di indirizzo diverso a ogni tentativo: un indirizzo
+         mai visto non puo' arrivare dalla cache, e' l'unico modo sicuro. */
+      var q = new URLSearchParams(location.search);
+      q.set('v', d.v + '.' + Date.now().toString(36));
+      location.replace(location.pathname + '?' + q.toString());
+      return;
+    }
+    /* Ci abbiamo gia' provato e siamo ancora indietro: vuol dire che la pagina
+       arriva comunque dalla cache. A quel punto non si insiste in silenzio —
+       si dice cosa fare, invece di far giocare una versione vecchia. */
+    var av = document.createElement('div');
+    av.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:99;padding:12px 16px;' +
+      'background:#ffc247;color:#241a4d;font:800 13px/1.4 Nunito,system-ui,sans-serif;' +
+      'text-align:center;box-shadow:0 -4px 18px rgba(0,0,0,.4)';
+    av.textContent = 'C’è una versione più nuova (v' + d.v + ') ma il telefono ' +
+      'continua a darti quella vecchia. Tieni premuto il tasto ricarica e scegli ' +
+      '« ricarica forzata ».';
+    document.body.appendChild(av);
+    setTimeout(function () { av.remove(); }, 12000);
   })
   .catch(function () { /* offline: pazienza, si gioca con quello che c'è */ });
 </script>
-<script src="js/util.js?v=100"></script>
-<script src="js/gfx.js?v=100"></script>
-<script src="js/audio.js?v=100"></script>
-<script src="js/input.js?v=100"></script>
-<script src="js/level.js?v=100"></script>
-<script src="js/entities.js?v=100"></script>
-<script src="js/game.js?v=100"></script>
+<script src="js/util.js?v=101"></script>
+<script src="js/gfx.js?v=101"></script>
+<script src="js/audio.js?v=101"></script>
+<script src="js/input.js?v=101"></script>
+<script src="js/level.js?v=101"></script>
+<script src="js/entities.js?v=101"></script>
+<script src="js/game.js?v=101"></script>
 </body>
 </html>
