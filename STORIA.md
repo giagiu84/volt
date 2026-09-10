@@ -466,6 +466,16 @@ secondo piano.
 
 > «HO OSSERVATO OGNI TUA SCELTA. ORA I TUOI POTERI APPARTENGONO A ME.»
 > «VOI VOLETE SALVARE IL VOSTRO MONDO. IO STO SOLTANTO CERCANDO DI NON SCOMPARIRE.»
+> «QUELLA LUCE NON È VOSTRA.» *(quando viene a riprendersi Ampere, settori 31-34)*
+> «TORNERÒ.» *(quando lo respingi)*
+> «È DI LÀ. PERDONATEMI… ERA L'UNICO MODO PER RESTARE VIVO.» *(settore 35)*
+
+> **ECHO-0 non spiega mai le proprie ragioni fino in fondo, e non dice mai da
+> che parte sta.** Fa le cose e lascia che si interpretino. È la regola che
+> tiene in piedi i venti settori di Eclissia, dove la domanda in testa al
+> giocatore deve restare una sola: *quando mi tradisce?* Una battuta come «ma è
+> giusto che torni vostra» — proposta e scartata — scioglieva quella domanda
+> venti settori prima del dovuto.
 
 **La resa (settore 35).** Sta per cadere. È in ginocchio, e la lanterna — che
 per cinque settori vi siete portati dietro voi — è a un passo dalla sua mano.

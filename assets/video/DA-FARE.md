@@ -168,8 +168,41 @@ vulcano nero: **Eclissia**.
 - **Nel riflesso del suo occhio ciano** resta l'immagine della lanterna accesa.
 - Abbassa la mano dal petto. Guarda Aren e Lyra.
 
-**4 · La scelta.** Si sposta, indica lo squarcio, e li lascia passare.
-**Frase a schermo (obbligatoria):** «È DI LÀ.»
+**4 · La scelta.** Si sposta, indica lo squarcio, e li lascia passare. E qui
+parla — tre frasi, in quest'ordine, con le pause fra l'una e l'altra:
+
+| | Cosa fa | Cosa dice |
+|---|---|---|
+| 1 | Indica la fenditura | **«È DI LÀ.»** |
+| 2 | Pausa. Guarda Aren e Lyra | **«PERDONATEMI…»** |
+| 3 | Abbassa lo sguardo | **«ERA L'UNICO MODO PER RESTARE VIVO.»** |
+
+**Come vanno dette.** Voce cupa, profonda, **stanca**. Nessuna enfasi da
+cattivo: **è una confessione**, non una minaccia. Testo a schermo nitido, in
+maiuscolo, una frase per volta — il filmato deve funzionare anche muto.
+
+**Perché la terza non ripete il fotogramma del prezzo.** L'immagine dice *«se
+Ampere torna, io muoio»*. La battuta dice *«l'ho rubata per non morire»*. Sono
+due fatti diversi, e il secondo è una **confessione di colpa** che l'immagine non
+può portare. Vanno tenute tutte e due.
+
+> ### ⛔ E qui ECHO-0 smette di parlare. Niente quarta battuta.
+> Era stata proposta una chiusura del tipo *«ma è giusto che torni vostra»*, ed
+> è stata **scartata**. Ecco perché, ed è una regola che vale per tutto quello
+> che ECHO-0 dirà da qui al settore 56:
+>
+> **Dal 36 al 55 la tensione è tutta in una domanda: «quando mi tradisce?»**
+> Aren e Lyra non sanno se fidarsi, e il giocatore nemmeno. È l'unica cosa che
+> tiene in piedi quei venti settori.
+>
+> Se qui dichiara da che parte sta, quei venti settori diventano un viaggio con
+> un amico. **ECHO-0 non spiega mai le proprie ragioni fino in fondo**: fa le
+> cose e lascia che si interpretino.
+>
+> E poi quel gesto lo sta già facendo: apre la strada e si scosta. *«È giusto
+> che torni vostra»* è quello che **fa**, non serve che lo dica. Lo rifarà al
+> settore 56, con la mano che si ritira, e lì senza una parola vale dieci volte
+> tanto.
 
 ---
 
