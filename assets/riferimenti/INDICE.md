@@ -1,6 +1,6 @@
 # I RIFERIMENTI CANONICI DI VOLT
 
-Queste dieci tavole sono state approvate una per una. **Da qui in avanti ogni
+Queste undici tavole sono state approvate una per una. **Da qui in avanti ogni
 immagine, ogni filmato e ogni post partono da loro**: forma, colori e
 proporzioni non si cambiano più.
 
@@ -24,6 +24,7 @@ entrano nel repo perché pesano quaranta mega; qui ci sono le stesse tavole in
 | `ohm.webp` | **OHM** — la Resistenza | Nessun corpo e nessun volto, il segno **Ω** dentro il groviglio, grande quanto una casa, si nutre dei colpi e si assottiglia sotto Ampere rovesciata |
 | `eclio.webp` | **ECLIO** | Le tre fasi, il suo linguaggio, **16 cm**, niente occhi né bocca né arti |
 | `eclio_scintilla.webp` | **ECLIO — la nascita** | La sequenza: la scintilla lascia ECHO-0, attraversa lo spazio, **entra nel vetro di Ampere**, e solo dopo nasce Eclio |
+| `il_bacio.webp` | **IL VOLTO DI AREN** e l'ultima scena | La faccia sotto il casco — capelli castani spettinati, occhi caldi, viso giovane e normale — e le tre battute finali: il casco che si alza, il casco a terra, il bacio. **Quella faccia si vede una volta sola, nell'ultima scena del gioco** |
 
 ## I luoghi
 
@@ -44,7 +45,11 @@ alla nostra sinistra, **cannone ciano** alla nostra destra. Mai il contrario.
 **2 · Lyra non porta il casco.** Faccia scoperta, capelli viola corti con la
 ciocca gialla. Se in un'immagine ha il casco, quell'immagine è sbagliata.
 
-**3 · La scintilla c'è sempre.** Dietro il fulmine giallo di ECHO-0 si intravede
+**3 · La faccia di Aren non si vede mai prima dell'ultima scena.** Non nel
+capitolo zero, non nell'introduzione, non nei rapimenti, non in un post. Se esce
+prima, quella scena non vale più niente.
+
+**4 · La scintilla c'è sempre.** Dietro il fulmine giallo di ECHO-0 si intravede
 una piccola sfera bianco-verde e indaco, in secondo piano. Nessuno la nomina —
 ma senza di lei, alla fine, Eclio sembrerebbe arrivato dal nulla.
 
