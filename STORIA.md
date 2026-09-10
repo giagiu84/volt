@@ -1100,6 +1100,11 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
 - **AMPERE** e la **Corrente Verde** esistono e funzionano, oltre la Frattura.
 - **Il cambio fra Aren e Lyra** esiste, in Circuito Aperto, con sei secondi di
   ricarica.
+- **I fondali dipinti.** Dal settore 21 il fondale del gioco è la stessa
+  immagine della tavola della Frattura, non più le colline disegnate in codice:
+  scorre più lento del terreno, si specchia a ogni ripetizione e ha sopra un
+  velo che stacca i personaggi. Per i primi venti settori servono le stesse
+  panoramiche di Lumina (commessa in `assets/video/DA-FARE.md`).
 - **La semina dei settori 15-20**: il Comandante della Laguna porta la lanterna
   verde sulla schiena, quando cade la luce sale e qualcosa se la porta via, e
   dal 16 al 20 Lumina va in blackout sempre più spesso.

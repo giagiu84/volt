@@ -198,6 +198,24 @@ const HeroSpin = {
   }
 };
 
+/* ---------- sfondi dipinti ----------
+   Alcuni mondi hanno un fondale vero, ricavato dalle tavole di riferimento:
+   si carica la prima volta che serve e da li' in poi il settore ha la stessa
+   aria dei render. Se il file non c'e', il gioco disegna il fondale di sempre. */
+const Sfondi = {
+  imgs: {},
+  get(nome) {
+    if (!nome) return null;
+    let im = this.imgs[nome];
+    if (im === undefined) {
+      im = new Image();
+      im.src = verAsset('assets/sfondi/' + nome + '.webp');
+      this.imgs[nome] = im;
+    }
+    return im.naturalWidth ? im : null;
+  }
+};
+
 const HeroArt = {
   imgs: {}, tried: false,
   poses: ['front', 'side', 'back'],

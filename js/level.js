@@ -39,11 +39,12 @@ const FRATTURA_DA = 21, FRATTURA_A = 35;
 const ECHO_SETTORI = [24, 27, 30];
 
 const THEME_FRATTURA = {
-  name: 'LA FRATTURA', frattura: true,
+  name: 'LA FRATTURA', frattura: true, sfondo: 'frattura',
   sky: ['#5b2c9e', '#0d0620'],
   hills: ['#40276f', '#2c1a53', '#1a0f38'],
-  /* la crosta resta l'erba di Lumina: sono pezzi di casa, non roccia aliena */
-  body: '#2b1b52', body2: '#150c2c', crust: '#5fd68a', crust2: '#a6f7bd',
+  /* Colori presi dal dipinto di riferimento e alzati di un gradino: il terreno
+     su cui si cammina deve staccare dal fondale, ma appartenergli. */
+  body: '#4a3a5c', body2: '#2c2038', crust: '#6f9153', crust2: '#9fc47a',
   plat: '#ffc247', spike: '#ff6b6b', accent: '#d9a6ff', fog: '#6a3fae'
 };
 

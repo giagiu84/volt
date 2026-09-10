@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=44">
+<link rel="stylesheet" href="css/style.css?v=45">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>%E2%9A%A1</text></svg>">
 </head>
 <body>
@@ -193,7 +193,7 @@
 /* Se il telefono ha in cache una versione vecchia della pagina, se ne accorge
    da solo e si ricarica: senza questo si continuerebbero a vedere i comandi
    di ieri per una decina di minuti. */
-window.VOLT_VERSION = 44;
+window.VOLT_VERSION = 45;
 fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   .then(function (r) { return r.json(); })
   .then(function (d) {
@@ -210,12 +210,12 @@ fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   })
   .catch(function () { /* offline: pazienza, si gioca con quello che c'è */ });
 </script>
-<script src="js/util.js?v=44"></script>
-<script src="js/gfx.js?v=44"></script>
-<script src="js/audio.js?v=44"></script>
-<script src="js/input.js?v=44"></script>
-<script src="js/level.js?v=44"></script>
-<script src="js/entities.js?v=44"></script>
-<script src="js/game.js?v=44"></script>
+<script src="js/util.js?v=45"></script>
+<script src="js/gfx.js?v=45"></script>
+<script src="js/audio.js?v=45"></script>
+<script src="js/input.js?v=45"></script>
+<script src="js/level.js?v=45"></script>
+<script src="js/entities.js?v=45"></script>
+<script src="js/game.js?v=45"></script>
 </body>
 </html>

@@ -1754,6 +1754,42 @@ const Game = {
     const ground = lv.pxH - camY;              /* linea del suolo sullo schermo */
     const horizon = Math.min(H, ground);
 
+    /* Se il mondo ha un fondale dipinto, si usa quello: e' la stessa immagine
+       delle tavole di riferimento, quindi il settore ha l'aria dei render
+       invece delle colline disegnate a mano. Scorre piu' lento del terreno e
+       si specchia a ogni ripetizione, cosi la giuntura non si vede. */
+    const sf = Sfondi.get(th.sfondo);
+    if (sf) {
+      const h = H * 1.25, w = sf.naturalWidth * (h / sf.naturalHeight);
+      const yk = clamp(camY / Math.max(1, lv.pxH - H), 0, 1);
+      const y = -(h - H) * yk;
+      const passo = w * 2;
+      let off = -(camX * 0.16) % passo;
+      if (off > 0) off -= passo;
+      for (let x = off; x < W; x += w) {
+        const k = Math.round((x - off) / w);
+        ctx.save();
+        if (k % 2) { ctx.translate(x + w, y); ctx.scale(-1, 1); ctx.drawImage(sf, 0, 0, w, h); }
+        else ctx.drawImage(sf, x, y, w, h);
+        ctx.restore();
+      }
+      /* un velo: senza, i personaggi disegnati si perdono dentro il dipinto */
+      ctx.fillStyle = 'rgba(24,10,52,0.30)';
+      ctx.fillRect(0, 0, W, H);
+      /* il pulviscolo resta: da' profondita' all'aria */
+      ctx.save();
+      ctx.fillStyle = '#ffffff';
+      for (const m of lv.motes) {
+        const mx = (m.x * W * 1.6 - camX * 0.35 + Math.sin(this.portalT * 0.4 + m.ph) * 20) % (W + 60);
+        const px2 = mx < -30 ? mx + W + 60 : mx;
+        const py2 = (m.y * H + Math.sin(this.portalT * m.sp * 0.08 + m.ph) * 16);
+        ctx.globalAlpha = 0.20 + Math.sin(this.portalT * 1.4 + m.ph) * 0.1;
+        ctx.beginPath(); ctx.arc(px2, py2, m.r, 0, TAU); ctx.fill();
+      }
+      ctx.restore();
+      return;
+    }
+
     const g = ctx.createLinearGradient(0, 0, 0, Math.max(2, horizon));
     g.addColorStop(0, th.sky[0]); g.addColorStop(1, th.sky[1]);
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);

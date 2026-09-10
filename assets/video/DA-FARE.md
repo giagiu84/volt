@@ -68,6 +68,38 @@ blu, mai fuoco arancione.
 
 ---
 
+# I FONDALI DIPINTI — la commessa più importante per il gioco
+
+Il gioco ha imparato a usare **i vostri dipinti come fondale**: dal settore 21
+in poi, dietro al gioco c'è la stessa immagine della tavola della Frattura, e la
+differenza è enorme — il gioco finalmente somiglia ai render.
+
+**Servono le stesse panoramiche per Lumina**, cioè per i primi venti settori,
+che sono quelli che vede chi apre il gioco per la prima volta. Cinque
+paesaggi, uno ogni cinque settori:
+
+| # | Paesaggio | Settori |
+|---|---|---|
+| 1 | **Prateria Cromo** — prati verdi, colline morbide, cielo azzurro | 1-5 |
+| 2 | **Deserto Solare** — dune calde, rocce arancioni, sole basso | 6-10 |
+| 3 | **Laguna Profonda** — acque turchesi, isole, cascate | 11-15 |
+| 4 | **Giardino Viola** — fiori e alberi viola, luce lilla | 16-20 |
+| 5 | **Ghiacciaio** — ghiaccio, azzurro pallido, cielo terso | (Circuito Aperto) |
+
+**Come vanno fatte, ed è importante:**
+- **panoramica larga**, formato 16:9 o più largo;
+- **nessun personaggio**, nessuna scritta, nessun pannello: solo il paesaggio;
+- **niente terreno in primo piano**: il terreno lo disegna il gioco. Serve quello
+  che sta **dietro** — cielo, colline, montagne, alberi lontani, acqua;
+- i bordi destro e sinistro possono essere qualunque cosa: il gioco specchia
+  l'immagine a ogni ripetizione, quindi la giuntura non si vede mai;
+- la stessa aria delle tavole già approvate.
+
+Le stesse tre servono, più avanti, per **Eclissia** e per la **Caldera**: ma
+quelle si ricavano già dalle tavole che avete fatto, quindi non sono urgenti.
+
+---
+
 # LE DIECI SCHEDE, IN ORDINE DI STORIA
 
 Sono elencate come si incontrano giocando, dal settore 21 al 65. Accanto a
