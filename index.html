@@ -9,9 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=96">
-<link rel="icon" href="assets/logo/volt_icona.png?v=96">
-<link rel="apple-touch-icon" href="assets/logo/volt_icona.png?v=96">
+<link rel="stylesheet" href="css/style.css?v=100">
+<link rel="icon" href="assets/logo/volt_icona.png?v=100">
+<link rel="apple-touch-icon" href="assets/logo/volt_icona.png?v=100">
 </head>
 <body>
 <div id="app">
@@ -77,7 +77,7 @@
   <div id="titolo" class="overlay hidden">
     <div class="panel small">
       <div class="logo-wrap">
-        <img class="logo-img" src="assets/logo/volt.webp?v=96" alt="" width="360" height="360">
+        <img class="logo-img" src="assets/logo/volt.webp?v=100" alt="" width="360" height="360">
         <h1 class="logo">VOLT</h1>
       </div>
       <p class="tag">Non si nasce VOLT. Lo si diventa.</p>
@@ -88,7 +88,7 @@
   <div id="menu" class="overlay">
     <div class="panel">
       <div class="logo-wrap">
-        <img class="logo-img" src="assets/logo/volt.webp?v=96" alt="" width="360" height="360">
+        <img class="logo-img" src="assets/logo/volt.webp?v=100" alt="" width="360" height="360">
         <h1 class="logo">VOLT</h1>
       </div>
       <p class="tag" id="claim">Diventi VOLT. Lyra è oltre la frattura.</p>
@@ -200,7 +200,7 @@
 /* Se il telefono ha in cache una versione vecchia della pagina, se ne accorge
    da solo e si ricarica: senza questo si continuerebbero a vedere i comandi
    di ieri per una decina di minuti. */
-window.VOLT_VERSION = 96;
+window.VOLT_VERSION = 100;
 fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   .then(function (r) { return r.json(); })
   .then(function (d) {
@@ -217,12 +217,12 @@ fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   })
   .catch(function () { /* offline: pazienza, si gioca con quello che c'è */ });
 </script>
-<script src="js/util.js?v=96"></script>
-<script src="js/gfx.js?v=96"></script>
-<script src="js/audio.js?v=96"></script>
-<script src="js/input.js?v=96"></script>
-<script src="js/level.js?v=96"></script>
-<script src="js/entities.js?v=96"></script>
-<script src="js/game.js?v=96"></script>
+<script src="js/util.js?v=100"></script>
+<script src="js/gfx.js?v=100"></script>
+<script src="js/audio.js?v=100"></script>
+<script src="js/input.js?v=100"></script>
+<script src="js/level.js?v=100"></script>
+<script src="js/entities.js?v=100"></script>
+<script src="js/game.js?v=100"></script>
 </body>
 </html>

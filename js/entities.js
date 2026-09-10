@@ -1103,7 +1103,13 @@ const ENEMY_DEF = {
   bomber:  { w: 30, h: 24, hp: 2,  speed: 110, score: 220, col: '#5ee08a', dark: '#2c9d5a', touch: 1 },
   boss:    { w: 76, h: 76, hp: 60, speed: 105, score: 2500, col: '#ff4d7d', dark: '#b41f52', touch: 2 },
   /* ECHO-0 non e' un mostro: e' uno che pensa. Vola, studia, copia e scappa. */
-  echo:    { w: 52, h: 70, hp: 130, speed: 250, score: 4000, col: '#1c1038', dark: '#0e0722', touch: 2 }
+  echo:    { w: 52, h: 70, hp: 130, speed: 250, score: 4000, col: '#1c1038', dark: '#0e0722', touch: 2 },
+  /* ECHO-1 non si abbatte a colpi: la vita non conta, contano i tre cristalli.
+     Sta scritto qui solo perche' il resto del gioco si aspetta una scheda. */
+  echo1:   { w: 120, h: 150, hp: 999, speed: 62, score: 9000, col: '#171029', dark: '#0a0618', touch: 3 },
+  /* I Silenti non sparano: camminano addosso e bloccano. Due colpi e vanno
+     giu', ma finche' ECHO-1 ha un cristallo acceso si rialzano. */
+  silente: { w: 30, h: 54, hp: 2, speed: 96, score: 300, col: '#2a1c4a', dark: '#150e2a', touch: 1 }
 };
 
 /* ---------- gli élite ----------
@@ -1158,6 +1164,14 @@ class Enemy {
     this.tier = tier || 1;
     this.finale = !!finale;
     this.rinculo = 0;
+    this.presaCd = 0;
+    this.giu = false; this.giuT = 0;
+    if (type === 'echo1') {
+      /* i tre cristalli esistono da subito: la barra in alto li conta anche
+         prima che lui si svegli */
+      this.cristalli = 3; this.esposto = 0; this.chi = 'aren';
+      this.colpiCristallo = 0; this.carica = 0; this.espostoT = 7; this.cadutoT = 0;
+    }
     this.phase = 0;
     this.awake = false; this.hunting = false; this.jumped = false;
     this.baseSpeed = this.speed; this.slow = 0;
@@ -1168,6 +1182,11 @@ class Enemy {
 
   hurt(dmg, fromX, freeze) {
     if (this.dead) return;
+    /* ECHO-1: la vita non conta. Ogni colpo sul corpo lo CARICA; solo il
+       cristallo esposto, colpito dal Custode giusto, gli leva qualcosa. */
+    if (this.type === 'echo1') { Game.echo1Colpito(this, dmg, fromX); return; }
+    /* un Silente a terra non si colpisce: e' gia' fermo */
+    if (this.type === 'silente' && this.giu) return;
     /* a terra non lo si colpisce piu': lo scontro e' finito, e infierire su
        uno in ginocchio non e' quello che fanno i Custodi */
     if (this.state === 10 && this.finale) return;
@@ -1233,6 +1252,8 @@ class Enemy {
       case 'bomber':  this.updateBomber(dt, lv, player, bullets, dx, dy); break;
       case 'boss':    this.updateBoss(dt, lv, player, bullets, dx, dy); break;
       case 'echo':    this.updateEcho(dt, lv, player, bullets, dx, dy); break;
+      case 'echo1':   this.updateEcho1(dt, lv, player, bullets, dx, dy); break;
+      case 'silente': this.updateSilente(dt, lv, player, dx, distX); break;
     }
   }
 
@@ -1609,6 +1630,106 @@ class Enemy {
     }
   }
 
+  /* ---------------- ECHO-1, il Condensatore ----------------
+     Enorme e lento. Ogni colpo che prende addosso **lo carica**: quando e'
+     pieno scarica tutto in un'ondata. L'unico modo di levargli un cristallo e'
+     colpire quello esposto **col Custode giusto** — e quale sia lo dice il
+     colore del cristallo: ciano vuole Aren, corallo vuole Lyra. */
+  updateEcho1(dt, lv, player, bullets, dx, dy) {
+    this.stateT -= dt;
+    if (this.cristalli === undefined) {
+      this.cristalli = 3;
+      this.esposto = 0;          /* quale dei tre e' scoperto, 0..2 */
+      this.chi = 'aren';
+      this.colpiCristallo = 0;
+      this.carica = 0;           /* quanto si e' caricato coi tuoi colpi */
+      this.espostoT = 7;
+      this.cadutoT = 0;
+    }
+
+    /* caduto: resta a terra e non fa piu' niente */
+    if (this.cristalli <= 0) {
+      this.cadutoT += dt;
+      this.vy += GRAV * 0.5 * dt;
+      this.y += this.vy * dt;
+      if (lv.solidAt(this.cx, this.y + this.h)) { this.y -= this.vy * dt; this.vy = 0; }
+      if (Math.random() < 0.3)
+        Particles.spawn(this.cx + (Math.random() - 0.5) * 90, this.cy + (Math.random() - 0.5) * 90,
+          0, -30, 0.6, 4, '#5effa8', 0, 1);
+      return;
+    }
+
+    /* si muove piano verso di te: non ti insegue, ti viene addosso */
+    const distX = Math.abs(dx);
+    this.vx = approach(this.vx, sign(dx) * this.speed * (distX > 200 ? 1 : 0.25), 260 * dt);
+    this.vy += GRAV * dt;
+    moveEntity(this, lv, dt, false);
+    this.dir = sign(dx) || this.dir;
+
+    /* ogni tanto cambia il cristallo esposto, e con lui cambia chi serve */
+    this.espostoT -= dt;
+    if (this.espostoT <= 0) {
+      this.espostoT = 6.5 + Math.random() * 3;
+      this.chi = this.chi === 'aren' ? 'lyra' : 'aren';
+      this.colpiCristallo = 0;
+      Rings.add(this.cx, this.cy - 10, this.chi === 'aren' ? '#22c8f5' : '#ff5d8f', 150, 0.5, 6);
+      Sfx.tone(300, 0.2, 'square', 0.05, 500);
+    }
+
+    /* pieno: scarica tutto quello che gli hai sparato addosso */
+    if (this.carica >= 100) {
+      this.carica = 0;
+      Game.echo1Ondata(this);
+    }
+
+    /* colpo pesante ravvicinato */
+    if (this.cool <= 0 && distX < 200) {
+      this.cool = 2.6;
+      Game.echo1Colpo(this, player);
+    }
+  }
+
+  /* ---------------- i Silenti ----------------
+     Non sparano. Camminano addosso e, se ti prendono, ti tengono fermo un
+     istante. Due colpi e vanno giu' — ma finche' ECHO-1 ha un cristallo
+     acceso si rialzano, e quanti ne restano in piedi dice quanti cristalli
+     mancano. */
+  updateSilente(dt, lv, player, dx, distX) {
+    if (this.giu) {
+      this.vx = approach(this.vx, 0, 800 * dt);
+      this.vy += GRAV * dt;
+      moveEntity(this, lv, dt, false);
+      this.giuT -= dt;
+      if (this.giuT <= 0 && Game.echo1Vivo()) {
+        this.giu = false; this.hp = this.maxHp;
+        Rings.add(this.cx, this.cy, '#7a3fd6', 90, 0.4, 5);
+      }
+      return;
+    }
+    /* quando ECHO-1 e' caduto smettono: restano in piedi e guardano */
+    if (this.fermo) {
+      this.vx = approach(this.vx, 0, 700 * dt);
+      this.vy += GRAV * dt;
+      moveEntity(this, lv, dt, false);
+      this.dir = sign(dx) || this.dir;
+      return;
+    }
+    this.dir = sign(dx) || this.dir;
+    this.vx = approach(this.vx, this.dir * this.speed, 900 * dt);
+    this.vy += GRAV * dt;
+    moveEntity(this, lv, dt, false);
+    if (this.hitWall && this.onGround) this.vy = -640;
+    /* le braccia lunghe: se ti arriva addosso ti tiene fermo un momento */
+    if (distX < 26 && Math.abs(player.cy - this.cy) < 44 && this.presaCd <= 0) {
+      this.presaCd = 2.4;
+      player.stunT = Math.max(player.stunT || 0, 0.4);
+      Floaters.add(player.cx, player.y - 16, 'TI TENGONO', '#c9a6ff', 14);
+      Rings.add(this.cx, this.cy, '#7a3fd6', 110, 0.4, 5);
+      Sfx.tone(120, 0.28, 'sawtooth', 0.05, 700);
+    }
+    this.presaCd = Math.max(0, this.presaCd - dt);
+  }
+
   /* ---------------- disegno ---------------- */
   draw(ctx, cx, cy) {
     if (this.dead) return;
@@ -1784,6 +1905,90 @@ class Enemy {
       ctx.beginPath(); ctx.ellipse(6.5 + guarda * 1.5, -28, 3.4, 4.4, 0, 0, TAU); ctx.fill();
 
       ctx.restore();
+      ctx.restore();
+
+    } else if (this.type === 'echo1') {
+      /* Il Condensatore. Colosso senza volto: una massa scura squadrata, tre
+         cristalli gialli sul petto e in mezzo, incastonata come un reattore,
+         AMPERE — che si vede verde attraverso il vetro. Quello esposto pulsa
+         del colore del Custode che serve. */
+      const respiro2 = 1 + Math.sin(this.t * 1.3) * 0.02;
+      ctx.save();
+      ctx.scale(respiro2, 2 - respiro2);
+      ctx.lineWidth = 3.5; ctx.strokeStyle = OUTLINE; ctx.lineJoin = 'round';
+
+      /* le braccia, enormi, appoggiate in avanti */
+      ctx.fillStyle = dark;
+      roundRect(ctx, -78, -22, 30, 74, 12); ctx.fill(); ctx.stroke();
+      roundRect(ctx, 48, -22, 30, 74, 12); ctx.fill(); ctx.stroke();
+
+      /* il torso */
+      ctx.fillStyle = col;
+      ctx.beginPath();
+      ctx.moveTo(-46, -58); ctx.lineTo(46, -58); ctx.lineTo(54, 20);
+      ctx.lineTo(30, 62); ctx.lineTo(-30, 62); ctx.lineTo(-54, 20);
+      ctx.closePath(); ctx.fill(); ctx.stroke();
+
+      /* la testa: non ha faccia, solo una fessura spenta */
+      ctx.fillStyle = dark;
+      roundRect(ctx, -26, -86, 52, 32, 10); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#3a2c62';
+      roundRect(ctx, -16, -74, 32, 6, 3); ctx.fill();
+
+      /* AMPERE nel petto */
+      const q = this.cristalli === undefined ? 3 : this.cristalli;
+      Gfx.light(ctx, 0, -18, 44, '#5effa8', q > 0 ? 0.5 : 0.9);
+      ctx.fillStyle = '#123a2c';
+      roundRect(ctx, -17, -36, 34, 40, 10); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = 'rgba(94,255,168,.75)';
+      roundRect(ctx, -13, -32, 26, 32, 8); ctx.fill();
+      ctx.fillStyle = '#eafff2';
+      ctx.beginPath(); ctx.arc(0, -16, 5 + Math.sin(this.t * 5) * 1, 0, TAU); ctx.fill();
+
+      /* i tre cristalli, e quello esposto e' acceso del colore giusto */
+      const colChi = this.chi === 'lyra' ? '#ff5d8f' : '#22c8f5';
+      for (let i = 0; i < 3; i++) {
+        const acceso = i < q;
+        const espo = acceso && i === q - 1;
+        const ax2 = (i - 1) * 30, ay2 = 22;
+        if (espo) Gfx.light(ctx, ax2, ay2, 30, colChi, 0.55 + Math.sin(this.t * 6) * 0.2);
+        ctx.fillStyle = acceso ? (espo ? colChi : '#ffc247') : '#2a2140';
+        ctx.beginPath();
+        ctx.moveTo(ax2, ay2 - 13); ctx.lineTo(ax2 + 10, ay2);
+        ctx.lineTo(ax2, ay2 + 13); ctx.lineTo(ax2 - 10, ay2);
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+      }
+
+      /* quanto si e' caricato coi tuoi colpi: un anello che si chiude */
+      if (this.carica > 4) {
+        ctx.save();
+        ctx.globalAlpha = 0.55 + (this.carica / 100) * 0.4;
+        ctx.strokeStyle = '#ffc247'; ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(0, -8, 72, -Math.PI / 2, -Math.PI / 2 + (this.carica / 100) * TAU);
+        ctx.stroke();
+        ctx.restore();
+      }
+      ctx.restore();
+
+    } else if (this.type === 'silente') {
+      /* I Silenti: sagome umane allungate, senza volto e senza vestiti.
+         Viola-nere e un po' trasparenti, col contorno che prende luce. */
+      ctx.save();
+      if (this.giu) { ctx.translate(0, 14); ctx.rotate(0.5); ctx.globalAlpha = 0.55; }
+      else ctx.globalAlpha = 0.9;
+      ctx.lineWidth = 2.4; ctx.strokeStyle = '#7a3fd6'; ctx.lineJoin = 'round';
+      ctx.fillStyle = '#1b1033';
+      /* braccia lunghe */
+      roundRect(ctx, -17, -8, 8, 34, 4); ctx.fill(); ctx.stroke();
+      roundRect(ctx, 9, -8, 8, 34, 4); ctx.fill(); ctx.stroke();
+      /* corpo: spalle strette */
+      ctx.beginPath();
+      ctx.moveTo(-9, -14); ctx.lineTo(9, -14); ctx.lineTo(12, 26);
+      ctx.lineTo(-12, 26);
+      ctx.closePath(); ctx.fill(); ctx.stroke();
+      /* testa piccola, niente faccia */
+      ctx.beginPath(); ctx.ellipse(0, -22, 7.5, 9, 0, 0, TAU); ctx.fill(); ctx.stroke();
       ctx.restore();
 
     } else if (this.type === 'boss') {

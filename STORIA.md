@@ -1020,7 +1020,7 @@ settori (vedi *Il compagno scomodo*, capitolo 4).
 Ampere non ce l'hai. La corrente **te la tieni addosso** (vedi capitolo 2), con
 la barra verde in alto che si riempie e ogni tanto scarica da sola.
 
-#### Fase 4 · IL CONDENSATORE — settore 56
+#### Fase 4 · IL CONDENSATORE — settore 56 **[GIOCO]** *(dalla versione 100)*
 Lo raggiungi. È enorme, ha tre cristalli gialli nel petto e **al centro, come un
 reattore, c'è Ampere**.
 
@@ -1268,7 +1268,7 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
 
 ---
 
-## 10. Cos'è vero oggi nel gioco (versione 96)
+## 10. Cos'è vero oggi nel gioco (versione 100)
 
 - Campagna di **20 settori**, Comandanti a 5-10-15, il Divoratore al 20, punti
   di ripresa dopo ogni Comandante.
@@ -1454,10 +1454,35 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
   - Tre per settore. L'altezza sullo schermo è **calcolata sulla vista, non sul
     mondo**: col telefono coricato la vista è alta meno della metà, e una sagoma
     messa sette caselle sopra il suolo finirebbe fuori dall'inquadratura.
-- Oltre il 55 il gioco **si ferma e lo dice**, invece di far finta: schermata
+- **SETTORE 56: il Condensatore, e i quattro Silenti.** È l'unico scontro del
+  gioco che non si vince sparando, e la regola sta in una frase:
+  **ogni colpo lo carica**.
+  - **ECHO-1** è un colosso senza volto: massa scura squadrata, **tre cristalli
+    gialli** sul petto e in mezzo, incastonata come un reattore, **AMPERE** —
+    che si vede verde attraverso il vetro. La barra in alto non conta la vita:
+    **conta i cristalli**.
+  - **Sparargli addosso non fa danno: gli riempie il serbatoio.** Un anello
+    giallo gli si chiude intorno man mano, e quando è pieno **si scarica** e ti
+    ridà tutto in faccia.
+  - **L'unica cosa che gli leva un cristallo** è colpire **quello esposto** con
+    il **Custode giusto**: il cristallo **ciano vuole Aren**, quello **corallo
+    vuole Lyra**. Ogni sei-nove secondi cambia, e tocca cambiare anche a te.
+    **È il motivo per cui il cambio esiste dal settore 21**, e qui viene
+    presentato il conto.
+  - **I quattro Silenti** sono lì dall'inizio. Non sparano: camminano addosso e
+    con le braccia lunghe **ti tengono fermo** un istante. E **a ogni cristallo
+    che si spegne uno di loro cade in ginocchio**: quanti ne restano in piedi
+    dice quanti cristalli mancano, e non serve spiegarlo a nessuno.
+  - **Quando l'ultimo cristallo si spegne**, ECHO-1 si accascia, i **quattro
+    Silenti si rimettono in piedi tutti insieme** e smettono di attaccare, e
+    **la corrente che ti sei portato addosso si svuota dentro Ampere in un colpo
+    solo** — con scritto quanta ne è entrata.
+  - E all'uscita parte **`il_reattore`**.
+- Oltre il 56 il gioco **si ferma e lo dice**, invece di far finta: schermata
   «fine di questo tratto». Il confine si sposta man mano che costruiamo.
 
-**Manca la fine dell'atto II**, cioè i settori **56-65**:
+**Manca la fine dell'atto II**, cioè i settori **57-65**: la salita sulla
+Caldera in 2,5D, la cima in soggettiva, OHM, Ampere rovesciata, e
 il tradimento di ECHO-1, Eclissia, la barra della corrente addosso, i Silenti,
 il reattore, la salita in 2,5D, la cima in soggettiva, OHM, Ampere rovesciata e
 i filmati che restano.

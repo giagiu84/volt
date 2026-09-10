@@ -13,14 +13,16 @@ const CAMPAIGN_END = 65;      /* la fine vera del gioco: la Caldera */
 /* Fin dove arriva quello che e' costruito davvero. Si alza mano a mano che
    l'atto II viene programmato: oltre questo settore il gioco si ferma e lo
    dice, invece di far finta. */
-const SETTORI_PRONTI = 55;
+const SETTORI_PRONTI = 56;
 /* Dal 31 al 35 Ampere e' dei Custodi: gliel'hanno strappata a ECHO-0 e se la
    portano dietro, e va riempita di Corrente Verde. Al 35 gliela porta via
    ECHO-1, e da li' in poi la corrente si tiene addosso. */
 const AMPERE_DA = 31, AMPERE_A = 35;
 /* E dal 36 al 55 non c'e' piu' niente in cui metterla: la corrente si tiene
    addosso. Piena e' pericolosa, e ogni tanto scappa da sola. */
-const CORRENTE_DA = 36, CORRENTE_A = 55;
+/* Fino al 56 compreso: la barra deve essere ancora li' quando la corrente si
+   svuota dentro Ampere, se no il momento non si vede. */
+const CORRENTE_DA = 36, CORRENTE_A = 56;
 const CORRENTE_MAX = 100;
 /* I poteri che ECHO-0 sa copiare: sono quelli che si vedono addosso a lui e
    sui suoi colpi. Rubarne uno che non si nota non servirebbe a niente. */
@@ -531,6 +533,131 @@ const Game = {
     }
   },
 
+  /* ---------------- SETTORE 56: il Condensatore ----------------
+
+     La regola dello scontro, e sta tutta in una frase: **ogni colpo lo
+     carica**. Sparargli addosso non fa danno, gli riempie il serbatoio — e
+     quando e' pieno te lo restituisce tutto in faccia.
+
+     L'unica cosa che gli leva un cristallo e' colpire **quello esposto** col
+     **Custode giusto**: il cristallo ciano vuole Aren, quello corallo vuole
+     Lyra. Ogni sei-nove secondi cambia, e tocca cambiare anche a te. E' il
+     motivo per cui il cambio esiste dal settore 21. */
+  echo1Vivo() {
+    const e = this.enemies.find(x => x.type === 'echo1' && !x.dead);
+    return !!(e && e.cristalli > 0);
+  },
+
+  echo1Colpito(e, dmg, fromX) {
+    if (e.cristalli <= 0) return;
+    /* il cristallo esposto sta sul petto, sopra la meta' del corpo */
+    const p = this.player;
+    const suCristallo = p && Math.abs(p.cy - (e.cy - 18)) < 90;
+    const giusto = this.hero === e.chi;
+
+    if (suCristallo && giusto) {
+      e.colpiCristallo += dmg;
+      e.flash = 0.14;
+      Particles.burst(e.cx, e.cy - 18, 8, this.hero === 'aren' ? '#22c8f5' : '#ff5d8f', 200, 3.5, 0);
+      Sfx.tone(700, 0.06, 'square', 0.05, 200);
+      if (e.colpiCristallo >= 14) this.echo1Cristallo(e);
+      return;
+    }
+    /* tutto il resto lo carica, e il gioco lo dice subito */
+    e.carica = Math.min(100, e.carica + dmg * 2.4);
+    if (!e._avviso || this.sectorTime - e._avviso > 2.4) {
+      e._avviso = this.sectorTime;
+      Floaters.add(e.cx, e.cy - 60,
+        giusto ? 'NON LI' : 'SERVE ' + (HEROES[e.chi] || HEROES.aren).name, '#ffc247', 15);
+    }
+    Particles.burst(e.cx, e.cy, 5, '#ffc247', 150, 3, 0);
+  },
+
+  /* un cristallo si spegne, e con lui va giu' un Silente */
+  echo1Cristallo(e) {
+    e.cristalli--;
+    e.colpiCristallo = 0;
+    e.carica = Math.max(0, e.carica - 30);
+    e.espostoT = 6.5;
+    e.chi = e.chi === 'aren' ? 'lyra' : 'aren';
+    this.hitStop = 0.22;
+    this.shake(22, 0.5);
+    this.flashT = 0.3;
+    Rings.add(e.cx, e.cy - 18, '#ffc247', 240, 0.7, 8);
+    Particles.burst(e.cx, e.cy - 18, 34, '#ffc247', 320, 5, 0);
+    Sfx.tone(160, 0.5, 'sawtooth', 0.08, 1200);
+
+    /* e uno dei Silenti cade: quanti ne restano in piedi dice quanti
+       cristalli mancano, e non serve spiegarlo a nessuno */
+    const s = this.enemies.find(x => x.type === 'silente' && !x.giu && !x.dead);
+    if (s) { s.giu = true; s.giuT = 1e9; s.vy = -260; Rings.add(s.cx, s.cy, '#7a3fd6', 120, 0.5, 5); }
+
+    if (e.cristalli > 0) {
+      this.banner('UN CRISTALLO IN MENO', 'targa');
+    } else {
+      this.echo1Cade(e);
+    }
+  },
+
+  /* pieno: ti ridà tutto quello che gli hai sparato */
+  echo1Ondata(e) {
+    this.banner('SI SCARICA', 'targa');
+    this.shake(26, 0.6);
+    this.flashT = 0.35;
+    Rings.add(e.cx, e.cy, '#ffc247', 420, 0.9, 10);
+    Particles.burst(e.cx, e.cy, 54, '#ffc247', 380, 6, 0);
+    Sfx.tone(90, 0.7, 'sawtooth', 0.09, 1800);
+    const p = this.player;
+    if (p && !p.dead && dist2(p.cx, p.cy, e.cx, e.cy) < 340 * 340) p.hurt(1);
+  },
+
+  /* il colpo pesante ravvicinato: lento, si vede arrivare */
+  echo1Colpo(e, p) {
+    Rings.add(e.cx + e.dir * 70, e.cy + 30, '#7a3fd6', 170, 0.5, 7);
+    Sfx.tone(130, 0.3, 'sawtooth', 0.06, 700);
+    setTimeout(() => {
+      if (this.state !== 'play' || e.dead || !this.player) return;
+      const q = this.player;
+      if (Math.abs(q.cx - (e.cx + e.dir * 70)) < 78 && Math.abs(q.cy - (e.cy + 30)) < 70) q.hurt(1);
+      Particles.burst(e.cx + e.dir * 70, e.cy + 40, 20, '#7a3fd6', 240, 5, 60);
+      this.shake(14, 0.3);
+    }, 620);
+  },
+
+  /* Cade. Ampere esce dal petto, e tutta la corrente che ti sei portato
+     addosso per venti settori le entra dentro in un colpo solo. */
+  echo1Cade(e) {
+    this.banner('AMPERE', 'nome');
+    this.hitStop = 0.5;
+    this.shake(34, 0.9);
+    this.flashT = 0.5;
+    Rings.add(e.cx, e.cy, '#5effa8', 460, 1.1, 11);
+    Particles.burst(e.cx, e.cy - 20, 70, '#5effa8', 420, 7, -30);
+    Sfx.tone(120, 0.9, 'sawtooth', 0.09, 2000);
+    [523, 659, 784, 1046].forEach((f, i) => setTimeout(() => Sfx.tone(f, 0.45, 'triangle', 0.09), i * 190));
+
+    /* i quattro Silenti si rimettono in piedi tutti insieme, e si voltano
+       verso i Custodi. Non attaccano piu'. */
+    for (const s of this.enemies) {
+      if (s.type !== 'silente') continue;
+      s.giu = false; s.giuT = 0; s.fermo = true; s.hp = s.maxHp;
+      Rings.add(s.cx, s.cy, '#5effa8', 130, 0.6, 6);
+    }
+
+    /* e la corrente addosso si svuota dentro il vetro */
+    const presa = Math.round(this.corrente);
+    this.corrente = 0;
+    setTimeout(() => {
+      if (this.state !== 'play' || !this.player) return;
+      Floaters.add(this.player.cx, this.player.y - 46,
+        presa > 0 ? presa + '% DENTRO AMPERE' : 'AMPERE È VUOTA', '#5effa8', 17);
+    }, 900);
+
+    this.addScore(e.score);
+    this.missionDone = true;
+    if (!this.portalOn) this.openPortal();
+  },
+
   /* Settore 35. Non l'hai ucciso: l'hai fermato. Da qui in poi non si puo'
      piu' colpire, il settore e' finito, e quello che succede dopo — la mano
      che esce dal buio e vi strappa Ampere — lo racconta il filmato. */
@@ -654,9 +781,9 @@ const Game = {
        fermato il gioco: quando SETTORI_PRONTI si sposta, questa frase si
        riscrive insieme a lui. */
     document.getElementById('winText').textContent =
-      'Hai attraversato ECLISSIA tutta, con la corrente addosso e ECHO-0 ' +
-      'davanti che non si capisce da che parte sta. Di là c’è ECHO-1, e poi ' +
-      'la Caldera: li stiamo costruendo, torna a vedere.';
+      'ECHO-1 è caduto e Ampere è di nuovo vostra, piena di venti settori di ' +
+      'corrente. Resta la salita sulla Caldera e quello che vi aspetta in ' +
+      'cima: lo stiamo costruendo, torna a vedere.';
     document.getElementById('winScore').textContent = this.score;
     document.getElementById('winKills').textContent = this.kills;
     document.getElementById('winRank').textContent =
@@ -905,7 +1032,7 @@ const Game = {
     const finale = this.mode === 'campaign' && n === ATTO1_FINE;
     /* Un nome proprio si scrive col lettering grosso, una missione con la
        targa: «IL DIVORATORE» e «ECHO-0» sono nomi, «CACCIA» e «ASSALTO» no. */
-    const eNome = lv.boss || this.mission.type === 'echo';
+    const eNome = lv.boss || this.mission.type === 'echo' || this.mission.type === 'echo1';
     this.banner(lv.boss ? this.bossName() : missionName(this.mission.type),
                 eNome ? 'nome' : 'targa');
     if (!lv.boss && n > 1 && n % 2 === 0) setTimeout(() => {
@@ -2613,6 +2740,7 @@ const Game = {
      nei settori della caccia la missione e' un'altra, ma quello che ti sta
      addosso e' lui. */
   bossName(chi) {
+    if (chi && chi.type === 'echo1') return 'ECHO-1';
     if (chi && chi.type === 'echo') return 'ECHO-0';
     if (this.mission && this.mission.type === 'echo') return 'ECHO-0';
     if (this.mode === 'campaign') {
@@ -2625,10 +2753,13 @@ const Game = {
   },
 
   drawBossBar(ctx) {
-    const boss = this.enemies.find(e => (e.type === 'boss' || e.type === 'echo') && !e.dead && e.awake);
+    const boss = this.enemies.find(e => (e.type === 'boss' || e.type === 'echo' || e.type === 'echo1') && !e.dead && e.awake);
     if (!boss) return;
     const w = Math.min(this.viewW * 0.66, 400), x = (this.viewW - w) / 2, y = 100;
-    const frac = clamp(boss.hp / boss.maxHp, 0, 1);
+    /* Per ECHO-1 la vita non vuol dire niente: la barra conta i cristalli. */
+    const frac = boss.type === 'echo1'
+      ? clamp((boss.cristalli === undefined ? 3 : boss.cristalli) / 3, 0, 1)
+      : clamp(boss.hp / boss.maxHp, 0, 1);
     ctx.save();
     ctx.fillStyle = 'rgba(24,18,50,.5)';
     roundRect(ctx, x - 5, y - 5, w + 10, 20, 10); ctx.fill();

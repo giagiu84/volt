@@ -76,6 +76,10 @@ const THEME_FRATTURA = {
    arriva radente e non scalda niente. I colori sono presi dal dipinto: indaco,
    prugna, e la roccia che ha perso il colore. */
 const ECLISSIA_DA = 36, ECLISSIA_A = 55;
+/* Il settore del Condensatore. E' ancora Eclissia a vedersi, ma non e' un
+   settore come gli altri: niente leggi, niente mostri comuni, un'arena e
+   basta. */
+const ECHO1_SETTORE = 56;
 
 const THEME_ECLISSIA = {
   name: 'ECLISSIA', eclissia: true, sfondo: 'eclissia',
@@ -102,7 +106,8 @@ const MISSIONS = {
   assault: { name: 'ASSALTO',      hint: 'Respingi le ondate' },
   escape:  { name: 'FUGA',         hint: 'Corri al portale, la tempesta avanza' },
   boss:    { name: 'BOSS',         hint: 'Abbatti il boss' },
-  echo:    { name: 'ECHO-0',       hint: 'Non lo puoi uccidere: puoi solo stancarlo' }
+  echo:    { name: 'ECHO-0',       hint: 'Non lo puoi uccidere: puoi solo stancarlo' },
+  echo1:   { name: 'ECHO-1',       hint: 'Ogni colpo lo carica. Cambia Custode e colpisci il cristallo acceso' }
 };
 
 /* ---------- le leggi della Frattura ----------
@@ -134,6 +139,8 @@ function lawFor(n, mode, missionType) {
   /* In Eclissia le leggi non sono un effetto speciale: sono il clima del posto.
      Ogni tre settori il mondo cambia regola, e il conto riparte dal 36 — i
      primi tre servono a prendere le misure, come nel Circuito Aperto. */
+  /* nel settore del Condensatore non c'e' legge: lo scontro e' gia' la regola */
+  if (n === ECHO1_SETTORE) return null;
   const eclissia = mode === 'campaign' && n >= ECLISSIA_DA && n <= ECLISSIA_A;
   if (mode !== 'endless' && !eclissia) return null;   /* i primi 35 restano com'e' */
   const base = eclissia ? ECLISSIA_DA : 1;
@@ -167,7 +174,8 @@ function missionName(type) {
 function generateLevel(n) {
   const rng = makeRng(0x9e37 + n * 2654435761);
   const dentroLaFrattura = n >= FRATTURA_DA && n <= FRATTURA_A;
-  const dentroEclissia = n >= ECLISSIA_DA && n <= ECLISSIA_A;
+  const scontroEcho1 = n === ECHO1_SETTORE;
+  const dentroEclissia = (n >= ECLISSIA_DA && n <= ECLISSIA_A) || scontroEcho1;
   /* Nei primi venti settori il ritmo e' il Comandante ogni cinque. Dentro la
      Frattura quel ritmo si spegne e ne subentra un altro, che e' quello di
      ECHO-0: appuntamento al 24, al 27 e al 30, inseguimento in mezzo. Due
@@ -181,7 +189,7 @@ function generateLevel(n) {
               : dentroEclissia ? THEME_ECLISSIA
               : THEMES[Math.floor((n - 1) / 5) % THEMES.length];
   /* l'arena di ECHO-0 e' corta: lui si sposta in fretta, non serve spazio */
-  const w = boss ? 58 : (scontroEcho ? 76 : Math.min(64 + n * 5, 190));
+  const w = boss ? 58 : (scontroEcho || scontroEcho1 ? 76 : Math.min(64 + n * 5, 190));
   const h = LEVEL_H;
   const tiles = new Uint8Array(w * h);
   const at = (x, y) => (y * w + x);
@@ -280,7 +288,8 @@ function generateLevel(n) {
 
   /* --- missione del settore --- */
   let mission;
-  if (scontroEcho) mission = { type: 'echo' };
+  if (scontroEcho1) mission = { type: 'echo1' };
+  else if (scontroEcho) mission = { type: 'echo' };
   else if (boss) mission = { type: 'boss' };
   else if (n <= 2) mission = { type: 'hunt' };
   else {
@@ -388,7 +397,23 @@ function generateLevel(n) {
     }
   }
 
-  if (scontroEcho) {
+  if (scontroEcho1) {
+    /* L'arena del Condensatore: lui in fondo, i quattro Silenti in mezzo. E
+       nient'altro — qui non c'e' fauna, c'e' uno scontro. */
+    const ex = w - 20;
+    const gy4 = groundY[ex] > 0 ? groundY[ex] : 16;
+    spawns.push({ type: 'echo1', x: ex * TILE, y: (gy4 - 5) * TILE });
+    /* Quattro, e quattro devono essere: il loro numero e' l'informazione.
+       Se il punto scelto e' sopra un burrone si cerca la terra piu' vicina. */
+    for (let i = 0; i < 4; i++) {
+      let sx = Math.round(w * (0.40 + i * 0.11));
+      for (let d = 0; d < 14 && (groundY[sx] < 0 || sx < 6 || sx > w - 4); d++)
+        sx = Math.round(w * (0.40 + i * 0.11)) + (d % 2 ? d : -d);
+      if (groundY[sx] < 0) sx = Math.round(w * 0.5);
+      if (groundY[sx] < 0) continue;
+      spawns.push({ type: 'silente', x: sx * TILE, y: (groundY[sx] - 2) * TILE });
+    }
+  } else if (scontroEcho) {
     /* lui sta in fondo, e la sua scorta e' poca: e' uno scontro, non un assedio */
     const ex = w - 18;
     spawns.push({ type: 'echo', x: ex * TILE, y: (Math.max(6, (groundY[ex] > 0 ? groundY[ex] : 16) - 7)) * TILE,
