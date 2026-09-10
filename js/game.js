@@ -13,7 +13,7 @@ const CAMPAIGN_END = 65;      /* la fine vera del gioco: la Caldera */
 /* Fin dove arriva quello che e' costruito davvero. Si alza mano a mano che
    l'atto II viene programmato: oltre questo settore il gioco si ferma e lo
    dice, invece di far finta. */
-const SETTORI_PRONTI = 30;
+const SETTORI_PRONTI = 34;
 /* Dal 31 al 35 Ampere e' dei Custodi: gliel'hanno strappata a ECHO-0 e se la
    portano dietro, e va riempita di Corrente Verde. Al 35 gliela porta via
    ECHO-1, e da li' in poi la corrente si tiene addosso. */
@@ -110,7 +110,7 @@ const Game = {
   perks: {}, pendingLevel: 0, shieldGenT: 0, drone: null,
   mode: 'campaign', progress: Store.get('volt_progress', { cleared: false, cp: null }),
   law: null, lawDef: null, platsOff: false, platT: 0, meteorT: 0, stormOn: false,
-  ampere: null, cariche: [], cella: null, vign: [],
+  ampere: null, cariche: [], cella: null, vign: [], cacciaT: 0,
   furto: null, blackT: 0, blackNext: 0,
   canSwap: false, swapCd: 0,
   rubato: null, echiVia: false,
@@ -452,11 +452,36 @@ const Game = {
     }, 1900);
   },
 
+  /* Ci e' arrivato. Non ti toglie vite: ti toglie la corrente che hai
+     raccolto, ed e' peggio — quella l'hai guadagnata tu, un pezzo alla volta. */
+  echoRubaCorrente(e, amp) {
+    const preso = Math.min(amp.charge, 22);
+    amp.charge = Math.max(0, amp.charge - preso);
+    amp.alarm = 1;
+    /* la lanterna viene sbalzata via, e ci mette un attimo a tornare */
+    amp.x += (amp.x - e.cx) * 0.8;
+    amp.y -= 26;
+    Rings.add(amp.x, amp.y, '#ff8a3d', 150, 0.5, 7);
+    Particles.burst(amp.x, amp.y, 22, '#5effa8', 260, 5, 40);
+    Floaters.add(amp.x, amp.y - 26, preso > 0 ? '−' + Math.round(preso) + ' CORRENTE' : 'È VUOTA',
+                 '#ff8a3d', 15);
+    this.shake(16, 0.3);
+    Sfx.tone(150, 0.3, 'sawtooth', 0.06, 900);
+  },
+
   /* Sotto un quarto di vita smette di combattere: non lo hai ucciso, lo hai
      stancato. E si porta via l'unica cosa che gli importa.
      Al terzo appuntamento pero' la fuga non gli riesce: e' li' che gli si
      strappa Ampere di mano, ed e' la fine della caccia. */
   echoInFuga(e) {
+    /* nei settori della caccia non c'e' un ultimo scontro: se ne va e basta,
+       e lo ritrovi nel settore dopo */
+    if (e.caccia) {
+      this.banner('TORNERÒ', 'voce', e);
+      Rings.add(e.cx + 60, e.cy, '#b06bff', 200, 0.8, 8);
+      Sfx.tone(140, 0.5, 'sawtooth', 0.07, 1200);
+      return;
+    }
     const ultimo = e.tier >= 3;
     this.banner(ultimo ? 'STAVOLTA NO' : 'CI VEDIAMO PIÙ AVANTI', 'voce', e);
     Rings.add(e.cx + 60, e.cy, ultimo ? '#5effa8' : '#b06bff', 200, 0.8, 8);
@@ -467,6 +492,13 @@ const Game = {
     e.dead = true;
     this.echiVia = true;
     this.addScore(e.score);
+    if (e.caccia) {
+      /* non aveva rubato poteri: era venuto per la lanterna */
+      Particles.burst(e.cx, e.cy, 46, '#b06bff', 340, 6, 0);
+      Rings.add(e.cx, e.cy, '#ffffff', 150, 0.5, 7);
+      Sfx.kill();
+      return;
+    }
     Particles.burst(e.cx, e.cy, 46, '#b06bff', 340, 6, 0);
     Rings.add(e.cx, e.cy, '#ffffff', 150, 0.5, 7);
     const ultimo = e.tier >= 3;
@@ -524,8 +556,8 @@ const Game = {
        riscrive insieme a lui. */
     document.getElementById('winText').textContent =
       'Hai attraversato la Frattura fino al settore ' + SETTORI_PRONTI +
-      ', e Ampere è tornata nelle vostre mani. Adesso la caccia si rovescia: ' +
-      'sarà ECHO-0 a inseguire voi. I settori li stiamo costruendo — torna a vedere.';
+      ', con Ampere in mano e ECHO-0 alle calcagna. Manca lo scontro del 35, ' +
+      'quello in cui arriva qualcosa di più grande di lui. Lo stiamo costruendo.';
     document.getElementById('winScore').textContent = this.score;
     document.getElementById('winKills').textContent = this.kills;
     document.getElementById('winRank').textContent =
@@ -670,6 +702,10 @@ const Game = {
         e.baseSpeed *= 0.82; e.speed = e.baseSpeed;
       }
     }
+
+    /* La caccia al contrario: ECHO-0 non c'e' all'inizio del settore, arriva
+       mentre stai giocando. Aspettare che entri e' meta' della tensione. */
+    this.cacciaT = lv.caccia ? 9 + Math.random() * 6 : 0;
 
     /* ECHO-0: appena il settore comincia, il furto e' gia' deciso */
     this.rubato = null; this.echiVia = false;
@@ -1243,6 +1279,28 @@ const Game = {
       }
     }
 
+    /* L'arrivo di ECHO-0 nei settori della caccia. Entra dal bordo, in alto,
+       dalla parte da cui stai andando: te lo trovi davanti. */
+    if (this.cacciaT > 0 && !p.dead) {
+      this.cacciaT -= dt;
+      if (this.cacciaT <= 0) {
+        this.cacciaT = 0;
+        const ex = clamp(p.cx + this.viewW * 0.75, 60, lv.pxW - 80);
+        const e = new Enemy('echo', ex, Math.max(60, p.cy - 150), this.level, 2);
+        e.caccia = true;
+        e.state = 0; e.stateT = 1.8; e.awake = true;
+        this.enemies.push(e);
+        this._echo = e;
+        Rings.add(e.cx, e.cy, '#b06bff', 220, 0.7, 8);
+        Sfx.boss();
+        this.banner('ECHO-0', 'nome');
+        setTimeout(() => {
+          if (this.state !== 'play' || e.dead) return;
+          this.banner('QUELLA LUCE NON È VOSTRA', 'voce', e);
+        }, 2400);
+      }
+    }
+
     /* le vignette aperte */
     for (let i = this.vign.length - 1; i >= 0; i--) {
       this.vign[i].t += dt;
@@ -1326,7 +1384,10 @@ const Game = {
       }
     }
 
-    this.enemiesLeft = this.enemies.length;
+    /* ECHO-0 quando da' la caccia non conta come mostro: non si puo' uccidere
+       e non e' l'obiettivo del settore. Se contasse, una CACCIA non si potrebbe
+       chiudere finche' lui non se ne va da solo. */
+    this.enemiesLeft = this.enemies.filter(e => !e.caccia).length;
     this.updateMission(dt);
 
     /* proiettili */
@@ -2320,7 +2381,11 @@ const Game = {
 
   /* Ogni Comandante prende il nome dall'area che presidia: e' quello che il
      gioco mostra gia', visto che il paesaggio cambia ogni cinque settori. */
-  bossName() {
+  /* Il nome sopra la barra. Chi c'e' davvero conta piu' del numero del settore:
+     nei settori della caccia la missione e' un'altra, ma quello che ti sta
+     addosso e' lui. */
+  bossName(chi) {
+    if (chi && chi.type === 'echo') return 'ECHO-0';
     if (this.mission && this.mission.type === 'echo') return 'ECHO-0';
     if (this.mode === 'campaign') {
       if (this.level === ATTO1_FINE) return 'IL DIVORATORE';
@@ -2347,7 +2412,7 @@ const Game = {
     if (w * frac > 10) Gfx.gloss(ctx, x + 3, y + 1.5, w * frac - 6, 3, 0.45);
     ctx.fillStyle = 'rgba(255,255,255,.92)';
     ctx.font = '800 11px Nunito, system-ui, sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText(this.bossName(), this.viewW / 2, y - 10);
+    ctx.fillText(this.bossName(boss), this.viewW / 2, y - 10);
     ctx.restore();
   },
 

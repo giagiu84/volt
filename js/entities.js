@@ -1118,6 +1118,7 @@ class Enemy {
     this.flash = 0; this.dead = false; this.stun = 0;
     this.cool = 0.8 + Math.random(); this.state = 0; this.stateT = 0;
     this.tier = tier || 1;
+    this.rinculo = 0;
     this.phase = 0;
     this.awake = false; this.hunting = false; this.jumped = false;
     this.baseSpeed = this.speed; this.slow = 0;
@@ -1363,6 +1364,10 @@ class Enemy {
     const R = Game.rubato;
     this.stateT -= dt;
 
+    /* Quando da' la caccia non combatte per vincere: combatte per arrivare
+       alla lanterna. E' un'altra creatura, e si deve sentire. */
+    if (this.caccia) { this.updateEchoCaccia(dt, lv, player); return; }
+
     /* --- fuga: sotto un quarto di vita non combatte piu' --- */
     if (this.state !== 9 && this.hp <= this.maxHp * 0.25) {
       this.state = 9; this.stateT = 1.6;
@@ -1443,6 +1448,72 @@ class Enemy {
         }
         Sfx.tone(300, 0.1, 'square', 0.05, 120);
       }
+    }
+  }
+
+  /* La caccia al contrario, settori 31-34. Non gli interessi tu: punta dritto
+     ad AMPERE, e se la raggiunge le porta via un pezzo di corrente. Non si
+     uccide — si respinge. Quando ha preso abbastanza, o quando l'hai stancato
+     abbastanza, se ne va e lo ritrovi nel settore dopo. */
+  updateEchoCaccia(dt, lv, player) {
+    const amp = Game.ampere;
+    this.cacciaT = (this.cacciaT || 0) + dt;
+
+    /* fuga: quando l'hai stancato, o quando ha preso quello che voleva */
+    if (this.state !== 9 && (this.hp <= this.maxHp * 0.45 || this.cacciaT > 26)) {
+      this.state = 9; this.stateT = 1.4;
+      this.vx = 0; this.vy = 0;
+      Game.echoInFuga(this);
+    }
+    if (this.state === 9) {
+      this.vx = approach(this.vx, 90, 400 * dt);
+      this.vy = approach(this.vy, -40, 400 * dt);
+      this.x += this.vx * dt; this.y += this.vy * dt;
+      if (Math.random() < 0.6)
+        Particles.spawn(this.cx + (Math.random() - 0.5) * 40, this.cy + (Math.random() - 0.5) * 50,
+          0, -40, 0.4, 4, '#b06bff', 0, 1);
+      if (this.stateT <= 0) Game.echoVia(this);
+      return;
+    }
+
+    /* entrata: un paio di secondi in cui si fa vedere arrivare */
+    if (this.state === 0) {
+      this.vy = approach(this.vy, Math.sin(this.t * 2) * 40, 300 * dt);
+      this.vx = approach(this.vx, -40, 300 * dt);
+      this.x += this.vx * dt; this.y += this.vy * dt;
+      if (this.stateT <= 0) { this.state = 1; this.stateT = 0; }
+      return;
+    }
+
+    /* il bersaglio e' la lanterna, non il custode */
+    const bx = amp ? amp.x : player.cx;
+    const by = amp ? amp.y : player.cy;
+    const ax = bx - this.cx, ay = by - this.cy;
+    const d = Math.hypot(ax, ay) || 1;
+
+    /* dopo un colpo rimbalza indietro e si riprende */
+    if (this.rinculo > 0) {
+      this.rinculo -= dt;
+      this.vx = approach(this.vx, -(ax / d) * 260, 900 * dt);
+      this.vy = approach(this.vy, -(ay / d) * 200, 900 * dt);
+    } else {
+      /* piomba addosso alla lanterna, e piu' e' vicino piu' accelera */
+      const fretta = 1 + clamp((360 - d) / 360, 0, 1) * 1.4;
+      this.vx = approach(this.vx, (ax / d) * this.speed * fretta, 1000 * dt);
+      this.vy = approach(this.vy, (ay / d) * this.speed * 0.7 * fretta + Math.sin(this.t * 3) * 40, 1000 * dt);
+    }
+
+    this.x += this.vx * dt; this.y += this.vy * dt;
+    if (lv.solidAt(this.cx, this.y + this.h)) { this.y -= this.vy * dt; this.vy = -140; }
+    if (lv.solidAt(this.cx, this.y)) { this.y -= this.vy * dt; this.vy = 140; }
+    this.x = clamp(this.x, 20, lv.pxW - this.w - 20);
+    this.y = clamp(this.y, 40, lv.pxH - 120);
+    this.dir = sign(ax) || this.dir;
+
+    /* ci e' arrivato: le strappa un sorso di corrente */
+    if (amp && this.rinculo <= 0 && d < 46) {
+      Game.echoRubaCorrente(this, amp);
+      this.rinculo = 1.5;
     }
   }
 

@@ -1248,7 +1248,7 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
 
 ---
 
-## 10. Cos'è vero oggi nel gioco (versione 58)
+## 10. Cos'è vero oggi nel gioco (versione 79)
 
 - Campagna di **20 settori**, Comandanti a 5-10-15, il Divoratore al 20, punti
   di ripresa dopo ogni Comandante.
@@ -1339,12 +1339,39 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
 - **E subito dopo parte `ampere_torna`**, il filmato dello strappo. Il tratto
   giocabile si chiude **dopo** il filmato, non prima: la caccia non si ferma un
   attimo prima del momento per cui l'hai fatta.
-- Oltre il 30 il gioco **si ferma e lo dice**, invece di far finta: schermata
-  «fine di questo tratto», e la frase dice che adesso la caccia si rovescia. Il
-  confine si sposta man mano che costruiamo.
+- **Settori 31-34: la caccia al contrario, e il gioco si rovescia davvero.**
+  - **AMPERE è tua.** Galleggia dietro le spalle, illumina, si riempie di
+    Corrente Verde — quella sparsa nei settori e quella che lasciano i mostri
+    cadendo — e quando è piena **scarica da sola**, con un filo verde che salta
+    di mostro in mostro. La carica **resta da un settore all'altro**: quello che
+    hai raccolto al 31 te lo porti al 34.
+  - **ECHO-0 non ti aspetta alla fine del settore: arriva mentre giochi.** Fra i
+    nove e i quindici secondi dall'inizio, dal bordo, in alto, dalla parte in
+    cui stai andando. Entra col suo nome e con una battuta: **«QUELLA LUCE NON È
+    VOSTRA»**.
+  - **E non punta a te: punta alla lanterna.** Ignora i colpi, ignora dove ti
+    metti, piomba su Ampere — e più le è vicino più accelera. Quando la
+    raggiunge le strappa **ventidue punti di corrente**, la lanterna viene
+    sbalzata via e lui rimbalza indietro. Poi ci riprova.
+  - **Non si uccide: si respinge.** Se lo porti sotto metà vita, o se resiste
+    ventisei secondi, se ne va — **«TORNERÒ»** — e lo ritrovi nel settore dopo.
+  - **Non conta come mostro**: la missione del settore resta quella che è, e si
+    può chiudere anche mentre lui è lì.
 
-**Manca la seconda metà dell'atto II**, cioè i settori **31-65**: la caccia al
-contrario dei settori 31-35,
+  **Come si sente.** Se lo ignori ti svuota la lanterna in una quindicina di
+  secondi. Se lo affronti ne perdi la metà e lo mandi via in dieci. È il primo
+  scontro del gioco in cui **non si difende la propria vita: si difende una
+  cosa**.
+
+  **E una regola di composizione:** in questi quattro settori **non c'è mai la
+  missione di FUGA**. Con un muro di tempesta alle spalle o lo semini correndo o
+  se lo mangia il muro — due inseguitori insieme non fanno il doppio della
+  tensione, se la tolgono a vicenda.
+- Oltre il 34 il gioco **si ferma e lo dice**, invece di far finta: schermata
+  «fine di questo tratto». Il confine si sposta man mano che costruiamo.
+
+**Manca la seconda metà dell'atto II**, cioè i settori **35-65**: lo scontro
+del 35 e
 il tradimento di ECHO-1, Eclissia, la barra della corrente addosso, i Silenti,
 il reattore, la salita in 2,5D, la cima in soggettiva, OHM, Ampere rovesciata e
 i filmati che restano.

@@ -45,6 +45,11 @@ const FRATTURA_DA = 21, FRATTURA_A = 35;
 /* I tre appuntamenti con ECHO-0: si ferma, combatte, e appena rischia di
    perdere scappa. Al terzo gli si strappa Ampere di mano. */
 const ECHO_SETTORI = [24, 27, 30];
+/* Dal 31 al 35 il gioco si rovescia: la lanterna e' tua e lui viene a
+   riprendersela. In questi quattro settori ECHO-0 non ti aspetta alla fine —
+   arriva mentre stai giocando, e non punta a te: punta ad AMPERE. */
+const ECHO_CACCIA = [31, 32, 33, 34];
+
 /* E i settori in mezzo, quelli dell'inseguimento: non combatte, si fa vedere.
    Una sagoma lontana su un'isola, che ti guarda e sparisce appena ti avvicini.
    Serve a togliere il vuoto fra uno scontro e l'altro: non stai attraversando
@@ -144,6 +149,7 @@ function generateLevel(n) {
   const boss = (n % 5 === 0) && !dentroLaFrattura;
   const scontroEcho = ECHO_SETTORI.indexOf(n) >= 0;
   const inseguimento = ECHO_OMBRE.indexOf(n) >= 0;
+  const caccia = ECHO_CACCIA.indexOf(n) >= 0;
   const theme = dentroLaFrattura ? THEME_FRATTURA : THEMES[Math.floor((n - 1) / 5) % THEMES.length];
   /* l'arena di ECHO-0 e' corta: lui si sposta in fretta, non serve spazio */
   const w = boss ? 58 : (scontroEcho ? 76 : Math.min(64 + n * 5, 190));
@@ -250,7 +256,11 @@ function generateLevel(n) {
   else if (n <= 2) mission = { type: 'hunt' };
   else {
     const pool = ['hunt', 'survive', 'cores', 'targets', 'assault'];
-    if (n >= 4) pool.push('escape');   /* la fuga arriva quando si sa gia' correre */
+    /* La fuga arriva quando si sa gia' correre — ma non nei settori della
+       caccia: li' ECHO-0 arriva mentre giochi, e in una fuga o lo semini
+       correndo o se lo mangia il muro di tempesta. Due inseguitori insieme
+       non fanno il doppio della tensione, se la tolgono a vicenda. */
+    if (n >= 4 && !caccia) pool.push('escape');
     /* la caccia resta la piu' frequente: e' l'identita' del gioco */
     const type = pick(rng, ['hunt'].concat(pool));
     mission = { type };
@@ -402,6 +412,7 @@ function generateLevel(n) {
   return {
     ombre,
     n, boss, theme, w, h, tiles, spawns, pickups, hills, clouds, motes, ships, mission,
+    caccia,
     pxW: w * TILE, pxH: h * TILE,
     startX: 5 * TILE, startY: (groundY[5] - 2) * TILE,
     portalX: (w - 3) * TILE, portalY: (groundY[w - 3] - 2) * TILE,
