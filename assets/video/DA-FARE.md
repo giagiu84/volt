@@ -55,8 +55,13 @@ di Eclissia e vanno disegnati **identici a quel filmato**: sagome umane
 allungate — braccia lunghe, spalle strette, testa piccola — **senza volto, senza
 vestiti, senza dettagli**, viola-nere e un po' trasparenti come vetro fumé, col
 contorno che prende luce da quello che hanno dietro. Stanno **fermi e dritti,
-braccia lungo i fianchi**: è quello che fa paura. Non stanno con nessuno:
-**stanno con chi ha Ampere in mano.**
+braccia lungo i fianchi**: è quello che fa paura.
+
+> ⛔ **La loro regola è «I Silenti non seguono un padrone. Seguono la Corrente.»
+> — e NON si dice a nessuno prima del settore 56.** Fino a lì devono sembrare
+> seguaci di ECHO-1. Nessun post, nessuna didascalia e nessun filmato prima del
+> 56 la può spiegare: si mostrano, non si spiegano. La rivelazione è tutta nel
+> filmato `il_reattore`, quando la lanterna torna ai Custodi e loro si voltano.
 
 **AMPERE** — lanterna da minatore, metallo blu scuro, vetro tondo, manico ad
 archetto, dentro una corrente verde che sale come un liquido. Non ha faccia:
@@ -144,17 +149,28 @@ casa loro, a brandelli.
 ---
 
 ## 2 · `il_tradimento` — settore 35 · **ESSENZIALE**
-**Dove:** settore 35, alla fine del terzo scontro con ECHO-0.
-**Cosa deve mostrare, in tre battute:**
-1. ECHO-0 è in ginocchio, sconfitto, e stringe **Ampere** al petto: l'ha difesa
-   fino all'ultimo.
-2. Dal buio alle sue spalle si muove qualcosa di enorme: **ECHO-1**. Una mano
-   gigantesca gli **strappa la lanterna** e sparisce nell'ombra.
-3. ECHO-0 resta a terra con la mano tesa nel vuoto. Non guarda i Custodi:
-   guarda la lanterna che se ne va.
+**Dove:** settore 35, alla fine dello scontro con ECHO-0.
 
-**Perché conta:** è il momento in cui il nemico diventa una vittima. Lo
-spettatore deve provare pena per lui.
+> ⚠️ **Attenzione a chi ha la lanterna in mano, perché è tutto qui.**
+> Dal settore 31 al 35 **Ampere ce l'hanno i Custodi**: gliel'hanno strappata a
+> ECHO-0 al settore 30 e se la sono portata dietro per cinque settori. ECHO-0 li
+> insegue per riprendersela. Quindi in questa scena **la lanterna è in mano ad
+> Aren e Lyra**, non a ECHO-0.
+
+**Cosa deve mostrare, in tre battute:**
+1. **ECHO-0 è in ginocchio, sconfitto.** Allunga la mano verso la lanterna, che
+   è **dalla parte dei Custodi**, a un passo da lui. Ha quasi finito: gli manca
+   un secondo.
+2. Dal buio alle sue spalle si muove qualcosa di enorme: **ECHO-1**. Una mano
+   gigantesca **strappa la lanterna dalle mani dei Custodi** e sparisce
+   nell'ombra. Nessuno dei tre fa in tempo a reagire.
+3. Restano tutti e tre nella stessa posa: **la mano tesa nel vuoto.** ECHO-0 non
+   guarda i Custodi, i Custodi non guardano lui. Guardano tutti nella stessa
+   direzione, la lanterna che se ne va.
+
+**Perché conta:** è il momento in cui il nemico diventa una vittima — e non
+perché soffre, ma perché **ha appena perso la tua stessa cosa, nello stesso
+istante**. Da qui in poi non è più il tuo nemico: è uno che ha perso quanto te.
 **Frase a schermo:** nessuna.
 
 ---

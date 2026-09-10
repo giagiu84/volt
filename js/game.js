@@ -13,7 +13,7 @@ const CAMPAIGN_END = 65;      /* la fine vera del gioco: la Caldera */
 /* Fin dove arriva quello che e' costruito davvero. Si alza mano a mano che
    l'atto II viene programmato: oltre questo settore il gioco si ferma e lo
    dice, invece di far finta. */
-const SETTORI_PRONTI = 24;
+const SETTORI_PRONTI = 27;
 /* I poteri che ECHO-0 sa copiare: sono quelli che si vedono addosso a lui e
    sui suoi colpi. Rubarne uno che non si nota non servirebbe a niente. */
 const RUBABILI = ['bounce', 'power', 'rapidfire', 'boom', 'jump3'];
@@ -1295,6 +1295,38 @@ const Game = {
     Floaters.update(dt);
     this.flashT = Math.max(0, this.flashT - dt);
 
+    /* Le apparizioni di ECHO-0 nei settori dell'inseguimento. Non fanno male e
+       non si possono colpire: compaiono lontane, ti guardano, e appena ti
+       avvicini si sfilano dentro un varco. Il settore smette di essere vuoto. */
+    /* La comparsa non si regola sulla distanza ma sul tempo: entra in campo,
+       resta il tempo di accorgersene, e se ne va. Sulla distanza non
+       funzionerebbe — la vista e' larga poco piu' di trecento pixel, e chi
+       corre se lo perderebbe in mezzo secondo. */
+    const vistaOmbra = this.viewW * 0.55;
+    for (const om of (lv.ombre || [])) {
+      if (om.fatta) continue;
+      if (om.via > 0) {
+        /* si sfila dentro un varco */
+        om.via -= dt;
+        om.k = Math.max(0, om.via / 0.55);
+        if (om.via <= 0) { om.fatta = true; om.k = 0; }
+        continue;
+      }
+      if (om.vita > 0) {
+        om.k = Math.min(1, om.k + dt * 2.4);
+        om.vita -= dt;
+        if (om.vita <= 0) {
+          om.via = 0.55;
+          Rings.add(om.x, om.y, '#b06bff', 130, 0.5, 6);
+          Particles.burst(om.x, om.y, 18, '#b06bff', 200, 5, 0);
+          Sfx.tone(150, 0.35, 'sawtooth', 0.035, 900);
+        }
+        continue;
+      }
+      /* non e' ancora comparso: aspetta che tu gli arrivi sotto */
+      if (Math.abs(p.cx - om.x) < vistaOmbra) om.vita = 2.6;
+    }
+
     /* portale */
     this.portalT += dt;
     if (this.portalOn && !p.dead) {
@@ -1457,8 +1489,12 @@ const Game = {
     const rank = this.score >= 60000 ? 'S' : this.score >= 40000 ? 'A' : this.score >= 25000 ? 'B' : 'C';
     const H = HEROES[this.hero] || HEROES.aren;
     document.getElementById('winTitle').textContent = H.otherFree;
+    /* Non si dice che la Frattura si chiude: non si chiude. Questa vittoria
+       salva la persona amata, non il mondo — e il mondo, dietro di loro, si sta
+       spegnendo proprio adesso. */
     document.getElementById('winText').textContent =
-      'Il Divoratore è caduto. ' + H.otherLabel + ' è di nuovo al tuo fianco.';
+      'Il Divoratore è caduto. ' + H.otherLabel + ' è di nuovo al tuo fianco. ' +
+      'Ma dietro di voi Lumina si sta spegnendo.';
     document.getElementById('winScore').textContent = this.score;
     document.getElementById('winKills').textContent = this.kills;
     document.getElementById('winRank').textContent = rank;
@@ -1719,6 +1755,7 @@ const Game = {
     ctx.setTransform(this.dpr * this.scale, 0, 0, this.dpr * this.scale, 0, 0);
     ctx.lineJoin = 'round'; ctx.lineCap = 'round';
     this.drawBackground(ctx, camX, camY, lv);
+    if (lv.ombre && lv.ombre.length) this.drawOmbre(ctx, camX, camY, lv);
     this.drawTiles(ctx, camX, camY, lv);
     if (this.state !== 'menu') {
       this.drawPortal(ctx, camX, camY, lv);
@@ -1865,6 +1902,87 @@ const Game = {
     fg.addColorStop(1, Gfx.alpha(th.fog, 0.5));
     ctx.fillStyle = fg;
     ctx.fillRect(0, horizon - 150, W, 150);
+  },
+
+  /* La sagoma di ECHO-0 in lontananza. E' disegnata PRIMA del terreno, quindi
+     gli passa dietro: e' quello che la fa leggere come lontana. Niente occhi
+     accesi e niente colori: solo la forma, i nastri e le schegge. Chi ha
+     combattuto al settore 24 la riconosce al primo sguardo. */
+  drawOmbre(ctx, camX, camY, lv) {
+    const t = this.portalT;
+    for (const om of lv.ombre) {
+      if (om.fatta || om.k <= 0.01) continue;
+      const x = om.x - camX, y = om.y - camY;
+      if (x < -140 || x > this.viewW + 140) continue;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.scale(0.9, 0.9);
+      ctx.globalAlpha = om.k * 0.85;
+      /* un alone scuro dietro: senza, la sagoma nera sparisce dentro il viola
+         del fondale dipinto */
+      const alone = ctx.createRadialGradient(0, 0, 8, 0, 0, 72);
+      alone.addColorStop(0, 'rgba(16,6,38,0.75)');
+      alone.addColorStop(1, 'rgba(16,6,38,0)');
+      ctx.fillStyle = alone;
+      ctx.beginPath(); ctx.arc(0, 0, 72, 0, TAU); ctx.fill();
+
+      /* i nastri, che si muovono da soli */
+      ctx.strokeStyle = '#6b3aa8'; ctx.lineWidth = 6; ctx.lineCap = 'round';
+      for (const lato of [-1, 1]) {
+        ctx.beginPath();
+        for (let i = 0; i <= 8; i++) {
+          const f = i / 8;
+          const nx = lato * (14 + f * 44);
+          const ny = -8 + Math.sin(t * 2.4 + f * 4 + lato) * 15 * f + f * 10;
+          if (i === 0) ctx.moveTo(nx, ny); else ctx.lineTo(nx, ny);
+        }
+        ctx.stroke();
+      }
+
+      /* le schegge in orbita */
+      ctx.fillStyle = '#1b0f36';
+      for (let i = 0; i < 7; i++) {
+        const a = t * (0.6 + i * 0.1) + i * 0.9;
+        const r = 32 + Math.sin(t * 1.4 + i) * 7;
+        const g2 = 3.5 + (i % 3) * 2;
+        ctx.save();
+        ctx.translate(Math.cos(a) * r, Math.sin(a) * r * 0.75);
+        ctx.rotate(a * 1.7);
+        ctx.beginPath();
+        ctx.moveTo(0, -g2); ctx.lineTo(g2 * 0.6, 0); ctx.lineTo(0, g2); ctx.lineTo(-g2 * 0.6, 0);
+        ctx.closePath(); ctx.fill();
+        ctx.restore();
+      }
+
+      /* Il corpo: la stessa sagoma dello scontro, piena e senza dettagli. Il
+         contorno e' chiaro, non scuro — su un fondale viola un corpo nero col
+         bordo nero sparisce, ed e' la stessa regola che vale per lui. */
+      ctx.fillStyle = '#1b0f36';
+      ctx.strokeStyle = '#a678ff'; ctx.lineWidth = 2.6; ctx.lineJoin = 'round';
+      /* le braccia, appena accennate: si vede che sono diverse fra loro */
+      roundRect(ctx, -32, -8, 16, 16, 6); ctx.fill(); ctx.stroke();
+      roundRect(ctx, 16, -6, 17, 12, 5); ctx.fill(); ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0, -26); ctx.lineTo(17, -6); ctx.lineTo(13, 24);
+      ctx.lineTo(0, 30); ctx.lineTo(-13, 24); ctx.lineTo(-17, -6);
+      ctx.closePath(); ctx.fill(); ctx.stroke();
+      /* la testa */
+      ctx.beginPath();
+      ctx.moveTo(0, -40); ctx.lineTo(11, -30); ctx.lineTo(8, -22);
+      ctx.lineTo(-8, -22); ctx.lineTo(-11, -30);
+      ctx.closePath(); ctx.fill(); ctx.stroke();
+
+      /* E i due occhi, gli unici punti accesi. Il verso e' quello di sempre:
+         rosso alla nostra sinistra, ciano alla nostra destra. */
+      ctx.globalAlpha = om.k;
+      Gfx.light(ctx, -5, -30, 11, '#ff3b5c', 0.7);
+      Gfx.light(ctx, 5, -30, 11, '#38e8ff', 0.7);
+      ctx.fillStyle = '#ff3b5c';
+      ctx.beginPath(); ctx.ellipse(-5, -30, 2.6, 3.4, 0, 0, TAU); ctx.fill();
+      ctx.fillStyle = '#38e8ff';
+      ctx.beginPath(); ctx.ellipse(5, -30, 2.6, 3.4, 0, 0, TAU); ctx.fill();
+      ctx.restore();
+    }
   },
 
   drawTiles(ctx, camX, camY, lv) {

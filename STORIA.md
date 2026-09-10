@@ -352,9 +352,12 @@ faccia.
 #### L'arco di Ampere, e va rispettato
 1. **Rubata** — ECHO-0 se la porta via dalla centrale di Lumina. È il motivo per
    cui Lumina si sta spegnendo.
-2. **Riconquistata** — settore 30: gliela strappi di mano.
-3. **Persa di nuovo** — settore 35: te la strappa ECHO-1, un istante prima che tu
-   vinca.
+2. **Riconquistata** — settore 30: gliela strappi di mano. **Dal 31 al 35 la
+   lanterna è tua**, te la porti dietro e la riempi: è per questo che ECHO-0 ti
+   dà la caccia.
+3. **Persa di nuovo** — settore 35: **te la strappa ECHO-1 dalle mani**, un
+   istante prima che tu vinca. Non la strappa a ECHO-0: ECHO-0 in quel momento
+   è in ginocchio davanti a te, a un passo dal riprendersela.
 4. **Riavuta** — settore 56, dal petto di ECHO-1.
 5. **Riempita** — con tutta la corrente che ti sei portato addosso per venti
    settori.
@@ -458,9 +461,15 @@ secondo piano.
 > «HO OSSERVATO OGNI TUA SCELTA. ORA I TUOI POTERI APPARTENGONO A ME.»
 > «VOI VOLETE SALVARE IL VOSTRO MONDO. IO STO SOLTANTO CERCANDO DI NON SCOMPARIRE.»
 
-**La resa (settore 35).** Sta per cadere, e proprio allora arriva ECHO-1 e gli
-porta via Ampere. Si arrende — non perché l'hai battuto: perché l'hanno derubato
-anche a lui. Si rialza e **vi mostra il passaggio per Eclissia**.
+**La resa (settore 35).** Sta per cadere. È in ginocchio, e la lanterna — che
+per cinque settori vi siete portati dietro voi — è a un passo dalla sua mano.
+
+E proprio allora **arriva ECHO-1 e la strappa a voi.**
+
+In un secondo restano tutti e tre senza: voi senza la luce di casa, lui senza
+l'unica cosa per cui esisteva. **Si arrende non perché l'hai battuto: perché
+adesso avete perso la stessa cosa.** Si rialza e **vi mostra il passaggio per
+Eclissia**.
 
 Sa perfettamente dove porta quella strada. Sa che se Ampere torna a funzionare
 lui muore. **Ve la indica lo stesso.**
@@ -509,7 +518,7 @@ Questa è la sua storia, ed è la traccia da rispettare in ogni media.
 | 2 | Settori 24-30 | Fugge e viene inseguito |
 | 3 | Settore 30 | Perde Ampere |
 | 4 | Settori 31-35 | Insegue i Custodi per riprendersela |
-| 5 | Settore 35 | ECHO-1 gli ruba Ampere; lui si arrende e apre Eclissia |
+| 5 | Settore 35 | Sta per riprendersi Ampere, ma ECHO-1 la strappa ai Custodi davanti a lui; si arrende e apre Eclissia |
 | 6 | Settori 36-55 | Li guida a distanza, senza conquistarne la fiducia |
 | 7 | **Settore 56** | **Potrebbe riprendersi Ampere e sceglie di non farlo** |
 | 8 | Settori 57-65 | Li accompagna alla Caldera: la decisione è presa |
@@ -653,7 +662,7 @@ che li rende speciali.
 Se in Eclissia serviranno altri scontri, saranno **creature di Eclissia** — non
 ECHO. Il nome ECHO è riservato a chi è nato dalla scarica di OHM.
 
-### I SILENTI — le ombre che guardano **[SCRITTO]**
+### I SILENTI — le ombre che guardano **[SCRITTO]** *(nome approvato)*
 Sono già nel gioco, e nessuno se n'è accorto. Nel filmato del rapimento di Aren,
 **dietro alla scena, in piedi, ci sono quattro sagome umane scure** che non
 fanno niente. Guardano. Poi il cielo si chiude e non si vedono più.
@@ -676,15 +685,27 @@ e loro sono quello che resta di chi ci vive: **persone senza luce dentro**.
 Quando la prima Frattura si è aperta ne sono passati alcuni, e sono rimasti
 dalla parte sbagliata.
 
-**Cosa vogliono.** Una cosa sola: **stare vicino ad Ampere.** Non la rubano, non
-la toccano. Le vanno incontro come ci si mette vicino a una stufa. Per questo
-erano lì la notte del rapimento — non guardavano i due Custodi, **guardavano la
-lanterna**.
+**Cosa vogliono.** Una cosa sola: **stare vicino alla corrente.** Non la rubano
+e non la toccano: le vanno incontro come ci si mette vicino a una stufa. Per
+questo erano lì la notte del rapimento — non guardavano i due Custodi,
+**guardavano la lanterna**.
 
-> **La regola dei Silenti, e vale sempre.**
-> **Non stanno con nessuno: stanno con chi ha Ampere in mano.** Al settore 56
-> Ampere è nel petto di ECHO-1, e loro difendono ECHO-1. Appena la lanterna
-> torna ai Custodi, **smettono di combattere e si voltano verso di loro**.
+> ### La regola dei Silenti
+> ## «I Silenti non seguono un padrone. Seguono la Corrente.»
+>
+> Al settore 56 Ampere è nel petto di ECHO-1, e loro difendono ECHO-1. Appena la
+> lanterna torna ai Custodi, **smettono di combattere e si voltano verso di
+> loro**. Non hanno cambiato idea: non l'avevano mai avuta.
+
+> ### ⛔ QUESTA REGOLA NON SI DICE — vale per il gioco, i post e i filmati
+> Fino al settore 56 i Silenti devono sembrare **quello che sembrano**: seguaci
+> inquietanti di ECHO-1. Il giocatore ci deve arrivare da solo, e ci arriva in
+> un istante — quando la lanterna torna ai Custodi e loro si voltano.
+>
+> Quindi: **nessun post, nessuna didascalia e nessun filmato prima del 56 può
+> spiegare che seguono la corrente.** Si possono mostrare, si possono nominare,
+> non si possono spiegare. Chi scrive per Instagram lo tratti come lo si tratta
+> in un film: la spiegazione arriva alla scena, non prima.
 
 **Come si combattono (settore 56).** Sono quattro e sono il contorno dello
 scontro, non lo scontro: non sparano, **camminano addosso** e con le braccia
@@ -705,9 +726,11 @@ Nel finale, quando Ampere si riaccende, **si accendono anche loro** — e per la
 prima volta hanno un colore. È il modo più semplice di far vedere che
 riaccendere Lumina serviva anche a qualcun altro.
 
-> **Il nome è una proposta.** «Silenti» descrive quello che fanno: guardano e
-> non parlano mai. Se ne salta fuori uno migliore, si cambia qui e in tutti i
-> file — sono l'unica cosa di questo capitolo ancora da approvare.
+**Perché si chiamano così.** «Silenti» dice quello che fanno: guardano e non
+parlano mai. Funziona anche fuori dall'italiano — *The Silent Ones* — e
+soprattutto **non anticipa niente**: non c'è dentro la corrente, non c'è dentro
+Ampere. Un nome che spiegasse il loro rapporto con la lanterna avrebbe bruciato
+la scena del 56.
 
 ### I mostri comuni **[GIOCO]**
 Non hanno nome proprio, sono la fauna della Frattura: **strisciante, volante,
@@ -880,7 +903,7 @@ ECHO-0 torna per riprendersela, e ogni settore diventa una cosa da proteggere.
 | Settore | Cosa succede |
 |---|---|
 | 31-34 | Ti dà la caccia. Si raccoglie corrente e si sopravvive |
-| **35** | Lo scontro vero. Sta per cadere — e proprio allora, dal buio, arriva **ECHO-1**: prende Ampere e sparisce |
+| **35** | Lo scontro vero. Sta per cadere — e proprio allora, dal buio, arriva **ECHO-1**: **strappa Ampere dalle vostre mani** e sparisce |
 
 **La resa.** ECHO-0 si arrende. Non perché l'hai battuto: perché l'hanno derubato
 anche a lui. Si rialza e **vi mostra il passaggio nascosto per Eclissia**,
@@ -1153,7 +1176,7 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
 
 ---
 
-## 10. Cos'è vero oggi nel gioco (versione 30)
+## 10. Cos'è vero oggi nel gioco (versione 58)
 
 - Campagna di **20 settori**, Comandanti a 5-10-15, il Divoratore al 20, punti
   di ripresa dopo ogni Comandante.
@@ -1195,13 +1218,35 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
   potere davvero, e quando sta per cadere scappa. Barra della vita viola e
   ciano col suo nome. Provato col bot: fugge in mezzo minuto scarso, il portale
   si apre e il potere torna.
-- Oltre il 24 il gioco **si ferma e lo dice**, invece di far finta: schermata
+- **Settori 25 e 26: l'inseguimento, e non è più un corridoio vuoto.** Tre
+  volte per settore ECHO-0 **si fa vedere**: una sagoma nera sospesa sopra di
+  te, con i nastri viola, le schegge in orbita e i due occhi accesi — rosso alla
+  nostra sinistra, ciano alla nostra destra. È disegnata **dietro al terreno**,
+  quindi gli passa dietro e si legge come lontana. Non spara, non si può
+  colpire, non fa male: resta due secondi e mezzo, poi si sfila dentro un varco
+  lasciando un anello viola. Non stai attraversando settori a caso: stai
+  seguendo qualcuno.
+- **Settore 27: il secondo scontro.** Lo stesso ECHO-0, ma di seconda mano:
+  quasi il doppio della vita, più veloce, e la raffica cambia forma **secondo il
+  potere che ti ha appena rubato** — se ti prende il rimbalzo i suoi colpi
+  rimbalzano, se ti prende la raffica rapida ti martella. È lì che si vede che
+  sta usando contro di te la tua stessa partita.
+- **Dentro la Frattura non ci sono più i Comandanti ogni cinque settori.** Il
+  ritmo dei primi venti (boss a 5-10-15-20) si spegne al 21 e ne subentra un
+  altro, che è quello di ECHO-0: appuntamento al 24, al 27 e al 30, inseguimento
+  in mezzo. Due ritmi insieme non funzionavano — un Comandante al 25, subito
+  dopo lo scontro del 24, spezzava la caccia invece di darle respiro.
+- **Il filmato `ampere_torna`** si vede entrando nel settore 31: è lo strappo
+  della lanterna, cioè come finisce lo scontro del 30. È arrivato senza traccia
+  audio, quindi su questo filmato la musica del gioco non si ferma.
+- Oltre il 27 il gioco **si ferma e lo dice**, invece di far finta: schermata
   «fine di questo tratto». Il confine si sposta man mano che costruiamo.
 
-**Manca tutto l'atto II**, cioè i settori **21-65**: la semina nei settori 15-20,
-la Frattura come luogo, ECHO-0 e i suoi tre scontri, il furto dei poteri, la
-barra della corrente addosso, Eclissia, ECHO-1 e il suo reattore, la salita in
-2,5D, la cima in soggettiva, OHM, Ampere rovesciata e i filmati nuovi.
+**Manca la seconda metà dell'atto II**, cioè i settori **28-65**: il terzo
+scontro e lo strappo della lanterna, la caccia al contrario dei settori 31-35,
+il tradimento di ECHO-1, Eclissia, la barra della corrente addosso, i Silenti,
+il reattore, la salita in 2,5D, la cima in soggettiva, OHM, Ampere rovesciata e
+i filmati che restano.
 
 Quello che c'è già e che l'atto II riuserà: il cambio fra i due Custodi, Ampere
 con la sua corrente, le sette leggi del mondo, gli élite, il buio (che serve per
@@ -1431,7 +1476,7 @@ quelli senza cui la storia non si capisce; gli altri fanno bella figura.
 | # | File | Settore | Cosa deve mostrare | Priorità |
 |---|---|---|---|---|
 | 1 | `dentro_la_frattura` | 21 | I due entrano insieme; il mondo è fatto di pezzi di casa loro | desiderabile |
-| 2 | `il_tradimento` | 35 | ECHO-0 è in ginocchio con Ampere al petto; ECHO-1 gliela strappa e sparisce | **essenziale** |
+| 2 | `il_tradimento` | 35 | ECHO-0 è in ginocchio e allunga la mano verso la lanterna; ECHO-1 la strappa **ai Custodi** e sparisce; restano tutti e tre senza | **essenziale** |
 | 3 | `il_passaggio` | 35 | Si rialza e apre la fenditura su Eclissia: «È DI LÀ» | **essenziale** |
 | 4 | `eclissia` | 36 | La prima immagine del mondo nuovo, con la Caldera all'orizzonte | desiderabile |
 | 5 | `il_reattore` | 56 | I tre cristalli si spengono, Ampere esce e si riempie di colpo | **essenziale** |

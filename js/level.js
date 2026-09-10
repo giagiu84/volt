@@ -45,6 +45,11 @@ const FRATTURA_DA = 21, FRATTURA_A = 35;
 /* I tre appuntamenti con ECHO-0: si ferma, combatte, e appena rischia di
    perdere scappa. Al terzo gli si strappa Ampere di mano. */
 const ECHO_SETTORI = [24, 27, 30];
+/* E i settori in mezzo, quelli dell'inseguimento: non combatte, si fa vedere.
+   Una sagoma lontana su un'isola, che ti guarda e sparisce appena ti avvicini.
+   Serve a togliere il vuoto fra uno scontro e l'altro: non stai attraversando
+   settori a caso, stai seguendo qualcuno. */
+const ECHO_OMBRE = [25, 26, 28, 29];
 
 const THEME_FRATTURA = {
   name: 'LA FRATTURA', frattura: true, sfondo: 'frattura',
@@ -130,9 +135,15 @@ function missionName(type) {
 
 function generateLevel(n) {
   const rng = makeRng(0x9e37 + n * 2654435761);
-  const boss = (n % 5 === 0);
   const dentroLaFrattura = n >= FRATTURA_DA && n <= FRATTURA_A;
+  /* Nei primi venti settori il ritmo e' il Comandante ogni cinque. Dentro la
+     Frattura quel ritmo si spegne e ne subentra un altro, che e' quello di
+     ECHO-0: appuntamento al 24, al 27 e al 30, inseguimento in mezzo. Due
+     ritmi insieme non funzionano — un Comandante al 25, subito dopo lo
+     scontro del 24, spezzerebbe la caccia invece di darle respiro. */
+  const boss = (n % 5 === 0) && !dentroLaFrattura;
   const scontroEcho = ECHO_SETTORI.indexOf(n) >= 0;
+  const inseguimento = ECHO_OMBRE.indexOf(n) >= 0;
   const theme = dentroLaFrattura ? THEME_FRATTURA : THEMES[Math.floor((n - 1) / 5) % THEMES.length];
   /* l'arena di ECHO-0 e' corta: lui si sposta in fretta, non serve spazio */
   const w = boss ? 58 : (scontroEcho ? 76 : Math.min(64 + n * 5, 190));
@@ -303,6 +314,23 @@ function generateLevel(n) {
   if (n >= 6) types.push('charger');
   if (n >= 8) types.push('bomber');
 
+  /* Le apparizioni dell'inseguimento. Tre, ben distanziate. Vanno messe
+     IN ALTO, non lontane: col telefono in piedi la vista e' larga poco piu' di
+     dieci caselle, e una sagoma "in fondo alla valle" non ci starebbe mai
+     dentro. In alto invece lo spazio c'e' — e guardare in su per vederlo e'
+     esattamente l'effetto giusto. */
+  const ombre = [];
+  if (inseguimento) {
+    for (const f of [0.30, 0.56, 0.82]) {
+      const ox = Math.round(w * f);
+      const gy3 = groundY[ox] > 0 ? groundY[ox] : 15;
+      /* cinque-sei caselle sopra il suolo: piu' in alto finirebbe dietro al
+         cruscotto, piu' in basso sembrerebbe un mostro qualunque */
+      ombre.push({ x: ox * TILE, y: (Math.max(3, gy3 - 7 - Math.floor(rng() * 2))) * TILE,
+                   k: 0, vita: 0, via: 0, fatta: false });
+    }
+  }
+
   if (scontroEcho) {
     /* lui sta in fondo, e la sua scorta e' poca: e' uno scontro, non un assedio */
     const ex = w - 18;
@@ -372,6 +400,7 @@ function generateLevel(n) {
     clouds.push({ x: rng(), y: rndRange(rng, 0.04, 0.42), s: rndRange(rng, 0.55, 1.5), spd: rndRange(rng, 3, 11) });
 
   return {
+    ombre,
     n, boss, theme, w, h, tiles, spawns, pickups, hills, clouds, motes, ships, mission,
     pxW: w * TILE, pxH: h * TILE,
     startX: 5 * TILE, startY: (groundY[5] - 2) * TILE,

@@ -19,7 +19,7 @@ GIA' FATTI (otto)
 DA FARE (nove, in ordine di settore). Quelli segnati [E] sono essenziali:
 sono sette, e vanno prodotti a coppie perche' sono scene divise in due.
   dentro_la_frattura.mp4  settore 21
-  il_tradimento.mp4  [E]  settore 35: ECHO-1 ruba Ampere a ECHO-0      --.
+  il_tradimento.mp4  [E]  settore 35: ECHO-1 strappa Ampere ai Custodi --.
   il_passaggio.mp4   [E]  settore 35: ECHO-0 apre la strada per Eclissia  '- coppia
   eclissia.mp4            settore 36: il mondo nuovo
   il_reattore.mp4    [E]  settore 56: ECHO-1 cade e Ampere esce        --.
