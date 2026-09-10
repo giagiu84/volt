@@ -13,11 +13,15 @@ const CAMPAIGN_END = 65;      /* la fine vera del gioco: la Caldera */
 /* Fin dove arriva quello che e' costruito davvero. Si alza mano a mano che
    l'atto II viene programmato: oltre questo settore il gioco si ferma e lo
    dice, invece di far finta. */
-const SETTORI_PRONTI = 35;
+const SETTORI_PRONTI = 40;
 /* Dal 31 al 35 Ampere e' dei Custodi: gliel'hanno strappata a ECHO-0 e se la
    portano dietro, e va riempita di Corrente Verde. Al 35 gliela porta via
    ECHO-1, e da li' in poi la corrente si tiene addosso. */
 const AMPERE_DA = 31, AMPERE_A = 35;
+/* E dal 36 al 55 non c'e' piu' niente in cui metterla: la corrente si tiene
+   addosso. Piena e' pericolosa, e ogni tanto scappa da sola. */
+const CORRENTE_DA = 36, CORRENTE_A = 55;
+const CORRENTE_MAX = 100;
 /* I poteri che ECHO-0 sa copiare: sono quelli che si vedono addosso a lui e
    sui suoi colpi. Rubarne uno che non si nota non servirebbe a niente. */
 const RUBABILI = ['bounce', 'power', 'rapidfire', 'boom', 'jump3'];
@@ -111,6 +115,7 @@ const Game = {
   mode: 'campaign', progress: Store.get('volt_progress', { cleared: false, cp: null }),
   law: null, lawDef: null, platsOff: false, platT: 0, meteorT: 0, stormOn: false,
   ampere: null, cariche: [], cella: null, vign: [], cacciaT: 0, cacciaMax: 0,
+  corrente: 0, correnteOn: false, scaricaT: 0, scarica: null,
   furto: null, blackT: 0, blackNext: 0,
   canSwap: false, swapCd: 0,
   rubato: null, echiVia: false,
@@ -480,6 +485,49 @@ const Game = {
     }, 1900);
   },
 
+  /* Una scia raccolta quando non c'e' la lanterna: va addosso al Custode. */
+  prendiCorrente(v) {
+    if (!this.correnteOn) return;
+    this.corrente = Math.min(CORRENTE_MAX, this.corrente + v);
+    Sfx.tone(420 + this.corrente * 4, 0.08, 'triangle', 0.05, 900);
+    if (this.player)
+      Particles.burst(this.player.cx, this.player.cy, 6, '#5effa8', 160, 3, 0);
+  },
+
+  /* La corrente scappa. Non toglie vite: toglie tranquillita'. Il Custode
+     perde un istante il controllo, e intanto il lampo si scarica su quello che
+     ha intorno — non lo decidi tu, e non lo puoi puntare. */
+  scaricaAddosso() {
+    const p = this.player;
+    if (!p) return;
+    /* Quello che scappa non torna piu': e' corrente che Lumina non riavra'.
+       E' il prezzo di portarsela addosso, ed e' il motivo per cui vogliono
+       indietro la lanterna. */
+    const persa = 4 + Math.random() * 5;
+    this.corrente = Math.max(0, this.corrente - persa);
+    /* un istante di controllo perso: i comandi non rispondono */
+    p.stunT = Math.max(p.stunT || 0, 0.26);
+    this.flashT = 0.28;
+    this.shake(13, 0.28);
+    Rings.add(p.cx, p.cy, '#5effa8', 190, 0.5, 7);
+    Particles.burst(p.cx, p.cy, 26, '#5effa8', 300, 5, 0);
+    Sfx.tone(160, 0.3, 'sawtooth', 0.06, 1500);
+    Sfx.tone(880, 0.14, 'triangle', 0.05, 300);
+    /* e quello che le sta vicino se lo prende */
+    const presi = [];
+    for (const e of this.enemies) {
+      if (e.dead || e.type === 'echo') continue;
+      if (dist2(p.cx, p.cy, e.cx, e.cy) < 190 * 190) presi.push(e);
+      if (presi.length >= 4) break;
+    }
+    this.scarica = { t: 0, x: p.cx, y: p.cy, punti: presi.map(e => ({ x: e.cx, y: e.cy })) };
+    for (const e of presi) {
+      e.hurt(2 + Math.floor(this.level / 12), p.cx);
+      e.stun = Math.max(e.stun, 0.24);
+      Particles.burst(e.cx, e.cy, 8, '#5effa8', 200, 3.5, 40);
+    }
+  },
+
   /* Settore 35. Non l'hai ucciso: l'hai fermato. Da qui in poi non si puo'
      piu' colpire, il settore e' finito, e quello che succede dopo — la mano
      che esce dal buio e vi strappa Ampere — lo racconta il filmato. */
@@ -603,9 +651,9 @@ const Game = {
        fermato il gioco: quando SETTORI_PRONTI si sposta, questa frase si
        riscrive insieme a lui. */
     document.getElementById('winText').textContent =
-      'Hai attraversato la Frattura fino in fondo. ECHO-1 vi ha portato via ' +
-      'Ampere, e ECHO-0 vi ha aperto la strada sapendo dove porta. Di là c’è ' +
-      'ECLISSIA: la stiamo costruendo, torna a vedere.';
+      'Sei dentro ECLISSIA, con la corrente addosso e niente in cui metterla. ' +
+      'Manca la strada che porta a ECHO-1 e alla Caldera: la stiamo ' +
+      'costruendo, torna a vedere.';
     document.getElementById('winScore').textContent = this.score;
     document.getElementById('winKills').textContent = this.kills;
     document.getElementById('winRank').textContent =
@@ -694,6 +742,15 @@ const Game = {
     for (const s of lv.spawns) this.enemies.push(new Enemy(s.type, s.x, s.y, n, s.tier, s.elite, s.finale));
     for (const q of lv.pickups) this.pickups.push(new Pickup(q.x, q.y, Pickup.randomKind()));
 
+    /* Dal 36 al 55 la corrente si tiene addosso: niente lanterna, ma le scie
+       si raccolgono lo stesso. Quello che si e' raccolto **non si perde** fra
+       un settore e l'altro: e' il bottino di venti settori, e al 56 finisce
+       tutto dentro Ampere in un colpo solo. */
+    this.correnteOn = this.mode === 'campaign' && n >= CORRENTE_DA && n <= CORRENTE_A;
+    if (!this.correnteOn && !(this.mode === 'campaign' && n > CORRENTE_A)) this.corrente = 0;
+    this.scaricaT = this.correnteOn ? 4 : 0;
+    this.scarica = null;
+
     /* la lanterna e le cariche sparse nel settore */
     const conAmpere = this.mode === 'endless' ||
       (this.mode === 'campaign' && n >= AMPERE_DA && n <= AMPERE_A);
@@ -722,6 +779,27 @@ const Game = {
         this.cariche.push(c);
       }
     } else this.ampere = null;
+
+    /* le scie di ECHO-1, in Eclissia: le lascia cadere lui perche' e' troppo
+       pieno, e sono la mappa e il bottino insieme */
+    if (this.correnteOn) {
+      const quante = 6;
+      const rng = makeRng(0x51e7 + n * 2654435761);
+      const dentro = 12, fondo = lv.w - 10;
+      for (let i = 0; i < quante; i++) {
+        const da = dentro + Math.round((fondo - dentro) * (i / quante));
+        const a = dentro + Math.round((fondo - dentro) * ((i + 1) / quante));
+        let tx = -1;
+        for (let k = 0; k < 14 && tx < 0; k++) {
+          const q = rndInt(rng, da, Math.max(da + 1, a));
+          if (lv.groundY[q] > 0) tx = q;
+        }
+        if (tx < 0) continue;
+        const c = new Carica(tx * TILE, (lv.groundY[tx] - 2 - Math.floor(rng() * 4)) * TILE);
+        c.vx = 0; c.vy = 0;
+        this.cariche.push(c);
+      }
+    }
     for (const sh of (lv.ships || [])) this.ships.push(new Ship(sh.x, sh.y));
 
     /* missione del settore */
@@ -1523,6 +1601,25 @@ const Game = {
       if (q.dead || q.y > lv.pxH + 100) this.pickups.splice(i, 1);
     }
 
+    /* La corrente addosso: piu' e' piena, piu' spesso scappa. A meta' barra
+       capita ogni dieci secondi scarsi, quasi piena ogni tre. */
+    if (this.correnteOn && !p.dead) {
+      if (this.scarica) { this.scarica.t += dt; if (this.scarica.t > 0.5) this.scarica = null; }
+      const k = this.corrente / CORRENTE_MAX;
+      /* Misurato: al 30% della barra scappa una volta ogni dodici secondi, al
+         60% ogni sette, quasi piena ogni tre e mezzo. La salita si sente, ma
+         non arriva mai a togliere il gioco di mano. */
+      if (k > 0.18) {
+        this.scaricaT -= dt * (0.27 + k * k * 1.1);
+        if (this.scaricaT <= 0) { this.scaricaAddosso(); this.scaricaT = 3.2 + Math.random() * 2.4; }
+      }
+      for (let i = this.cariche.length - 1; i >= 0; i--) {
+        const c = this.cariche[i];
+        c.update(dt, p);
+        if (c.dead || c.y > lv.pxH + 200) this.cariche.splice(i, 1);
+      }
+    }
+
     /* la lanterna e la sua corrente */
     if (this.ampere && !p.dead) {
       this.ampere.update(dt, p, this.enemies);
@@ -1942,6 +2039,22 @@ const Game = {
       for (let i = 0; i < p.shield; i++) html += '<div class="heart shield"></div>';
       document.getElementById('hearts').innerHTML = html;
     }
+    /* la corrente che ci si porta addosso */
+    const cor = this.correnteOn ? Math.round(this.corrente) : -1;
+    if (c.cor !== cor) {
+      c.cor = cor;
+      const box = document.getElementById('corHud');
+      if (box) {
+        box.classList.toggle('hidden', cor < 0);
+        if (cor >= 0) {
+          document.getElementById('corFill').style.width = cor + '%';
+          document.getElementById('corState').textContent = 'CORRENTE ' + cor + '%';
+          /* sopra il settanta per cento comincia a pulsare: e' l'unico avviso */
+          box.classList.toggle('carica', cor >= 70);
+        }
+      }
+    }
+
     /* la carica della lanterna */
     const amp = this.ampere ? Math.round(this.ampere.charge) : -1;
     if (c.amp !== amp) {
@@ -2053,6 +2166,7 @@ const Game = {
     }
     if (this.furto) this.drawFurto(ctx, camX, camY);
     if (this.cella) this.drawCella(ctx, camX, camY);
+    if (this.scarica) this.drawScarica(ctx, camX, camY);
     if (this.vign.length) this.drawRiquadri(ctx);
     if (this.blackT > 0) this.drawBlackout(ctx);
     this.drawVignette(ctx);
@@ -2633,6 +2747,35 @@ const Game = {
     if (this.portalOn) buco(this.lv.portalX - camX, this.lv.portalY - camY, 120, 0.9);
     d.globalAlpha = 1;
     ctx.drawImage(c, 0, 0, this.viewW, this.viewH);
+  },
+
+  /* Il lampo che scappa dal Custode. Stessa mano del filo di Ampere — tre
+     passate, contorno scuro, corpo verde, cuore bianco — perche' e' la stessa
+     corrente: solo che questa non l'ha chiamata nessuno. */
+  drawScarica(ctx, camX, camY) {
+    const sc = this.scarica, a = 1 - sc.t / 0.5;
+    const x = sc.x - camX, y = sc.y - camY;
+    Gfx.light(ctx, x, y, 70, '#5effa8', a * 0.8);
+    if (!sc.punti.length) return;
+    ctx.save();
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    for (const q of [{ c: OUTLINE, w: 8, add: false }, { c: '#2fd18a', w: 5, add: false },
+                     { c: '#eafff2', w: 2, add: true }]) {
+      ctx.globalCompositeOperation = q.add ? 'lighter' : 'source-over';
+      ctx.strokeStyle = q.c; ctx.lineWidth = q.w; ctx.globalAlpha = a;
+      for (const pt of sc.punti) {
+        ctx.beginPath(); ctx.moveTo(x, y);
+        const seg = 6;
+        for (let j = 1; j <= seg; j++) {
+          const f = j / seg;
+          const mx = lerp(x, pt.x - camX, f), my = lerp(y, pt.y - camY, f);
+          const off = j === seg ? 0 : Math.sin(j * 2.7 + sc.t * 30) * 15;
+          ctx.lineTo(mx + off * 0.4, my + off);
+        }
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
   },
 
   /* Le vignette. Si disegnano sullo schermo, non nel mondo: stanno in alto,

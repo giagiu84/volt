@@ -69,6 +69,25 @@ const THEME_FRATTURA = {
   plat: '#ffc247', spike: '#ff6b6b', accent: '#d9a6ff', fog: '#6a3fae'
 };
 
+/* ---------- ECLISSIA ----------
+   Dal 36 al 55 non si e' piu' dentro la ferita: si e' dall'altra parte. Non e'
+   un posto inventato — e' un mondo vero, con la sua terra e il suo cielo, solo
+   **illuminato al contrario**: il sole c'e' ma e' un anello nero, la luce
+   arriva radente e non scalda niente. I colori sono presi dal dipinto: indaco,
+   prugna, e la roccia che ha perso il colore. */
+const ECLISSIA_DA = 36, ECLISSIA_A = 55;
+
+const THEME_ECLISSIA = {
+  name: 'ECLISSIA', eclissia: true, sfondo: 'eclissia',
+  velo: 'rgba(26,16,58,0.26)',
+  sky: ['#3a2a6e', '#0a0818'],
+  hills: ['#2e2452', '#221a3e', '#150f2a'],
+  /* la roccia di Eclissia e' viola smorto, e sopra non cresce erba: cresce
+     una vegetazione secca color prugna */
+  body: '#3a3357', body2: '#221d38', crust: '#6b5a8e', crust2: '#9b83b8',
+  plat: '#ffc247', spike: '#ff6b6b', accent: '#c0a6ff', fog: '#4a3a7a'
+};
+
 /* Il mondo è più alto di quanto serva al terreno: il margine sotto permette
    alla camera di tenere il giocatore alto sullo schermo, sopra i comandi touch. */
 const LEVEL_H = 32;
@@ -112,8 +131,13 @@ const LAW_ORDER = ['lowgrav', 'dark', 'blink', 'giants', 'echo', 'storm', 'meteo
 const LAW_BAN = { storm: ['survive', 'assault', 'cores', 'targets', 'boss'] };
 
 function lawFor(n, mode, missionType) {
-  if (mode !== 'endless') return null;      /* la campagna dei 20 resta com'e' */
-  const cycle = Math.floor((n - 1) / 3);
+  /* In Eclissia le leggi non sono un effetto speciale: sono il clima del posto.
+     Ogni tre settori il mondo cambia regola, e il conto riparte dal 36 — i
+     primi tre servono a prendere le misure, come nel Circuito Aperto. */
+  const eclissia = mode === 'campaign' && n >= ECLISSIA_DA && n <= ECLISSIA_A;
+  if (mode !== 'endless' && !eclissia) return null;   /* i primi 35 restano com'e' */
+  const base = eclissia ? ECLISSIA_DA : 1;
+  const cycle = Math.floor((n - base) / 3);
   if (cycle === 0) return null;
   const idx = cycle - 1;
   const giro = Math.floor(idx / LAW_ORDER.length);
@@ -143,16 +167,19 @@ function missionName(type) {
 function generateLevel(n) {
   const rng = makeRng(0x9e37 + n * 2654435761);
   const dentroLaFrattura = n >= FRATTURA_DA && n <= FRATTURA_A;
+  const dentroEclissia = n >= ECLISSIA_DA && n <= ECLISSIA_A;
   /* Nei primi venti settori il ritmo e' il Comandante ogni cinque. Dentro la
      Frattura quel ritmo si spegne e ne subentra un altro, che e' quello di
      ECHO-0: appuntamento al 24, al 27 e al 30, inseguimento in mezzo. Due
      ritmi insieme non funzionano — un Comandante al 25, subito dopo lo
      scontro del 24, spezzerebbe la caccia invece di darle respiro. */
-  const boss = (n % 5 === 0) && !dentroLaFrattura;
+  const boss = (n % 5 === 0) && !dentroLaFrattura && !dentroEclissia;
   const scontroEcho = ECHO_SETTORI.indexOf(n) >= 0;
   const inseguimento = ECHO_OMBRE.indexOf(n) >= 0;
   const caccia = ECHO_CACCIA.indexOf(n) >= 0;
-  const theme = dentroLaFrattura ? THEME_FRATTURA : THEMES[Math.floor((n - 1) / 5) % THEMES.length];
+  const theme = dentroLaFrattura ? THEME_FRATTURA
+              : dentroEclissia ? THEME_ECLISSIA
+              : THEMES[Math.floor((n - 1) / 5) % THEMES.length];
   /* l'arena di ECHO-0 e' corta: lui si sposta in fretta, non serve spazio */
   const w = boss ? 58 : (scontroEcho ? 76 : Math.min(64 + n * 5, 190));
   const h = LEVEL_H;
@@ -302,7 +329,7 @@ function generateLevel(n) {
   }
 
   /* --- piattaforme sospese --- */
-  const platCount = boss ? 5 : Math.floor(w / (dentroLaFrattura ? 6 : 9));
+  const platCount = boss ? 5 : Math.floor(w / (dentroLaFrattura || dentroEclissia ? 6 : 9));
   for (let i = 0; i < platCount; i++) {
     const px = rndInt(rng, 10, w - 12);
     const base = groundY[px] > 0 ? groundY[px] : h - 6;

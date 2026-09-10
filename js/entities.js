@@ -446,6 +446,10 @@ class Player {
     if (this.dead) return;
     if (this.riding) { this.updateFlight(dt, lv, enemies, bullets, camX, camY); return; }
     this.anim += dt;
+    /* La corrente che scappa fa perdere il controllo per un istante: i comandi
+       non rispondono. Non toglie vite — toglie il tempo, che in mezzo a un
+       settore e' peggio. */
+    this.stunT = Math.max(0, (this.stunT || 0) - dt);
     this.invuln = Math.max(0, this.invuln - dt);
     this.swapFx = Math.max(0, this.swapFx - dt);
     this.flash = Math.max(0, this.flash - dt);
@@ -466,7 +470,7 @@ class Player {
        così i colpi ad altezza del petto passano sopra la testa. */
     this.setCrouch(this.onGround && this.dashT <= 0 && Input.moveY() > 0.55, lv);
 
-    const mx = Input.moveX();
+    const mx = this.stunT > 0 ? 0 : Input.moveX();
     const ACC = this.onGround ? 4200 : 2600;
     const rush = Game.rushT > 0;
     const MAXV = (300 + (this.weapon === 'rapid' ? 24 : 0)) * (rush ? 1.2 : 1) * (this.crouch ? 0.42 : 1) * hero().speed;
@@ -518,7 +522,7 @@ class Player {
       Particles.burst(this.cx, this.cy, 14, '#8ff0ff', 260, 4, 0);
     }
 
-    if (Input.wantFire() && this.fireCd <= 0 && this.overheat <= 0) this.shoot(bullets);
+    if (this.stunT <= 0 && Input.wantFire() && this.fireCd <= 0 && this.overheat <= 0) this.shoot(bullets);
 
     const dropThrough = Input.moveY() > 0.6;
     const wasAir = !this.onGround;
@@ -1041,6 +1045,40 @@ class Player {
       ctx.save();
       ctx.fillStyle = '#ffffff';
       ctx.beginPath(); ctx.arc(mx2, my2, 6.5, 0, TAU); ctx.fill();
+      ctx.restore();
+    }
+
+    /* Le vene della corrente. Non e' un effetto: e' il modo in cui si vede
+       che il Custode e' pieno di una cosa che non e' sua. Salgono lungo il
+       corpo, e piu' la barra e' alta piu' sono fitte e luminose. */
+    if (Game.correnteOn && Game.corrente > 4) {
+      const k = Game.corrente / 100;
+      ctx.save();
+      Gfx.light(ctx, x, y, 26 + k * 16, '#5effa8', 0.12 + k * 0.30);
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.strokeStyle = '#5effa8';
+      ctx.lineCap = 'round';
+      const quante = 2 + Math.round(k * 4);
+      for (let i = 0; i < quante; i++) {
+        const f = i / quante;
+        const ph = this.anim * (2.4 + i * 0.7) + i * 2.1;
+        ctx.globalAlpha = (0.25 + k * 0.55) * (0.6 + 0.4 * Math.sin(ph));
+        ctx.lineWidth = 1.2 + k * 1.1;
+        ctx.beginPath();
+        const bx = (f - 0.5) * this.w * 1.05;
+        ctx.moveTo(x + bx, y + this.h * 0.42);
+        for (let j = 1; j <= 4; j++) {
+          const q = j / 4;
+          ctx.lineTo(x + bx + Math.sin(ph + q * 5) * (2 + k * 3),
+                     y + this.h * 0.42 - q * this.h * 0.85);
+        }
+        ctx.stroke();
+      }
+      /* e ogni tanto una scintilla salta via da sola */
+      if (Math.random() < k * 0.14)
+        Particles.spawn(this.cx + (Math.random() - 0.5) * this.w,
+                        this.cy + (Math.random() - 0.5) * this.h,
+                        (Math.random() - 0.5) * 60, -50, 0.35, 2.6, '#5effa8', 40, 1);
       ctx.restore();
     }
 
@@ -2317,11 +2355,15 @@ class Carica {
     this.vx = (Math.random() - 0.5) * 90; this.vy = -70 - Math.random() * 70;
     this.dead = false; this.life = 34; this.presa = false;
   }
+  /* `amp` e' dove va a finire la corrente: la lanterna quando ce l'hai, e il
+     Custode stesso quando non ce l'hai piu'. Alla scia non cambia niente —
+     cerca un posto dove scorrere, e prende quello che c'e'. */
   update(dt, amp) {
     this.t += dt; this.life -= dt;
     if (this.life <= 0) { this.dead = true; return; }
     if (!amp) return;
-    const dx = amp.x - this.x, dy = amp.y - this.y;
+    const dx = (amp.x !== undefined ? amp.x : amp.cx) - this.x;
+    const dy = (amp.y !== undefined ? amp.y : amp.cy) - this.y;
     const d = Math.hypot(dx, dy) || 1;
     if (d < 210) this.presa = true;
     if (this.presa) {
@@ -2332,7 +2374,7 @@ class Carica {
         Particles.spawn(this.x, this.y, 0, 0, 0.25, 3, '#5effa8', 0, 1);
       if (d < 16) {
         this.dead = true;
-        amp.prendi(14);
+        if (amp.prendi) amp.prendi(14); else Game.prendiCorrente(14);
         Particles.burst(amp.x, amp.y, 8, '#5effa8', 160, 3.5, 0);
       }
     } else {

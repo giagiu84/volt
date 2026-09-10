@@ -194,7 +194,7 @@ addosso — vedi *La corrente addosso*, qui sotto.
 alone. Verde `#5effa8`, cuore chiaro `#eafff2`. Mai monete, mai gemme, mai
 soldi: sono scintille ordinate.
 
-### La corrente addosso **[SCRITTO]**
+### La corrente addosso **[GIOCO]** *(dalla versione 89)*
 **Cos'è.** Dal settore 36 al 55 Ampere non ce l'hanno: la corrente se la tengono
 dentro. Aren e Lyra sono i Custodi di VOLT, sono fatti per **reggere la
 tensione** — ma non sono contenitori. Tenersi la corrente in corpo è scomodo e
@@ -205,11 +205,20 @@ capriccio: è che senza un contenitore l'energia non serve a niente e fa solo
 male. È il tema del gioco, applicato addosso ai protagonisti.
 
 **Come si gioca.** Una **barra verde fluo in alto** che si riempie mano a mano
-che si raccoglie. Più è piena, più è instabile: ogni tanto **scarica da sola** —
-un lampo, una scossa, il personaggio che perde un istante il controllo — e più
-sale, più capita spesso. Non toglie vite: toglie tranquillità. Al settore 56,
-appena Ampere torna, **si svuota dentro il vetro in un colpo solo** e la
-lanterna si accende come non l'hai mai vista.
+che si raccoglie, e che pulsa quando supera il settanta per cento. Più è piena,
+più è instabile: ogni tanto **scarica da sola** — un lampo, una scossa, il
+personaggio che perde un istante il controllo — e più sale, più capita spesso.
+**Non toglie vite: toglie tranquillità.**
+
+I numeri, misurati: al 30% della barra scappa ogni quindici secondi, al 60% ogni
+sette e mezzo, quasi piena ogni tre e mezzo. Ogni scarica costa un quarto di
+secondo di comandi che non rispondono e un pezzo di barra — e **quel pezzo non
+torna più**. Il lampo intanto salta addosso a quello che hai vicino, fino a
+quattro mostri: non lo decidi tu e non lo puoi puntare, quindi è una cosa che
+ti capita, non un'arma.
+
+Al settore 56, appena Ampere torna, **si svuota dentro il vetro in un colpo
+solo** e la lanterna si accende come non l'hai mai vista.
 
 **Come si disegna.** Nei post e nei disegni: vene verdi che si accendono sotto
 la tuta lungo le braccia, il petto che pulsa, scariche che saltano fra i due
@@ -1259,7 +1268,7 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
 
 ---
 
-## 10. Cos'è vero oggi nel gioco (versione 84)
+## 10. Cos'è vero oggi nel gioco (versione 89)
 
 - Campagna di **20 settori**, Comandanti a 5-10-15, il Divoratore al 20, punti
   di ripresa dopo ogni Comandante.
@@ -1399,11 +1408,41 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
     nel portale e partono `il_tradimento` e `il_passaggio` di fila, senza
     stacco: la mano di ECHO-1 che strappa Ampere **ai Custodi**, il prezzo, e la
     strada aperta verso Eclissia.
-- Oltre il 35 il gioco **si ferma e lo dice**, invece di far finta: schermata
-  «fine di questo tratto», dopo aver fatto vedere i due filmati. Il confine si
-  sposta man mano che costruiamo.
+- **ECLISSIA esiste, dal settore 36.** Il fondale è la tavola di riferimento
+  ritagliata: l'eclissi, la nebbia viola, le rovine e il vulcano che lampeggia
+  all'orizzonte. La roccia ha perso il colore — viola smorto, prugna — e sopra
+  non cresce erba. Niente Comandanti: lì il ritmo lo danno le leggi.
+- **Le leggi del mondo sono in campagna.** Dal 36 il mondo cambia regola **ogni
+  tre settori**, col conto che riparte da capo: i primi tre servono a prendere
+  le misure, poi escono tutte e sette mescolate — pioggia di fuoco, eco,
+  giganti, piattaforme instabili, buio, bassa gravità, tempesta.
+- **LA CORRENTE ADDOSSO, ed è la cosa nuova più grossa dai fondali in poi.**
+  - Ampere ce l'ha ECHO-1 nel petto, quindi la corrente **non si può mettere da
+    nessuna parte**: te la tieni in corpo.
+  - **Barra verde fluo in alto**, larga, che pulsa quando supera il settanta per
+    cento. Non è una risorsa da guardare quando serve: è una cosa che ti stai
+    portando addosso e che non dovresti dimenticarti.
+  - **Si vede sul personaggio**: vene verdi che salgono lungo il corpo, sempre
+    più fitte e luminose man mano che la barra sale, e scintille che saltano via
+    da sole. Sono pieni di una cosa che non è loro.
+  - **Più è piena, più scappa.** Misurato: al 30% della barra parte da sola una
+    volta ogni quindici secondi, al 60% ogni sette e mezzo, quasi piena ogni
+    tre e mezzo.
+  - **Quando scappa non toglie vite: toglie il controllo.** Un quarto di secondo
+    in cui i comandi non rispondono, il lampo verde che salta addosso a quello
+    che hai intorno — fino a quattro mostri — e un pezzo di barra che se ne va.
+    A barra piena si resta immobili meno dell'otto per cento del tempo: si
+    sente, ma non toglie mai il gioco di mano.
+  - **E quello che scappa non torna.** È corrente che Lumina non riavrà, ed è il
+    motivo per cui vogliono indietro la lanterna. Il tema del gioco applicato
+    addosso ai protagonisti: senza un contenitore l'energia non serve a niente
+    e fa solo male.
+  - La barra **non si azzera fra un settore e l'altro**: è il bottino di venti
+    settori, e al 56 finirà tutto dentro Ampere in un colpo solo.
+- Oltre il 40 il gioco **si ferma e lo dice**, invece di far finta: schermata
+  «fine di questo tratto». Il confine si sposta man mano che costruiamo.
 
-**Manca la seconda metà dell'atto II**, cioè i settori **36-65**:
+**Manca l'ultimo terzo dell'atto II**, cioè i settori **41-65**:
 il tradimento di ECHO-1, Eclissia, la barra della corrente addosso, i Silenti,
 il reattore, la salita in 2,5D, la cima in soggettiva, OHM, Ampere rovesciata e
 i filmati che restano.

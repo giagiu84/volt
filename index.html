@@ -9,9 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=84">
-<link rel="icon" href="assets/logo/volt_icona.png?v=84">
-<link rel="apple-touch-icon" href="assets/logo/volt_icona.png?v=84">
+<link rel="stylesheet" href="css/style.css?v=90">
+<link rel="icon" href="assets/logo/volt_icona.png?v=90">
+<link rel="apple-touch-icon" href="assets/logo/volt_icona.png?v=90">
 </head>
 <body>
 <div id="app">
@@ -38,6 +38,13 @@
     <div class="power-hud">
       <div class="power-head"><span id="voltState">CARICA VOLT</span><span id="weapon">BLASTER</span></div>
       <div class="power-track"><div id="voltbar" class="power-fill"></div></div>
+    </div>
+    <!-- La corrente addosso: sta IN ALTO, sopra tutto, perche' non e' una
+         risorsa da guardare quando serve — e' una cosa che ti stai portando
+         addosso e che non dovresti dimenticarti. -->
+    <div id="corHud" class="cor-hud hidden">
+      <div class="cor-track"><div id="corFill" class="cor-fill"></div></div>
+      <span id="corState">CORRENTE 0%</span>
     </div>
     <div id="ampHud" class="amp-hud hidden">
       <span class="amp-lamp" aria-hidden="true"></span>
@@ -70,7 +77,7 @@
   <div id="titolo" class="overlay hidden">
     <div class="panel small">
       <div class="logo-wrap">
-        <img class="logo-img" src="assets/logo/volt.webp?v=84" alt="" width="360" height="360">
+        <img class="logo-img" src="assets/logo/volt.webp?v=90" alt="" width="360" height="360">
         <h1 class="logo">VOLT</h1>
       </div>
       <p class="tag">Non si nasce VOLT. Lo si diventa.</p>
@@ -81,7 +88,7 @@
   <div id="menu" class="overlay">
     <div class="panel">
       <div class="logo-wrap">
-        <img class="logo-img" src="assets/logo/volt.webp?v=84" alt="" width="360" height="360">
+        <img class="logo-img" src="assets/logo/volt.webp?v=90" alt="" width="360" height="360">
         <h1 class="logo">VOLT</h1>
       </div>
       <p class="tag" id="claim">Diventi VOLT. Lyra è oltre la frattura.</p>
@@ -193,7 +200,7 @@
 /* Se il telefono ha in cache una versione vecchia della pagina, se ne accorge
    da solo e si ricarica: senza questo si continuerebbero a vedere i comandi
    di ieri per una decina di minuti. */
-window.VOLT_VERSION = 84;
+window.VOLT_VERSION = 90;
 fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   .then(function (r) { return r.json(); })
   .then(function (d) {
@@ -210,12 +217,12 @@ fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
   })
   .catch(function () { /* offline: pazienza, si gioca con quello che c'è */ });
 </script>
-<script src="js/util.js?v=84"></script>
-<script src="js/gfx.js?v=84"></script>
-<script src="js/audio.js?v=84"></script>
-<script src="js/input.js?v=84"></script>
-<script src="js/level.js?v=84"></script>
-<script src="js/entities.js?v=84"></script>
-<script src="js/game.js?v=84"></script>
+<script src="js/util.js?v=90"></script>
+<script src="js/gfx.js?v=90"></script>
+<script src="js/audio.js?v=90"></script>
+<script src="js/input.js?v=90"></script>
+<script src="js/level.js?v=90"></script>
+<script src="js/entities.js?v=90"></script>
+<script src="js/game.js?v=90"></script>
 </body>
 </html>
