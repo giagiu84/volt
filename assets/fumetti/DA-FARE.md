@@ -1,3 +1,14 @@
+# GLI SQUARCI DI FUMETTO — **fatti tutti e tre** ✅
+
+Consegnati il 10 settembre 2026 e montati nel gioco dalla versione 74:
+`furto_lanterna`, `grido_lyra`, `grido_aren`. Tutti e tre a specifica al primo
+colpo — soggetto solo, centrato, fondo scuro, margine attorno, niente testo e
+niente cornice. A 130 pixel si leggono in mezzo secondo.
+
+Quello che segue resta come **regola per le prossime**: quando servirà un altro
+squarcio, si parte da qui.
+
+---
 # GLI SQUARCI DI FUMETTO
 
 Sono **vignette di dettaglio**: piccoli riquadri che si aprono sopra il gioco per
