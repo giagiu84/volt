@@ -281,13 +281,64 @@ body.is-touch .help .help-row{margin-bottom:8px;line-height:1.65}
 .skip-btn:active{transform:translateY(2px)}
 
 /* ---------- Banner ---------- */
+/* ---------- i banner, disegnati come in un fumetto ----------
+   Due forme, e la differenza non e' estetica: in un fumetto **chi parla ha la
+   nuvoletta e chi racconta ha la targa**. Qui vale uguale — la nuvoletta nera
+   col bordo viola e' la voce delle creature della Frattura, la targa gialla e'
+   il gioco che dice cosa sta succedendo. Non si mescolano mai. */
 .banner{position:absolute;top:30%;left:0;right:0;text-align:center;pointer-events:none;z-index:4}
-.banner span{display:inline-block;font-family:'Fredoka',sans-serif;font-weight:700;
+.banner span{position:relative;display:inline-block;
+  font-family:'Fredoka',sans-serif;font-weight:700;
   font-size:clamp(26px,7vw,52px);color:#fff;padding:0 10px;
   text-shadow:0 4px 0 rgba(30,18,70,.35),0 10px 28px rgba(0,0,0,.35);
   animation:bpop .5s cubic-bezier(.2,1.5,.4,1)}
 @keyframes bpop{0%{transform:scale(.5) rotate(-4deg);opacity:0}
   60%{transform:scale(1.1) rotate(1deg);opacity:1}100%{transform:none;opacity:1}}
+
+/* LA NUVOLETTA — quello che una creatura dice davvero.
+   Nera col bordo viola: e' la stessa coppia di colori di ECHO-0, cosi si
+   riconosce chi sta parlando prima ancora di leggere. */
+.banner.voce span{
+  max-width:min(86vw,760px);
+  font-size:clamp(20px,5.4vw,40px);line-height:1.12;
+  color:#fff;background:#1b0f36;border:4px solid #a678ff;border-radius:28px;
+  padding:12px 24px 14px;text-shadow:0 2px 0 rgba(0,0,0,.5);
+  box-shadow:0 9px 0 rgba(18,8,44,.45),0 20px 44px rgba(0,0,0,.5);
+  animation:bpop .5s cubic-bezier(.2,1.5,.4,1)}
+/* La codina: due triangoli sovrapposti, quello viola fa da bordo. Sta dalla
+   parte di chi parla — sul telefono la nuvoletta e' larga quasi quanto lo
+   schermo e spostarla non servirebbe, ma la codina si', perche' e' lei a dire
+   chi ha aperto bocca. Senza, la battuta sembra dell'eroe. */
+.banner.voce span::before,.banner.voce span::after{
+  content:'';position:absolute;left:var(--coda,50%);width:0;height:0;
+  border:16px solid transparent}
+.banner.voce span::before{bottom:-32px;margin-left:-16px;border-top-color:#a678ff}
+.banner.voce span::after{bottom:-23px;margin-left:-16px;border-top-color:#1b0f36}
+.banner.voce.sx span{--coda:24%}
+.banner.voce.dx span{--coda:76%}
+
+/* LA TARGA — il gioco che racconta. Come il riquadro giallo in alto a
+   sinistra delle vignette: leggermente storta, bordo spesso, testo scuro. */
+.banner.targa span{
+  max-width:min(88vw,820px);
+  color:#241a4d;background:#ffc247;border:4px solid #20183f;border-radius:10px;
+  padding:8px 22px 10px;text-shadow:0 2px 0 rgba(255,255,255,.35);
+  box-shadow:0 8px 0 rgba(32,24,63,.4),0 18px 36px rgba(0,0,0,.4);
+  animation:tpop .5s cubic-bezier(.2,1.5,.4,1)}
+@keyframes tpop{0%{transform:scale(.6) rotate(3deg);opacity:0}
+  60%{transform:scale(1.06) rotate(-2.4deg);opacity:1}
+  100%{transform:rotate(-1.6deg);opacity:1}}
+
+/* IL NOME DI CHI ARRIVA — non e' una battuta e non e' una didascalia: e' il
+   lettering d'impatto, quello grosso col contorno, come quando in un fumetto
+   entra in scena il cattivo. */
+.banner.nome span{
+  font-size:clamp(34px,9.5vw,64px);letter-spacing:1px;
+  color:#fff;-webkit-text-stroke:5px #20183f;paint-order:stroke fill;
+  text-shadow:0 6px 0 rgba(32,24,63,.5),0 16px 34px rgba(0,0,0,.55);
+  animation:npop .55s cubic-bezier(.2,1.6,.35,1)}
+@keyframes npop{0%{transform:scale(.4) rotate(-8deg);opacity:0}
+  55%{transform:scale(1.18) rotate(2deg);opacity:1}100%{transform:none;opacity:1}}
 
 @media (max-width:520px){
   .panel{padding:24px 18px 20px;border-radius:24px}

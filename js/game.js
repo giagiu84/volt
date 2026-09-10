@@ -413,14 +413,16 @@ const Game = {
   echoEntra(e) {
     this.rubato = this.rubaPotere();
     e.state = 0; e.stateT = 1.9; e.awake = true;
-    this.banner('ECHO-0');
+    this._echo = e;
     Sfx.boss();
-    const p = this.player;
+    /* La battuta arriva DOPO l'avviso della missione, se no se lo mangia: le
+       tre cose in fila sono il nome, la regola dello scontro, e poi lui che
+       parla. */
     setTimeout(() => {
       if (this.state !== 'play' || !this.player) return;
-      Floaters.add(this.player.cx, this.player.y - 46,
-        this.rubato ? 'HO OSSERVATO OGNI TUA SCELTA' : 'NON HAI NIENTE CHE MI SERVA', '#c9a6ff', 14);
-    }, 900);
+      this.banner(this.rubato ? 'HO OSSERVATO OGNI TUA SCELTA'
+                              : 'NON HAI NIENTE CHE MI SERVA', 'voce', this._echo);
+    }, 3200);
     if (this.rubato) setTimeout(() => {
       if (this.state !== 'play' || !this.player) return;
       Floaters.add(this.player.cx, this.player.y - 26, '−' + this.nomeRubato(), this.coloreRubato(), 17);
@@ -434,7 +436,7 @@ const Game = {
      strappa Ampere di mano, ed e' la fine della caccia. */
   echoInFuga(e) {
     const ultimo = e.tier >= 3;
-    this.banner(ultimo ? 'STAVOLTA NO' : 'CI VEDIAMO PIÙ AVANTI');
+    this.banner(ultimo ? 'STAVOLTA NO' : 'CI VEDIAMO PIÙ AVANTI', 'voce', e);
     Rings.add(e.cx + 60, e.cy, ultimo ? '#5effa8' : '#b06bff', 200, 0.8, 8);
     Sfx.tone(ultimo ? 220 : 140, 0.5, 'sawtooth', 0.07, 1200);
   },
@@ -697,7 +699,11 @@ const Game = {
 
     const md = MISSIONS[this.mission.type] || MISSIONS.hunt;
     const finale = this.mode === 'campaign' && n === ATTO1_FINE;
-    this.banner(lv.boss ? this.bossName() : missionName(this.mission.type));
+    /* Un nome proprio si scrive col lettering grosso, una missione con la
+       targa: «IL DIVORATORE» e «ECHO-0» sono nomi, «CACCIA» e «ASSALTO» no. */
+    const eNome = lv.boss || this.mission.type === 'echo';
+    this.banner(lv.boss ? this.bossName() : missionName(this.mission.type),
+                eNome ? 'nome' : 'targa');
     if (!lv.boss && n > 1 && n % 2 === 0) setTimeout(() => {
       if (this.state === 'play' && this.level === n && this.player)
         Floaters.add(this.player.cx, this.player.y - 40,
@@ -734,14 +740,22 @@ const Game = {
     if (j) j.textContent = flying ? 'BOOST' : 'SALTA';
   },
 
-  banner(text) {
+  /* `tipo` dice che forma prende, come in una vignetta:
+     'voce'  — la nuvoletta: qualcuno sta parlando davvero
+     'nome'  — il lettering grosso: entra in scena qualcuno
+     'targa' — il riquadro giallo: e' il gioco che racconta (predefinito) */
+  banner(text, tipo, chiParla) {
     const el = document.getElementById('banner');
     document.getElementById('bannerText').textContent = text;
-    el.classList.remove('hidden');
+    el.classList.remove('hidden', 'voce', 'nome', 'targa', 'sx', 'dx');
+    el.classList.add(tipo || 'targa');
+    /* da che parte sta chi parla: la codina va di la' */
+    if (chiParla && this.player)
+      el.classList.add(chiParla.cx >= this.player.cx ? 'dx' : 'sx');
     /* riavvia l'animazione CSS */
     const span = document.getElementById('bannerText');
     span.style.animation = 'none'; void span.offsetWidth; span.style.animation = '';
-    this.bannerT = 1.6;
+    this.bannerT = tipo === 'voce' ? 2.2 : 1.6;
   },
 
   shake(amt, t) {
@@ -1750,7 +1764,10 @@ const Game = {
       else if (m.type === 'cores') tg = 'FRAMMENTI ' + (m.need - this.cores.length) + '/' + m.need;
       else if (m.type === 'targets') tg = 'GENERATORI ' + (m.need - this.gens.length) + '/' + m.need;
       else if (m.type === 'assault') tg = 'ONDATA ' + Math.max(1, this.wave) + '/' + (m.waves || 3);
-      else if (m.type === 'echo') tg = this.rubato ? 'TI HA RUBATO ' + this.nomeRubato() : 'ECHO-0';
+      /* corto per forza: andando a capo tre volte finiva sopra la barra della
+         vita di ECHO-0. Che te l'abbia rubato lo dicono gia' il banner e la
+         scritta che sale dal giocatore — qui basta ricordare cosa manca. */
+      else if (m.type === 'echo') tg = this.rubato ? '− ' + this.nomeRubato() : 'ECHO-0';
       else tg = 'MOSTRI ' + this.enemiesLeft;
     }
     if (c.tg !== tg) { c.tg = tg; document.getElementById('targets').textContent = tg; }
@@ -2221,7 +2238,7 @@ const Game = {
   drawBossBar(ctx) {
     const boss = this.enemies.find(e => (e.type === 'boss' || e.type === 'echo') && !e.dead && e.awake);
     if (!boss) return;
-    const w = Math.min(this.viewW * 0.66, 400), x = (this.viewW - w) / 2, y = 92;
+    const w = Math.min(this.viewW * 0.66, 400), x = (this.viewW - w) / 2, y = 100;
     const frac = clamp(boss.hp / boss.maxHp, 0, 1);
     ctx.save();
     ctx.fillStyle = 'rgba(24,18,50,.5)';

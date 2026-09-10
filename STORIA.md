@@ -1239,6 +1239,22 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
 - **Il filmato `ampere_torna`** si vede entrando nel settore 31: è lo strappo
   della lanterna, cioè come finisce lo scontro del 30. È arrivato senza traccia
   audio, quindi su questo filmato la musica del gioco non si ferma.
+- **I banner sono disegnati come in un fumetto, e le forme vogliono dire
+  qualcosa.** In una vignetta chi parla ha la nuvoletta e chi racconta ha la
+  targa: qui vale uguale.
+  - **La nuvoletta** — nera col bordo viola, gli stessi colori di ECHO-0 — è
+    **solo** quello che una creatura dice davvero: «HO OSSERVATO OGNI TUA
+    SCELTA», «CI VEDIAMO PIÙ AVANTI», «STAVOLTA NO». **La codina punta da che
+    parte sta chi parla**, se no la battuta sembra dell'eroe.
+  - **La targa gialla storta** è il gioco che racconta: «CACCIA», «PORTALE
+    APERTO!», «ONDATA 2», gli avvisi delle missioni e delle leggi.
+  - **Il lettering grosso col contorno** è per i nomi propri di chi entra in
+    scena, e per quelli soltanto: «IL DIVORATORE», «ECHO-0», «IL COMANDANTE
+    DELLA LAGUNA».
+
+  Non si mescolano mai, ed è una regola di racconto prima che di grafica: se il
+  gioco parlasse con la nuvoletta, la voce delle creature non varrebbe più
+  niente.
 - **Settori 28 e 29: le ultime due tappe dell'inseguimento**, con le stesse
   apparizioni del 25 e del 26.
 - **Settore 30: il terzo scontro, e la caccia finisce.** ECHO-0 arriva alla
