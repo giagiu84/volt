@@ -6,18 +6,18 @@ cartella): e' il file da dare a chi produce i filmati, si legge da solo.
 L'elenco riassunto sta anche nella Bibbia, capitolo 14.3.
 Qui restano solo i nomi dei file e le regole tecniche.
 
-GIA' FATTI (sei)
+GIA' FATTI (sette)
   introduzione.mp4        all'apertura del gioco, prima della scelta
   rapimento_lyra.mp4      Lyra viene rapita     (lo vede chi gioca AREN, all'inizio)
   rapimento_aren.mp4      Aren viene rapito     (lo vede chi gioca LYRA, all'inizio)
   liberazione_lyra.mp4    Aren libera Lyra      (chi gioca AREN, dopo il settore 20)
   liberazione_aren.mp4    Lyra libera Aren      (chi gioca LYRA, dopo il settore 20)
   la_luce_se_ne_va.mp4    premendo CONTINUA, dopo il settore 20
+  primo_incontro.mp4      entrando nel settore 24: ECHO-0 si compone
 
-DA FARE (undici, in ordine di settore). Quelli segnati [E] sono essenziali:
+DA FARE (dieci, in ordine di settore). Quelli segnati [E] sono essenziali:
 sono sette, e vanno prodotti a coppie perche' sono scene divise in due.
   dentro_la_frattura.mp4  settore 21
-  primo_incontro.mp4      settore 24: ECHO-0 parla per la prima volta
   ampere_torna.mp4        settore 30
   il_tradimento.mp4  [E]  settore 35: ECHO-1 ruba Ampere a ECHO-0      --.
   il_passaggio.mp4   [E]  settore 35: ECHO-0 apre la strada per Eclissia  '- coppia

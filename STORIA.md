@@ -1336,7 +1336,7 @@ Il gioco mostra brevi filmati fra una fase e l'altra, come faceva *Prince of
 Persia*: non sono premi, sono **il modo in cui la storia va avanti mentre si
 gioca**.
 
-**Fatti** (già dentro il gioco, sei):
+**Fatti** (già dentro il gioco, sette):
 
 | File | Quando | Cosa mostra |
 |---|---|---|
@@ -1346,14 +1346,14 @@ gioca**.
 | `liberazione_lyra` | dopo il settore 20 | Aren spezza la cella, si abbracciano |
 | `liberazione_aren` | dopo il settore 20 | Lyra apre la cella col guanto, si abbracciano |
 | `la_luce_se_ne_va` | premendo CONTINUA, dopo il 20 | I due davanti alla Frattura: isole di Lumina sospese nel viola, saette, e la luce di casa che se ne va |
+| `primo_incontro` | entrando nel settore 24 | ECHO-0 si compone dalle schegge e si alza sopra i due: braccia diverse, occhi accesi, fulmine giallo |
 
-**Da fare: undici**, qui in ordine di settore. I sette segnati **essenziale** sono
+**Da fare: dieci**, qui in ordine di settore. I sette segnati **essenziale** sono
 quelli senza cui la storia non si capisce; gli altri fanno bella figura.
 
 | # | File | Settore | Cosa deve mostrare | Priorità |
 |---|---|---|---|---|
 | 1 | `dentro_la_frattura` | 21 | I due entrano insieme; il mondo è fatto di pezzi di casa loro | desiderabile |
-| 2 | `primo_incontro` | 24 | ECHO-0 si compone dalle schegge e parla per la prima volta | desiderabile |
 | 3 | `ampere_torna` | 30 | Gliela strappano di mano; la lanterna si accende fra i due | desiderabile |
 | 4 | `il_tradimento` | 35 | ECHO-0 è in ginocchio con Ampere al petto; ECHO-1 gliela strappa e sparisce | **essenziale** |
 | 5 | `il_passaggio` | 35 | Si rialza e apre la fenditura su Eclissia: «È DI LÀ» | **essenziale** |

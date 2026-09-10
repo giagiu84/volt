@@ -17,6 +17,11 @@ const SETTORI_PRONTI = 24;
 /* I poteri che ECHO-0 sa copiare: sono quelli che si vedono addosso a lui e
    sui suoi colpi. Rubarne uno che non si nota non servirebbe a niente. */
 const RUBABILI = ['bounce', 'power', 'rapidfire', 'boom', 'jump3'];
+/* I filmati che aprono un settore. Si aggiungono man mano che arrivano: se il
+   file non c'e' ancora, il lettore tira dritto e il settore comincia lo stesso. */
+const FILMATI_SETTORE = {
+  24: 'primo_incontro'
+};
 const CHECKPOINTS = [5, 10, 15];
 /* La semina del secondo atto: dal settore 15 la luce di Lumina comincia ad
    andarsene, e lo si vede prima che qualcuno lo dica. */
@@ -1455,12 +1460,23 @@ const Game = {
 
   startNextLevel() {
     document.getElementById('choice').classList.add('hidden');
-    document.getElementById('hud').classList.remove('hidden');
-    this.state = 'play';
     this.level = this.pendingLevel || (this.level + 1);
     this.pendingLevel = 0;
-    Sfx.resume(); Sfx.startMusic();
-    this.loadLevel(this.level, false);
+
+    /* il settore comincia davvero solo dopo il filmato, se ce n'e' uno: cosi
+       l'insegna e l'entrata di ECHO-0 arrivano quando stai gia' giocando */
+    const via = () => {
+      document.getElementById('hud').classList.remove('hidden');
+      this.state = 'play';
+      Sfx.resume(); Sfx.startMusic();
+      this.loadLevel(this.level, false);
+    };
+    const film = this.mode === 'campaign' ? FILMATI_SETTORE[this.level] : null;
+    if (film) {
+      document.getElementById('hud').classList.add('hidden');
+      this.state = 'cinema';
+      this.playCinema(film, via);
+    } else via();
   },
 
   /* ---- missioni ---- */
