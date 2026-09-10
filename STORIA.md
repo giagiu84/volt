@@ -1290,8 +1290,7 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
   in mezzo. Due ritmi insieme non funzionavano — un Comandante al 25, subito
   dopo lo scontro del 24, spezzava la caccia invece di darle respiro.
 - **Il filmato `ampere_torna`** si vede entrando nel settore 31: è lo strappo
-  della lanterna, cioè come finisce lo scontro del 30. È arrivato senza traccia
-  audio, quindi su questo filmato la musica del gioco non si ferma.
+  della lanterna, cioè come finisce lo scontro del 30.
 - **I banner sono disegnati come in un fumetto, e le forme vogliono dire
   qualcosa.** In una vignetta chi parla ha la nuvoletta e chi racconta ha la
   targa: qui vale uguale.
@@ -1548,7 +1547,7 @@ gioca**.
 | `liberazione_aren` | dopo il settore 20 | Lyra apre la cella col guanto, si abbracciano |
 | `la_luce_se_ne_va` | premendo CONTINUA, dopo il 20 | I due davanti alla Frattura: isole di Lumina sospese nel viola, saette, e la luce di casa che se ne va |
 | `primo_incontro` | entrando nel settore 24 | ECHO-0 si compone dalle schegge e si alza sopra i due: braccia diverse, occhi accesi, fulmine giallo |
-| `ampere_torna` | entrando nel settore 31 | Lo strappo: la lanterna passa di mano, si accende di verde fra Aren e Lyra, ECHO-0 indietreggia e fugge nel varco. **È muto** |
+| `ampere_torna` | entrando nel settore 31 | Lo strappo: la lanterna passa di mano, si accende di verde fra Aren e Lyra, ECHO-0 indietreggia e fugge nel varco |
 | `il_tradimento` | fine del settore 35 | ECHO-0 in ginocchio allunga la mano verso la lanterna che è in mano ai Custodi; il pugno di ECHO-1 la strappa **a loro**; restano tutti e tre a terra con la mano tesa nel vuoto |
 
 **Da fare: otto**, qui in ordine di settore. I sei segnati **essenziale** sono

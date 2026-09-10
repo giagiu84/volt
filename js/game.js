@@ -36,9 +36,11 @@ const FILMATI_SETTORE = {
   36: ['il_tradimento']
 };
 /* I filmati consegnati senza traccia audio. Su questi la musica del gioco NON
-   si ferma: senza, sarebbero otto secondi di silenzio totale e sembrerebbe che
-   il gioco si sia piantato. Appena arriva l'audio vero, il nome si toglie. */
-const FILMATI_MUTI = new Set(['ampere_torna']);
+   si ferma: senza, sarebbero secondi di silenzio totale e sembrerebbe che il
+   gioco si sia piantato. Adesso non ce n'e' piu' nessuno — `ampere_torna` e'
+   stato riconsegnato con l'audio — ma la rete resta tesa: se un giorno ne
+   arriva un altro muto, basta scriverne il nome qui. */
+const FILMATI_MUTI = new Set();
 const CHECKPOINTS = [5, 10, 15];
 /* La semina del secondo atto: dal settore 15 la luce di Lumina comincia ad
    andarsene, e lo si vede prima che qualcuno lo dica. */
