@@ -145,13 +145,18 @@ const Game = {
     addEventListener('orientationchange', () => setTimeout(() => this.resize(), 250));
 
     /* Scorciatoie per provare: ?settore=N parte da quel settore con una
-       dotazione plausibile, ?vinci=1 porta dritti alla fine del primo atto.
-       Non toccano il salvataggio e non si vedono se non le si scrive. */
+       dotazione plausibile, ?vinci=1 porta dritti alla fine del primo atto,
+       ?filmato=nome fa vedere un filmato senza doverci arrivare giocando —
+       serve a rivedere una scena appena montata, anche di un settore che
+       ancora non esiste. Non toccano il salvataggio e non si vedono se non le
+       si scrive. */
     try {
       const q = new URLSearchParams(location.search);
       const n = parseInt(q.get('settore') || '', 10);
       if (n >= 1 && n <= SETTORI_PRONTI) this.prova = { settore: n };
       if (q.get('vinci') === '1') this.prova = { settore: ATTO1_FINE, vinci: true };
+      const film = q.get('filmato');
+      if (film) this.provaFilm = film.split(',').filter(Boolean);
     } catch (e) { /* niente parametri: si gioca normale */ }
 
     /* L'introduzione la si vede una volta sola, la prima. Prima di lei c'e'
@@ -164,6 +169,17 @@ const Game = {
        serve per provarla e per farla vedere a qualcuno */
     let primaVolta = !Store.get('volt_intro', 0);
     try { if (new URLSearchParams(location.search).get('intro') === '1') primaVolta = true; } catch (e) {}
+    /* la sala di proiezione ha la precedenza su tutto: si e' venuti per vedere
+       un filmato, non per giocare. Il pulsante del titolo lo fa partire —
+       serve un tocco, se no il browser non lascia partire l'audio. */
+    if (this.provaFilm) {
+      primaVolta = false;
+      document.getElementById('titolo').classList.remove('hidden');
+      document.getElementById('menu').classList.add('hidden');
+      const b = document.getElementById('introBtn');
+      b.querySelector('span').textContent = 'GUARDA IL FILMATO';
+      b.onclick = () => this.guardaFilmati(this.provaFilm);
+    }
     if (primaVolta && !this.prova) {
       document.getElementById('titolo').classList.remove('hidden');
       document.getElementById('menu').classList.add('hidden');
@@ -419,6 +435,18 @@ const Game = {
 
   /* L'introduzione: la centrale di Lumina, i due di turno, e il cielo che si
      spacca. Finisce esattamente dove comincia il rapimento. */
+  /* Fa vedere uno o piu' filmati di fila e poi torna al menu. E' la sala di
+     proiezione: si arriva con ?filmato=nome, o ?filmato=uno,due per una coppia. */
+  guardaFilmati(nomi) {
+    this.schermoIntero();
+    Sfx.init(); Sfx.resume();
+    document.getElementById('titolo').classList.add('hidden');
+    document.getElementById('menu').classList.add('hidden');
+    document.getElementById('hud').classList.add('hidden');
+    this.state = 'cinema';
+    this.playCinemaSerie(nomi, () => { this.provaFilm = null; this.toMenu(); });
+  },
+
   guardaIntro() {
     this.schermoIntero();
     Sfx.init(); Sfx.resume();
