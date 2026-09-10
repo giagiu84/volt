@@ -359,14 +359,32 @@ function generateLevel(n) {
      dentro. In alto invece lo spazio c'e' — e guardare in su per vederlo e'
      esattamente l'effetto giusto. */
   const ombre = [];
-  if (inseguimento) {
-    for (const f of [0.30, 0.56, 0.82]) {
+  if (inseguimento || dentroEclissia) {
+    /* Due modi, e sono l'uno il rovescio dell'altro.
+       'fuga'  — nella Frattura: si fa vedere e sparisce appena ti avvicini.
+       'guida' — in Eclissia: si ferma, INDICA qualcosa, e aspetta che tu passi.
+       Stessa sagoma, comportamento opposto: e' il modo in cui il giocatore
+       capisce che qualcosa e' cambiato, senza che nessuno glielo dica. */
+    const modo = inseguimento ? 'fuga' : 'guida';
+    for (const f of [0.28, 0.54, 0.80]) {
       const ox = Math.round(w * f);
       const gy3 = groundY[ox] > 0 ? groundY[ox] : 15;
       /* cinque-sei caselle sopra il suolo: piu' in alto finirebbe dietro al
          cruscotto, piu' in basso sembrerebbe un mostro qualunque */
-      ombre.push({ x: ox * TILE, y: (Math.max(3, gy3 - 7 - Math.floor(rng() * 2))) * TILE,
-                   k: 0, vita: 0, via: 0, fatta: false });
+      const oy = (Math.max(3, gy3 - 7 - Math.floor(rng() * 2))) * TILE;
+      const o = { x: ox * TILE, y: oy, modo, k: 0, vita: 0, via: 0, fatta: false };
+      if (modo === 'guida') {
+        /* Cosa indica. Conosce Eclissia: guarda avanti, verso dove si va, a
+           meno che non ci sia una buca proprio davanti — allora indica quella.
+           Non si capisce mai se ti sta aiutando o portando dove conviene a lui,
+           ed e' esattamente il punto. */
+        let buco = -1;
+        for (let q = ox + 3; q < Math.min(w - 2, ox + 22); q++)
+          if (groundY[q] < 0) { buco = q; break; }
+        if (buco >= 0) { o.ix = buco * TILE + TILE / 2; o.iy = oy + 190; }
+        else { o.ix = (ox + 6) * TILE; o.iy = oy + 130; }
+      }
+      ombre.push(o);
     }
   }
 

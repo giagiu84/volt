@@ -522,7 +522,7 @@ la prenderà. Senza questa battuta è un gesto gentile; con questa battuta il
 giocatore sa che prendersela era **l'unico modo che aveva di restare vivo**. È
 per questo che alla fine i due Custodi non lo lasciano andare.
 
-#### Il compagno scomodo (settori 36-55) **[SCRITTO]**
+#### Il compagno scomodo (settori 36-55) **[GIOCO]** *(dalla versione 95)*
 Da lì in poi **non sparisce: viene con voi.** Ma a una distanza inquietante, e
 va tenuta:
 
@@ -1268,7 +1268,7 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
 
 ---
 
-## 10. Cos'è vero oggi nel gioco (versione 89)
+## 10. Cos'è vero oggi nel gioco (versione 96)
 
 - Campagna di **20 settori**, Comandanti a 5-10-15, il Divoratore al 20, punti
   di ripresa dopo ogni Comandante.
@@ -1439,10 +1439,25 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
     e fa solo male.
   - La barra **non si azzera fra un settore e l'altro**: è il bottino di venti
     settori, e al 56 finirà tutto dentro Ampere in un colpo solo.
-- Oltre il 40 il gioco **si ferma e lo dice**, invece di far finta: schermata
+- **ECHO-0 il compagno scomodo c'è, dal 36 al 55.** Ed è il rovescio esatto
+  delle apparizioni della Frattura, che è il modo in cui il giocatore capisce
+  che qualcosa è cambiato senza che nessuno glielo dica:
+  - **nella Frattura** si faceva vedere e **spariva** appena ti avvicinavi, con
+    uno schiocco e un anello viola;
+  - **in Eclissia** si ferma, **indica qualcosa**, e **aspetta che tu gli passi
+    accanto**. Poi si spegne piano, senza schiocco.
+  - Cosa indica: **la strada avanti**, o **una buca**, se ce n'è una nel tratto
+    che sta arrivando. Dove indica compare un cerchietto viola che pulsa.
+  - **Non si capisce mai se ti stia aiutando o portando dove conviene a lui**, e
+    quello è il punto. Non combatte, non si comanda, non parla, non lo si può
+    colpire.
+  - Tre per settore. L'altezza sullo schermo è **calcolata sulla vista, non sul
+    mondo**: col telefono coricato la vista è alta meno della metà, e una sagoma
+    messa sette caselle sopra il suolo finirebbe fuori dall'inquadratura.
+- Oltre il 55 il gioco **si ferma e lo dice**, invece di far finta: schermata
   «fine di questo tratto». Il confine si sposta man mano che costruiamo.
 
-**Manca l'ultimo terzo dell'atto II**, cioè i settori **41-65**:
+**Manca la fine dell'atto II**, cioè i settori **56-65**:
 il tradimento di ECHO-1, Eclissia, la barra della corrente addosso, i Silenti,
 il reattore, la salita in 2,5D, la cima in soggettiva, OHM, Ampere rovesciata e
 i filmati che restano.

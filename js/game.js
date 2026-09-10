@@ -13,7 +13,7 @@ const CAMPAIGN_END = 65;      /* la fine vera del gioco: la Caldera */
 /* Fin dove arriva quello che e' costruito davvero. Si alza mano a mano che
    l'atto II viene programmato: oltre questo settore il gioco si ferma e lo
    dice, invece di far finta. */
-const SETTORI_PRONTI = 40;
+const SETTORI_PRONTI = 55;
 /* Dal 31 al 35 Ampere e' dei Custodi: gliel'hanno strappata a ECHO-0 e se la
    portano dietro, e va riempita di Corrente Verde. Al 35 gliela porta via
    ECHO-1, e da li' in poi la corrente si tiene addosso. */
@@ -37,7 +37,10 @@ const FILMATI_SETTORE = {
   31: 'ampere_torna',
   /* il tradimento e il passaggio sono una scena sola spezzata in due: si
      vedono di fila, senza stacco */
-  36: ['il_tradimento', 'il_passaggio']
+  36: ['il_tradimento', 'il_passaggio'],
+  /* e cosi' il reattore e la scelta, all'uscita dal 56. Quando arriva anche
+     `la_scelta_di_echo` basta aggiungerlo alla lista */
+  57: ['il_reattore']
 };
 /* I filmati consegnati senza traccia audio. Su questi la musica del gioco NON
    si ferma: senza, sarebbero secondi di silenzio totale e sembrerebbe che il
@@ -651,9 +654,9 @@ const Game = {
        fermato il gioco: quando SETTORI_PRONTI si sposta, questa frase si
        riscrive insieme a lui. */
     document.getElementById('winText').textContent =
-      'Sei dentro ECLISSIA, con la corrente addosso e niente in cui metterla. ' +
-      'Manca la strada che porta a ECHO-1 e alla Caldera: la stiamo ' +
-      'costruendo, torna a vedere.';
+      'Hai attraversato ECLISSIA tutta, con la corrente addosso e ECHO-0 ' +
+      'davanti che non si capisce da che parte sta. Di là c’è ECHO-1, e poi ' +
+      'la Caldera: li stiamo costruendo, torna a vedere.';
     document.getElementById('winScore').textContent = this.score;
     document.getElementById('winKills').textContent = this.kills;
     document.getElementById('winRank').textContent =
@@ -1679,17 +1682,26 @@ const Game = {
       }
       if (om.vita > 0) {
         om.k = Math.min(1, om.k + dt * 2.4);
+        /* Chi guida non se ne va a tempo: resta finche' non gli sei passato
+           accanto. Vuole che tu veda dove sta indicando. */
+        if (om.modo === 'guida' && p.cx < om.x + 40) om.vita = Math.max(om.vita, 0.9);
         om.vita -= dt;
         if (om.vita <= 0) {
           om.via = 0.55;
-          Rings.add(om.x, om.y, '#b06bff', 130, 0.5, 6);
-          Particles.burst(om.x, om.y, 18, '#b06bff', 200, 5, 0);
-          Sfx.tone(150, 0.35, 'sawtooth', 0.035, 900);
+          /* chi guida non sparisce con lo schiocco di chi scappa: si spegne */
+          if (om.modo === 'guida') {
+            Particles.burst(om.x, om.y, 12, '#b06bff', 130, 4, -20);
+            Sfx.tone(210, 0.4, 'sine', 0.028, 500);
+          } else {
+            Rings.add(om.x, om.y, '#b06bff', 130, 0.5, 6);
+            Particles.burst(om.x, om.y, 18, '#b06bff', 200, 5, 0);
+            Sfx.tone(150, 0.35, 'sawtooth', 0.035, 900);
+          }
         }
         continue;
       }
       /* non e' ancora comparso: aspetta che tu gli arrivi sotto */
-      if (Math.abs(p.cx - om.x) < vistaOmbra) om.vita = 2.6;
+      if (Math.abs(p.cx - om.x) < vistaOmbra) om.vita = om.modo === 'guida' ? 4.5 : 2.6;
     }
 
     /* portale */
@@ -2299,8 +2311,13 @@ const Game = {
     const t = this.portalT;
     for (const om of lv.ombre) {
       if (om.fatta || om.k <= 0.01) continue;
-      const x = om.x - camX, y = om.y - camY;
+      const x = om.x - camX;
       if (x < -140 || x > this.viewW + 140) continue;
+      /* L'altezza si decide sullo SCHERMO, non nel mondo: col telefono
+         coricato la vista e' alta meno della meta', e una sagoma messa sette
+         caselle sopra il suolo finirebbe fuori dall'inquadratura. Qui resta
+         sempre nella fascia alta di quello che si vede. */
+      const y = clamp(om.y - camY, 190, this.viewH * 0.52);
       ctx.save();
       ctx.translate(x, y);
       ctx.scale(0.9, 0.9);
@@ -2346,9 +2363,24 @@ const Game = {
          bordo nero sparisce, ed e' la stessa regola che vale per lui. */
       ctx.fillStyle = '#1b0f36';
       ctx.strokeStyle = '#a678ff'; ctx.lineWidth = 2.6; ctx.lineJoin = 'round';
-      /* le braccia, appena accennate: si vede che sono diverse fra loro */
-      roundRect(ctx, -32, -8, 16, 16, 6); ctx.fill(); ctx.stroke();
-      roundRect(ctx, 16, -6, 17, 12, 5); ctx.fill(); ctx.stroke();
+      /* Le braccia, appena accennate: si vede che sono diverse fra loro. E se
+         sta indicando qualcosa, il braccio col guanto si allunga in quella
+         direzione — e' l'unica cosa che fa, ed e' tutto quello che dice. */
+      const ind = om.modo === 'guida' && om.ix !== undefined;
+      if (ind) {
+        /* l'angolo si prende sulle posizioni a schermo, se no il braccio
+           punterebbe da un'altra parte rispetto al segno */
+        const a = Math.atan2((clamp(om.iy - camY, 110, this.viewH * 0.86) - y),
+                             (om.ix - camX - x));
+        ctx.save();
+        ctx.rotate(a);
+        roundRect(ctx, 14, -7, 30, 14, 6); ctx.fill(); ctx.stroke();
+        ctx.restore();
+        roundRect(ctx, -30, -7, 15, 14, 5); ctx.fill(); ctx.stroke();
+      } else {
+        roundRect(ctx, -32, -8, 16, 16, 6); ctx.fill(); ctx.stroke();
+        roundRect(ctx, 16, -6, 17, 12, 5); ctx.fill(); ctx.stroke();
+      }
       ctx.beginPath();
       ctx.moveTo(0, -26); ctx.lineTo(17, -6); ctx.lineTo(13, 24);
       ctx.lineTo(0, 30); ctx.lineTo(-13, 24); ctx.lineTo(-17, -6);
@@ -2360,7 +2392,8 @@ const Game = {
       ctx.closePath(); ctx.fill(); ctx.stroke();
 
       /* E i due occhi, gli unici punti accesi. Il verso e' quello di sempre:
-         rosso alla nostra sinistra, ciano alla nostra destra. */
+         rosso alla nostra sinistra, ciano alla nostra destra.
+         Chi guida non guarda te: guarda dove sta indicando. */
       ctx.globalAlpha = om.k;
       Gfx.light(ctx, -5, -30, 11, '#ff3b5c', 0.7);
       Gfx.light(ctx, 5, -30, 11, '#38e8ff', 0.7);
@@ -2369,6 +2402,21 @@ const Game = {
       ctx.fillStyle = '#38e8ff';
       ctx.beginPath(); ctx.ellipse(5, -30, 2.6, 3.4, 0, 0, TAU); ctx.fill();
       ctx.restore();
+
+      /* il segno di quello che indica: un puntino viola che pulsa, appena
+         accennato, la' dove sta guardando */
+      if (om.modo === 'guida' && om.ix !== undefined) {
+        const px2 = om.ix - camX, py2 = clamp(om.iy - camY, 110, this.viewH * 0.86);
+        if (px2 > -60 && px2 < this.viewW + 60) {
+          const b = 0.35 + Math.sin(t * 4) * 0.2;
+          Gfx.light(ctx, px2, py2, 30, '#b06bff', om.k * b);
+          ctx.save();
+          ctx.globalAlpha = om.k * (0.5 + b * 0.5);
+          ctx.strokeStyle = '#c98fff'; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.arc(px2, py2, 9 + Math.sin(t * 4) * 2, 0, TAU); ctx.stroke();
+          ctx.restore();
+        }
+      }
     }
   },
 
