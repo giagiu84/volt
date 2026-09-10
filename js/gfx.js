@@ -216,6 +216,24 @@ const Sfondi = {
   }
 };
 
+/* ---------- le vignette di fumetto ----------
+   Gli squarci che si aprono nei momenti chiave. Funzionano anche senza: se il
+   disegno non c'e', il gioco lo ridisegna in codice e nessuno se ne accorge.
+   Quando il file arriva, prende il suo posto da solo. */
+const Fumetti = {
+  imgs: {},
+  get(nome) {
+    if (!nome) return null;
+    let im = this.imgs[nome];
+    if (im === undefined) {
+      im = new Image();
+      im.src = verAsset('assets/fumetti/' + nome + '.webp');
+      this.imgs[nome] = im;
+    }
+    return im.naturalWidth ? im : null;
+  }
+};
+
 const HeroArt = {
   imgs: {}, tried: false,
   poses: ['front', 'side', 'back'],

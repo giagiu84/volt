@@ -852,7 +852,21 @@ sovrapposte non si capirebbe nessuna delle due.
    destra arrivano **tre viticci viola**, la afferrano, e **il tempo si ferma un
    istante**. La trascinano via piano, mentre rimpicciolisce, fino a sparire.
 
-**Nessuna scritta, nessun filmato.** Vale la regola di tutta la semina: chi
+**E su ciascuno dei due furti si apre uno squarcio di fumetto.** Una vignetta
+piccola, in alto, con la cornice chiara: ingrandisce il momento come il riquadro
+di primo piano in una pagina disegnata. Restano aperte insieme un istante, in
+fila, e sembrano due riquadri della stessa pagina.
+
+- **La prima** è la lanterna, con tre dita nere che si chiudono su di lei.
+- **La seconda** è il rapito che grida, e nella nuvoletta bianca c'è **il nome
+  di chi sta giocando**: «AREN!» se giochi Aren, «LYRA!» se giochi Lyra. Chiama
+  la persona che lo sta cercando.
+
+La nuvoletta è **bianca col testo scuro**, non nera col bordo viola: quella è la
+voce delle creature della Frattura, questa è la voce di un Custode, e la
+differenza si deve vedere dal colore prima ancora che dalle parole.
+
+**Nessun'altra scritta, nessun filmato.** Vale la regola di tutta la semina: chi
 guarda lo vede.
 
 **Perché conta, e sono due cose.**

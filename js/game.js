@@ -103,7 +103,7 @@ const Game = {
   perks: {}, pendingLevel: 0, shieldGenT: 0, drone: null,
   mode: 'campaign', progress: Store.get('volt_progress', { cleared: false, cp: null }),
   law: null, lawDef: null, platsOff: false, platT: 0, meteorT: 0, stormOn: false,
-  ampere: null, cariche: [], cella: null,
+  ampere: null, cariche: [], cella: null, vign: [],
   furto: null, blackT: 0, blackNext: 0,
   canSwap: false, swapCd: 0,
   rubato: null, echiVia: false,
@@ -678,7 +678,7 @@ const Game = {
       for (const e of this.enemies) if (e.type === 'boss') { e.lanterna = true; e.cella = true; }
 
     /* i cali di tensione: dal 16 in poi, sempre piu' fitti */
-    this.furto = null; this.cella = null; this.blackT = 0;
+    this.furto = null; this.cella = null; this.vign.length = 0; this.blackT = 0;
     this.blackNext = (this.mode === 'campaign' && n > SEMINA_DA && n <= SEMINA_A)
       ? 3 + Math.random() * 4 : 0;
 
@@ -754,6 +754,9 @@ const Game = {
      'nome'  — il lettering grosso: entra in scena qualcuno
      'targa' — il riquadro giallo: e' il gioco che racconta (predefinito) */
   banner(text, tipo, chiParla) {
+    /* mentre una vignetta e' aperta, i banner aspettano: quello che c'e' da
+       sapere resta scritto nel cruscotto, e la scena non si sporca */
+    if (this.vign && this.vign.length) return;
     const el = document.getElementById('banner');
     document.getElementById('bannerText').textContent = text;
     el.classList.remove('hidden', 'voce', 'nome', 'targa', 'sx', 'dx');
@@ -765,6 +768,21 @@ const Game = {
     const span = document.getElementById('bannerText');
     span.style.animation = 'none'; void span.offsetWidth; span.style.animation = '';
     this.bannerT = tipo === 'voce' ? 2.2 : 1.6;
+  },
+
+  /* Uno squarcio di fumetto: una vignetta che si apre sopra la scena e
+     ingrandisce quello che sta succedendo, come il riquadro di dettaglio in una
+     pagina disegnata. Dura poco e non copre mai il terreno: sta in alto.
+       tipo  - che cosa mostra
+       lato  - -1 a sinistra, +1 a destra (cosi due vignette stanno in fila)
+       grido - la battuta nella nuvoletta, se ce n'e' una */
+  apriRiquadro(tipo, lato, grido) {
+    this.vign.push({ tipo, lato, grido, t: 0, dur: 2.6 });
+    /* quando si apre una vignetta il gioco tace: banner e vignette stanno alla
+       stessa altezza, e due cose insieme non se ne legge nessuna */
+    document.getElementById('banner').classList.add('hidden');
+    this.bannerT = 0;
+    Sfx.tone(660, 0.08, 'square', 0.04, 260);
   },
 
   shake(amt, t) {
@@ -1207,9 +1225,18 @@ const Game = {
       }
     }
 
+    /* le vignette aperte */
+    for (let i = this.vign.length - 1; i >= 0; i--) {
+      this.vign[i].t += dt;
+      if (this.vign[i].t > this.vign[i].dur) this.vign.splice(i, 1);
+    }
+
     /* il furto della lanterna, dopo il Comandante della Laguna */
     if (this.furto) {
+      const prima = this.furto.t;
       this.furto.t += dt;
+      /* la vignetta si apre nell'istante in cui la sagoma se la prende */
+      if (prima <= 1.55 && this.furto.t > 1.55) this.apriRiquadro('lanterna', -1);
       if (this.furto.t > 3.4) this.furto = null;
     }
     /* La cella che se la portano via, ma DOPO la lanterna: i due furti vanno
@@ -1230,6 +1257,10 @@ const Game = {
       /* i viticci arrivano e la prendono: qui il tempo si ferma un istante */
       if (c.t > 2.6 && !c.presa) {
         c.presa = true;
+        /* e qui si apre la seconda: il rapito che chiama per nome chi lo sta
+           cercando. Le due vignette restano in fila un momento, come due
+           riquadri della stessa pagina. */
+        this.apriRiquadro('rapito', 1, (HEROES[this.hero] || HEROES.aren).name + '!');
         this.hitStop = 0.35;
         this.shake(24, 0.5);
         Sfx.tone(90, 0.6, 'sawtooth', 0.08, 1600);
@@ -1876,6 +1907,7 @@ const Game = {
     }
     if (this.furto) this.drawFurto(ctx, camX, camY);
     if (this.cella) this.drawCella(ctx, camX, camY);
+    if (this.vign.length) this.drawRiquadri(ctx);
     if (this.blackT > 0) this.drawBlackout(ctx);
     this.drawVignette(ctx);
     this.drawOrb(ctx, dt);
@@ -2451,6 +2483,137 @@ const Game = {
     if (this.portalOn) buco(this.lv.portalX - camX, this.lv.portalY - camY, 120, 0.9);
     d.globalAlpha = 1;
     ctx.drawImage(c, 0, 0, this.viewW, this.viewH);
+  },
+
+  /* Le vignette. Si disegnano sullo schermo, non nel mondo: stanno in alto,
+     sotto il cruscotto e sopra la testa del giocatore, e non coprono mai il
+     terreno su cui si combatte. Se il disegno non c'e' ancora, la vignetta si
+     disegna in codice: il gioco funziona lo stesso, e quando il file arriva
+     prende il suo posto senza toccare niente. */
+  drawRiquadri(ctx) {
+    const W = this.viewW;
+    const larg = Math.min(132, W * 0.40), alt = larg * 0.86;
+    for (const v of this.vign) {
+      /* entra di scatto, resta, e se ne va scivolando in su */
+      const ap = clamp(v.t / 0.16, 0, 1);
+      const via = clamp((v.t - (v.dur - 0.3)) / 0.3, 0, 1);
+      const sc = (0.6 + ap * 0.4) * (1 - via * 0.25);
+      const cx = W / 2 + v.lato * (larg * 0.56);
+      const cy = 196 - via * 30;
+
+      ctx.save();
+      ctx.globalAlpha = (1 - via);
+      ctx.translate(cx, cy);
+      ctx.rotate(v.lato * 0.035);
+      ctx.scale(sc, sc);
+
+      /* la cornice: bordo spesso scuro, come un riquadro disegnato */
+      ctx.save();
+      ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = 18; ctx.shadowOffsetY = 6;
+      ctx.fillStyle = '#0e0a22';
+      roundRect(ctx, -larg / 2, -alt / 2, larg, alt, 7); ctx.fill();
+      ctx.restore();
+
+      /* il contenuto, ritagliato dentro la cornice */
+      ctx.save();
+      ctx.beginPath();
+      roundRect(ctx, -larg / 2 + 4, -alt / 2 + 4, larg - 8, alt - 8, 4);
+      ctx.clip();
+      const img = Fumetti.get(v.tipo === 'rapito'
+        ? 'grido_' + (this.hero === 'aren' ? 'lyra' : 'aren')
+        : 'furto_lanterna');
+      if (img) {
+        /* il disegno vero, riempiendo il riquadro senza deformarlo */
+        const r = Math.max((larg - 8) / img.naturalWidth, (alt - 8) / img.naturalHeight);
+        ctx.drawImage(img, -img.naturalWidth * r / 2, -img.naturalHeight * r / 2,
+                      img.naturalWidth * r, img.naturalHeight * r);
+      } else {
+        this.riquadroDisegnato(ctx, v, larg, alt);
+      }
+      ctx.restore();
+
+      /* la cornice chiara sopra al taglio */
+      ctx.lineWidth = 3.5; ctx.strokeStyle = '#f4efff';
+      roundRect(ctx, -larg / 2 + 2, -alt / 2 + 2, larg - 4, alt - 4, 6); ctx.stroke();
+
+      /* la nuvoletta del rapito: bianca col testo scuro - chi parla e' un
+         Custode, non una creatura, e si deve vedere dal colore */
+      if (v.grido && v.t > 0.18) {
+        const g = clamp((v.t - 0.18) / 0.14, 0, 1);
+        ctx.save();
+        ctx.translate(0, -alt / 2 - 10);
+        ctx.scale(g, g);
+        ctx.font = '800 15px Nunito, system-ui, sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        const w = ctx.measureText(v.grido).width + 20;
+        ctx.lineWidth = 3; ctx.strokeStyle = '#20183f'; ctx.fillStyle = '#ffffff';
+        roundRect(ctx, -w / 2, -13, w, 25, 11); ctx.fill(); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(-6, 10); ctx.lineTo(2, 22); ctx.lineTo(6, 10);
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = '#241a4d';
+        ctx.fillText(v.grido, 0, 0);
+        ctx.restore();
+      }
+      ctx.restore();
+    }
+  },
+
+  /* Il ripiego, finche' i disegni non ci sono: la stessa scena ridisegnata in
+     codice, ingrandita. Non e' bella come un fumetto vero, ma si capisce. */
+  riquadroDisegnato(ctx, v, larg, alt) {
+    const t = v.t;
+    /* fondo a raggiera: e' un dettaglio, e si vede che e' un dettaglio */
+    const g = ctx.createRadialGradient(0, 0, 4, 0, 0, larg * 0.8);
+    g.addColorStop(0, v.tipo === 'rapito' ? '#4a2c86' : '#123a2c');
+    g.addColorStop(1, '#0e0a22');
+    ctx.fillStyle = g;
+    ctx.fillRect(-larg, -alt, larg * 2, alt * 2);
+    ctx.save();
+    ctx.globalAlpha = 0.5;
+    ctx.strokeStyle = v.tipo === 'rapito' ? '#b06bff' : '#5effa8';
+    ctx.lineWidth = 2;
+    for (let i = 0; i < 14; i++) {
+      const a = (i / 14) * TAU + t * 0.4;
+      ctx.beginPath(); ctx.moveTo(Math.cos(a) * 16, Math.sin(a) * 16);
+      ctx.lineTo(Math.cos(a) * larg, Math.sin(a) * larg); ctx.stroke();
+    }
+    ctx.restore();
+
+    ctx.save();
+    ctx.translate(0, 4);
+    if (v.tipo === 'rapito') {
+      ctx.scale(3.1, 3.1);
+      /* trema: sta chiamando */
+      ctx.translate(Math.sin(t * 26) * 0.7, 0);
+      drawRapito(ctx, rapito(), t);
+    } else {
+      /* la lanterna, e la mano scura che la prende */
+      ctx.scale(3.4, 3.4);
+      Gfx.light(ctx, 0, 0, 30, '#5effa8', 0.9);
+      ctx.lineWidth = 2.2; ctx.strokeStyle = OUTLINE;
+      ctx.beginPath(); ctx.arc(0, -13, 5, Math.PI, 0); ctx.stroke();
+      ctx.fillStyle = '#3b4a7a';
+      roundRect(ctx, -8, -11, 16, 5, 2.5); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = 'rgba(120,255,190,.35)';
+      roundRect(ctx, -7, -7, 14, 15, 5); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#eafff2';
+      ctx.beginPath(); ctx.arc(0, 1, 3.2 + Math.sin(t * 8) * 0.5, 0, TAU); ctx.fill();
+      ctx.fillStyle = '#3b4a7a';
+      roundRect(ctx, -8, 7, 16, 4, 2); ctx.fill(); ctx.stroke();
+      /* le dita nere che si chiudono da destra */
+      const chiude = clamp((t - 0.2) / 0.6, 0, 1);
+      ctx.fillStyle = '#150c2e';
+      for (let i = 0; i < 3; i++) {
+        const yy = -7 + i * 7;
+        ctx.save();
+        ctx.translate(17 - chiude * 9, yy);
+        ctx.rotate(-chiude * 0.5 + i * 0.16);
+        roundRect(ctx, 0, -2.4, 13, 4.8, 2.4); ctx.fill();
+        ctx.restore();
+      }
+    }
+    ctx.restore();
   },
 
   /* La cella con dentro il custode rapito. Cade dal Comandante, resta un
