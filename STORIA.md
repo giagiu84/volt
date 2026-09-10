@@ -1353,11 +1353,16 @@ in cui qualcuno, dopo aver giocato, chiede **chi è ECHO-0**.
   - **AMPERE è tua.** Galleggia dietro le spalle, illumina, si riempie di
     Corrente Verde — quella sparsa nei settori e quella che lasciano i mostri
     cadendo — e quando è piena **scarica da sola**, con un filo verde che salta
-    di mostro in mostro. La carica **resta da un settore all'altro**: quello che
+    di mostro in mostro. Le cariche sparse sono **una per ogni tratto del
+    settore**, non a caso: sparpagliate a caso finivano ammucchiate in fondo e
+    il primo pezzo di strada era vuoto. La carica **resta da un settore all'altro**: quello che
     hai raccolto al 31 te lo porti al 34.
-  - **ECHO-0 non ti aspetta alla fine del settore: arriva mentre giochi.** Fra i
-    nove e i quindici secondi dall'inizio, dal bordo, in alto, dalla parte in
-    cui stai andando. Entra col suo nome e con una battuta: **«QUELLA LUCE NON È
+  - **ECHO-0 non ti aspetta alla fine del settore: arriva mentre giochi.** E non
+    arriva a tempo: **arriva quando nella lanterna c'è qualcosa da prendere** —
+    dal terzo di carica in su, e mai prima di otto secondi. Se non raccogli
+    niente si presenta lo stesso dopo ventisei secondi, ma il suo momento è
+    quello in cui hai qualcosa da perdere. Entra dal bordo, in alto, dalla parte
+    in cui stai andando, col suo nome e con una battuta: **«QUELLA LUCE NON È
     VOSTRA»**.
   - **E non punta a te: punta alla lanterna.** Ignora i colpi, ignora dove ti
     metti, piomba su Ampere — e più le è vicino più accelera. Quando la

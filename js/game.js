@@ -110,7 +110,7 @@ const Game = {
   perks: {}, pendingLevel: 0, shieldGenT: 0, drone: null,
   mode: 'campaign', progress: Store.get('volt_progress', { cleared: false, cp: null }),
   law: null, lawDef: null, platsOff: false, platT: 0, meteorT: 0, stormOn: false,
-  ampere: null, cariche: [], cella: null, vign: [], cacciaT: 0,
+  ampere: null, cariche: [], cella: null, vign: [], cacciaT: 0, cacciaMax: 0,
   furto: null, blackT: 0, blackNext: 0,
   canSwap: false, swapCd: 0,
   rubato: null, echiVia: false,
@@ -652,13 +652,24 @@ const Game = {
     if (conAmpere) {
       if (!this.ampere) this.ampere = new Ampere(lv.startX, lv.startY - 40);
       else { this.ampere.x = lv.startX; this.ampere.y = lv.startY - 40; this.ampere.arc = null; this.ampere.arcT = 0; }
-      const quante = 3 + Math.floor(n / 7);
+      /* Sparse a fasce, non a caso: una per ogni tratto del settore. A caso
+         finivano ammucchiate in fondo, e il primo pezzo di strada era vuoto —
+         proprio quello in cui ECHO-0 arriva. Se dentro non c'e' niente, non ha
+         niente da rubare e la scena non vale nulla. */
+      const quante = 4 + Math.floor(n / 7);
       const rng = makeRng(0x9a5f + n * 2654435761);
+      const dentro = 12, fondo = lv.w - 10;
       for (let i = 0; i < quante; i++) {
-        const tx = rndInt(rng, 14, lv.w - 10);
-        const gy = lv.groundY[tx];
-        if (gy < 0) continue;
-        const c = new Carica(tx * TILE, (gy - 2 - Math.floor(rng() * 4)) * TILE);
+        const da = dentro + Math.round((fondo - dentro) * (i / quante));
+        const a = dentro + Math.round((fondo - dentro) * ((i + 1) / quante));
+        /* dentro la fascia cerca un punto che abbia terra sotto */
+        let tx = -1;
+        for (let k = 0; k < 14 && tx < 0; k++) {
+          const q = rndInt(rng, da, Math.max(da + 1, a));
+          if (lv.groundY[q] > 0) tx = q;
+        }
+        if (tx < 0) continue;
+        const c = new Carica(tx * TILE, (lv.groundY[tx] - 2 - Math.floor(rng() * 4)) * TILE);
         c.vx = 0; c.vy = 0;
         this.cariche.push(c);
       }
@@ -705,7 +716,8 @@ const Game = {
 
     /* La caccia al contrario: ECHO-0 non c'e' all'inizio del settore, arriva
        mentre stai giocando. Aspettare che entri e' meta' della tensione. */
-    this.cacciaT = lv.caccia ? 9 + Math.random() * 6 : 0;
+    this.cacciaT = lv.caccia ? 8 + Math.random() * 4 : 0;
+    this.cacciaMax = lv.caccia ? 26 : 0;
 
     /* ECHO-0: appena il settore comincia, il furto e' gia' deciso */
     this.rubato = null; this.echiVia = false;
@@ -1283,7 +1295,13 @@ const Game = {
        dalla parte da cui stai andando: te lo trovi davanti. */
     if (this.cacciaT > 0 && !p.dead) {
       this.cacciaT -= dt;
-      if (this.cacciaT <= 0) {
+      this.cacciaMax -= dt;
+      /* Non arriva a tempo: arriva quando **c'e' qualcosa da prendere**. Il
+         tempo minimo serve a non farlo comparire addosso alla partenza, quello
+         massimo a non farlo aspettare all'infinito se non raccogli niente. */
+      const vale = this.ampere && this.ampere.charge >= 34;
+      if (this.cacciaT <= 0 && !vale && this.cacciaMax > 0) this.cacciaT = 0.5;
+      else if (this.cacciaT <= 0) {
         this.cacciaT = 0;
         const ex = clamp(p.cx + this.viewW * 0.75, 60, lv.pxW - 80);
         const e = new Enemy('echo', ex, Math.max(60, p.cy - 150), this.level, 2);
