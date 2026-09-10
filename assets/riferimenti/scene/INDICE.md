@@ -20,6 +20,18 @@ repo perché pesano tre mega l'uno.
 | `fuga_di_echo.webp` | 24-30 | ECHO-0 scappa dentro un varco in alto, **portandosi via Ampere**. I due lo guardano andare da sotto. La lanterna in mezzo, ancora verde |
 | `lo_strappo.webp` | 30 | Il momento in cui Ampere **cambia mano**: la lanterna a mezz'aria fra ECHO-0 e i due Custodi, tutte e tre le mani tese. Nessuno la tiene |
 | `riaccensione_ampere.webp` | 30 | Ampere torna ai Custodi e **si riaccende di verde**: le mani di Aren e Lyra la prendono insieme, una per lato |
+| `il_tradimento_1_il_secondo_prima.webp` | 35 | **La lanterna è in mano ai Custodi**, ECHO-0 in ginocchio allunga la mano rossa verso di lei, e dall'alto scende il **pugno di ECHO-1** con i tre diamanti gialli. È il secondo prima |
+| `il_tradimento_2_lo_strappo.webp` | 35 | Il pugno **afferra Ampere per il manico** mentre Lyra la tiene ancora: nessuno dei tre fa in tempo |
+| `il_tradimento_3_il_vuoto.webp` | 35 | Tutti e tre a terra, **la mano tesa nella stessa direzione**, e il verde piccolo e lontano in alto. Nessuno guarda gli altri due |
+
+---
+
+## Le tre battute de `il_tradimento`
+
+Sono la **seconda versione**: nella prima Ampere era in mano a ECHO-0, che al
+settore 35 non può averla — gliel'hanno strappata al 30. La regia è rimasta
+identica, si è spostata solo la lanterna. Il primo tentativo è superato e non si
+usa più.
 
 ---
 
