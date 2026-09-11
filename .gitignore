@@ -21,3 +21,7 @@ assets/logo/*.png
 
 # Le vignette: nel repo va solo il .webp che il gioco carica
 assets/fumetti/*.png
+
+# Materiale di lavoro del Capo e dell'altra IA (piani, bozze): resta sul
+# disco, non va sul sito
+PIANO_INSTAGRAM_*.md
