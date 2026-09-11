@@ -6,7 +6,7 @@ cartella): e' il file da dare a chi produce i filmati, si legge da solo.
 L'elenco riassunto sta anche nella Bibbia, capitolo 14.3.
 Qui restano solo i nomi dei file e le regole tecniche.
 
-GIA' FATTI (dieci)
+GIA' FATTI (undici)
   introduzione.mp4        all'apertura del gioco, prima della scelta
   rapimento_lyra.mp4      Lyra viene rapita     (lo vede chi gioca AREN, all'inizio)
   rapimento_aren.mp4      Aren viene rapito     (lo vede chi gioca LYRA, all'inizio)
@@ -17,13 +17,14 @@ GIA' FATTI (dieci)
   ampere_torna.mp4        entrando nel settore 31: lo strappo della lanterna
   il_tradimento.mp4       fine del settore 35: ECHO-1 strappa Ampere ai Custodi
   il_passaggio.mp4        subito dopo: ECHO-0 apre la strada per Eclissia
+  il_reattore.mp4         fine del settore 56: ECHO-1 cade e Ampere esce
 
-DA FARE (sette, in ordine di settore). Quelli segnati [E] sono essenziali:
-sono cinque, e vanno prodotti a coppie perche' sono scene divise in due.
+DA FARE (sei, in ordine di settore). Quelli segnati [E] sono essenziali:
+sono quattro.
   dentro_la_frattura.mp4  settore 21
   eclissia.mp4            settore 36: il mondo nuovo
-  il_reattore.mp4    [E]  settore 56: ECHO-1 cade e Ampere esce        --.
-  la_scelta_di_echo.mp4 [E] settore 56: ECHO-0 allunga la mano e la ritira '- coppia
+  la_scelta_di_echo.mp4 [E] settore 56: ECHO-0 allunga la mano e la ritira
+                          (seguito di il_reattore, gia' girato)
   la_cima.mp4        [E]  settore 65: appare OHM                       --.
   il_finale.mp4      [E]  settore 65: l'eruzione, la scintilla, Eclio     '- terzina
   il_bacio.mp4       [E]  settore 65: Aren si toglie il casco            --'

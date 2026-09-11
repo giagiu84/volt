@@ -3,10 +3,10 @@
 Da consegnare a chi li produce. Ogni scheda è autosufficiente: dentro c'è chi
 compare, com'è fatto, cosa succede e cosa deve restare in mente allo spettatore.
 
-**Da fare: sette** (cinque essenziali).
-**Già fatti: dieci** — `introduzione`, `rapimento_lyra`, `rapimento_aren`,
+**Da fare: sei** (quattro essenziali).
+**Già fatti: undici** — `introduzione`, `rapimento_lyra`, `rapimento_aren`,
 `liberazione_lyra`, `liberazione_aren`, `la_luce_se_ne_va`, `primo_incontro`,
-`ampere_torna`, `il_tradimento`, `il_passaggio`.
+`ampere_torna`, `il_tradimento`, `il_passaggio`, `il_reattore`.
 
 ---
 
@@ -119,16 +119,18 @@ del browser e dell'icona sul telefono. È il marchio ufficiale: **da qui in poi
 
 ---
 
-# LE SETTE SCHEDE, IN ORDINE DI STORIA
+# LE SEI SCHEDE, IN ORDINE DI STORIA
 
 Sono elencate come si incontrano giocando, dal settore 21 al 65. Accanto a
 ognuna c'è se è **essenziale** (senza, la storia ha un buco) o desiderabile.
 
-**I cinque essenziali** sono `il_reattore`, `la_scelta_di_echo`, `la_cima`,
-`il_finale` e `il_bacio`. Vanno prodotti **a coppie**,
-perché sono tre scene divise in due ciascuna:
-`il_tradimento`+`il_passaggio` · `il_reattore`+`la_scelta_di_echo` ·
-`la_cima`+`il_finale`.
+**I quattro essenziali** sono `la_scelta_di_echo`, `la_cima`, `il_finale` e
+`il_bacio`.
+
+**`la_scelta_di_echo` attacca dove finisce `il_reattore`**, che è già girato e
+nel gioco: la lanterna accesa a mezz'aria è l'ultimo fotogramma dell'uno e il
+primo dell'altro. `la_cima`+`il_finale`+`il_bacio` sono invece una sequenza
+sola, e vanno prodotti insieme.
 
 Se se ne dovesse fare uno solo, sarebbe **`la_scelta_di_echo`**: è il perno di
 tutto l'atto II.
@@ -160,36 +162,7 @@ I due sono piccoli in basso nell'inquadratura.
 
 ---
 
-## 3 · `il_reattore` — settore 56 · **ESSENZIALE**
-**Dove:** settore 56, alla caduta di ECHO-1.
-**Chi c'è:** ECHO-1, Aren, Lyra e **i quattro Silenti**.
-
-**Cosa deve mostrare:**
-1. ECHO-1 in piedi, e **intorno a lui i quattro Silenti**, fermi, in piedi,
-   rivolti verso i Custodi. Si devono riconoscere subito come le sagome
-   dell'inizio del gioco: chi ha giocato dal primo settore deve pensare
-   *«questi li ho già visti»*.
-2. I **tre cristalli gialli** si spengono uno dopo l'altro e le morse si aprono.
-   **A ogni cristallo che si spegne, un Silente cade in ginocchio e non si
-   rialza.** Al terzo ne resta uno solo in piedi.
-3. **Ampere esce** dal petto del colosso che si accascia.
-4. La lanterna fluttua verso i due e **si riempie di colpo** di tutta la
-   corrente che si erano portati addosso per venti settori: si accende come non
-   l'abbiamo mai vista, e per un attimo illumina tutto.
-5. **Un secondo in più, e vale il filmato:** alla luce della lanterna i quattro
-   Silenti si rimettono in piedi tutti insieme — e **si voltano verso i
-   Custodi**. Non attaccano. Guardano la lanterna, come facevano all'inizio.
-
-**Perché conta:** è la fine di una caccia lunga venti settori, ed è il momento
-in cui si capisce che le ombre del primo filmato non stavano dalla parte del
-nemico: **stavano dalla parte della lanterna**.
-**Frase a schermo:** nessuna.
-**Nota:** finisce con la lanterna accesa a mezz'aria. Da lì riparte
-`la_scelta_di_echo`, che è il seguito immediato: vanno prodotti insieme.
-
----
-
-## 4 · `la_scelta_di_echo` — settore 56 · **ESSENZIALE**
+## 3 · `la_scelta_di_echo` — settore 56 · **ESSENZIALE**
 **Dove:** subito dopo `il_reattore`, senza stacco.
 **Cosa deve mostrare, in tre battute, e va girata lenta:**
 1. La lanterna è accesa a mezz'aria. **ECHO-0 è lì, a un passo.** Aren e Lyra
@@ -208,7 +181,7 @@ scena, è un debito. **Se si deve produrre un solo filmato, è questo.**
 
 ---
 
-## 5 · `la_cima` — settore 65 · **ESSENZIALE**
+## 4 · `la_cima` — settore 65 · **ESSENZIALE**
 **Dove:** settore 65, arrivati in cima, prima dello scontro.
 **Cosa:** il bordo del cratere. Sopra di esso si condensa **OHM**: una massa di
 fulmini bianchi e azzurri senza faccia, enorme. Il segno **Ω** si accende dentro
@@ -218,7 +191,7 @@ OHM.» poi «E NOI SIAMO SOLTANTO LE SUE ECO.»
 
 ---
 
-## 6 · `il_finale` — settore 65 · **ESSENZIALE**
+## 5 · `il_finale` — settore 65 · **ESSENZIALE**
 **Dove:** settore 65, in cima alla Caldera, dopo la sconfitta di OHM.
 **Cosa deve mostrare, in cinque battute (questo può arrivare a 14-16 secondi:
 è il finale del gioco, qui la durata si può sforare):**
@@ -254,7 +227,7 @@ dolcezza, non in trionfo.
 
 ---
 
-## 7 · `il_bacio` — settore 65, dopo il finale · **ESSENZIALE**
+## 6 · `il_bacio` — settore 65, dopo il finale · **ESSENZIALE**
 **Dove:** l'ultima scena del gioco, subito dopo `il_finale`, senza stacco.
 **Durata:** 8-10 secondi.
 
